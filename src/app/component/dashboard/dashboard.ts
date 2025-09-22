@@ -1,11 +1,11 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ElectionService } from '../../service/election.service';
 import { SafePipe } from '../../pipes/safe.pipe';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
-import { text } from 'stream/consumers';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,14 +13,18 @@ import { text } from 'stream/consumers';
   styleUrls: ['./dashboard.scss'],
   imports: [SafePipe, CommonModule, HttpClientModule]
 })
-export class Dashboard implements OnInit {
+export class Dashboard implements OnInit, AfterViewInit {
   svgContent: string = '';
+
+  @ViewChild('svgContainer') svgContainer!: ElementRef;
 
   private provinceCodeMap: { [province: string]: string } = {
     'chiangrai': 'CRI',
     'phayao': 'PYO',
     'prachuapkhirikhan': 'PKN'
   };
+
+  private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
 
   constructor(private electionService: ElectionService, private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
 
@@ -53,7 +57,7 @@ export class Dashboard implements OnInit {
           });
           for (const id in allWinners) {
             console.log(id);
-            const g = document.getElementById(id);
+            const g = svg.querySelector('#' + id);
             console.log(g);
             if (g) {
               const path = g.querySelector('path');
@@ -62,7 +66,7 @@ export class Dashboard implements OnInit {
                 console.log(path.id);
                 let styleStr = path.getAttribute('style') || '';
                 let styleText = text.getAttribute('style') || '';
-                styleText += ' fill:  #FFFFFF  !important;';
+                styleText += ' fill: #FFFFFF !important;';
                 styleStr = styleStr.replace(/fill: *[^;]*;/g, '').replace(/stroke: *[^;]*;/g, '').replace(/stroke-width: *[^;]*;/g, '');
                 styleStr += ' fill: ' + this.getColor(allWinners[id]) + ' !important;';
                 path.setAttribute('style', styleStr);
@@ -77,6 +81,30 @@ export class Dashboard implements OnInit {
         }
       });
     });
+  }
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const svg = d3.select(this.svgContainer.nativeElement).select('svg');
+      const zoom = d3.zoom<any, unknown>()
+        .on('zoom', (event: d3.D3ZoomEvent<any, any>) => {
+          d3.select('#map_provinces').attr('transform', event.transform.toString());
+        });
+      svg.call(zoom);
+      this.zoomBehavior = zoom;
+    }
+  }
+
+  zoomIn() {
+    if (isPlatformBrowser(this.platformId) && this.zoomBehavior) {
+      d3.select(this.svgContainer.nativeElement).select('svg').transition().call(this.zoomBehavior.scaleBy as any, 1.5);
+    }
+  }
+
+  zoomOut() {
+    if (isPlatformBrowser(this.platformId) && this.zoomBehavior) {
+      d3.select(this.svgContainer.nativeElement).select('svg').transition().call(this.zoomBehavior.scaleBy as any, 0.5);
+    }
   }
 
   private getColor(winner: string): string {

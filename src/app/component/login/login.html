@@ -1,0 +1,60 @@
+<div *ngIf="isLoading" class="splash-screen">
+    <img src="../../../../assets/images/background/cat2.png" alt="Loading Logo">
+    <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+</div>
+
+<div class="login-wrapper">
+    <div class="login-container">
+        <div class="left-section">
+            <div class="image-frame">
+                <div class="logo-image"></div>
+                <div class="logo"></div>
+            </div>
+            <p class="app-title">Login</p>
+        </div>
+
+        <div class="right-section">
+            <div class="logo-container">
+                <div class="logo-image"></div>
+                <p class="company-name">ONEE</p>
+            </div>
+            <h1 class="app-login-title">555</h1>
+            <div *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username"  required />
+                    <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+                        กรุณากรอก Username
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password" [type]="hidePassword ? 'password' : ''"  required />
+                    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+                        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                        กรุณากรอก Password
+                    </mat-error>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit" class="login-button">
+                    เข้าสู่ระบบ
+                </button>
+            </form>
+        </div>
+
+        <div class="cat-image-container" aria-hidden="true">
+            <p class="copyright-text">Copyright © The One Enterprise PCL. | All Rights Reserved.</p>
+            <!-- <div class="cat-image-mobile" [style.backgroundImage]="'url(' + backgroundImage + ')'" aria-hidden="true"></div> -->
+        </div>
+    </div>
+</div>

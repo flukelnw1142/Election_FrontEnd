@@ -1,0 +1,775 @@
+{
+    "chiangrai": {
+        "1": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายชิตวัน ชินอนุวัฒน์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:/Party_pic/P_31.png",
+                    "score": "43,153",
+                    "province": "เชียงราย",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "ร้อยตำรวจเอกธนรัช จงสุทธานามณี",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:/Party_pic/P_29.png",
+                    "score": "36,100",
+                    "province": "เชียงราย",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายเอกภพ เพียรพิเศษ",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:/Party_pic/P_07.png",
+                    "score": "15,644",
+                    "province": "เชียงราย",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายสมนึก ใจจักร์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:/Party_pic/P_22.png",
+                    "score": "3,993",
+                    "province": "เชียงราย",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายอภิชิต ศิริชัย",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:/Party_pic/P_32.png",
+                    "score": "873",
+                    "province": "เชียงราย",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "2": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวปิยะรัฐชย์ ติยะไพรัช",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:/Party_pic/P_29.png",
+                    "score": "55,778",
+                    "province": "เชียงราย",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายรัตน์ธนวัตร พุทธจันทร์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:/Party_pic/P_31.png",
+                    "score": "33,085",
+                    "province": "เชียงราย",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "สิบตำรวจตรีชมชาติ กัปปะหะ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:/Party_pic/P_22.png",
+                    "score": "2,738",
+                    "province": "เชียงราย",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นางวันดี ราชชมภู",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:/Party_pic/P_37.png",
+                    "score": "1,216",
+                    "province": "เชียงราย",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายเสน่ห์ ปัญญาดี",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:/Party_pic/P_07.png",
+                    "score": "1,017",
+                    "province": "เชียงราย",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "3": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายฐากูร ยะแสง",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:/Party_pic/P_31.png",
+                    "score": "25,056",
+                    "province": "เชียงราย",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายวิกรม เตชะธีราวัฒน์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:/Party_pic/P_29.png",
+                    "score": "23,384",
+                    "province": "เชียงราย",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "พันตำรวจเอกรัฐพล น้อยช่างคิด",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:/Party_pic/P_37.png",
+                    "score": "15,091",
+                    "province": "เชียงราย",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายวันชัย เจียมวิจักษณ์",
+                    "party_name": "พรรคชาติไทยพัฒนา",
+                    "party_pic": "V:/Party_pic/P_18.png",
+                    "score": "14,096",
+                    "province": "เชียงราย",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายจิราวุฒิ แก้วเขื่อน",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:/Party_pic/P_07.png",
+                    "score": "10,400",
+                    "province": "เชียงราย",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "4": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาววิสาระดี เตชะธีราวัฒน์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:/Party_pic/P_29.png",
+                    "score": "39,589",
+                    "province": "เชียงราย",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายเจริญ บุญเลิศ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:/Party_pic/P_31.png",
+                    "score": "25,502",
+                    "province": "เชียงราย",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายสุรสิทธิ์ เจียมวิจักษณ์",
+                    "party_name": "พรรคชาติไทยพัฒนา",
+                    "party_pic": "V:/Party_pic/P_18.png",
+                    "score": "19,199",
+                    "province": "เชียงราย",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายทัศพงษ์ สุวรรณมงคล",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:/Party_pic/P_07.png",
+                    "score": "8,335",
+                    "province": "เชียงราย",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายสฤษฏ์ อึ้งอภินันท์",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:/Party_pic/P_32.png",
+                    "score": "7,801",
+                    "province": "เชียงราย",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "5": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายเทอดชาติ ชัยพงษ์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:/Party_pic/P_29.png",
+                    "score": "35,162",
+                    "province": "เชียงราย",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายรังสรรค์ วันไชยธนวงศ์",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:/Party_pic/P_07.png",
+                    "score": "27,073",
+                    "province": "เชียงราย",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายสิริวัฒน์ ปัญญาโสพรรณ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:/Party_pic/P_31.png",
+                    "score": "18,181",
+                    "province": "เชียงราย",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายพันธวัช ปัญญาพันธกานต์",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:/Party_pic/P_37.png",
+                    "score": "13,620",
+                    "province": "เชียงราย",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายธนพัต รักเรียน",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:/Party_pic/P_26.png",
+                    "score": "907",
+                    "province": "เชียงราย",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "6": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางจุฬาลักษณ์ ขันสุธรรม",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:/Party_pic/P_31.png",
+                    "score": "31,789",
+                    "province": "เชียงราย",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายอิทธิเดช แก้วหลวง",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:/Party_pic/P_29.png",
+                    "score": "18,027",
+                    "province": "เชียงราย",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายพีรเดช ปัญญาดี",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:/Party_pic/P_07.png",
+                    "score": "16,011",
+                    "province": "เชียงราย",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายระพิน เตมียะ",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:/Party_pic/P_37.png",
+                    "score": "9,913",
+                    "province": "เชียงราย",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "พลตรีสุวิทย์ วังยาว",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:/Party_pic/P_22.png",
+                    "score": "2,105",
+                    "province": "เชียงราย",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "7": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายพิเชษฐ์ เชื้อเมืองพาน",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:/Party_pic/P_29.png",
+                    "score": "31,588",
+                    "province": "เชียงราย",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายประหยัด เสียงดัง",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:/Party_pic/P_31.png",
+                    "score": "25,889",
+                    "province": "เชียงราย",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวมิรันตี บุญแก้ว",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:/Party_pic/P_07.png",
+                    "score": "18,153",
+                    "province": "เชียงราย",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายสัมพันธ์ เลิศนุวัฒน์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:/Party_pic/P_22.png",
+                    "score": "10,824",
+                    "province": "เชียงราย",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายบัวสอน ประชามอญ",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:/Party_pic/P_32.png",
+                    "score": "2,637",
+                    "province": "เชียงราย",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        }
+    },
+    "phayao": {
+        "1": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายธรรมนัส พรหมเผ่า",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "53,963",
+                    "province": "พะเยา",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายวิสา บุญนัดดา",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "27,862",
+                    "province": "พะเยา",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายศุภชาติ ฟองจำ",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "8,804",
+                    "province": "พะเยา",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายดีระพัฒน์ ธนนันทพันธุ์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "1,881",
+                    "province": "พะเยา",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายสุรพล เต็มสวัสดิ์",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "718",
+                    "province": "พะเยา",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "2": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายอนุรัตน์ ตันบรรจง",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "32,779",
+                    "province": "พะเยา",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "พลตำรวจตรีธรรมนูญ มั่นคง",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "30,405",
+                    "province": "พะเยา",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายวิทวัส รัชตาจ้าย",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "25,904",
+                    "province": "พะเยา",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายมานัส ทาระจีน",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "1,249",
+                    "province": "พะเยา",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายจำรัส สักลอ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "574",
+                    "province": "พะเยา",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "3": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายจีรเดช ศรีวิราช",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "34,720",
+                    "province": "พะเยา",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายอำนาจ วิชัย",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "23,624",
+                    "province": "พะเยา",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายไพโรจน์ ตันบรรจง",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "17,982",
+                    "province": "พะเยา",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายชัยประพันธ์ สิงห์ชัย",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "16,921",
+                    "province": "พะเยา",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายสมหวัง วรกิจพาณิชย์",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "666",
+                    "province": "พะเยา",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        }
+    },
+    "prachuapkhirikhan": {
+        "1": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายสังคม แดงโชติ",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "34,445",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายมนตรี ปาน้อยนนท์",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "33,216",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายภูวดล ด่านรัตนชัย",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "17,622",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายวัชรพล ปลั่งศรีสกุล",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "7,650",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายณภัทร ชุ่มจิตตรี",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "5,870",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "2": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายจักพันธ์ ปิยพรไพบูลย์",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "42,736",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายพรเทพ วิสุทธิ์วัฒนศักดิ์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "26,197",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวกัลปังหา โพธิ์เอี่ยม ฟิงเค่อ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "20,797",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายพิษณุ กล้าขาย",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "7,894",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายอุดร ออลสัน",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "4,726",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "3": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายประมวล พงศ์ถาวราเดช",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "20,444",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายสมพงค์ ทั่งศรี",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "13,950",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายอนุชา รุ่งมรกต",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "13,355",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายวนิชย์ ปักษ์กิ่งเมือง",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "13,080",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางสาวมาเรีย เผ่าประทาน",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "4,778",
+                    "province": "ประจวบคีรีขันธ์",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        }
+    }
+}

@@ -1,5 +1,8 @@
 @use 'bootstrap/scss/bootstrap' as *;
 
+*{
+     font-family: "Kanit", sans-serif;
+}
 
 html,
 body {
@@ -8,7 +11,7 @@ body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    // font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 svg {

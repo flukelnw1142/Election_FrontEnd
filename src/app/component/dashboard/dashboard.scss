@@ -9,3 +9,39 @@ path {
 path:hover {
   fill: yellow !important;  /* สี hover */
 }
+
+
+/* tooltip */
+.svg-tooltip {
+  position: fixed;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  max-width: 300px;
+}
+
+.tooltip-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.tooltip-content img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  // border:#000 1px solid;
+}
+
+.tooltip-text {
+  flex: 1;
+}

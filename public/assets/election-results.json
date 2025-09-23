@@ -1,5 +1,5 @@
 {
-    "chiangrai": {
+    "CRI": {
         "1": {
             "DISTRICT": {
                 "rank1": {
@@ -414,7 +414,7 @@
             }
         }
     },
-    "phayao": {
+    "PYO": {
         "1": {
             "DISTRICT": {
                 "rank1": {
@@ -593,7 +593,7 @@
             }
         }
     },
-    "prachuapkhirikhan": {
+    "PKN": {
         "1": {
             "DISTRICT": {
                 "rank1": {
@@ -765,6 +765,2016 @@
                     "score": "4,778",
                     "province": "ประจวบคีรีขันธ์",
                     "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        }
+    },
+    "TRT": {
+        "1": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายศักดินัย นุ่มหนู",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "44,576",
+                    "province": "ตราด",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายทินวัฒน์ เจียมอุย",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "24,090",
+                    "province": "ตราด",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายกิตติธัช ไชยอรรถ",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "18,399",
+                    "province": "ตราด",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายประทีป เลขาพันธ์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "11,356",
+                    "province": "ตราด",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายวศิน พงษ์ศิริ",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "8,275",
+                    "province": "ตราด",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        }
+    },
+    "BKK": {
+        "1": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายปารเมศ วิทยารักษ์สรรค์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "37,438",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายพลัฏฐ์ ศิริกุลพิสุทธิ์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "18,261",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวกานต์กนิษฐ์ แห้วสันตติ",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "15,289",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นางเจิมมาศ จึงเลิศศิริ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "11,544",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางสาวสุวดี พันธุ์พานิช",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "2,368",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "1",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "2": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวธิษะณา ชุณหะวัณ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "41,148",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นางสาวศิรินันท์ ศิริพานิช",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "17,908",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวลีลาวดี วัชโรบล",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "12,235",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นางสาวอรอนงค์ กาญจนชูศักดิ์",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "7,392",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางสาวพัชรินทร์ ซำศิริพงษ์",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "5,237",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "2",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "3": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายจรยุทธ จตุรพรประสิทธิ์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "33,431",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายเนวินธุ์ ช่อชัยทิพฐ์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "15,823",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวเพ็ญพิสุทธิ์ จินตโสภณ",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "14,370",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายอภิมุข ฉันทวานิช",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "10,269",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายปรัชญา อึ้งรังษี",
+                    "party_name": "พรรคชาติพัฒนากล้า",
+                    "party_pic": "V:\\party_pic\\P_14.png",
+                    "score": "2,253",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "3",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "4": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายภัณฑิล น่วมเจิม",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "33,381",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายพงศกร ขวัญเมือง",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "14,908",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายเขตรัฐ เหล่าธรรมทัศน์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "12,992",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายนวธันย์ ธวัชวงศ์เดชากุล",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "10,901",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางกรณิศ งามสุคนธ์รัตนา",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "9,643",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "4",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "5": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายเฉลิมชัย กุลาเลิศ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "47,147",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นางสาวภรณี วัฒนโชติ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "15,886",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายขจรศักดิ์ ประดิษฐาน",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "15,443",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายประเดิมชัย บุญช่วยเหลือ",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "9,693",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางสาวสุภัสสรา ธงไชย",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "1,835",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "5",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "6": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายกัณตภณ ดวงอัมพร",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "46,082",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นางสาวอรพินทร์ เพชรทัต",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "24,040",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายภัทร ภมรมนตรี",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "16,718",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายธนา ชีรวินิจ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "3,966",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางสาวภาดาท์ วรกานนท์",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "3,361",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "6",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "7": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวภัสริน รามวงศ์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "45,050",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายชื่นชอบ คงอุดม",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "24,882",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายรัฐพงศ์ ระหงษ์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "17,266",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายภูเบศร์ อภัยวงศ์",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "2,283",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "ร้อยตำรวจเอกวัฒนรักษ์ อำนรรฆสรเดช",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "1,296",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "7",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "8": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายชยพล สท้อนดี",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "40,011",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "8",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายสุรชาติ เทียนทอง",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "25,174",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "8",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวอรัญญา มณีแจ่ม",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "18,207",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "8",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "พลตำรวจตรีวิชัย สังข์ประไพ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "8,261",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "8",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายรังสรรค์ กียปัจจ์",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "5,431",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "8",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "9": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายศุภณัฐ มีนชัยนันท์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "50,132",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "9",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายอนุสรณ์ ปั้นทอง",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "20,573",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "9",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวพัชรนันท์ โกศลสมบัตินนท์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "18,866",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "9",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายอนันตชาติ บัวสุวรรณ์",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "2,475",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "9",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางสาวแวววรรณ ก้องไตรภพ",
+                    "party_name": "พรรคชาติพัฒนากล้า",
+                    "party_pic": "V:\\party_pic\\P_14.png",
+                    "score": "2,415",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "9",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "10": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายเอกราช อุดมอำนวย",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "38,313",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "10",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายการุณ โหสกุล",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "22,492",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "10",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายสุธนพจน์ กิจธนาภิทักษ์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "14,745",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "10",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นางสาวณัฐวรินธร บวรภัควุฒิสิริ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "11,065",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "10",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายธัญญ์นิธิ ชวรัตน์นิธิโชติ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "9,545",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "10",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "11": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวศศินันท์ ธรรมนิฐินันท์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "36,985",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "11",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายสมชาย เวสารัชตระกูล",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "22,242",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "11",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายเอกภพ เหลืองประเสริฐ",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "14,645",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "11",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายเอกภาพ หงสกุล",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "14,325",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "11",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายสุภดิช อากาศฤกษ์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "7,658",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "11",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "12": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายภูริวรรธก์ ใจสำราญ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "45,797",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "12",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายญาณกิตติ์ ห่วงทรัพย์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "18,633",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "12",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายศรราม ภูมิไชย",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "13,608",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "12",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นางสาวปราณี เชื้อเกตุ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "12,405",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "12",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางสาวนพวรรณ หัวใจมั่น",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "5,245",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "12",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "13": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายธนเดช เพ็งสุข",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "43,186",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "13",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นางสาวสกาวใจ พูนสวัสดิ์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "22,312",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "13",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายศุกล กุลสิงห์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "17,591",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "13",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายแทนคุณ จิตต์อิสระ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "5,380",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "13",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายกษิดิ์เดช ชุติมันต์",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "2,378",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "13",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "14": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวสิริลภัส กองตระการ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "42,187",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "14",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นางสาวฐิติภัสร์ โชติเดชาชัยนันต์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "29,075",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "14",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายพงศกร รัตนเรืองวัฒนา",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "17,512",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "14",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายตรีรัตน์ ศิริจันทโรภาส",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "1,884",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "14",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายประพฤติ ฉัตรประภาชัย",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "1,811",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "14",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "15": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายวิทวัส ติชะวาณิชย์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "35,904",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "15",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายพลภูมิ วิภัติภูมิประเทศ",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "28,121",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "15",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวกาญจนา ภวัครานนท์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "15,111",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "15",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายแมน เจริญวัลย์",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "6,613",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "15",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายพันธ์พิสุทธิ์ นุราช",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "2,311",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "15",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "16": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวพิมพ์กาญจน์ กีรติวิราปกรณ์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "40,129",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "16",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายจิรายุ ห่วงทรัพย์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "27,111",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "16",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวเกศกานดา อินช่วย",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "12,784",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "16",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายณัฐนันท์ กัลยาศิริ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "12,357",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "16",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางปิยะนุช จงบรรเจิด",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "924",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "16",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "17": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายวีรวุธ รักเที่ยง",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "30,439",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "17",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายไพฑูรย์ อิสระเสรีพงษ์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "19,155",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "17",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายศิริพงษ์ รัสมี",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "18,034",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "17",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายฤกษ์อารี นานา",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "6,340",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "17",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายฮาซัน วันนุ",
+                    "party_name": "พรรคชาติไทยพัฒนา",
+                    "party_pic": "V:\\party_pic\\P_18.png",
+                    "score": "2,930",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "17",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "18": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายธีรัจชัย พันธุมาศ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "34,461",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "18",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายไพโรจน์ อิสระเสรีพงษ์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "16,394",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "18",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายพีระพงษ์ รัสมี",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "13,618",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "18",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายวุฒิภัทร คำประกอบ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "8,056",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "18",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายอนันต์ ฤกษ์ดี",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "1,720",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "18",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "19": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายกันต์พงษ์ ประยูรศักดิ์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "41,841",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "19",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายวิชาญ มีนชัยนันท์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "26,670",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "19",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายอรรถวิทย์ เซะวิเศษ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "17,176",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "19",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นางนาถยา แดงบุหงา",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "3,411",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "19",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายสุนันท์ มีนมณี",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "2,144",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "19",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "20": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวธีรรัตน์ สำเร็จวาณิชย์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "34,749",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "20",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายชุมพล หลักคำ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "34,745",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "20",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายรณชัย สังฆมิตกล",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "9,446",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "20",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายสุพจน์ ฤกษ์ดี",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "1,501",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "20",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายเอกฤทธิ เจียกขจร",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "1,017",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "20",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "21": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายณัฐพงศ์ เปรมพูลสวัสดิ์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "44,959",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "21",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายกิตพล เชิดชูกิจกุล",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "16,496",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "21",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายอรรฆรัตน์ นิติพน",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "14,694",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "21",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายประสิทธิ์ มะหะหมัด",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "13,518",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "21",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางสกุลรัตน์ ทิพย์วรรณงาม",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "1,010",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "21",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "22": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายสุภกร ตันติไพบูลย์ธนะ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "43,083",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "22",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายพงศ์พล ยอดเมืองเจริญ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "16,377",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "22",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายธกร เลาหพงศ์ชนะ",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "13,466",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "22",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "ร้อยตำรวจตรีมณฑล โพธิ์คาย",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "7,283",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "22",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายจักรวี วิสุทธิผล",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "6,526",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "22",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "23": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายปิยรัฐ จงเทพ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "47,225",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "23",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นางสาวอัยรดา บำรุงรักษ์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "17,956",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "23",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายกวีวงศ์ อยู่วิจิตร",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "17,100",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "23",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายปณิธาน ประจวบเหมาะ",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "5,308",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "23",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายสุทธิ ปัญญาสกุลวงศ์",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "4,547",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "23",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "24": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายเท่าพิภพ ลิ้มจิตรกร",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "48,317",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "24",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นางสาวศิลัมพา เลิศนุวัฒน์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "18,320",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "24",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายศิลปวิชญ์ น้อยสมมิตร",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "17,316",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "24",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นางสาวศิริภา อินทวิเชียร",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "6,284",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "24",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายศันสนะ สุริยะโยธิน",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "2,033",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "24",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "25": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวแอนศิริ วลัยกนก",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "35,623",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "25",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายกิตติพล รวยฟูพันธ์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "28,189",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "25",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายทศพร ทองศิริ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "12,264",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "25",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายชยิน พึ่งสาย",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "5,517",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "25",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายระพีพัฒน์ สุเมธโชติเมธา",
+                    "party_name": "พรรคพลังประชารัฐ",
+                    "party_pic": "V:\\party_pic\\P_37.png",
+                    "score": "1,808",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "25",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "26": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายไชยามพวาน มั่นเพียรจิตต์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "46,570",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "26",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายศรัณยสัณฑ์ วีรกุลสุนทร",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "19,813",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "26",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายมินทร์ ลักษิตานนท์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "13,150",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "26",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายสุวัฒน์ ม่วงศิริ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "8,892",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "26",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายธวัชชัย ทองสิมา",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "3,722",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "26",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "27": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายณัฐชา บุญไชยอินสวัสดิ์",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "50,035",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "27",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายสากล ม่วงศิริ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "23,351",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "27",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวกมลพัฒน์ ปุงบางกะดี่",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "13,593",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "27",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายภาสกร เงินเจริญกุล",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "6,973",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "27",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายเศรษฐสรร จันทร์ทอง",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "959",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "27",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "28": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวรักชนก ศรีนอก",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "47,592",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "28",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายวัน อยู่บำรุง",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "26,479",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "28",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาววณิชชา ม่วงศิริ",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "11,405",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "28",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายทวนชัย นิยมชาติ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "10,579",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "28",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายสมพร คงโครัด",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "2,041",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "28",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "29": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวทิสรัตน์ เลาหพล",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "47,652",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "29",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายกฤชนนท์ อัยยปัญญา",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "23,541",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "29",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายเกรียงไกร จงเจริญ",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "15,700",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "29",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "พันตำรวจเอกทศพล โชติคุตร์",
+                    "party_name": "พรรคชาติพัฒนากล้า",
+                    "party_pic": "V:\\party_pic\\P_14.png",
+                    "score": "5,772",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "29",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายวัชระ เพชรทอง",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "5,045",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "29",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "30": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายธัญธร ธนินวัฒนาธร",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "49,770",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "30",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นางสุภาภรณ์ คงวุฒิปัญญา",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "24,520",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "30",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นางสาวศศิกานต์ วัฒนะจันทร์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "15,783",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "30",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายธนูชยานันท์ ปั้นบริสุทธิ์",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "2,633",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "30",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายพีร์ โรจนดารา",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "2,356",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "30",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "31": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายสิริน สงวนสิน",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "46,405",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "31",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายประเวช แสวงสุข",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "23,617",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "31",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายจิรวัฒน์ อรัณยกานนท์",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "18,479",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "31",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายกันตพงศ์ ดีชัยยะ",
+                    "party_name": "พรรคไทยสร้างไทย",
+                    "party_pic": "V:\\party_pic\\P_32.png",
+                    "score": "4,642",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "31",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายพลวิทย์ เจริญพงศ์",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "3,591",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "31",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "32": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นางสาวปวิตรา จิตตกิจ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "43,115",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "32",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นายอารุม ตุ้มน้อย",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "18,736",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "32",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายอิทธิพัทธ์ เศรษฐยุกานนท์",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "14,888",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "32",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายวิลาศ จันทร์พิทักษ์",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "11,633",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "32",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นางสาวอัชญา จุลชาต",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "1,597",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "32",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                }
+            }
+        },
+        "33": {
+            "DISTRICT": {
+                "rank1": {
+                    "name": "นายพงศ์พันธ์ ยอดเมืองเจริญ",
+                    "party_name": "พรรคก้าวไกล",
+                    "party_pic": "V:\\party_pic\\P_31.png",
+                    "score": "45,189",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "33",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank2": {
+                    "name": "นางรัดเกล้า อินทวงศ์  สุวรรณคีรี",
+                    "party_name": "พรรครวมไทยสร้างชาติ",
+                    "party_pic": "V:\\party_pic\\P_22.png",
+                    "score": "18,628",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "33",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank3": {
+                    "name": "นายชนินทร์ รุ่งแสง",
+                    "party_name": "พรรคประชาธิปัตย์",
+                    "party_pic": "V:\\party_pic\\P_26.png",
+                    "score": "15,817",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "33",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank4": {
+                    "name": "นายธิติวัฐ อดิศรพันธุ์กุล",
+                    "party_name": "พรรคเพื่อไทย",
+                    "party_pic": "V:\\party_pic\\P_29.png",
+                    "score": "15,053",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "33",
+                    "counted": "95",
+                    "map": "...",
+                    "bkg": "..."
+                },
+                "rank5": {
+                    "name": "นายจักรพันธ์ พรนิมิตร",
+                    "party_name": "พรรคภูมิใจไทย",
+                    "party_pic": "V:\\party_pic\\P_07.png",
+                    "score": "4,100",
+                    "province": "กรุงเทพมหานคร",
+                    "zone": "33",
                     "counted": "95",
                     "map": "...",
                     "bkg": "..."

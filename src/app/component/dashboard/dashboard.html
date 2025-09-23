@@ -1,2 +1,19 @@
-<h2>แผนที่ประเทศไทย</h2>
-<div #svgContainer [innerHTML]="svgContent | safe: 'html'" (click)="onSvgClick($event)"></div>
+<h2>แผนที่ประเทศไทย
+    <!-- <img src="/background/cat.png"> -->
+</h2>
+<!-- <div #svgContainer [innerHTML]="svgContent | safe: 'html'" (click)="onSvgClick($event)"></div> -->
+
+
+
+<div #svgContainer [innerHTML]="svgContent | safe: 'html'" (click)="onSvgClick($event)" (mousemove)="onSvgHover($event)"
+    (mouseleave)="hideTooltip()"></div>
+
+<div class="svg-tooltip" *ngIf="tooltipVisible" [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
+    <div class="tooltip-content">
+        <img [src]="tooltipImageUrl" alt="รูปภาพ" />
+        <div class="tooltip-text">
+            <strong>{{ tooltipText }}</strong><br />
+            <div class="tooltip-subtext" [innerHTML]="tooltipSubText"></div>
+        </div>
+    </div>
+</div>

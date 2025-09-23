@@ -520,6 +520,14 @@ export class Dashboard implements OnInit {
                   ' fill: ' + this.getColor(allWinners[id]) + ' !important;';
                 path.setAttribute('style', styleStr);
                 text.setAttribute('style', styleText);
+                // 🔥 ลบ stroke แบบ DOM ด้วย
+                // path.removeAttribute('stroke');
+                // path.removeAttribute('stroke-width');
+
+                // path.style.stroke = 'none';
+                // path.style.strokeWidth = '0';
+                path.style.setProperty('stroke', 'none', 'important');
+                path.style.setProperty('stroke-width', '0', 'important');
               }
             }
           }
@@ -615,8 +623,21 @@ export class Dashboard implements OnInit {
 
   onSvgClick(event: MouseEvent) {
     const target = event.target as SVGElement;
-    if (target.tagName === 'path') {
-      const parent = target.parentNode as SVGElement;
+
+    // รองรับทั้ง <path> และ <text> หรือ <tspan>
+    if (
+      target.tagName === 'path' ||
+      target.tagName === 'text' ||
+      target.tagName === 'tspan'
+    ) {
+      let parent = target.parentNode as SVGElement;
+
+      // ในบางกรณี <tspan> อยู่ใต้ <text> แล้วอยู่ใต้ <g>
+      if (target.tagName === 'tspan') {
+        const textEl = parent;
+        parent = textEl?.parentNode as SVGElement;
+      }
+
       if (
         parent &&
         parent.tagName === 'g' &&

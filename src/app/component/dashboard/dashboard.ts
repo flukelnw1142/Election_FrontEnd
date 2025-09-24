@@ -15,6 +15,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
+import { DashboardService } from './service/dashboardservice';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,38 +29,23 @@ export class Dashboard implements OnInit {
 
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
 
-  // private provinceCodeMap: { [province: string]: string } = {
-  //   chiangrai: 'CRI',
-  //   phayao: 'PYO',
-  //   prachuapkhirikhan: 'PKN',
-  //   trat: 'TRT',
-  //   bangkok: 'BKK',
-  // };
-
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
 
   constructor(
-    private electionService: ElectionService,
+    private _dashboard: DashboardService,
     private http: HttpClient,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  // ngAfterViewChecked(): void {
-  //   if (this.svgContent && this.svgContent !== this.prevSvgContent) {
-  //     this.prevSvgContent = this.svgContent;
-  //     // เรียก initializeZoom หลัง view เสร็จแบบไม่ทำให้ loop
-  //     setTimeout(() => {
-  //       this.initializeZoom();
-  //     }, 0);
-  //   }
-  // }
-
   allElectionData: any = {};
 
   ngOnInit(): void {
-    this.http.get('/assets/election-results.json').subscribe((data) => {
-      this.allElectionData = data;
+    // this.http.get('/assets/election-results.json').subscribe((data) => {
+    //   this.allElectionData = data;
+    // });
+    this._dashboard.getDistrictWinners().subscribe((data) => {
+      console.log('API data:', data);
     });
     // const provinces = [
     //   'CRI', //เชียงราย

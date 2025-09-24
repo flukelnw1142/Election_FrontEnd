@@ -5,18 +5,16 @@ import {
   PLATFORM_ID,
   ElementRef,
   ViewChild,
-  AfterViewInit,
   ChangeDetectorRef,
 } from '@angular/core';
-import { ElectionService } from '../../service/election.service';
-import { SafePipe } from '../../pipes/safe.pipe';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { firstValueFrom, forkJoin } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { NgZone } from '@angular/core';
 
 interface Winner {
   party: string;
@@ -55,26 +53,70 @@ export class Dashboard implements OnInit {
     private http: HttpClient,
     private cd: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
+    private zone: NgZone,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
 
+  // async ngOnInit(): Promise<void> {
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     try {
+  //       // ใช้ Promise.all เพื่อรอทั้งสอง request พร้อมกัน
+  //       const [winners, svgText] = await Promise.all([
+  //         firstValueFrom(this._dashboard.getDistrictWinners()),
+  //         firstValueFrom(
+  //           this.http.get('/assets/thailand.svg', { responseType: 'text' })
+  //         ),
+  //       ]);
+
+  //       console.log(winners);
+  //       this.allWinners = winners;
+  //       this.settingSvg(svgText);
+  //     } catch (error) {
+  //       console.error('Error loading data:', error);
+  //     }
+  //   }
+  // }
+
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
       try {
-        // ใช้ Promise.all เพื่อรอทั้งสอง request พร้อมกัน
-        const [winners, svgText] = await Promise.all([
-          firstValueFrom(this._dashboard.getDistrictWinners()),
-          firstValueFrom(
-            this.http.get('/assets/thailand.svg', { responseType: 'text' })
-          ),
-        ]);
+        // ✅ 1. ดึงข้อมูลจาก API ก่อน
+        const winners = await firstValueFrom(
+          this._dashboard.getDistrictWinners()
+        );
 
-        console.log(winners);
-        this.allWinners = winners;
-        this.settingSvg(svgText);
+        console.log('1', typeof winners);
+
+        if (winners && Object.keys(winners).length > 0) {
+          this.allWinners = winners;
+
+          const svgText = await firstValueFrom(
+            this.http.get('/assets/thailand.svg', { responseType: 'text' })
+          );
+          this.settingSvg(svgText);
+        }
+
+        // ✅ 2. Subscribe ต่อ SignalR สำหรับอัปเดตภายหลัง
+        this._dashboard.winners$.subscribe((winners) => {
+          console.log('📡 Received signalR update:', winners);
+          console.log('2', typeof winners);
+
+          if (winners && Object.keys(winners).length > 0) {
+            this.zone.run(() => {
+              this.allWinners = winners;
+
+              firstValueFrom(
+                this.http.get('/assets/thailand.svg', { responseType: 'text' })
+              ).then((svgText) => {
+                this.settingSvg(svgText);
+                this.cd.detectChanges();
+              });
+            });
+          }
+        });
       } catch (error) {
         console.error('Error loading data:', error);
       }
@@ -101,6 +143,7 @@ export class Dashboard implements OnInit {
     });
 
     for (const id in this.allWinners) {
+      console.log('id', id);
       const g = svg.querySelector('#' + id);
       if (g) {
         const path = g.querySelector('path');
@@ -247,47 +290,6 @@ export class Dashboard implements OnInit {
       this.tooltipVisible = false;
     }
   }
-
-  // onSvgHover(event: MouseEvent): void {
-  //   const target = event.target as SVGElement;
-
-  //   if (
-  //     target instanceof SVGPathElement ||
-  //     target instanceof SVGTextElement ||
-  //     (target instanceof SVGTSpanElement &&
-  //       /^\d+$/.test(target.textContent || ''))
-  //   ) {
-  //     let parent = target.parentElement;
-
-  //     if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
-  //       parent = parent.parentElement;
-  //     }
-
-  //     if (parent instanceof SVGGElement && parent.id.includes('_')) {
-  //       console.log('parent.id >>>', parent.id);
-  //       const zoneId = parent.id;
-  //       console.log('allWinners >>>', this.allWinners[zoneId]);
-  //       console.log('areaID >>>', this.allWinners[zoneId].areaID);
-  //       const areaID = this.allWinners[zoneId].areaID;
-  //       this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
-  //         this.detailDistrict = data;
-  //         console.log(data);
-
-  //         this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
-  //       });
-  //     } else {
-  //       this.tooltipText = 'จังหวัด: ไม่ทราบ';
-  //       this.tooltipSubText = '';
-  //       this.tooltipImageUrl = '/background/profile.png';
-  //     }
-
-  //     this.tooltipX = event.clientX + 10;
-  //     this.tooltipY = event.clientY + 10;
-  //     this.tooltipVisible = true;
-  //   } else {
-  //     this.tooltipVisible = false;
-  //   }
-  // }
 
   hideTooltip() {
     this.tooltipVisible = false;

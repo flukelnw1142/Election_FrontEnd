@@ -1,20 +1,26 @@
-<!-- <div class="svg-container" *ngIf="svgContent">
-    <div #svgContainer [innerHTML]="svgContent" (click)="onSvgClick($event)"
-        (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()">
-    </div>
-</div> -->
-
 <div class="svg-container" *ngIf="true">
     <div #svgContainer (click)="onSvgClick($event)" (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()">
     </div>
 </div>
 
+
+
 <div class="svg-tooltip" *ngIf="tooltipVisible" [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
     <div class="tooltip-content">
-        <img [src]="tooltipImageUrl" alt="รูปภาพ" />
         <div class="tooltip-text">
-            <strong>{{ tooltipText }}</strong><br />
-            <div class="tooltip-subtext" [innerHTML]="tooltipSubText"></div>
+            <p>{{ tooltipText }}</p>
+            <div class="tooltip-subtext">
+                <div *ngFor="let candidate of detailDistrict">
+                    <!-- <img [src]="getCandidateImage(candidate.logoURL)" alt="{{ candidate.name }}"
+                        style="width: 30px; height: 30px; margin-right: 8px; border-radius: 50%; object-fit: cover;" /> -->
+                    <img [src]="'/background/cat.png'" alt="{{ candidate.name }}" />
+                    <div>
+                        <p>{{ candidate.party_name }}</p>
+                        <p>{{ candidate.name }}</p>
+                        <p>คะแนน: {{ candidate.score | number }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

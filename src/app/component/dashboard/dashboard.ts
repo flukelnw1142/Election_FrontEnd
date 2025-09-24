@@ -18,6 +18,23 @@ import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
+interface Winner {
+  party: string;
+  areaID: number;
+  name: string;
+  score: number;
+}
+
+interface Candidate {
+  logoURL: string;
+  name: string;
+  party_name: string;
+  score: number;
+  province: string;
+  zone: number;
+  counted: number;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
@@ -25,9 +42,9 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   imports: [CommonModule, HttpClientModule],
 })
 export class Dashboard implements OnInit {
-  // svgContent: string = '';
   svgContent: SafeHtml = '';
   prevSvgContent = '';
+  detailDistrict: Candidate[] = [];
 
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
 
@@ -42,7 +59,7 @@ export class Dashboard implements OnInit {
   ) {}
 
   allElectionData: any = {};
-  allWinners: { [id: string]: string } = {};
+  allWinners: { [id: string]: Winner } = {};
 
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
@@ -109,66 +126,14 @@ export class Dashboard implements OnInit {
       }
     }
 
-    // this.svgContent = (svg.outerHTML);
-    console.log(svg.outerHTML);
     this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg.outerHTML);
     hiddenDiv.remove();
     this.cd.detectChanges();
 
-    // requestAnimationFrame(() => {
-    //   this.initializeZoom();
-    // });
-
-    // setTimeout(() => {
-    // this.initializeZoom();
-    // });
-
-    // ล้าง container แล้วแปะ SVG
     const container = this.svgContainer.nativeElement;
     container.innerHTML = '';
     container.appendChild(svg);
   }
-
-  // initializeZoom() {
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     if (!this.svgContainer) {
-  //       console.warn('svgContainer ยังไม่พร้อม');
-  //       return;
-  //     }
-  //     const svgEl = this.svgContainer.nativeElement.querySelector('svg');
-  //     if (!svgEl) {
-  //       console.warn('SVG ยังไม่ถูก render ใน container');
-  //       return;
-  //     }
-  //     // ... โค้ด zoom ...
-  //   }
-  // }
-
-  // initializeZoom() {
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     const svgEl = this.svgContainer.nativeElement.querySelector('svg');
-
-  //     // ถ้า SVG ยังไม่ถูก render จริง ให้ return ทันที
-  //     if (!svgEl) {
-  //       console.warn('SVG ยังไม่มา รอ render ก่อน');
-  //       return;
-  //     }
-
-  //     const svg = d3.select(svgEl);
-  //     const zoom = d3
-  //       .zoom<any, unknown>()
-  //       .scaleExtent([1, 8])
-  //       .on('zoom', (event: d3.D3ZoomEvent<any, any>) => {
-  //         d3.select('#map_provinces').attr(
-  //           'transform',
-  //           event.transform.toString()
-  //         );
-  //       });
-
-  //     svg.call(zoom);
-  //     this.zoomBehavior = zoom;
-  //   }
-  // }
 
   zoomIn() {
     if (isPlatformBrowser(this.platformId) && this.zoomBehavior) {
@@ -212,7 +177,8 @@ export class Dashboard implements OnInit {
     if (
       target.tagName === 'path' ||
       target.tagName === 'text' ||
-      target.tagName === 'tspan'
+      (target instanceof SVGTSpanElement &&
+        /^\d+$/.test(target.textContent || ''))
     ) {
       let parent = target.parentNode as SVGElement;
 
@@ -249,60 +215,79 @@ export class Dashboard implements OnInit {
     if (
       target instanceof SVGPathElement ||
       target instanceof SVGTextElement ||
-      target instanceof SVGTSpanElement
+      (target instanceof SVGTSpanElement &&
+        /^\d+$/.test((target.textContent || '').trim()))
     ) {
       let parent = target.parentElement;
-
       if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
         parent = parent.parentElement;
       }
 
       if (parent instanceof SVGGElement && parent.id.includes('_')) {
-        console.log('>>>', parent.id);
         const zoneId = parent.id;
-        console.log('>>>', this.allWinners[zoneId]);
-        const electionData = this.allElectionData;
-        const [provinceCode, zoneNumber] = zoneId.split('_');
+        console.log('zoneId', zoneId);
+        const areaID = this.allWinners[zoneId]?.areaID;
+        console.log('areaID', areaID);
 
-        // ตรวจสอบว่าข้อมูลมีครบก่อน
-        if (
-          electionData &&
-          electionData[provinceCode] &&
-          electionData[provinceCode][zoneNumber] &&
-          electionData[provinceCode][zoneNumber].DISTRICT
-        ) {
-          const districtData = electionData[provinceCode][zoneNumber].DISTRICT;
+        if (!areaID) return;
 
-          console.log('ข้อมูลทั้งหมดของ DISTRICT', districtData);
+        this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
+          console.log(data);
+          this.detailDistrict = data;
 
-          // เข้าถึงแต่ละอันดับก็ได้ เช่น:
-          const rank1 = districtData.rank1;
-
-          // เอาไปแสดงใน tooltip ได้
-          this.tooltipText = `${rank1.province} เขต${rank1.zone}`;
-          this.tooltipSubText = `${rank1.name} <br> ${rank1.party_name} <br><h5> ${rank1.score}</h5>`;
-          // this.tooltipImageUrl = `/assets/party-pic/${rank1.party_pic
-          //   .split('/')
-          //   .pop()}`;
-          this.tooltipImageUrl = `/background/cat.png`;
-        } else {
-          this.tooltipText = 'ไม่พบข้อมูล';
-          this.tooltipSubText = '';
-          this.tooltipImageUrl = '/background/profile.png';
-        }
+          this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
+          this.tooltipX = event.clientX + 10;
+          this.tooltipY = event.clientY + 10;
+          this.tooltipVisible = true; // << ย้ายมาที่นี่
+        });
       } else {
-        this.tooltipText = 'จังหวัด: ไม่ทราบ';
-        this.tooltipSubText = '';
-        this.tooltipImageUrl = 'assets/images/default.jpg';
+        this.tooltipVisible = false;
       }
-
-      this.tooltipX = event.clientX + 10;
-      this.tooltipY = event.clientY + 10;
-      this.tooltipVisible = true;
     } else {
       this.tooltipVisible = false;
     }
   }
+
+  // onSvgHover(event: MouseEvent): void {
+  //   const target = event.target as SVGElement;
+
+  //   if (
+  //     target instanceof SVGPathElement ||
+  //     target instanceof SVGTextElement ||
+  //     (target instanceof SVGTSpanElement &&
+  //       /^\d+$/.test(target.textContent || ''))
+  //   ) {
+  //     let parent = target.parentElement;
+
+  //     if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
+  //       parent = parent.parentElement;
+  //     }
+
+  //     if (parent instanceof SVGGElement && parent.id.includes('_')) {
+  //       console.log('parent.id >>>', parent.id);
+  //       const zoneId = parent.id;
+  //       console.log('allWinners >>>', this.allWinners[zoneId]);
+  //       console.log('areaID >>>', this.allWinners[zoneId].areaID);
+  //       const areaID = this.allWinners[zoneId].areaID;
+  //       this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
+  //         this.detailDistrict = data;
+  //         console.log(data);
+
+  //         this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
+  //       });
+  //     } else {
+  //       this.tooltipText = 'จังหวัด: ไม่ทราบ';
+  //       this.tooltipSubText = '';
+  //       this.tooltipImageUrl = '/background/profile.png';
+  //     }
+
+  //     this.tooltipX = event.clientX + 10;
+  //     this.tooltipY = event.clientY + 10;
+  //     this.tooltipVisible = true;
+  //   } else {
+  //     this.tooltipVisible = false;
+  //   }
+  // }
 
   hideTooltip() {
     this.tooltipVisible = false;

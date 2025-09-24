@@ -1,15 +1,13 @@
-<!-- <h2>แผนที่ประเทศไทย</h2> -->
-<!-- <div class="svg-container">
-    <div #svgContainer [innerHTML]="svgContent | safe: 'html'" (click)="onSvgClick($event)"
-        (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()"></div>
-</div> -->
-<!-- dashboard.html -->
-<div class="svg-container" *ngIf="svgContent">
-    <div #svgContainer [innerHTML]="svgContent | safe: 'html'" (click)="onSvgClick($event)"
+<!-- <div class="svg-container" *ngIf="svgContent">
+    <div #svgContainer [innerHTML]="svgContent" (click)="onSvgClick($event)"
         (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()">
     </div>
-</div>
+</div> -->
 
+<div class="svg-container" *ngIf="true">
+    <div #svgContainer (click)="onSvgClick($event)" (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()">
+    </div>
+</div>
 
 <div class="svg-tooltip" *ngIf="tooltipVisible" [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
     <div class="tooltip-content">

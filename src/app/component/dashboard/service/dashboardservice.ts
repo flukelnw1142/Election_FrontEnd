@@ -41,7 +41,7 @@ export class DashboardService {
 
   private registerOnServerEvents(): void {
     this.hubConnection.on('ReceiveElectionUpdate', (data) => {
-      console.log('SignalR winners received:', JSON.parse(data));
+      // console.log('SignalR winners received:', JSON.parse(data));
       this.winnersSubject.next(JSON.parse(data));
     });
   }

@@ -25,12 +25,11 @@ interface Winner {
 
 interface Candidate {
   logoURL: string;
-  name: string;
+  fullname: string;
   party_name: string;
-  score: number;
+  totalVotes: number;
   province: string;
   zone: number;
-  counted: number;
 }
 
 @Component({
@@ -88,7 +87,7 @@ export class Dashboard implements OnInit {
           this._dashboard.getDistrictWinners()
         );
 
-        console.log('1', typeof winners);
+        // console.log('1', typeof winners);
 
         if (winners && Object.keys(winners).length > 0) {
           this.allWinners = winners;
@@ -101,8 +100,9 @@ export class Dashboard implements OnInit {
 
         // ✅ 2. Subscribe ต่อ SignalR สำหรับอัปเดตภายหลัง
         this._dashboard.winners$.subscribe((winners) => {
-          console.log('📡 Received signalR update:', winners);
-          console.log('2', typeof winners);
+          console.log('📡 Received signalR update');
+          // console.log('📡 Received signalR update:', winners);
+          // console.log('2', typeof winners);
 
           if (winners && Object.keys(winners).length > 0) {
             this.zone.run(() => {
@@ -125,7 +125,7 @@ export class Dashboard implements OnInit {
 
   settingSvg(svgText: string) {
     console.log('>> SVG Loaded');
-    console.log(this.allWinners);
+    // console.log(this.allWinners);
 
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
@@ -143,7 +143,7 @@ export class Dashboard implements OnInit {
     });
 
     for (const id in this.allWinners) {
-      console.log('id', id);
+      // console.log('id', id);
       const g = svg.querySelector('#' + id);
       if (g) {
         const path = g.querySelector('path');
@@ -270,12 +270,12 @@ export class Dashboard implements OnInit {
         const zoneId = parent.id;
         console.log('zoneId', zoneId);
         const areaID = this.allWinners[zoneId]?.areaID;
-        console.log('areaID', areaID);
+        // console.log('areaID', areaID);
 
         if (!areaID) return;
 
         this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
-          console.log(data);
+          // console.log(data);
           this.detailDistrict = data;
 
           this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;

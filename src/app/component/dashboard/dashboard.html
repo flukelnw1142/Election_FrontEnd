@@ -1,6 +1,10 @@
-<div class="svg-container" *ngIf="true">
+<!-- <div class="svg-container" *ngIf="true">
     <div #svgContainer (click)="onSvgClick($event)" (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()">
     </div>
+</div> -->
+
+<div #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
+    <div [innerHTML]="svgContent"></div> <!-- Angular จะ render SVG ให้ -->
 </div>
 
 
@@ -13,11 +17,11 @@
                 <div *ngFor="let candidate of detailDistrict">
                     <!-- <img [src]="getCandidateImage(candidate.logoURL)" alt="{{ candidate.name }}"
                         style="width: 30px; height: 30px; margin-right: 8px; border-radius: 50%; object-fit: cover;" /> -->
-                    <img [src]="'/background/cat.png'" alt="{{ candidate.name }}" />
+                    <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" />
                     <div>
                         <p>{{ candidate.party_name }}</p>
-                        <p>{{ candidate.name }}</p>
-                        <p>คะแนน: {{ candidate.score | number }}</p>
+                        <p>{{ candidate.fullname }}</p>
+                        <p>คะแนน: {{ candidate.totalVotes | number }}</p>
                     </div>
                 </div>
             </div>

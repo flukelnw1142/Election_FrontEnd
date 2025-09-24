@@ -178,7 +178,7 @@ export class Dashboard implements OnInit {
       target.tagName === 'path' ||
       target.tagName === 'text' ||
       (target instanceof SVGTSpanElement &&
-        /^\d+$/.test(target.textContent || ''))
+        /^\d+$/.test((target.textContent || '').trim()))
     ) {
       let parent = target.parentNode as SVGElement;
 

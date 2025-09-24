@@ -4,7 +4,9 @@
 </div> -->
 
 <div #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
+
     <div [innerHTML]="svgContent"></div> <!-- Angular จะ render SVG ให้ -->
+
 </div>
 
 

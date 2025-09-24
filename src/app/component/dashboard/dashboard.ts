@@ -58,6 +58,7 @@ export class Dashboard implements OnInit {
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
+  private isSvgInitialized = false;
 
   // async ngOnInit(): Promise<void> {
   //   if (isPlatformBrowser(this.platformId)) {
@@ -95,7 +96,9 @@ export class Dashboard implements OnInit {
           const svgText = await firstValueFrom(
             this.http.get('/assets/thailand.svg', { responseType: 'text' })
           );
-          this.settingSvg(svgText);
+          // this.settingSvg(svgText);
+          await this.settingSvg(svgText, true); // ทำ animation ครั้งแรก
+          this.isSvgInitialized = true;
         }
 
         // ✅ 2. Subscribe ต่อ SignalR สำหรับอัปเดตภายหลัง
@@ -111,7 +114,9 @@ export class Dashboard implements OnInit {
               firstValueFrom(
                 this.http.get('/assets/thailand.svg', { responseType: 'text' })
               ).then((svgText) => {
-                this.settingSvg(svgText);
+                // this.settingSvg(svgText);
+                this.settingSvg(svgText, false); // อัปเดตสี แต่ไม่ทำ animation
+                this.cd.detectChanges();
                 this.cd.detectChanges();
               });
             });
@@ -123,27 +128,31 @@ export class Dashboard implements OnInit {
     }
   }
 
-  settingSvg(svgText: string) {
+  private delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async settingSvg(svgText: string, doAnimation = true) {
     console.log('>> SVG Loaded');
-    // console.log(this.allWinners);
+    const districtIds = Object.keys(this.allWinners);
 
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
     const svg = svgDoc.documentElement;
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
-    const hiddenDiv = document.createElement('div');
-    hiddenDiv.style.display = 'none';
-    document.body.appendChild(hiddenDiv);
-    hiddenDiv.appendChild(svg);
+    // --- เอา SVG ไปแสดงใน DOM ทันที ---
+    const container = this.svgContainer.nativeElement;
+    container.innerHTML = '';
+    container.appendChild(svg);
 
     const paths = svg.querySelectorAll('path');
     paths.forEach((p) => {
       p.style.stroke = 'none';
     });
 
-    for (const id in this.allWinners) {
-      // console.log('id', id);
+    for (let i = 0; i < districtIds.length; i++) {
+      const id = districtIds[i];
       const g = svg.querySelector('#' + id);
       if (g) {
         const path = g.querySelector('path');
@@ -165,17 +174,83 @@ export class Dashboard implements OnInit {
 
           path.style.setProperty('stroke', 'none', 'important');
           path.style.setProperty('stroke-width', '0', 'important');
+
+          if (doAnimation) {
+            path.classList.add('animated-path');
+            // รอ 20ms เพื่อให้ browser แสดง animation ทีละเขต
+            await this.delay(5);
+          }
         }
       }
     }
 
-    this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg.outerHTML);
-    hiddenDiv.remove();
     this.cd.detectChanges();
+  }
 
-    const container = this.svgContainer.nativeElement;
-    container.innerHTML = '';
-    container.appendChild(svg);
+  // settingSvg(svgText: string) {
+  //   console.log('>> SVG Loaded');
+  //   // console.log(this.allWinners);
+
+  //   const parser = new DOMParser();
+  //   const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+  //   const svg = svgDoc.documentElement;
+  //   svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+
+  //   const hiddenDiv = document.createElement('div');
+  //   hiddenDiv.style.display = 'none';
+  //   document.body.appendChild(hiddenDiv);
+  //   hiddenDiv.appendChild(svg);
+
+  //   const paths = svg.querySelectorAll('path');
+  //   paths.forEach((p) => {
+  //     p.style.stroke = 'none';
+  //   });
+
+  //   for (const id in this.allWinners) {
+  //     // console.log('id', id);
+  //     const g = svg.querySelector('#' + id);
+  //     if (g) {
+  //       const path = g.querySelector('path');
+  //       const text = g.querySelector('tspan');
+  //       if (path && text) {
+  //         let styleStr = path.getAttribute('style') || '';
+  //         let styleText = text.getAttribute('style') || '';
+  //         styleText += ' fill: #FFFFFF !important;';
+  //         styleStr = styleStr
+  //           .replace(/fill: *[^;]*;/g, '')
+  //           .replace(/stroke: *[^;]*;/g, '')
+  //           .replace(/stroke-width: *[^;]*;/g, '');
+
+  //         styleStr +=
+  //           ' fill: ' + this.getColor(this.allWinners[id]) + ' !important;';
+
+  //         path.setAttribute('style', styleStr);
+  //         text.setAttribute('style', styleText);
+
+  //         path.style.setProperty('stroke', 'none', 'important');
+  //         path.style.setProperty('stroke-width', '0', 'important');
+  //       }
+  //     }
+  //   }
+
+  //   this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg.outerHTML);
+  //   hiddenDiv.remove();
+  //   this.cd.detectChanges();
+
+  //   const container = this.svgContainer.nativeElement;
+  //   container.innerHTML = '';
+  //   container.appendChild(svg);
+
+  //   // ✅ ใส่ animation ที่นี่
+  //   this.addAnimationToSvg(svg as unknown as SVGSVGElement);
+  //   this.cd.detectChanges();
+  // }
+
+  addAnimationToSvg(svg: SVGSVGElement) {
+    const paths = svg.querySelectorAll('path');
+    paths.forEach((p) => {
+      p.classList.add('animated-path');
+    });
   }
 
   zoomIn() {

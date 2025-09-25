@@ -1,4 +1,15 @@
-<p>dashboard-v2 works!</p>
 <div class="svg-container">
-  <div [innerHTML]="svgContent"></div>
+  <div
+    [innerHTML]="svgContent"
+    (mousemove)="onSvgHover($event)"
+    (mouseleave)="hideTooltip()"
+  ></div>
+</div>
+
+<div
+  *ngIf="tooltipVisible"
+  class="custom-tooltip"
+  [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }"
+>
+  {{ tooltipText }}
 </div>

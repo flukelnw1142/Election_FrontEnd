@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Dashboard } from '../dashboard/dashboard';
 import { firstValueFrom } from 'rxjs';
 import { DashboardService } from '../dashboard/service/dashboardservice';
@@ -30,7 +30,7 @@ interface Color {
   styleUrl: './main-page.scss',
 })
 export class MainPage implements OnInit {
-  constructor(private _dashboard: DashboardService) {}
+  constructor(private _dashboard: DashboardService, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   // partySeatCountsZone: PartySeatCountZone[] = [];
   partySeatCountsList: PartySeatCountList[] = [];
@@ -39,22 +39,24 @@ export class MainPage implements OnInit {
 
   async ngOnInit(): Promise<void> {
     // ✅ 0. ดึงข้อมูลสี
-    this.partyColorMap = await firstValueFrom(this._dashboard.getPartyColors());
-    // this.partySeatCountsZone = await firstValueFrom(
-    //   this._dashboard.getPartySeatCountsZone()
-    // );
+    if (isPlatformBrowser(this.platformId)) {
+      this.partyColorMap = await firstValueFrom(this._dashboard.getPartyColors());
+      // this.partySeatCountsZone = await firstValueFrom(
+      //   this._dashboard.getPartySeatCountsZone()
+      // );
 
-    this.partySeatCountsList = await firstValueFrom(
-      this._dashboard.getPartySeatCountsList()
-    );
+      this.partySeatCountsList = await firstValueFrom(
+        this._dashboard.getPartySeatCountsList()
+      );
 
-    // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
-    this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-      return sum + p.zone_seats + p.partylist_seats;
-    }, 0);
+      // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
+      this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+        return sum + p.zone_seats + p.partylist_seats;
+      }, 0);
 
-    // console.log('partySeatCountsZone', this.partySeatCountsZone);
-    console.log('partySeatCountsList', this.partySeatCountsList);
+      // console.log('partySeatCountsZone', this.partySeatCountsZone);
+      console.log('partySeatCountsList', this.partySeatCountsList);
+    }
   }
 
   getColor(winner: any): string {

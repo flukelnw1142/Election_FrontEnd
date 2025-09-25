@@ -32,6 +32,12 @@ interface Candidate {
   zone: number;
 }
 
+interface Color {
+  ID: number;
+  PARTY_NAME: string;
+  COLOR: string;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
@@ -59,30 +65,16 @@ export class Dashboard implements OnInit {
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
   private isSvgInitialized = false;
-
-  // async ngOnInit(): Promise<void> {
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     try {
-  //       // ใช้ Promise.all เพื่อรอทั้งสอง request พร้อมกัน
-  //       const [winners, svgText] = await Promise.all([
-  //         firstValueFrom(this._dashboard.getDistrictWinners()),
-  //         firstValueFrom(
-  //           this.http.get('/assets/thailand.svg', { responseType: 'text' })
-  //         ),
-  //       ]);
-
-  //       console.log(winners);
-  //       this.allWinners = winners;
-  //       this.settingSvg(svgText);
-  //     } catch (error) {
-  //       console.error('Error loading data:', error);
-  //     }
-  //   }
-  // }
+  partyColorMap: { [partyKeyword: string]: Color } = {};
 
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
       try {
+        // ✅ 0. ดึงข้อมูลสี
+        this.partyColorMap = await firstValueFrom(
+          this._dashboard.getPartyColors()
+        );
+
         // ✅ 1. ดึงข้อมูลจาก API ก่อน
         const winners = await firstValueFrom(
           this._dashboard.getDistrictWinners()
@@ -187,65 +179,6 @@ export class Dashboard implements OnInit {
     this.cd.detectChanges();
   }
 
-  // settingSvg(svgText: string) {
-  //   console.log('>> SVG Loaded');
-  //   // console.log(this.allWinners);
-
-  //   const parser = new DOMParser();
-  //   const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
-  //   const svg = svgDoc.documentElement;
-  //   svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-
-  //   const hiddenDiv = document.createElement('div');
-  //   hiddenDiv.style.display = 'none';
-  //   document.body.appendChild(hiddenDiv);
-  //   hiddenDiv.appendChild(svg);
-
-  //   const paths = svg.querySelectorAll('path');
-  //   paths.forEach((p) => {
-  //     p.style.stroke = 'none';
-  //   });
-
-  //   for (const id in this.allWinners) {
-  //     // console.log('id', id);
-  //     const g = svg.querySelector('#' + id);
-  //     if (g) {
-  //       const path = g.querySelector('path');
-  //       const text = g.querySelector('tspan');
-  //       if (path && text) {
-  //         let styleStr = path.getAttribute('style') || '';
-  //         let styleText = text.getAttribute('style') || '';
-  //         styleText += ' fill: #FFFFFF !important;';
-  //         styleStr = styleStr
-  //           .replace(/fill: *[^;]*;/g, '')
-  //           .replace(/stroke: *[^;]*;/g, '')
-  //           .replace(/stroke-width: *[^;]*;/g, '');
-
-  //         styleStr +=
-  //           ' fill: ' + this.getColor(this.allWinners[id]) + ' !important;';
-
-  //         path.setAttribute('style', styleStr);
-  //         text.setAttribute('style', styleText);
-
-  //         path.style.setProperty('stroke', 'none', 'important');
-  //         path.style.setProperty('stroke-width', '0', 'important');
-  //       }
-  //     }
-  //   }
-
-  //   this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg.outerHTML);
-  //   hiddenDiv.remove();
-  //   this.cd.detectChanges();
-
-  //   const container = this.svgContainer.nativeElement;
-  //   container.innerHTML = '';
-  //   container.appendChild(svg);
-
-  //   // ✅ ใส่ animation ที่นี่
-  //   this.addAnimationToSvg(svg as unknown as SVGSVGElement);
-  //   this.cd.detectChanges();
-  // }
-
   addAnimationToSvg(svg: SVGSVGElement) {
     const paths = svg.querySelectorAll('path');
     paths.forEach((p) => {
@@ -272,21 +205,34 @@ export class Dashboard implements OnInit {
   }
 
   private getColor(winner: any): string {
-    const name = typeof winner === 'string' ? winner : winner?.party || '';
-
-    if (name.includes('ก้าวไกล')) return 'rgb(244, 117, 38)';
-    if (name.includes('เพื่อไทย')) return 'red';
-    if (name.includes('ภูมิใจไทย')) return 'rgb(12, 20, 156)';
-    if (name.includes('พลังประชารัฐ')) return 'rgb(31, 104, 221)';
-    if (name.includes('ประชาธิปัตย์')) return 'rgb(6, 175, 243)';
-    if (name.includes('รวมไทยสร้างชาติ')) return 'brown';
-    if (name.includes('ชาติไทยพัฒนา')) return '#FF5C77';
-    if (name.includes('ชาติพัฒนากล้า')) return '#004A87';
-    if (name.includes('ไทยสร้างไทย')) return '#1900FF';
-    if (name.includes('เพื่อไทรวมพลัง')) return '#96A9FF';
-    if (name.includes('ประชาชาติ')) return '#B87333';
-    return 'gray';
+    // console.log(this.partyColorMap);
+    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    for (const keyword in this.partyColorMap) {
+      // console.log(keyword);
+      // console.log(this.partyColorMap[keyword].PARTY_NAME);
+      if (partyName.includes(this.partyColorMap[keyword].PARTY_NAME)) {
+        return this.partyColorMap[keyword].COLOR;
+      }
+    }
+    return 'gray'; // fallback ถ้าไม่พบ
   }
+
+  // private getColor(winner: any): string {
+  //   const name = typeof winner === 'string' ? winner : winner?.party || '';
+
+  //   if (name.includes('ก้าวไกล')) return 'rgb(244, 117, 38)';
+  //   if (name.includes('เพื่อไทย')) return 'red';
+  //   if (name.includes('ภูมิใจไทย')) return 'rgb(12, 20, 156)';
+  //   if (name.includes('พลังประชารัฐ')) return 'rgb(31, 104, 221)';
+  //   if (name.includes('ประชาธิปัตย์')) return 'rgb(6, 175, 243)';
+  //   if (name.includes('รวมไทยสร้างชาติ')) return 'brown';
+  //   if (name.includes('ชาติไทยพัฒนา')) return '#FF5C77';
+  //   if (name.includes('ชาติพัฒนากล้า')) return '#004A87';
+  //   if (name.includes('ไทยสร้างไทย')) return '#1900FF';
+  //   if (name.includes('เพื่อไทรวมพลัง')) return '#96A9FF';
+  //   if (name.includes('ประชาชาติ')) return '#B87333';
+  //   return 'gray';
+  // }
 
   onSvgClick(event: MouseEvent) {
     const target = event.target as SVGElement;

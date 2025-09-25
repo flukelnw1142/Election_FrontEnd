@@ -53,4 +53,8 @@ export class DashboardService {
   getRankByDistrict(id: string | number): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/detail?id=${id}`);
   }
+
+  getPartyColors(): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/Election/color`);
+  }
 }

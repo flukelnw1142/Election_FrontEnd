@@ -6,9 +6,23 @@
 }
 
 .left-panel {
-    flex: 2;
-    // background: #ffffff;
+    flex: 1;
+    background: #f1f1f169;
     padding: 1rem;
+}
+
+.middle-panal {
+    flex: 1;
+    // align-self: center;
+
+    h4 {
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .dashboard {
+        align-self: center;
+    }
 }
 
 .right-panel {

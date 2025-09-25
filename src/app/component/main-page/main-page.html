@@ -1,9 +1,52 @@
-<div style="display: flex;">
-    <div style="flex: 1; background: #ffffff; padding: 1rem;">
-        <app-dashboard></app-dashboard>
+<div class="main-container">
+  <div class="left-panel">
+    <app-dashboard></app-dashboard>
+  </div>
 
+  <div class="right-panel">
+    <h3>จำนวนที่นั่งรวมต่อพรรค</h3>
+
+    <div class="scroll-container">
+      <div
+        *ngFor="let party of partySeatCountsList"
+        class="party-card-container"
+      >
+        <!-- รูป -->
+        <div class="image-container">
+          <img src="/background/cat.png" class="cat-image" />
+        </div>
+
+        <!-- กล่องพรรค -->
+        <div class="party-card" [style.background]="getColor(party.partyName)">
+          <!-- ซ้าย -->
+          <div class="left-section">
+            <div class="partyName">{{ party.partyName }} ({{party.zone_seats + party.partylist_seats}})</div>
+
+            <div class="progress-bar-bg">
+              <div
+                class="progress-bar"
+                [style.width.%]="
+                  ((party.zone_seats + party.partylist_seats) / totalSeats) *
+                  100
+                "
+                [style.background]="getColor(party.partyName)"
+              ></div>
+            </div>
+
+            <p class="vote-total">
+              คะแนนรวม: {{ party.total_party_votes | number }}
+            </p>
+          </div>
+
+          <!-- ขวา -->
+          <div class="right-section">
+            <div class="zone-seats">{{ party.zone_seats }}</div>
+            <div class="partylist-seats">{{ party.partylist_seats }}</div>
+          </div>
+        </div>
+        <hr />
+
+      </div>
     </div>
-    <div style="flex: 1; background: #e0e0e0; padding: 1rem;">
-        ฝั่งขวา
-    </div>
+  </div>
 </div>

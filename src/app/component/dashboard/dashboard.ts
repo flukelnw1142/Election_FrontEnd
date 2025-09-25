@@ -64,7 +64,7 @@ export class Dashboard implements OnInit {
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
-  private isSvgInitialized = false;
+  // private isSvgInitialized = false;
   partyColorMap: { [partyKeyword: string]: Color } = {};
 
   async ngOnInit(): Promise<void> {
@@ -90,7 +90,7 @@ export class Dashboard implements OnInit {
           );
           // this.settingSvg(svgText);
           await this.settingSvg(svgText, true); // ทำ animation ครั้งแรก
-          this.isSvgInitialized = true;
+          // this.isSvgInitialized = true;
         }
 
         // ✅ 2. Subscribe ต่อ SignalR สำหรับอัปเดตภายหลัง
@@ -210,7 +210,7 @@ export class Dashboard implements OnInit {
     for (const keyword in this.partyColorMap) {
       // console.log(keyword);
       // console.log(this.partyColorMap[keyword].PARTY_NAME);
-      if (partyName.includes(this.partyColorMap[keyword].PARTY_NAME)) {
+      if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         return this.partyColorMap[keyword].COLOR;
       }
     }

@@ -57,4 +57,18 @@ export class DashboardService {
   getPartyColors(): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/color`);
   }
+
+  // ส.ส. แบ่งเขต
+  getPartySeatCountsZone(): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseUrl}/Election/SummaryCountPartyZone`
+    );
+  }
+
+  // ส.ส. บัญชีรายชื่อ
+  getPartySeatCountsList(): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseUrl}/Election/GetSummaryCountPartyZoneAndPartyList`
+    );
+  }
 }

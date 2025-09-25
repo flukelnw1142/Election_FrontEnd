@@ -7,7 +7,7 @@
 </div>
 
 <div
-  *ngIf="tooltipVisible"
+  *ngIf="tooltipVisible && tooltipText !== '' "
   class="custom-tooltip"
   [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }"
 >

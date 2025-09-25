@@ -183,6 +183,7 @@ export class DashboardV2 implements OnInit {
       this.tooltipVisible = true;
     } else {
       this.tooltipVisible = false;
+      this.tooltipText = "";
     }
   }
 

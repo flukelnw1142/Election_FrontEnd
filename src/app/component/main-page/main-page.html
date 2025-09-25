@@ -1,5 +1,6 @@
 <div class="main-container">
   <div class="left-panel">
+    <!-- <h1>รายงานผลการเลือกตั้ง 25xx</h1> -->
     <app-dashboard></app-dashboard>
   </div>
 
@@ -20,7 +21,11 @@
         <div class="party-card" [style.background]="getColor(party.partyName)">
           <!-- ซ้าย -->
           <div class="left-section">
-            <div class="partyName">{{ party.partyName }} ({{party.zone_seats + party.partylist_seats}})</div>
+            <div class="partyName">
+              {{ party.partyName }} ({{
+                party.zone_seats + party.partylist_seats
+              }})
+            </div>
 
             <div class="progress-bar-bg">
               <div
@@ -45,7 +50,6 @@
           </div>
         </div>
         <hr />
-
       </div>
     </div>
   </div>

@@ -3503,19 +3503,19 @@
     fill="#fff"
     id="circle-500"
   />
-  <text x="490" y="370" text-anchor="middle" font-size="30" fill="#fff">
+  <text x="490" y="370" text-anchor="middle" font-size="30" fill="#000">
     รวม ส.ส.
   </text>
   <text
     x="450"
-    y="420"
+    y="415"
     text-anchor="middle"
     font-size="50"
-    fill="#fff"    font-weight="bold"
+    fill="#000"    font-weight="bold"
   >
     500
   </text>
-  <text x="500" y="450" text-anchor="middle" font-size="30" fill="#fff">
+  <text x="500" y="450" text-anchor="middle" font-size="30" fill="#000">
     ที่นั่ง
   </text>
 </svg>

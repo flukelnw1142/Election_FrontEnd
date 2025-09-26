@@ -27,7 +27,7 @@ export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
   prevSvgContent = '';
   detailDistrict: Candidate[] = [];
-
+  selectedParty: any;
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
 
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
@@ -105,7 +105,11 @@ export class Dashboard implements OnInit {
 
   async settingSvg(svgText: string, doAnimation = true) {
     console.log('>> SVG Loaded');
-    const districtIds = Object.keys(this.allWinners);
+    let districtIds = Object.keys(this.allWinners);
+    if (this.selectedParty) {
+      districtIds = districtIds.filter(id => this.allWinners[id].party === this.selectedParty);
+      console.log("this.selectedParty : ", this.selectedParty);
+    }
     console.log("districtIds : ", districtIds);
     console.log("allWinners : ", this.allWinners);
 
@@ -242,7 +246,19 @@ export class Dashboard implements OnInit {
       ) {
         const hexId = parent.id;
         const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
-        alert(`คลิกเขต: ${party}`);
+        this.selectedParty = party;
+        if (this.allWinners && Object.keys(this.allWinners).length > 0) {
+          this.zone.run(() => {
+            firstValueFrom(
+              this.http.get('/assets/thailand.svg', { responseType: 'text' })
+            ).then((svgText) => {
+              // this.settingSvg(svgText);
+              this.settingSvg(svgText, false); 
+              this.cd.detectChanges();
+            });
+          });
+        }
+        // alert(`คลิกเขต: ${party}`);
       } else {
         alert(`คลิกจังหวัด: ไม่ทราบ`);
       }

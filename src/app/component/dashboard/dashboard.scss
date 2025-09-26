@@ -104,16 +104,20 @@ path:hover {
 
   .left-top-panel {
     flex: 3;
-    background: #fefdfd;
     border-radius: 1rem;
     margin: 1rem 0rem 0rem 1rem;
+    position: relative;
+    /* For absolute positioning of child */
+    overflow: hidden;
   }
 
   .left-bottom-panel {
     flex: 2;
-    background: #fefdfd;
+    background: #b8b8b8;
     border-radius: 1rem;
     margin: 0rem 0rem 1rem 1rem;
+    order: 1;
+    /* Keep at top */
   }
 }
 
@@ -161,4 +165,12 @@ path:hover {
   align-items: center;
   gap: 10px;
   z-index: 1000;
+}
+
+.head-logo {
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: contain;
+  margin-left: 70px;
+  margin-top: 200px;
 }

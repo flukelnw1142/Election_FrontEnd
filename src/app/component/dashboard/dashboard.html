@@ -31,13 +31,14 @@
 <div *ngIf="selectedParty !== '' ">
     <div class="main-container">
         <div class="left-panel">
-            <div class="left-top-panel">
+            <div class="left-top-panel" [style.background-color]="partyBackgroundColor">
+                <img [src]="img_head" *ngIf="img_head" alt="Party Logo" class="head-logo">
             </div>
             <div class="left-bottom-panel"></div>
         </div>
         <div class="right-panel">
             <div class="button-container">
-                <img [src]="img" *ngIf="img" alt="Party Logo" class="party-logo">
+                <img [src]="img_party" *ngIf="img_party" alt="Party Logo" class="party-logo">
             </div>
             <div class="row">
                 <div #svgContainer (mousemove)="onSvgHover($event)" (mouseout)="hideTooltip()"

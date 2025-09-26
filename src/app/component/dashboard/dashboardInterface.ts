@@ -19,5 +19,6 @@ export interface Color {
   ID: number;
   PARTY_NAME: string;
   COLOR: string;
-  IMG: string;
+  IMG_PARTY: string;
+  IMG_HEAD: string;
 }

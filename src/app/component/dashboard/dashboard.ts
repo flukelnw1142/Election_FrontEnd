@@ -33,7 +33,9 @@ export class Dashboard implements OnInit {
   prevSvgContent = '';
   detailDistrict: Candidate[] = [];
   selectedParty: any = '';
-  img: any = '';
+  img_party: any = '';
+  img_head: any = '';
+  partyBackgroundColor: any = '';
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
 
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
@@ -143,8 +145,10 @@ export class Dashboard implements OnInit {
             const party = Object.values(this.partyColorMap).find(
               (p) => p.PARTY_NAME === this.selectedParty
             );
-            this.img = this.sanitizer.bypassSecurityTrustUrl(party?.IMG || '');
-            console.log("this.img : ",this.img);
+            this.img_party = this.sanitizer.bypassSecurityTrustUrl(party?.IMG_PARTY || '');
+            this.img_head = this.sanitizer.bypassSecurityTrustUrl(party?.IMG_HEAD || '');
+            this.partyBackgroundColor =  party?.COLOR || '#fefdfd';
+            console.log("partyBackgroundColor : ",this.partyBackgroundColor);
             
           } else {
             // Optional: Set a different style for non-selected districts (e.g., gray or transparent)

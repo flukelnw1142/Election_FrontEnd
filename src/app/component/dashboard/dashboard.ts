@@ -16,21 +16,24 @@ import { DashboardService } from './service/dashboardservice';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgZone } from '@angular/core';
 import { Candidate, Color, Winner } from './dashboardInterface';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailDialog } from '../detail-dialog/detail-dialog';
+import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-score-and-seat';
+import { DashboardV2 } from '../dashboard-v2/dashboard-v2';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, MatDialogModule, DashboardScoreAndSeat, DashboardV2],
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
   prevSvgContent = '';
   detailDistrict: Candidate[] = [];
-  selectedParty: any;
+  selectedParty: any = '';
+  img: any = '';
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
 
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
@@ -42,32 +45,23 @@ export class Dashboard implements OnInit {
     private sanitizer: DomSanitizer,
     private zone: NgZone,
     private dialog: MatDialog,
-    @Inject(PLATFORM_ID) private platformId: Object // private dialogRef: MatDialogRef<>
-  ) {}
+    @Inject(PLATFORM_ID) private platformId: Object,
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
-  // private isSvgInitialized = false;
   partyColorMap: { [partyKeyword: string]: Color } = {};
-
-  openDialog() {
-    this.dialog.open(DetailDialog);
-  }
 
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
       try {
-        // ✅ 0. ดึงข้อมูลสี
         this.partyColorMap = await firstValueFrom(
           this._dashboard.getPartyColors()
         );
 
-        // ✅ 1. ดึงข้อมูลจาก API ก่อน
         const winners = await firstValueFrom(
           this._dashboard.getDistrictWinners()
         );
-
-        // console.log('1', typeof winners);
 
         if (winners && Object.keys(winners).length > 0) {
           this.allWinners = winners;
@@ -75,27 +69,18 @@ export class Dashboard implements OnInit {
           const svgText = await firstValueFrom(
             this.http.get('/assets/thailand.svg', { responseType: 'text' })
           );
-          // this.settingSvg(svgText);
-          await this.settingSvg(svgText, true); // ทำ animation ครั้งแรก
-          // this.isSvgInitialized = true;
+          await this.settingSvg(svgText, true);
         }
 
-        // ✅ 2. Subscribe ต่อ SignalR สำหรับอัปเดตภายหลัง
         this._dashboard.winners$.subscribe((winners) => {
           console.log('📡 Received signalR update');
-          // console.log('📡 Received signalR update:', winners);
-          // console.log('2', typeof winners);
-
           if (winners && Object.keys(winners).length > 0) {
             this.zone.run(() => {
               this.allWinners = winners;
-
               firstValueFrom(
                 this.http.get('/assets/thailand.svg', { responseType: 'text' })
               ).then((svgText) => {
-                // this.settingSvg(svgText);
-                this.settingSvg(svgText, false); // อัปเดตสี แต่ไม่ทำ animation
-                this.cd.detectChanges();
+                this.settingSvg(svgText, false);
                 this.cd.detectChanges();
               });
             });
@@ -114,14 +99,9 @@ export class Dashboard implements OnInit {
   async settingSvg(svgText: string, doAnimation = true) {
     console.log('>> SVG Loaded');
     let districtIds = Object.keys(this.allWinners);
-    let currentHeight;
 
-    if (this.selectedParty) {
-      districtIds = districtIds.filter(
-        (id) => this.allWinners[id].party === this.selectedParty
-      );
-      console.log('this.selectedParty : ', this.selectedParty);
-    }
+    // Do not filter districtIds when selectedParty is set, to process all districts
+    console.log('this.selectedParty : ', this.selectedParty);
     console.log('districtIds : ', districtIds);
     console.log('allWinners : ', this.allWinners);
 
@@ -130,7 +110,6 @@ export class Dashboard implements OnInit {
     const svg = svgDoc.documentElement;
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
-    // --- เอา SVG ไปแสดงใน DOM ทันที ---
     const container = this.svgContainer.nativeElement;
     container.innerHTML = '';
     container.appendChild(svg);
@@ -140,9 +119,10 @@ export class Dashboard implements OnInit {
       p.style.stroke = 'none';
     });
 
+    // Process all districts to set styles and pointer-events
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
-      const g = svg.querySelector('#' + id);
+      const g = svg.querySelector('#' + id) as SVGGElement | null;
       if (g) {
         const path = g.querySelector('path');
         const text = g.querySelector('tspan');
@@ -155,8 +135,21 @@ export class Dashboard implements OnInit {
             .replace(/stroke: *[^;]*;/g, '')
             .replace(/stroke-width: *[^;]*;/g, '');
 
-          styleStr +=
-            ' fill: ' + this.getColor(this.allWinners[id]) + ' !important;';
+          // Apply color only if no selectedParty or if the district matches selectedParty
+          if (!this.selectedParty || this.allWinners[id].party === this.selectedParty) {
+            styleStr +=
+              ' fill: ' + this.getColor(this.allWinners[id]) + ' !important;';
+            // Find the image URL from partyColorMap
+            const party = Object.values(this.partyColorMap).find(
+              (p) => p.PARTY_NAME === this.selectedParty
+            );
+            this.img = this.sanitizer.bypassSecurityTrustUrl(party?.IMG || '');
+            console.log("this.img : ",this.img);
+            
+          } else {
+            // Optional: Set a different style for non-selected districts (e.g., gray or transparent)
+            styleStr += ' fill: #d3d3d3 !important;'; // Light gray for non-selected districts
+          }
 
           path.setAttribute('style', styleStr);
           text.setAttribute('style', styleText);
@@ -164,19 +157,19 @@ export class Dashboard implements OnInit {
           path.style.setProperty('stroke', 'none', 'important');
           path.style.setProperty('stroke-width', '0', 'important');
           g.setAttribute('data-party', this.allWinners[id].party || '');
-          if (doAnimation) {
+
+          // Disable pointer events for non-selected party regions when selectedParty is set
+          if (this.selectedParty && this.allWinners[id].party !== this.selectedParty) {
+            g.style.pointerEvents = 'none';
+          } else {
+            g.style.pointerEvents = 'auto';
+          }
+
+          if (doAnimation && (!this.selectedParty || this.allWinners[id].party === this.selectedParty)) {
             path.classList.add('animated-path');
-            // รอ 20ms เพื่อให้ browser แสดง animation ทีละเขต
             await this.delay(5);
           }
         }
-      }
-    }
-    if (this.selectedParty) {
-      const svg = this.svgContainer.nativeElement.querySelector('svg');
-      if (svg) {
-        const currentHeight = parseFloat(svg.getAttribute('height') || '100');
-        svg.setAttribute('height', `${currentHeight * 0.9}`); // ลดความสูงลง 10%
       }
     }
 
@@ -209,23 +202,17 @@ export class Dashboard implements OnInit {
   }
 
   private getColor(winner: any): string {
-    // console.log(this.partyColorMap);
     const partyName = typeof winner === 'string' ? winner : winner?.party || '';
     for (const keyword in this.partyColorMap) {
-      // console.log(keyword);
-      // console.log(this.partyColorMap[keyword].PARTY_NAME);
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         return this.partyColorMap[keyword].COLOR;
       }
     }
-    return 'gray'; // fallback ถ้าไม่พบ
+    return 'gray';
   }
 
   onSvgClick(event: MouseEvent) {
     const target = event.target as SVGElement;
-    this.openDialog()
-
-    // รองรับทั้ง <path> และ <text> หรือ <tspan>
     if (
       target.tagName === 'path' ||
       target.tagName === 'text' ||
@@ -233,8 +220,6 @@ export class Dashboard implements OnInit {
         /^\d+$/.test((target.textContent || '').trim()))
     ) {
       let parent = target.parentNode as SVGElement;
-
-      // ในบางกรณี <tspan> อยู่ใต้ <text> แล้วอยู่ใต้ <g>
       if (target.tagName === 'tspan') {
         const textEl = parent;
         parent = textEl?.parentNode as SVGElement;
@@ -247,15 +232,7 @@ export class Dashboard implements OnInit {
         parent.id.includes('_')
       ) {
         const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
-
         this.selectedParty = party;
-
-        // this.dialog.open(DetailDialog, {
-        //   width: '100vw',
-        //   height: '100vh',
-        //   maxWidth: '100vw',
-        //   panelClass: 'full-screen-dialog',
-        // });
 
         if (this.allWinners && Object.keys(this.allWinners).length > 0) {
           this.zone.run(() => {
@@ -267,7 +244,6 @@ export class Dashboard implements OnInit {
             });
           });
         }
-        // alert(`คลิกเขต: ${party}`);
       } else {
         alert(`คลิกจังหวัด: ไม่ทราบ`);
       }
@@ -297,20 +273,16 @@ export class Dashboard implements OnInit {
 
       if (parent instanceof SVGGElement && parent.id.includes('_')) {
         const zoneId = parent.id;
-        console.log('zoneId', zoneId);
         const areaID = this.allWinners[zoneId]?.areaID;
-        // console.log('areaID', areaID);
 
         if (!areaID) return;
 
         this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
-          // console.log(data);
           this.detailDistrict = data;
-
           this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
           this.tooltipX = event.clientX + 10;
           this.tooltipY = event.clientY + 10;
-          this.tooltipVisible = true; // << ย้ายมาที่นี่
+          this.tooltipVisible = true;
         });
       } else {
         this.tooltipVisible = false;
@@ -322,5 +294,38 @@ export class Dashboard implements OnInit {
 
   hideTooltip() {
     this.tooltipVisible = false;
+  }
+
+  openDialog() {
+    console.log('openDialog called');
+    try {
+      const dialogRef = this.dialog.open(DetailDialog, {
+        width: '100vw',
+        height: '100vh',
+        maxWidth: '100vw',
+        panelClass: 'full-screen-dialog'
+      });
+
+      dialogRef.afterClosed().subscribe(() => {
+        console.log('Dialog closed');
+      });
+    } catch (error) {
+      console.error('Error opening dialog:', error);
+    }
+  }
+
+  closeDialog() {
+    this.selectedParty = '';
+
+    if (this.allWinners && Object.keys(this.allWinners).length > 0) {
+      this.zone.run(() => {
+        firstValueFrom(
+          this.http.get('/assets/thailand.svg', { responseType: 'text' })
+        ).then((svgText) => {
+          this.settingSvg(svgText, false);
+          this.cd.detectChanges();
+        });
+      });
+    }
   }
 }

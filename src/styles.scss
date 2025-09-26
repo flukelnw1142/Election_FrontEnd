@@ -1,7 +1,7 @@
 @use 'bootstrap/scss/bootstrap' as *;
 
-*{
-     font-family: "Kanit", sans-serif;
+* {
+    font-family: "Kanit", sans-serif;
 }
 
 html,
@@ -22,12 +22,23 @@ g {
     cursor: pointer;
 }
 
+svg text[id^="text"] tspan {
+    fill: #FFFFFF !important;
+}
 
-path{
+path {
     display: inline;
-    fill: #ffffff !important;
-    stroke: #000000 !important;
+    fill: rgb(207, 212, 229) !important;
+    stroke: transparent !important;
     stroke-width: 0.2;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

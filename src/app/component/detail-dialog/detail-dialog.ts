@@ -1,24 +1,17 @@
-import { Component, Inject } from '@angular/core';
-import { Dashboard } from '../dashboard/dashboard';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { Dashboard } from '../dashboard/dashboard';
 
 @Component({
   selector: 'app-detail-dialog',
-  imports: [CommonModule, Dashboard, MatDialogModule],
-  templateUrl: './detail-dialog.html',
-  styleUrl: './detail-dialog.scss',
   standalone: true,
+  imports: [CommonModule, MatDialogModule, Dashboard],
+  templateUrl: './detail-dialog.html',
+  styleUrls: ['./detail-dialog.scss']
 })
 export class DetailDialog {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<DetailDialog>
-  ) {}
+  constructor(private dialogRef: MatDialogRef<DetailDialog>) {}
 
   close() {
     this.dialogRef.close();

@@ -1,11 +1,6 @@
-<!-- <div class="svg-container" *ngIf="true">
-    <div #svgContainer (click)="onSvgClick($event)" (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()">
-    </div>
-</div> -->
-
-<div #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
-
-    <div [innerHTML]="svgContent" ></div> <!-- Angular จะ render SVG ให้ -->
+<div *ngIf="selectedParty === '' " #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()"
+    (click)="onSvgClick($event)">
+    <div [innerHTML]="svgContent"></div>
 
 </div>
 
@@ -26,6 +21,32 @@
                         <p>คะแนน: {{ candidate.totalVotes | number }}</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="selectedParty !== '' ">
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="left-top-panel">
+            </div>
+            <div class="left-bottom-panel"></div>
+        </div>
+        <div class="right-panel">
+            <div class="button-container">
+                <img [src]="img" *ngIf="img" alt="Party Logo" class="party-logo">
+            </div>
+            <div class="row">
+                <div #svgContainer (mousemove)="onSvgHover($event)" (mouseout)="hideTooltip()"
+                    (click)="onSvgClick($event)">
+                    <div [innerHTML]="svgContent"></div>
+                </div>
+            </div>
+            <div class="button-container-ri">
+                <button mat-button color="primary" (click)="closeDialog()">X</button>
             </div>
         </div>
     </div>

@@ -87,3 +87,78 @@ path:hover {
   width: 100vw;
   border-radius: 0;
 }
+
+.main-container {
+  display: flex;
+  background: #00000086;
+  height: 100vh;
+  gap: 0.3rem;
+  padding: 1rem;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.3rem;
+
+  .left-top-panel {
+    flex: 3;
+    background: #fefdfd;
+    border-radius: 1rem;
+    margin: 1rem 0rem 0rem 1rem;
+  }
+
+  .left-bottom-panel {
+    flex: 2;
+    background: #fefdfd;
+    border-radius: 1rem;
+    margin: 0rem 0rem 1rem 1rem;
+  }
+}
+
+.right-panel {
+  flex: 2;
+  background: #fefdfd;
+  margin: 1rem 1rem 1rem 0rem;
+  user-select: none;
+  border-radius: 1rem;
+  position: relative;
+  /* Added to allow absolute positioning of child elements */
+}
+
+.button-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  /* Changed from right: 10px to left: 10px to move to the left */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  /* Ensure it stays above other content */
+}
+
+.party-logo {
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: contain;
+  z-index: 1000;
+}
+
+.row {
+  position: relative;
+  /* Ensure .row layout is independent */
+  z-index: 1;
+  /* Keep map below button-container */
+}
+
+.button-container-ri {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+}

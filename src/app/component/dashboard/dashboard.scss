@@ -2,12 +2,15 @@ svg {
   width: 100%;
   height: auto;
 }
+
 path {
   cursor: pointer;
   transition: fill 0.3s;
 }
+
 path:hover {
-  fill: yellow !important;  /* สี hover */
+  fill: yellow !important;
+  /* สี hover */
 }
 
 .svg-container {
@@ -16,7 +19,6 @@ path:hover {
   overflow: auto;
   position: relative;
 }
-
 
 /* ANIMATION */
 .animated-path {
@@ -54,10 +56,10 @@ path:hover {
   font-size: 16px;
   display: block;
   margin-bottom: 8px;
-  font-weight:700;
+  font-weight: 700;
 }
 
-.tooltip-subtext > div {
+.tooltip-subtext>div {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -77,4 +79,11 @@ path:hover {
   line-height: 1.4;
   font-weight: 400;
   font-size: 12px;
+}
+
+::ng-deep .full-screen-dialog .mat-dialog-container {
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  border-radius: 0;
 }

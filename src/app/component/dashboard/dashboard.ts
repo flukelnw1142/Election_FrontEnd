@@ -16,11 +16,14 @@ import { DashboardService } from './service/dashboardservice';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgZone } from '@angular/core';
 import { Candidate, Color, Winner } from './dashboardInterface';
+import { MatDialog } from '@angular/material/dialog';
+import { DetailDialog } from '../detail-dialog/detail-dialog';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
+  standalone: true,
   imports: [CommonModule, HttpClientModule],
 })
 export class Dashboard implements OnInit {
@@ -38,13 +41,18 @@ export class Dashboard implements OnInit {
     private cd: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
     private zone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+    private dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: Object // private dialogRef: MatDialogRef<>
+  ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
   // private isSvgInitialized = false;
   partyColorMap: { [partyKeyword: string]: Color } = {};
+
+  openDialog() {
+    this.dialog.open(DetailDialog);
+  }
 
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
@@ -106,13 +114,16 @@ export class Dashboard implements OnInit {
   async settingSvg(svgText: string, doAnimation = true) {
     console.log('>> SVG Loaded');
     let districtIds = Object.keys(this.allWinners);
-    if (this.selectedParty) {
-      districtIds = districtIds.filter(id => this.allWinners[id].party === this.selectedParty);
-      console.log("this.selectedParty : ", this.selectedParty);
-    }
-    console.log("districtIds : ", districtIds);
-    console.log("allWinners : ", this.allWinners);
+    let currentHeight;
 
+    if (this.selectedParty) {
+      districtIds = districtIds.filter(
+        (id) => this.allWinners[id].party === this.selectedParty
+      );
+      console.log('this.selectedParty : ', this.selectedParty);
+    }
+    console.log('districtIds : ', districtIds);
+    console.log('allWinners : ', this.allWinners);
 
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
@@ -161,6 +172,13 @@ export class Dashboard implements OnInit {
         }
       }
     }
+    if (this.selectedParty) {
+      const svg = this.svgContainer.nativeElement.querySelector('svg');
+      if (svg) {
+        const currentHeight = parseFloat(svg.getAttribute('height') || '100');
+        svg.setAttribute('height', `${currentHeight * 0.9}`); // ลดความสูงลง 10%
+      }
+    }
 
     this.cd.detectChanges();
   }
@@ -203,25 +221,9 @@ export class Dashboard implements OnInit {
     return 'gray'; // fallback ถ้าไม่พบ
   }
 
-  // private getColor(winner: any): string {
-  //   const name = typeof winner === 'string' ? winner : winner?.party || '';
-
-  //   if (name.includes('ก้าวไกล')) return 'rgb(244, 117, 38)';
-  //   if (name.includes('เพื่อไทย')) return 'red';
-  //   if (name.includes('ภูมิใจไทย')) return 'rgb(12, 20, 156)';
-  //   if (name.includes('พลังประชารัฐ')) return 'rgb(31, 104, 221)';
-  //   if (name.includes('ประชาธิปัตย์')) return 'rgb(6, 175, 243)';
-  //   if (name.includes('รวมไทยสร้างชาติ')) return 'brown';
-  //   if (name.includes('ชาติไทยพัฒนา')) return '#FF5C77';
-  //   if (name.includes('ชาติพัฒนากล้า')) return '#004A87';
-  //   if (name.includes('ไทยสร้างไทย')) return '#1900FF';
-  //   if (name.includes('เพื่อไทรวมพลัง')) return '#96A9FF';
-  //   if (name.includes('ประชาชาติ')) return '#B87333';
-  //   return 'gray';
-  // }
-
   onSvgClick(event: MouseEvent) {
     const target = event.target as SVGElement;
+    this.openDialog()
 
     // รองรับทั้ง <path> และ <text> หรือ <tspan>
     if (
@@ -244,16 +246,23 @@ export class Dashboard implements OnInit {
         parent.id &&
         parent.id.includes('_')
       ) {
-        const hexId = parent.id;
         const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
+
         this.selectedParty = party;
+
+        // this.dialog.open(DetailDialog, {
+        //   width: '100vw',
+        //   height: '100vh',
+        //   maxWidth: '100vw',
+        //   panelClass: 'full-screen-dialog',
+        // });
+
         if (this.allWinners && Object.keys(this.allWinners).length > 0) {
           this.zone.run(() => {
             firstValueFrom(
               this.http.get('/assets/thailand.svg', { responseType: 'text' })
             ).then((svgText) => {
-              // this.settingSvg(svgText);
-              this.settingSvg(svgText, false); 
+              this.settingSvg(svgText, false);
               this.cd.detectChanges();
             });
           });

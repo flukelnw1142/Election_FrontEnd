@@ -5,6 +5,7 @@ import { AuthGuard } from './core/guard/auth.guard';
 import { MainPage } from './component/main-page/main-page';
 import { DashboardV2 } from './component/dashboard-v2/dashboard-v2';
 import { DashboardScoreAndSeat } from './component/dashboard-score-and-seat/dashboard-score-and-seat';
+import { DetailDialog } from './component/detail-dialog/detail-dialog';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
@@ -25,5 +26,9 @@ export const routes: Routes = [
   {
     path: 'dashboardv3',
     component: DashboardScoreAndSeat,
+  },
+    {
+    path: 'detail',
+    component: DetailDialog,
   },
 ];

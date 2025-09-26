@@ -1,0 +1,36 @@
+.main-container {
+    display: flex;
+    background: #00000086;
+    height: 100vh;
+    gap: 0.3rem;
+    padding: 1rem;
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.3rem;
+
+    .left-top-panel {
+        flex: 3;
+        background: #ebebeb;
+        border-radius: 1rem;
+        margin: 1rem 0rem 0rem 1rem;
+    }
+
+    .left-bottom-panel {
+        flex: 2;
+        background: #b8b8b8;
+        border-radius: 1rem;
+        margin: 0rem 0rem 1rem 1rem;
+    }
+}
+
+.right-panel {
+    flex: 2;
+    background: #d1d1d1;
+    margin: 1rem 1rem 1rem 0rem;
+    user-select: none;
+    border-radius: 1rem;
+}

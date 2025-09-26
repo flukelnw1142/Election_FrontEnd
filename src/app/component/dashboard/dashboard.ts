@@ -39,7 +39,7 @@ export class Dashboard implements OnInit {
     private sanitizer: DomSanitizer,
     private zone: NgZone,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -106,6 +106,9 @@ export class Dashboard implements OnInit {
   async settingSvg(svgText: string, doAnimation = true) {
     console.log('>> SVG Loaded');
     const districtIds = Object.keys(this.allWinners);
+    console.log("districtIds : ", districtIds);
+    console.log("allWinners : ", this.allWinners);
+
 
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
@@ -145,7 +148,7 @@ export class Dashboard implements OnInit {
 
           path.style.setProperty('stroke', 'none', 'important');
           path.style.setProperty('stroke-width', '0', 'important');
-
+          g.setAttribute('data-party', this.allWinners[id].party || '');
           if (doAnimation) {
             path.classList.add('animated-path');
             // รอ 20ms เพื่อให้ browser แสดง animation ทีละเขต
@@ -238,7 +241,8 @@ export class Dashboard implements OnInit {
         parent.id.includes('_')
       ) {
         const hexId = parent.id;
-        alert(`คลิกเขต: ${hexId}`);
+        const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
+        alert(`คลิกเขต: ${party}`);
       } else {
         alert(`คลิกจังหวัด: ไม่ทราบ`);
       }

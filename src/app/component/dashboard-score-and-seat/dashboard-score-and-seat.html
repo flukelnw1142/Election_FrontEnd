@@ -1,0 +1,41 @@
+<h3>จำนวนที่นั่งรวมต่อพรรค</h3>
+
+<div class="scroll-container" >
+  <div *ngFor="let party of partySeatCountsList" class="party-card-container">
+    <!-- รูป -->
+    <div class="image-container">
+      <img src="/background/cat.png" class="cat-image" />
+    </div>
+
+    <!-- กล่องพรรค -->
+    <div class="party-card" [style.background]="getColor(party.partyName)">
+      <!-- ซ้าย -->
+      <div class="left-section">
+        <div class="partyName">
+          {{ party.partyName }} ({{ party.zone_seats + party.partylist_seats }})
+        </div>
+
+        <div class="progress-bar-bg">
+          <div
+            class="progress-bar"
+            [style.width.%]="
+              ((party.zone_seats + party.partylist_seats) / totalSeats) * 100
+            "
+            [style.background]="getColor(party.partyName)"
+          ></div>
+        </div>
+
+        <p class="vote-total">
+          คะแนนรวม: {{ party.total_party_votes }}
+        </p>
+      </div>
+
+      <!-- ขวา -->
+      <div class="right-section">
+        <div class="zone-seats">{{ party.zone_seats }}</div>
+        <div class="partylist-seats">{{ party.partylist_seats }}</div>
+      </div>
+    </div>
+    <hr />
+  </div>
+</div>

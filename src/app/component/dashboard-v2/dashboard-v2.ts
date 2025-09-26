@@ -9,7 +9,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
-import { Color, PartySeatCountList } from './dashboardInterface';
+import { Color, PartySeatCountList } from './dashboard-v2Interface';
 import { DashboardService } from '../dashboard/service/dashboardservice';
 import { CommonModule } from '@angular/common';
 

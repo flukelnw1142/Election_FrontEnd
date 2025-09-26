@@ -15,28 +15,7 @@ import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgZone } from '@angular/core';
-
-interface Winner {
-  party: string;
-  areaID: number;
-  name: string;
-  score: number;
-}
-
-interface Candidate {
-  logoURL: string;
-  fullname: string;
-  party_name: string;
-  totalVotes: number;
-  province: string;
-  zone: number;
-}
-
-interface Color {
-  ID: number;
-  PARTY_NAME: string;
-  COLOR: string;
-}
+import { Candidate, Color, Winner } from './dashboardInterface';
 
 @Component({
   selector: 'app-dashboard',

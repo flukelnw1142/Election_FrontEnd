@@ -31,4 +31,5 @@ export const routes: Routes = [
     path: 'detail',
     component: DetailDialog,
   },
+  { path: '**', pathMatch: 'full', redirectTo: '/dashboard' },
 ];

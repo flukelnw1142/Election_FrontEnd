@@ -30,24 +30,74 @@
 
 <div *ngIf="selectedParty !== '' ">
     <div class="main-container">
-        <div class="left-panel">
-            <div class="left-top-panel" [style.background-color]="partyBackgroundColor">
-                <img [src]="img_head" *ngIf="img_head" alt="Party Logo" class="head-logo">
-            </div>
-            <div class="left-bottom-panel"></div>
+        <div class="header-row">
+            <img src="https://onee.oneeclick.co/assets/images/logo-onee.png" class="logo-image" alt="Header Image" />
         </div>
-        <div class="right-panel">
-            <div class="button-container">
-                <img [src]="img_party" *ngIf="img_party" alt="Party Logo" class="party-logo">
-            </div>
-            <div class="row">
-                <div #svgContainer (mousemove)="onSvgHover($event)" (mouseout)="hideTooltip()"
-                    (click)="onSvgClick($event)">
-                    <div [innerHTML]="svgContent"></div>
+        <div class="content-row">
+            <div class="left-panel">
+                <div class="left-top-panel" [style.background-color]="partyBackgroundColor">
+                    <div class="row">
+                        <div class="col-7" style="padding: 10px 30px 10px 30px; margin-left: 20px;">
+                            <p style="padding: 0px; margin: 0;">อันดับ</p>
+                            <div class="center-info">
+                                <p style="padding: 0px; margin: 0; font-size: 2.5rem;">{{ ranking }}</p>
+                            </div>
+                            <p style="padding: 0px; margin: 0;">{{ selectedParty }}</p>
+                        </div>
+                        <div class="col-5" style="padding: 10px 30px 10px 30px;">
+                            <div class="center-info">
+                                <p style="padding: 0px; margin: 0; font-size: 3.5rem;">{{ totalSeats }}</p>
+                            </div>
+                            <p>/ 500 คน</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <img [src]="img_head" *ngIf="img_head" alt="Party Logo" class="head-logo">
+                    </div>
+                </div>
+                <div class="left-bottom-panel">
+                    <div class="zone-seats-info">
+                        <p style="font-size: 1rem">ส.ส. บัญชีรายชื่อ</p>
+                        <div class="center-info">
+                            <p style="padding: 0px; margin: 0; font-size: 1.5rem; font-weight: bold;">{{ partylistSeats
+                                }}</p>
+                        </div>
+                        <p style="font-size: 1rem">/ 100 คน</p>
+                        <div class="orange-dots">
+                            <span class="dot" *ngFor="let i of getPartylistSeatsArray()"
+                                [style.background-color]="partyBackgroundColor"></span>
+                        </div>
+                    </div>
+                    <div class="vote-info">
+                        <div class="center-info">
+                            <p style="padding: 0px; margin: 0; font-size: 1.5rem; font-weight: bold;">
+                                {{ formatTotalVotes(totalVote) }}
+                            </p>
+                        </div>
+                        <p style="font-size: 1rem">คะแนน</p>
+                    </div>
                 </div>
             </div>
-            <div class="button-container-ri">
-                <button mat-button color="primary" (click)="closeDialog()">X</button>
+            <div class="right-panel">
+                <div class="button-container">
+                    <img [src]="img_party" *ngIf="img_party" alt="Party Logo" class="party-logo">
+                </div>
+                <div class="row">
+                    <div #svgContainer (mousemove)="onSvgHover($event)" (mouseout)="hideTooltip()"
+                        (click)="onSvgClick($event)">
+                        <div [innerHTML]="svgContent"></div>
+                    </div>
+                </div>
+                <div class="zone-seats-info">
+                    <p>ส.ส. เขต</p>
+                    <div class="center-info">
+                        <p style="padding: 0px; margin: 0; font-size: 3.5rem; font-weight: bold;">{{ zoneSeats }}</p>
+                    </div>
+                    <p>/ 400 คน</p>
+                </div>
+                <div class="button-container-ri">
+                    <button mat-button color="primary" (click)="closeDialog()">X</button>
+                </div>
             </div>
         </div>
     </div>

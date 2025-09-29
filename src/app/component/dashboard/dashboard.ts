@@ -18,15 +18,16 @@ import { NgZone } from '@angular/core';
 import { Candidate, Color, Winner } from './dashboardInterface';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailDialog } from '../detail-dialog/detail-dialog';
-import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-score-and-seat';
-import { DashboardV2 } from '../dashboard-v2/dashboard-v2';
+import { PartySeatCountList } from '../dashboard-score-and-seat/dashboard-score-and-seatInterface';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatDialogModule, DashboardScoreAndSeat, DashboardV2],
+  imports: [CommonModule, HttpClientModule, MatDialogModule,MatIconModule],
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
@@ -36,6 +37,12 @@ export class Dashboard implements OnInit {
   img_party: any = '';
   img_head: any = '';
   partyBackgroundColor: any = '';
+  partySeatCountsList: PartySeatCountList[] = [];
+  totalSeats: number = 0;
+  zoneSeats: number = 0;
+  partylistSeats: number = 0;
+  ranking: number = 0;
+  totalVote: any;
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
 
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
@@ -91,6 +98,12 @@ export class Dashboard implements OnInit {
       } catch (error) {
         console.error('Error loading data:', error);
       }
+
+      this.partySeatCountsList = await firstValueFrom(
+        this._dashboard.getPartySeatCountsList()
+      );
+      console.log("partySeatCountsList : ", this.partySeatCountsList);
+
     }
   }
 
@@ -101,11 +114,6 @@ export class Dashboard implements OnInit {
   async settingSvg(svgText: string, doAnimation = true) {
     console.log('>> SVG Loaded');
     let districtIds = Object.keys(this.allWinners);
-
-    // Do not filter districtIds when selectedParty is set, to process all districts
-    console.log('this.selectedParty : ', this.selectedParty);
-    console.log('districtIds : ', districtIds);
-    console.log('allWinners : ', this.allWinners);
 
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
@@ -147,9 +155,21 @@ export class Dashboard implements OnInit {
             );
             this.img_party = this.sanitizer.bypassSecurityTrustUrl(party?.IMG_PARTY || '');
             this.img_head = this.sanitizer.bypassSecurityTrustUrl(party?.IMG_HEAD || '');
-            this.partyBackgroundColor =  party?.COLOR || '#fefdfd';
-            console.log("partyBackgroundColor : ",this.partyBackgroundColor);
-            
+            this.partyBackgroundColor = party?.COLOR || '#fefdfd';
+            const partyData = this.partySeatCountsList.find(
+              (p) => p.partyName === this.selectedParty
+            );
+
+            // Calculate totalSeats and assign individual values
+            if (partyData) {
+              this.totalSeats = partyData.zone_seats + partyData.partylist_seats;
+              this.zoneSeats = partyData.zone_seats;
+              this.partylistSeats = partyData.partylist_seats;
+              this.ranking = partyData.ranking;
+              this.totalVote = partyData.total_party_votes;
+            }
+
+
           } else {
             // Optional: Set a different style for non-selected districts (e.g., gray or transparent)
             styleStr += ' fill: #d3d3d3 !important;'; // Light gray for non-selected districts
@@ -331,5 +351,13 @@ export class Dashboard implements OnInit {
         });
       });
     }
+  }
+
+  getPartylistSeatsArray(): number[] {
+    return Array.from({ length: this.partylistSeats || 0 }, (_, i) => i);
+  }
+
+  formatTotalVotes(votes: number): string {
+    return votes.toLocaleString('en-US');
   }
 }

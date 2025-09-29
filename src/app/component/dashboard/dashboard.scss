@@ -90,87 +90,202 @@ path:hover {
 
 .main-container {
   display: flex;
-  background: #00000086;
+  flex-direction: column; // เปลี่ยนเป็น column เพื่อจัดแถว
+  background: #000;
   height: 100vh;
-  gap: 0.3rem;
-  padding: 1rem;
-}
 
-.left-panel {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 0.3rem;
+  .header-row {
+    width: 100%;
+    display: flex;
+    justify-content: left; // จัดรูปภาพให้อยู่ตรงกลาง
 
-  .left-top-panel {
-    flex: 3;
-    border-radius: 1rem;
-    margin: 1rem 0rem 0rem 1rem;
-    position: relative;
-    /* For absolute positioning of child */
-    overflow: hidden;
+    .logo-image {
+      margin-top: 10px;
+      padding: 10px;
+      max-width: 100%; // ครอบคลุมความกว้าง
+      max-height: 60px; // จำกัดความสูงเพื่อไม่ให้บัง content
+      object-fit: contain; // รักษาสัดส่วน
+    }
   }
 
-  .left-bottom-panel {
-    flex: 2;
-    background: #b8b8b8;
-    border-radius: 1rem;
-    margin: 0rem 0rem 1rem 1rem;
-    order: 1;
-    /* Keep at top */
+  .content-row {
+    display: flex;
+    flex: 1;
+    gap: 0.3rem;
+
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.3rem;
+      position: relative;
+      z-index: 1;
+
+      .left-top-panel {
+        flex: 3;
+        border-radius: 1rem;
+        margin: 1rem 0rem 0rem 1rem;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .row {
+          &:first-child {
+            display: flex;
+            align-items: center;
+
+            .col-7 {
+              text-align: left;
+              padding: 0 1rem;
+
+              p {
+                margin: 0;
+                padding: 0;
+              }
+
+              .center-info {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #000;
+              }
+
+              p:first-child {
+                font-size: 1rem;
+                color: #000;
+              }
+
+              p:last-child {
+                font-size: 1.2rem;
+                color: #000;
+              }
+            }
+
+            .col-5 {
+              text-align: center;
+              flex: 1;
+              padding: 0 1rem;
+
+              .center-info {
+                font-size: 3.5rem;
+                font-weight: bold;
+                color: #000;
+                margin: 0;
+              }
+
+              p:last-child {
+                font-size: 1.2rem;
+                color: #000;
+                margin: 0;
+              }
+            }
+          }
+
+          &:last-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+      }
+
+      .left-bottom-panel {
+        flex: 2;
+        background: #fefdfd;
+        border-radius: 1rem;
+        margin: 0rem 0rem 1rem 1rem;
+        display: flex;
+        align-items: flex-start;
+        padding: 1rem;
+
+        .zone-seats-info {
+          p {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #000;
+          }
+
+          .orange-dots {
+            display: grid;
+            grid-template-columns: repeat(15, auto); 
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+
+            .dot {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+    }
+
+    .right-panel {
+      flex: 2;
+      background: #fefdfd;
+      margin: 1rem 1rem 1rem 0rem;
+      user-select: none;
+      border-radius: 1rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+
+      .button-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+      }
+
+      .party-logo {
+        max-width: 150px;
+        max-height: 150px;
+        object-fit: contain;
+        z-index: 1000;
+      }
+
+      .row {
+        position: relative;
+        flex: 1;
+        z-index: 1;
+      }
+
+      .zone-seats-info {
+        position: absolute;
+        bottom: 10px; // วางที่มุมล่าง
+        left: 10px; // วางที่มุมซ้าย
+        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.8); // พื้นหลังโปร่งใส
+        border-radius: 5px;
+        font-size: 1.2rem;
+        color: #000;
+        z-index: 1000;
+
+        p {
+          margin: 0;
+        }
+      }
+
+      .button-container-ri {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+      }
+    }
   }
-}
-
-.right-panel {
-  flex: 2;
-  background: #fefdfd;
-  margin: 1rem 1rem 1rem 0rem;
-  user-select: none;
-  border-radius: 1rem;
-  position: relative;
-  /* Added to allow absolute positioning of child elements */
-}
-
-.button-container {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  /* Changed from right: 10px to left: 10px to move to the left */
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  z-index: 1000;
-  /* Ensure it stays above other content */
-}
-
-.party-logo {
-  max-width: 150px;
-  max-height: 150px;
-  object-fit: contain;
-  z-index: 1000;
-}
-
-.row {
-  position: relative;
-  /* Ensure .row layout is independent */
-  z-index: 1;
-  /* Keep map below button-container */
-}
-
-.button-container-ri {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  z-index: 1000;
 }
 
 .head-logo {
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 270px;
+  max-height: 270px;
   object-fit: contain;
-  margin-left: 70px;
-  margin-top: 200px;
 }

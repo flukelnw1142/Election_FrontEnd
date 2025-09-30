@@ -1,10 +1,17 @@
-<div class="svg-container" *ngIf="selectedParty === '' " #svgContainer (mousemove)="onSvgHover($event)"
-    (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
-    <div [innerHTML]="svgContent"></div>
-</div>
+<div class="row">
+    <div class="col-6">
+        <app-dashboard-v2 *ngIf="selectedParty === '' "></app-dashboard-v2>
+    </div>
+    <div class="col-6">
+        <app-dashboard-score-and-seat *ngIf="selectedParty === '' "></app-dashboard-score-and-seat>
+    </div>
 
-<div class="svg-container">
-    <app-dashboard-v2></app-dashboard-v2>
+</div>
+<div class="row">
+    <div class="svg-container" *ngIf="selectedParty === '' " #svgContainer (mousemove)="onSvgHover($event)"
+        (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
+        <div [innerHTML]="svgContent"></div>
+    </div>
 </div>
 
 

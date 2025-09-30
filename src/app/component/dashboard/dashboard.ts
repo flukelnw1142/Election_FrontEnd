@@ -21,13 +21,14 @@ import { DetailDialog } from '../detail-dialog/detail-dialog';
 import { PartySeatCountList } from '../dashboard-score-and-seat/dashboard-score-and-seatInterface';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardV2 } from '../dashboard-v2/dashboard-v2';
+import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-score-and-seat';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule, DashboardV2],
+  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule, DashboardV2, DashboardScoreAndSeat],
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';

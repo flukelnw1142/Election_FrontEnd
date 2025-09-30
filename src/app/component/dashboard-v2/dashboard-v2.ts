@@ -100,8 +100,16 @@ export class DashboardV2 implements OnInit {
       const svgDoc = parser.parseFromString(rawSvg, 'image/svg+xml');
       const svg = svgDoc.documentElement;
 
-      svg.setAttribute('width', '1000');
-      svg.setAttribute('height', '800');
+      // svg.setAttribute('width', '1000');
+      // svg.setAttribute('height', '800');
+
+      // ลบ width/height เดิมออก
+      svg.removeAttribute('width');
+      svg.removeAttribute('height');
+
+      svg.setAttribute('viewBox', '0 0 900 500');
+      svg.style.margin = '20px 0';
+      svg.style.height = '40vh';
 
       // 🧠 STEP 1: สร้าง flat list ของชื่อพรรค
       const partySeatMap: { [partyName: string]: number } = {};
@@ -170,7 +178,7 @@ export class DashboardV2 implements OnInit {
         const seats = p.zone_seats + p.partylist_seats;
         seatCounter += seats;
 
-        console.log(seatCounter)
+        console.log(seatCounter);
 
         if (index <= seatCounter) {
           this.tooltipText = p.partyName;
@@ -183,7 +191,7 @@ export class DashboardV2 implements OnInit {
       this.tooltipVisible = true;
     } else {
       this.tooltipVisible = false;
-      this.tooltipText = "";
+      this.tooltipText = '';
     }
   }
 

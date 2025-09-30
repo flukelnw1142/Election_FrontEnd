@@ -1,7 +1,10 @@
 <div class="svg-container" *ngIf="selectedParty === '' " #svgContainer (mousemove)="onSvgHover($event)"
     (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
     <div [innerHTML]="svgContent"></div>
+</div>
 
+<div class="svg-container">
+    <app-dashboard-v2></app-dashboard-v2>
 </div>
 
 

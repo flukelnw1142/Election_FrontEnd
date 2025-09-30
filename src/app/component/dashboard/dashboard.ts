@@ -20,13 +20,14 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailDialog } from '../detail-dialog/detail-dialog';
 import { PartySeatCountList } from '../dashboard-score-and-seat/dashboard-score-and-seatInterface';
 import { MatIconModule } from '@angular/material/icon';
+import { DashboardV2 } from '../dashboard-v2/dashboard-v2';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule],
+  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule, DashboardV2],
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
@@ -75,7 +76,7 @@ export class Dashboard implements OnInit {
           this.allWinners = winners;
 
           const svgText = await firstValueFrom(
-            this.http.get('/assets/thailandV2.svg', { responseType: 'text' })
+            this.http.get('/assets/thailand.svg', { responseType: 'text' })
           );
           await this.settingSvg(svgText, true);
         }
@@ -86,7 +87,7 @@ export class Dashboard implements OnInit {
             this.zone.run(() => {
               this.allWinners = winners;
               firstValueFrom(
-                this.http.get('/assets/thailandV2.svg', {
+                this.http.get('/assets/thailand.svg', {
                   responseType: 'text',
                 })
               ).then((svgText) => {
@@ -131,7 +132,7 @@ export class Dashboard implements OnInit {
       svg.style.height = '80vh';
     }
     svg.style.width = 'auto';
-    svg.style.display = 'block'; // ป้องกัน spacing ใต้ SVG
+    svg.style.display = 'block'; 
     svg.style.margin = '20px 0';
 
     const container = this.svgContainer.nativeElement;

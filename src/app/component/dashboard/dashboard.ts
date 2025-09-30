@@ -54,7 +54,7 @@ export class Dashboard implements OnInit {
     private zone: NgZone,
     private dialog: MatDialog,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -284,7 +284,10 @@ export class Dashboard implements OnInit {
       ) {
         const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
         this.selectedParty = party;
-
+        const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
+        if (img) {
+          img.style.marginLeft = '20px';
+        }
         if (this.allWinners && Object.keys(this.allWinners).length > 0) {
           this.zone.run(() => {
             firstValueFrom(
@@ -367,7 +370,11 @@ export class Dashboard implements OnInit {
 
   closeDialog() {
     this.selectedParty = '';
+    const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
 
+    if (img) {
+      img.style.marginLeft = '0px';
+    }
     if (this.allWinners && Object.keys(this.allWinners).length > 0) {
       this.zone.run(() => {
         firstValueFrom(

@@ -21,13 +21,12 @@ import { DetailDialog } from '../detail-dialog/detail-dialog';
 import { PartySeatCountList } from '../dashboard-score-and-seat/dashboard-score-and-seatInterface';
 import { MatIconModule } from '@angular/material/icon';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatDialogModule,MatIconModule],
+  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule],
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
@@ -54,8 +53,8 @@ export class Dashboard implements OnInit {
     private sanitizer: DomSanitizer,
     private zone: NgZone,
     private dialog: MatDialog,
-    @Inject(PLATFORM_ID) private platformId: Object,
-  ) { }
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -76,7 +75,7 @@ export class Dashboard implements OnInit {
           this.allWinners = winners;
 
           const svgText = await firstValueFrom(
-            this.http.get('/assets/thailand.svg', { responseType: 'text' })
+            this.http.get('/assets/thailandV2.svg', { responseType: 'text' })
           );
           await this.settingSvg(svgText, true);
         }
@@ -87,7 +86,9 @@ export class Dashboard implements OnInit {
             this.zone.run(() => {
               this.allWinners = winners;
               firstValueFrom(
-                this.http.get('/assets/thailand.svg', { responseType: 'text' })
+                this.http.get('/assets/thailandV2.svg', {
+                  responseType: 'text',
+                })
               ).then((svgText) => {
                 this.settingSvg(svgText, false);
                 this.cd.detectChanges();
@@ -102,8 +103,7 @@ export class Dashboard implements OnInit {
       this.partySeatCountsList = await firstValueFrom(
         this._dashboard.getPartySeatCountsList()
       );
-      console.log("partySeatCountsList : ", this.partySeatCountsList);
-
+      console.log('partySeatCountsList : ', this.partySeatCountsList);
     }
   }
 
@@ -112,13 +112,27 @@ export class Dashboard implements OnInit {
   }
 
   async settingSvg(svgText: string, doAnimation = true) {
-    console.log('>> SVG Loaded');
+    console.log('>> SVG Loaded', this.selectedParty);
     let districtIds = Object.keys(this.allWinners);
 
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
     const svg = svgDoc.documentElement;
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+
+    // ✅ ลบขนาดตายตัว เพื่อให้ responsive
+    svg.removeAttribute('width');
+    svg.removeAttribute('height');
+
+    // ✅ ใส่ style เพื่อให้ SVG สูงเท่าจอ
+    if (this.selectedParty) {
+      svg.style.height = '75vh';
+    } else {
+      svg.style.height = '80vh';
+    }
+    svg.style.width = 'auto';
+    svg.style.display = 'block'; // ป้องกัน spacing ใต้ SVG
+    svg.style.margin = '20px 0';
 
     const container = this.svgContainer.nativeElement;
     container.innerHTML = '';
@@ -146,15 +160,22 @@ export class Dashboard implements OnInit {
             .replace(/stroke-width: *[^;]*;/g, '');
 
           // Apply color only if no selectedParty or if the district matches selectedParty
-          if (!this.selectedParty || this.allWinners[id].party === this.selectedParty) {
+          if (
+            !this.selectedParty ||
+            this.allWinners[id].party === this.selectedParty
+          ) {
             styleStr +=
               ' fill: ' + this.getColor(this.allWinners[id]) + ' !important;';
             // Find the image URL from partyColorMap
             const party = Object.values(this.partyColorMap).find(
               (p) => p.PARTY_NAME === this.selectedParty
             );
-            this.img_party = this.sanitizer.bypassSecurityTrustUrl(party?.IMG_PARTY || '');
-            this.img_head = this.sanitizer.bypassSecurityTrustUrl(party?.IMG_HEAD || '');
+            this.img_party = this.sanitizer.bypassSecurityTrustUrl(
+              party?.IMG_PARTY || ''
+            );
+            this.img_head = this.sanitizer.bypassSecurityTrustUrl(
+              party?.IMG_HEAD || ''
+            );
             this.partyBackgroundColor = party?.COLOR || '#fefdfd';
             const partyData = this.partySeatCountsList.find(
               (p) => p.partyName === this.selectedParty
@@ -162,14 +183,13 @@ export class Dashboard implements OnInit {
 
             // Calculate totalSeats and assign individual values
             if (partyData) {
-              this.totalSeats = partyData.zone_seats + partyData.partylist_seats;
+              this.totalSeats =
+                partyData.zone_seats + partyData.partylist_seats;
               this.zoneSeats = partyData.zone_seats;
               this.partylistSeats = partyData.partylist_seats;
               this.ranking = partyData.ranking;
               this.totalVote = partyData.total_party_votes;
             }
-
-
           } else {
             // Optional: Set a different style for non-selected districts (e.g., gray or transparent)
             styleStr += ' fill: #d3d3d3 !important;'; // Light gray for non-selected districts
@@ -183,13 +203,20 @@ export class Dashboard implements OnInit {
           g.setAttribute('data-party', this.allWinners[id].party || '');
 
           // Disable pointer events for non-selected party regions when selectedParty is set
-          if (this.selectedParty && this.allWinners[id].party !== this.selectedParty) {
+          if (
+            this.selectedParty &&
+            this.allWinners[id].party !== this.selectedParty
+          ) {
             g.style.pointerEvents = 'none';
           } else {
             g.style.pointerEvents = 'auto';
           }
 
-          if (doAnimation && (!this.selectedParty || this.allWinners[id].party === this.selectedParty)) {
+          if (
+            doAnimation &&
+            (!this.selectedParty ||
+              this.allWinners[id].party === this.selectedParty)
+          ) {
             path.classList.add('animated-path');
             await this.delay(5);
           }
@@ -327,7 +354,7 @@ export class Dashboard implements OnInit {
         width: '100vw',
         height: '100vh',
         maxWidth: '100vw',
-        panelClass: 'full-screen-dialog'
+        panelClass: 'full-screen-dialog',
       });
 
       dialogRef.afterClosed().subscribe(() => {

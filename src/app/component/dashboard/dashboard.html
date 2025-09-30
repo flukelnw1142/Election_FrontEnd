@@ -1,5 +1,5 @@
-<div *ngIf="selectedParty === '' " #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()"
-    (click)="onSvgClick($event)">
+<div class="svg-container" *ngIf="selectedParty === '' " #svgContainer (mousemove)="onSvgHover($event)"
+    (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
     <div [innerHTML]="svgContent"></div>
 
 </div>
@@ -30,9 +30,9 @@
 
 <div *ngIf="selectedParty !== '' ">
     <div class="main-container">
-        <div class="header-row">
+        <!-- <div class="header-row">
             <img src="https://onee.oneeclick.co/assets/images/logo-onee.png" class="logo-image" alt="Header Image" />
-        </div>
+        </div> -->
         <div class="content-row">
             <div class="left-panel">
                 <div class="left-top-panel" [style.background-color]="partyBackgroundColor">
@@ -56,25 +56,28 @@
                     </div>
                 </div>
                 <div class="left-bottom-panel">
-                    <div class="zone-seats-info">
-                        <p style="font-size: 1rem">ส.ส. บัญชีรายชื่อ</p>
-                        <div class="center-info">
-                            <p style="padding: 0px; margin: 0; font-size: 1.5rem; font-weight: bold;">{{ partylistSeats
-                                }}</p>
+                    <div class="part1">
+                        <div class="zone-seats-info">
+                            <p style="font-size: 1rem">ส.ส. บัญชีรายชื่อ</p>
+                            <div class="center-info">
+                                <p style="padding: 0px; margin: 0; font-size: 1.5rem; font-weight: bold;">{{
+                                    partylistSeats
+                                    }}</p>
+                            </div>
+                            <p style="font-size: 1rem">/ 100 คน</p>
                         </div>
-                        <p style="font-size: 1rem">/ 100 คน</p>
-                        <div class="orange-dots">
-                            <span class="dot" *ngFor="let i of getPartylistSeatsArray()"
-                                [style.background-color]="partyBackgroundColor"></span>
+                        <div class="vote-info">
+                            <div class="center-info">
+                                <p style="padding: 0px; margin: 0; font-size: 1.5rem; font-weight: bold;">
+                                    {{ formatTotalVotes(totalVote) }}
+                                </p>
+                            </div>
+                            <p style="font-size: 1rem">คะแนน</p>
                         </div>
                     </div>
-                    <div class="vote-info">
-                        <div class="center-info">
-                            <p style="padding: 0px; margin: 0; font-size: 1.5rem; font-weight: bold;">
-                                {{ formatTotalVotes(totalVote) }}
-                            </p>
-                        </div>
-                        <p style="font-size: 1rem">คะแนน</p>
+                    <div class="orange-dots">
+                        <span class="dot" *ngFor="let i of getPartylistSeatsArray()"
+                            [style.background-color]="partyBackgroundColor"></span>
                     </div>
                 </div>
             </div>

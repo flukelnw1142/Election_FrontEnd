@@ -6,6 +6,7 @@ import {
   ElementRef,
   ViewChild,
   ChangeDetectorRef,
+  Renderer2,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -44,7 +45,7 @@ export class Dashboard implements OnInit {
   ranking: number = 0;
   totalVote: any;
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
-
+  @ViewChild('magnifier', { static: false }) magnifier!: ElementRef;
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
 
   constructor(
@@ -54,6 +55,7 @@ export class Dashboard implements OnInit {
     private sanitizer: DomSanitizer,
     private zone: NgZone,
     private dialog: MatDialog,
+    private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -132,7 +134,7 @@ export class Dashboard implements OnInit {
       svg.style.height = '70vh';
     }
     svg.style.width = 'auto';
-    svg.style.display = 'block'; 
+    svg.style.display = 'block';
     svg.style.margin = '20px 0';
 
     const container = this.svgContainer.nativeElement;
@@ -312,14 +314,24 @@ export class Dashboard implements OnInit {
   tooltipX = 0;
   tooltipY = 0;
 
+  magnifierVisible = false;
+  magnifierX = 0;
+  magnifierY = 0;
+  zoomLevel = 10;
+  lensSize = 199;
+  
   onSvgHover(event: MouseEvent): void {
-    const target = event.target as SVGElement;
+    if (!this.svgContainer || !this.svgContainer.nativeElement) {
+      console.log('SVG container not found');  // Debug
+      return;
+    }
+    this.showMagnifier(event);
 
+    const target = event.target as SVGElement;
     if (
       target instanceof SVGPathElement ||
       target instanceof SVGTextElement ||
-      (target instanceof SVGTSpanElement &&
-        /^\d+$/.test((target.textContent || '').trim()))
+      (target instanceof SVGTSpanElement && /^\d+$/.test((target.textContent || '').trim()))
     ) {
       let parent = target.parentElement;
       if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
@@ -338,17 +350,138 @@ export class Dashboard implements OnInit {
           this.tooltipX = event.clientX + 10;
           this.tooltipY = event.clientY + 10;
           this.tooltipVisible = true;
+          this.cd.detectChanges();  // Force update for tooltip
         });
       } else {
-        this.tooltipVisible = false;
+        this.hideTooltip();
       }
     } else {
-      this.tooltipVisible = false;
+      this.hideTooltip();
     }
+  }
+
+  showMagnifier(event: MouseEvent) {
+    if (!this.svgContainer || !this.svgContainer.nativeElement) {
+      console.log('SVG container not available in showMagnifier');  // Debug
+      return;
+    }
+
+    const svgContainerEl = this.svgContainer.nativeElement;
+    const svg = svgContainerEl.querySelector('svg') as SVGSVGElement;
+    if (!svg) {
+      console.log('SVG element not found inside container');  // Debug: This is key—if this logs, the issue is with [innerHTML]
+      return;
+    }
+
+    // Get mouse position relative to SVG (handling viewBox)
+    const point = svg.createSVGPoint();
+    point.x = event.clientX;
+    point.y = event.clientY;
+    const svgPoint = point.matrixTransform(svg.getScreenCTM()?.inverse() || new DOMMatrix());
+    let mouseX = svgPoint.x;
+    let mouseY = svgPoint.y;
+
+    // Parse original viewBox for clamp
+    const originalViewBoxStr = svg.getAttribute('viewBox') || `0 0 104.9999 164.99999`;
+    const originalViewBox = originalViewBoxStr.split(' ').map(Number);
+    const vbMinX = originalViewBox[0];
+    const vbMinY = originalViewBox[1];
+    const vbWidth = originalViewBox[2];
+    const vbHeight = originalViewBox[3];
+
+    // Clamp mouse to viewBox bounds to avoid negative/outside
+    mouseX = Math.max(vbMinX, Math.min(mouseX, vbMinX + vbWidth));
+    mouseY = Math.max(vbMinY, Math.min(mouseY, vbMinY + vbHeight));
+
+    // Position magnifier to center on mouse
+    this.magnifierX = event.clientX - (this.lensSize / 2);
+    this.magnifierY = event.clientY - (this.lensSize / 2);
+    this.magnifierX = Math.max(0, Math.min(this.magnifierX, window.innerWidth - this.lensSize));
+    this.magnifierY = Math.max(0, Math.min(this.magnifierY, window.innerHeight - this.lensSize));
+
+    // Clone SVG
+    const magnifierEl = this.magnifier.nativeElement;
+    magnifierEl.innerHTML = '';
+    const clonedSvg = svg.cloneNode(true) as SVGSVGElement;
+    clonedSvg.setAttribute('viewBox', originalViewBoxStr);
+    clonedSvg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    clonedSvg.removeAttribute('width');
+    clonedSvg.removeAttribute('height');
+    clonedSvg.style.width = '100%';
+    clonedSvg.style.height = '100%';
+    magnifierEl.appendChild(clonedSvg);
+
+    // Use g for zoom and translate with improved centering
+    const zoomGroup = d3.select(clonedSvg).append('g');
+    let transX = -mouseX * this.zoomLevel + (this.lensSize / 2);
+    let transY = -mouseY * this.zoomLevel + (this.lensSize / 2);
+    zoomGroup.attr('transform', `translate(${transX} ${transY}) scale(${this.zoomLevel})`);
+    // Move children to zoomGroup safely
+    const children = Array.from(clonedSvg.children);
+    children.forEach((child) => {
+      if (child !== zoomGroup.node()) {
+        zoomGroup.node()?.appendChild(child);
+      }
+    });
+
+    this.magnifierVisible = true;
+    this.cd.detectChanges();
+
+    // Force styles with Renderer2
+    this.renderer.setStyle(magnifierEl, 'display', 'block');
+    this.renderer.setStyle(magnifierEl, 'top', this.magnifierY + 'px');
+    this.renderer.setStyle(magnifierEl, 'left', this.magnifierX + 'px');
+
+    // Add mousemove listener to clonedSvg for hover simulation
+    this.renderer.listen(clonedSvg, 'mousemove', (lensEvent: MouseEvent) => {
+      // Calculate effective mouse position in original SVG coordinates
+      const lensPoint = svg.createSVGPoint();
+      lensPoint.x = lensEvent.offsetX;
+      lensPoint.y = lensEvent.offsetY;
+
+      // Map back to original coordinates (reverse zoom and translate)
+      const effectiveX = (lensPoint.x - transX) / this.zoomLevel;
+      const effectiveY = (lensPoint.y - transY) / this.zoomLevel;
+
+      // Convert effective position back to screen clientX/Y for tooltip position and elementFromPoint
+      const originalPoint = svg.createSVGPoint();
+      originalPoint.x = effectiveX;
+      originalPoint.y = effectiveY;
+      const screenPoint = originalPoint.matrixTransform(svg.getScreenCTM() || new DOMMatrix());
+      const effectiveClientX = screenPoint.x;
+      const effectiveClientY = screenPoint.y;
+
+      // Use elementFromPoint on the document to find the target in the original SVG
+      const target = document.elementFromPoint(effectiveClientX, effectiveClientY) as SVGElement | null;
+
+      if (target) {
+        // Simulate the hover logic with the effective target
+        this.onSvgHover({
+          target,
+          clientX: lensEvent.clientX,
+          clientY: lensEvent.clientY,
+          preventDefault: () => { },
+          stopPropagation: () => { },
+        } as unknown as MouseEvent);
+      } else {
+        this.hideTooltip();
+      }
+    });
+
   }
 
   hideTooltip() {
     this.tooltipVisible = false;
+  }
+
+  hideMagnifier() {
+    this.magnifierVisible = false;
+    this.cd.detectChanges();
+    if (this.magnifier && this.magnifier.nativeElement) {
+      this.renderer.setStyle(this.magnifier.nativeElement, 'display', 'none');
+      this.magnifier.nativeElement.innerHTML = '';
+    }
+    console.log('Magnifier hidden');
   }
 
   openDialog() {

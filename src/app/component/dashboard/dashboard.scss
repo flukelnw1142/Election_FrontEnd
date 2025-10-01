@@ -91,8 +91,10 @@ path:hover {
 .main-container {
   display: flex;
   flex-direction: column;
-  background: #000;
+  background: #fff;
   height: 80vh;
+  border-radius: 2rem;
+
 
   .content-row {
     display: flex;
@@ -318,4 +320,72 @@ path:hover {
   border-radius: 0.5rem;
   padding: 0.25rem 0.5rem;
   gap: 0.75rem;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+}
+
+.card-left {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 80vh;
+}
+
+.card-m {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 39.3vh;
+}
+
+.card-r {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 100vh;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-header img {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-content {
+  color: #666;
+}
+
+.progress {
+  height: 10px;
+  background: #f0e7d8;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #ffcc00;
+  width: 60%;
 }

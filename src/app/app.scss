@@ -1,0 +1,14 @@
+.header-row {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+
+
+    .logo-image {
+        margin-top: 10px;
+        padding: 10px;
+        max-width: 100%;
+        max-height: 60px;
+        object-fit: contain;
+    }
+}

@@ -130,12 +130,12 @@ export class Dashboard implements OnInit {
 
     // ✅ ใส่ style เพื่อให้ SVG สูงเท่าจอ
     if (this.selectedParty) {
-      svg.style.height = '75vh';
+      svg.style.height = '74vh';
     } else {
-      svg.style.height = '80vh';
+      svg.style.height = '74vh';
     }
     svg.style.width = 'auto';
-    svg.style.display = 'block';
+    // svg.style.display = 'block';
     svg.style.margin = '20px 0';
 
     const container = this.svgContainer.nativeElement;
@@ -550,22 +550,23 @@ export class Dashboard implements OnInit {
   }
 
   closeDialog() {
+    console.log("Close > ", this.selectedParty)
     this.selectedParty = '';
-    const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
+    // const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
 
-    if (img) {
-      img.style.marginLeft = '0px';
-    }
-    if (this.allWinners && Object.keys(this.allWinners).length > 0) {
-      this.zone.run(() => {
-        firstValueFrom(
-          this.http.get('/assets/thailand.svg', { responseType: 'text' })
-        ).then((svgText) => {
-          this.settingSvg(svgText, false);
-          this.cd.detectChanges();
-        });
-      });
-    }
+    // if (img) {
+    //   img.style.marginLeft = '0px';
+    // }
+    // if (this.allWinners && Object.keys(this.allWinners).length > 0) {
+    //   this.zone.run(() => {
+    //     firstValueFrom(
+    //       this.http.get('/assets/thailand.svg', { responseType: 'text' })
+    //     ).then((svgText) => {
+    //       this.settingSvg(svgText, false);
+    //       this.cd.detectChanges();
+    //     });
+    //   });
+    // }
   }
 
   getPartylistSeatsArray(): number[] {

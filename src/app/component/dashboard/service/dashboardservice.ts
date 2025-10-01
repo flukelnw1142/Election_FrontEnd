@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,10 @@ export class DashboardService {
   private winnersSubject = new BehaviorSubject<any>({});
   winners$ = this.winnersSubject.asObservable();
 
-  constructor(private _http: HttpClient) {
-    this.startConnection();
+  constructor(private _http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.startConnection();
+    }
   }
   private startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()

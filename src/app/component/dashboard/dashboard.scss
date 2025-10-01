@@ -3,6 +3,11 @@ svg {
   height: auto;
 }
 
+p {
+  padding: 0px;
+  margin: 0;
+}
+
 path {
   cursor: pointer;
   transition: fill 0.3s;
@@ -317,11 +322,6 @@ path:hover {
 //   }
 // }
 
-.head-logo {
-  max-width: 270px;
-  max-height: 270px;
-  object-fit: contain;
-}
 
 .ds-Button {
   user-select: none;
@@ -350,21 +350,84 @@ path:hover {
   border-radius: 15px;
   padding: 20px;
   height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+
+
+  .party-rank-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
 
   .party-logo {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 20%;
+    max-height: 20%;
+    position: absolute;
+    // object-fit: contain;
+    // z-index: 1000;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .head-logo {
+    // max-width: 270px;
+    // max-height: 270px;
+    width: 90%;
+    position: relative;
+    bottom: -20px;
     object-fit: contain;
-    z-index: 1000;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .party-text-left {
+    text-align: left;
+    // color: #fff;
+    font-size: 18px;
+    // text-shadow:
+    // 0 0 5px rgba(255, 255, 255, 0.356),
+    // 0.5px -0.5px 0 #ffffffbd,
+
+  }
+
+  .party-text-right {
+    text-align: left;
+    // color: #fff;
+    font-size: 18px;
+
+  }
+}
+
+.orange-dots {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  justify-content: flex-start;
+  gap: 0.2rem;
+
+  .dot {
+    // width: 30px;
+    // height: 30px;
+    width: 1.4dvw;
+    height: 1.4dvw;
+    border-radius: 50%;
+    background-color: #ff6200;
   }
 }
 
 .card-m {
-  background-color: rgba(255, 255, 255, 0.2);
+  // background-color: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  height: 39.3vh;
+  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  // height: 50%; 
+  // height: 39.3vh;
 }
 
 .card-r {

@@ -15,7 +15,12 @@ import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgZone } from '@angular/core';
-import { Candidate, Color, PartySeatCountList, Winner } from './dashboardInterface';
+import {
+  Candidate,
+  Color,
+  PartySeatCountList,
+  Winner,
+} from './dashboardInterface';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailDialog } from '../detail-dialog/detail-dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,7 +32,13 @@ import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-sco
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule,DashboardScoreAndSeat],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    MatDialogModule,
+    MatIconModule,
+    DashboardScoreAndSeat,
+  ],
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
@@ -55,7 +66,7 @@ export class Dashboard implements OnInit {
     private zone: NgZone,
     private dialog: MatDialog,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -132,7 +143,7 @@ export class Dashboard implements OnInit {
       svg.style.height = '70vh';
     }
     svg.style.width = 'auto';
-    svg.style.display = 'block'; 
+    svg.style.display = 'block';
     svg.style.margin = '20px 0';
 
     const container = this.svgContainer.nativeElement;
@@ -285,7 +296,10 @@ export class Dashboard implements OnInit {
       ) {
         const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
         this.selectedParty = party;
-        const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
+        this.hideTooltip();
+        const img = document.getElementsByClassName(
+          'logo-image'
+        )[0] as HTMLElement;
         if (img) {
           img.style.marginLeft = '20px';
         }

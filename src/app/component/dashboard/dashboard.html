@@ -17,15 +17,39 @@
     <div class="row">
         <div class="col-7">
             <div class="glass-card">
-                <div class="svg-container" #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()"
-                    (click)="onSvgClick($event)">
-                    <div [innerHTML]="svgContent"></div>
+                <div class="svg-container" *ngIf="selectedParty === ''" #svgContainer (mousemove)="onSvgHover($event)"
+                    (mouseleave)="hideTooltip(); hideMagnifier()" (click)="onSvgClick($event)">
+                    <div class="thailand-map-wrapper"> <!-- New wrapper class like original -->
+                        <div [innerHTML]="svgContent"></div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-5">
             <div class="card-left glass-card">
                 <app-dashboard-score-and-seat *ngIf="selectedParty === '' "></app-dashboard-score-and-seat>
+            </div>
+        </div>
+    </div>
+    <div class="magnifier" #magnifier [hidden]="!magnifierVisible"
+        [ngStyle]="{ 'top': magnifierY + 'px', 'left': magnifierX + 'px' }"></div>
+
+    <div class="svg-tooltip" *ngIf="tooltipVisible" [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
+        <div class="tooltip-content">
+            <div class="tooltip-text">
+                <p>{{ tooltipText }}</p>
+                <div class="tooltip-subtext">
+                    <div *ngFor="let candidate of detailDistrict">
+                        <!-- <img [src]="getCandidateImage(candidate.logoURL)" alt="{{ candidate.name }}"
+                        style="width: 30px; height: 30px; margin-right: 8px; border-radius: 50%; object-fit: cover;" /> -->
+                        <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" />
+                        <div>
+                            <p>{{ candidate.party_name }}</p>
+                            <p>{{ candidate.fullname }}</p>
+                            <p>คะแนน: {{ candidate.totalVotes | number }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -71,39 +95,16 @@
             </div>
             <p style="text-align: center;">({{ formatTotalVotes(totalVote) }} คะแนน)</p>
         </div>
-    </div>
+    </div> 
     <div class="col-6">
-        <div class="svg-container" *ngIf="selectedParty === ''" #svgContainer (mousemove)="onSvgHover($event)"
-            (mouseleave)="hideTooltip(); hideMagnifier()" (click)="onSvgClick($event)">
-            <div class="thailand-map-wrapper"> <!-- New wrapper class like original -->
-                <div [innerHTML]="svgContent"></div>
-            </div>
+        <div class="svg-container" #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()"
+            (click)="onSvgClick($event)">
+            <div [innerHTML]="svgContent"></div>
         </div>
     </div>
 </div>
 
-<div class="magnifier" #magnifier [hidden]="!magnifierVisible" 
-    [ngStyle]="{ 'top': magnifierY + 'px', 'left': magnifierX + 'px' }"></div>
 
-<div class="svg-tooltip" *ngIf="tooltipVisible" [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
-    <div class="tooltip-content">
-        <div class="tooltip-text">
-            <p>{{ tooltipText }}</p>
-            <div class="tooltip-subtext">
-                <div *ngFor="let candidate of detailDistrict">
-                    <!-- <img [src]="getCandidateImage(candidate.logoURL)" alt="{{ candidate.name }}"
-                        style="width: 30px; height: 30px; margin-right: 8px; border-radius: 50%; object-fit: cover;" /> -->
-                    <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" />
-                    <div>
-                        <p>{{ candidate.party_name }}</p>
-                        <p>{{ candidate.fullname }}</p>
-                        <p>คะแนน: {{ candidate.totalVotes | number }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 

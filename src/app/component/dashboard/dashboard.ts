@@ -16,14 +16,10 @@ import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgZone } from '@angular/core';
-import {
-  Candidate,
-  Color,
-  PartySeatCountList,
-  Winner,
-} from './dashboardInterface';
+import { Candidate, Color, Winner } from './dashboardInterface';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailDialog } from '../detail-dialog/detail-dialog';
+import { PartySeatCountList } from '../dashboard/dashboardInterface';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardV2 } from '../dashboard-v2/dashboard-v2';
 import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-score-and-seat';
@@ -33,13 +29,7 @@ import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-sco
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatIconModule,
-    DashboardScoreAndSeat,
-  ],
+  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule, DashboardV2, DashboardScoreAndSeat],
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
@@ -68,7 +58,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -89,7 +79,7 @@ export class Dashboard implements OnInit {
           this.allWinners = winners;
 
           const svgText = await firstValueFrom(
-            this.http.get('/assets/thailandV2.svg', { responseType: 'text' })
+            this.http.get('/assets/thailand.svg', { responseType: 'text' })
           );
           await this.settingSvg(svgText, true);
         }
@@ -100,7 +90,7 @@ export class Dashboard implements OnInit {
             this.zone.run(() => {
               this.allWinners = winners;
               firstValueFrom(
-                this.http.get('/assets/thailandV2.svg', {
+                this.http.get('/assets/thailand.svg', {
                   responseType: 'text',
                 })
               ).then((svgText) => {
@@ -140,9 +130,9 @@ export class Dashboard implements OnInit {
 
     // ✅ ใส่ style เพื่อให้ SVG สูงเท่าจอ
     if (this.selectedParty) {
-      svg.style.height = '70vh';
+      svg.style.height = '75vh';
     } else {
-      svg.style.height = '70vh';
+      svg.style.height = '80vh';
     }
     svg.style.width = 'auto';
     svg.style.display = 'block';
@@ -298,10 +288,7 @@ export class Dashboard implements OnInit {
       ) {
         const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
         this.selectedParty = party;
-        this.hideTooltip();
-        const img = document.getElementsByClassName(
-          'logo-image'
-        )[0] as HTMLElement;
+        const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
         if (img) {
           img.style.marginLeft = '20px';
         }
@@ -331,16 +318,19 @@ export class Dashboard implements OnInit {
   magnifierVisible = false;
   magnifierX = 0;
   magnifierY = 0;
-  zoomLevel = 10;
-  lensSize = 199;
-  
+  zoomLevel = 8;
+  lensSize = 300;  // Match CSS width/height
+
   onSvgHover(event: MouseEvent): void {
     if (!this.svgContainer || !this.svgContainer.nativeElement) {
       console.log('SVG container not found');  // Debug
       return;
     }
+
+    // Always show magnifier on any mousemove in container
     this.showMagnifier(event);
 
+    // Tooltip logic (keep tied to specific targets)
     const target = event.target as SVGElement;
     if (
       target instanceof SVGPathElement ||
@@ -387,6 +377,8 @@ export class Dashboard implements OnInit {
       return;
     }
 
+    console.log('SVG found, showing magnifier');  // Debug: Confirm trigger
+
     // Get mouse position relative to SVG (handling viewBox)
     const point = svg.createSVGPoint();
     point.x = event.clientX;
@@ -406,12 +398,14 @@ export class Dashboard implements OnInit {
     // Clamp mouse to viewBox bounds to avoid negative/outside
     mouseX = Math.max(vbMinX, Math.min(mouseX, vbMinX + vbWidth));
     mouseY = Math.max(vbMinY, Math.min(mouseY, vbMinY + vbHeight));
+    console.log('Clamped Mouse in SVG units:', mouseX, mouseY);
 
     // Position magnifier to center on mouse
     this.magnifierX = event.clientX - (this.lensSize / 2);
     this.magnifierY = event.clientY - (this.lensSize / 2);
     this.magnifierX = Math.max(0, Math.min(this.magnifierX, window.innerWidth - this.lensSize));
     this.magnifierY = Math.max(0, Math.min(this.magnifierY, window.innerHeight - this.lensSize));
+    console.log('Magnifier position (px):', this.magnifierX, this.magnifierY);
 
     // Clone SVG
     const magnifierEl = this.magnifier.nativeElement;
@@ -430,6 +424,8 @@ export class Dashboard implements OnInit {
     let transX = -mouseX * this.zoomLevel + (this.lensSize / 2);
     let transY = -mouseY * this.zoomLevel + (this.lensSize / 2);
     zoomGroup.attr('transform', `translate(${transX} ${transY}) scale(${this.zoomLevel})`);
+    console.log('Transform: translate(' + transX + ' ' + transY + ') scale(' + this.zoomLevel + ')');
+
     // Move children to zoomGroup safely
     const children = Array.from(clonedSvg.children);
     children.forEach((child) => {
@@ -482,6 +478,43 @@ export class Dashboard implements OnInit {
       }
     });
 
+    // Add click listener to clonedSvg for click simulation
+    this.renderer.listen(clonedSvg, 'click', (lensEvent: MouseEvent) => {
+      // Calculate effective mouse position in original SVG coordinates
+      const lensPoint = svg.createSVGPoint();
+      lensPoint.x = lensEvent.offsetX;
+      lensPoint.y = lensEvent.offsetY;
+
+      // Map back to original coordinates (reverse zoom and translate)
+      const effectiveX = (lensPoint.x - transX) / this.zoomLevel;
+      const effectiveY = (lensPoint.y - transY) / this.zoomLevel;
+
+      // Convert effective position back to screen clientX/Y for elementFromPoint
+      const originalPoint = svg.createSVGPoint();
+      originalPoint.x = effectiveX;
+      originalPoint.y = effectiveY;
+      const screenPoint = originalPoint.matrixTransform(svg.getScreenCTM() || new DOMMatrix());
+      const effectiveClientX = screenPoint.x;
+      const effectiveClientY = screenPoint.y;
+
+      // Use elementFromPoint on the document to find the target in the original SVG
+      const target = document.elementFromPoint(effectiveClientX, effectiveClientY) as SVGElement | null;
+
+      if (target) {
+        // Simulate the click logic with the effective target
+        this.onSvgClick({
+          target,
+          clientX: lensEvent.clientX,
+          clientY: lensEvent.clientY,
+          preventDefault: () => { },
+          stopPropagation: () => { },
+        } as unknown as MouseEvent);
+      }
+    });
+
+    console.log('Magnifier style: top ' + magnifierEl.style.top + ', left ' + magnifierEl.style.left + ', display ' + magnifierEl.style.display);
+    console.log('Magnifier content snippet: ' + magnifierEl.outerHTML.substring(0, 200));
+    console.log('Magnifier visible set to true');
   }
 
   hideTooltip() {

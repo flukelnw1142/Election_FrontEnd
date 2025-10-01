@@ -15,10 +15,9 @@ import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgZone } from '@angular/core';
-import { Candidate, Color, Winner } from './dashboardInterface';
+import { Candidate, Color, PartySeatCountList, Winner } from './dashboardInterface';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailDialog } from '../detail-dialog/detail-dialog';
-import { PartySeatCountList } from '../dashboard-score-and-seat/dashboard-score-and-seatInterface';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardV2 } from '../dashboard-v2/dashboard-v2';
 import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-score-and-seat';
@@ -28,7 +27,7 @@ import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-sco
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule, DashboardV2, DashboardScoreAndSeat],
+  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule,DashboardScoreAndSeat],
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
@@ -77,7 +76,7 @@ export class Dashboard implements OnInit {
           this.allWinners = winners;
 
           const svgText = await firstValueFrom(
-            this.http.get('/assets/thailand.svg', { responseType: 'text' })
+            this.http.get('/assets/thailandV2.svg', { responseType: 'text' })
           );
           await this.settingSvg(svgText, true);
         }
@@ -88,7 +87,7 @@ export class Dashboard implements OnInit {
             this.zone.run(() => {
               this.allWinners = winners;
               firstValueFrom(
-                this.http.get('/assets/thailand.svg', {
+                this.http.get('/assets/thailandV2.svg', {
                   responseType: 'text',
                 })
               ).then((svgText) => {
@@ -128,9 +127,9 @@ export class Dashboard implements OnInit {
 
     // ✅ ใส่ style เพื่อให้ SVG สูงเท่าจอ
     if (this.selectedParty) {
-      svg.style.height = '75vh';
+      svg.style.height = '70vh';
     } else {
-      svg.style.height = '80vh';
+      svg.style.height = '70vh';
     }
     svg.style.width = 'auto';
     svg.style.display = 'block'; 

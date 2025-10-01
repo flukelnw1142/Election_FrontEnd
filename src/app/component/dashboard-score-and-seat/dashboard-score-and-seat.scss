@@ -1,6 +1,8 @@
 .scroll-container {
     overflow-y: auto;
-    height: 90vh;
+    overflow-x: hidden;
+    height: 70vh;
+    // width:100%;
 
     /* ซ่อน scrollbar ทุกเบราว์เซอร์ */
     scrollbar-width: none;
@@ -33,17 +35,40 @@
 }
 
 
-.image-container {
-    display: flex;
-    justify-content: center;
+// .image-container {
+//     display: flex;
+//     justify-content: center;
+// }
+
+// .cat-image {
+//     width: 30%;
+//     margin-bottom: -1.5rem;
+//     position: relative;
+//     z-index: 1;
+//     animation: bounce 3s infinite ease-in-out;
+// }
+.header-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    margin: 2px;
 }
 
-.cat-image {
-    width: 30%;
-    margin-bottom: -1.5rem;
-    position: relative;
-    z-index: 1;
-    animation: bounce 3s infinite ease-in-out;
+.img-head {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    animation: bounce 1s ease-in;
+}
+
+.img-party {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    left: 90px;
+    top: 90px;
+    border-radius: 100%;
+    animation: bounce 1s ease-in;
 }
 
 @keyframes bounce {
@@ -79,13 +104,19 @@
 
 .left-section {
     white-space: nowrap;
-    width: 80%;
+    width: 100%;
     color: #ffffff;
 }
 
 .partyName {
-    font-size: larger;
+    font-size: 16px;
     font-weight: 700;
+    word-break: break-word;
+    /* <<< สำคัญ */
+    white-space: normal;
+    /* <<< ยกเลิก nowrap */
+    overflow-wrap: break-word;
+    /* fallback */
 }
 
 .progress-bar-bg {
@@ -109,10 +140,12 @@
 }
 
 .right-section {
-    flex: 1;
-    //   background: #ffffff;
+    // flex: 1;
+    // background: #ffffff;
     border-radius: 1rem;
-    border: #ffffff 2px solid;
+    width: 50px;
+    // border: #ffffff 1.5px solid;
+    border: 2px solid rgba(255, 255, 255, 0.4);
     overflow: hidden;
     width: 18%;
     display: flex;
@@ -120,7 +153,7 @@
 }
 
 .zone-seats {
-    background: #ffffff6e;
+    background: rgba(255, 255, 255, 0.4);
     color: #fff;
     padding: 0.5rem;
     text-align: center;

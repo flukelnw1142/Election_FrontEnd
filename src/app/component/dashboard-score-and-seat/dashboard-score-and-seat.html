@@ -1,14 +1,16 @@
-<h3>จำนวนที่นั่งรวมต่อพรรค</h3>
+<div class="header-text">จำนวนที่นั่งรวมต่อพรรค</div>
 
-<div class="scroll-container" style="width: 600px;">
+<div class="scroll-container">
   <div *ngFor="let party of partySeatCountsList" class="party-card-container">
     <!-- รูป -->
-    <div class="image-container">
+    <!-- <div class="image-container">
       <img src="/background/cat.png" class="cat-image" />
-    </div>
+    </div> -->
 
     <!-- กล่องพรรค -->
     <div class="party-card" [style.background]="getColor(party.partyName)">
+      <img [src]="getUrlHead(party.partyName)" alt="Party Logo" class="img-head">
+      <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo" class="img-party">
       <!-- ซ้าย -->
       <div class="left-section">
         <div class="partyName">
@@ -16,13 +18,9 @@
         </div>
 
         <div class="progress-bar-bg">
-          <div
-            class="progress-bar"
-            [style.width.%]="
+          <div class="progress-bar" [style.width.%]="
               ((party.zone_seats + party.partylist_seats) / totalSeats) * 100
-            "
-            [style.background]="getColor(party.partyName)"
-          ></div>
+            " [style.background]="getColor(party.partyName)"></div>
         </div>
 
         <p class="vote-total">

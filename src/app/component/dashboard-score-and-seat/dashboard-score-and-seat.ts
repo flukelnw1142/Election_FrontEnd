@@ -5,10 +5,11 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { Color, PartySeatCountList } from './dashboard-score-and-seatInterface';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { DashboardService } from '../dashboard/service/dashboardservice';
+import { Color, PartySeatCountList } from '../dashboard/dashboardInterface';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard-score-and-seat',
@@ -45,7 +46,7 @@ export class DashboardScoreAndSeat implements OnInit {
       }, 0);
 
       console.log('partySeatCountsList', this.partySeatCountsList);
-      
+
       // ✅ บังคับให้ Angular render ใหม่
       this.cdRef.detectChanges();
     }
@@ -58,6 +59,29 @@ export class DashboardScoreAndSeat implements OnInit {
         return this.partyColorMap[keyword].COLOR;
       }
     }
-    return 'gray'; // fallback ถ้าไม่พบ
+    return 'gray';
+  }
+
+  getUrlHead(winner: any): string {
+    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    // console.log('partyName', partyName);
+    for (const keyword in this.partyColorMap) {
+      if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+        return this.partyColorMap[keyword].IMG_HEAD;
+      }
+    }
+    return 'https://vote66.workpointtoday.com/assets/placeholder_candidate.svg?v=17';
+  }
+
+  getUrlParty(winner: any): string {
+    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    // console.log('partyName', partyName);
+    for (const keyword in this.partyColorMap) {
+      if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+        // console.log('IMG_PARTY', this.partyColorMap[keyword].IMG_PARTY);
+        return this.partyColorMap[keyword].IMG_PARTY;
+      }
+    }
+    return '';
   }
 }

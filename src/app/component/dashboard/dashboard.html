@@ -11,10 +11,31 @@
         (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
         <div [innerHTML]="svgContent"></div>
     </div> -->
+<div *ngIf="selectedParty === '' ">
+    <div class="row">
+        <div class="col-7">
+            <div class="glass-card">
+                <div class="svg-container" #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()"
+                    (click)="onSvgClick($event)">
+                    <div [innerHTML]="svgContent"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="card-left glass-card">
+                <app-dashboard-score-and-seat *ngIf="selectedParty === '' "></app-dashboard-score-and-seat>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="row">
+
+<div class="row" *ngIf="selectedParty !== '' ">
     <div class="col-4">
         <div class="card-left">
+            <div class="button-container" *ngIf="selectedParty !== '' ">
+                <img [src]="img_party" *ngIf="img_party" alt="Party Logo" class="party-logo">
+            </div>
         </div>
     </div>
     <div class="col-2">
@@ -28,9 +49,11 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="svg-container" *ngIf="selectedParty === '' " #svgContainer (mousemove)="onSvgHover($event)"
-            (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
-            <div [innerHTML]="svgContent"></div>
+        <div style="background-color: rgba(255, 255, 255, 0.4); border-radius: 15px; height: 100%;">
+            <div class="svg-container" #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()"
+                (click)="onSvgClick($event)">
+                <div [innerHTML]="svgContent"></div>
+            </div>
         </div>
     </div>
 </div>

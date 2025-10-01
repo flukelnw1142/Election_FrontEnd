@@ -73,17 +73,17 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="glass-card">
-            <div class="svg-container" #svgContainer (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()"
-                (click)="onSvgClick($event)">
+        <div class="svg-container" *ngIf="selectedParty === ''" #svgContainer (mousemove)="onSvgHover($event)"
+            (mouseleave)="hideTooltip(); hideMagnifier()" (click)="onSvgClick($event)">
+            <div class="thailand-map-wrapper"> <!-- New wrapper class like original -->
                 <div [innerHTML]="svgContent"></div>
             </div>
         </div>
     </div>
 </div>
 
-
-
+<div class="magnifier" #magnifier [hidden]="!magnifierVisible" 
+    [ngStyle]="{ 'top': magnifierY + 'px', 'left': magnifierX + 'px' }"></div>
 
 <div class="svg-tooltip" *ngIf="tooltipVisible" [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
     <div class="tooltip-content">

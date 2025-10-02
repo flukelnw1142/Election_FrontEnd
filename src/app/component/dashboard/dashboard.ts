@@ -29,7 +29,14 @@ import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-sco
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatDialogModule, MatIconModule, DashboardV2, DashboardScoreAndSeat],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    MatDialogModule,
+    MatIconModule,
+    DashboardV2,
+    DashboardScoreAndSeat,
+  ],
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
@@ -45,6 +52,7 @@ export class Dashboard implements OnInit {
   partylistSeats: number = 0;
   ranking: number = 0;
   totalVote: any;
+  selectDashboard: string = 'dashboard'; //dashboard_2
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
   @ViewChild('magnifier', { static: false }) magnifier!: ElementRef;
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
@@ -58,7 +66,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -265,6 +273,11 @@ export class Dashboard implements OnInit {
     return 'gray';
   }
 
+  changeSvg(): void {
+    this.selectDashboard =
+      this.selectDashboard === 'dashboard' ? 'dashboard_2' : 'dashboard';
+  }
+
   onSvgClick(event: MouseEvent) {
     const target = event.target as SVGElement;
     if (
@@ -287,7 +300,9 @@ export class Dashboard implements OnInit {
       ) {
         const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
         this.selectedParty = party;
-        const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
+        const img = document.getElementsByClassName(
+          'logo-image'
+        )[0] as HTMLElement;
         if (img) {
           img.style.marginLeft = '20px';
         }
@@ -318,13 +333,13 @@ export class Dashboard implements OnInit {
   magnifierX = 0;
   magnifierY = 0;
   zoomLevel = 8;
-  lensSize = 200;  // Match CSS width/height
+  lensSize = 200; // Match CSS width/height
 
   onSvgHover(event: MouseEvent): void {
     if (!this.svgContainer || !this.svgContainer.nativeElement) {
       return;
     }
-    
+
     this.showMagnifier(event);
 
     const target = event.target as SVGElement;
@@ -332,7 +347,8 @@ export class Dashboard implements OnInit {
     if (
       target instanceof SVGPathElement ||
       target instanceof SVGTextElement ||
-      (target instanceof SVGTSpanElement && /^\d+$/.test((target.textContent || '').trim()))
+      (target instanceof SVGTSpanElement &&
+        /^\d+$/.test((target.textContent || '').trim()))
     ) {
       let parent = target.parentElement;
       if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
@@ -379,12 +395,15 @@ export class Dashboard implements OnInit {
     const point = svg.createSVGPoint();
     point.x = event.clientX;
     point.y = event.clientY;
-    const svgPoint = point.matrixTransform(svg.getScreenCTM()?.inverse() || new DOMMatrix());
+    const svgPoint = point.matrixTransform(
+      svg.getScreenCTM()?.inverse() || new DOMMatrix()
+    );
     let mouseX = svgPoint.x;
     let mouseY = svgPoint.y;
 
     // Parse original viewBox for clamp
-    const originalViewBoxStr = svg.getAttribute('viewBox') || `0 0 104.9999 164.99999`;
+    const originalViewBoxStr =
+      svg.getAttribute('viewBox') || `0 0 104.9999 164.99999`;
     const originalViewBox = originalViewBoxStr.split(' ').map(Number);
     const vbMinX = originalViewBox[0];
     const vbMinY = originalViewBox[1];
@@ -396,10 +415,16 @@ export class Dashboard implements OnInit {
     mouseY = Math.max(vbMinY, Math.min(mouseY, vbMinY + vbHeight));
 
     // Position magnifier to center on mouse
-    this.magnifierX = event.clientX - (this.lensSize / 2);
-    this.magnifierY = event.clientY - (this.lensSize / 2);
-    this.magnifierX = Math.max(0, Math.min(this.magnifierX, window.innerWidth - this.lensSize));
-    this.magnifierY = Math.max(0, Math.min(this.magnifierY, window.innerHeight - this.lensSize));
+    this.magnifierX = event.clientX - this.lensSize / 2;
+    this.magnifierY = event.clientY - this.lensSize / 2;
+    this.magnifierX = Math.max(
+      0,
+      Math.min(this.magnifierX, window.innerWidth - this.lensSize)
+    );
+    this.magnifierY = Math.max(
+      0,
+      Math.min(this.magnifierY, window.innerHeight - this.lensSize)
+    );
 
     // Clone SVG
     const magnifierEl = this.magnifier.nativeElement;
@@ -418,9 +443,12 @@ export class Dashboard implements OnInit {
 
     // Use g for zoom and translate with improved centering, accounting for units
     const zoomGroup = d3.select(clonedSvg).append('g');
-    let transX = -mouseX * this.zoomLevel + (this.lensSize / 2) / scale;
-    let transY = -mouseY * this.zoomLevel + (this.lensSize / 2) / scale;
-    zoomGroup.attr('transform', `translate(${transX} ${transY}) scale(${this.zoomLevel})`);
+    let transX = -mouseX * this.zoomLevel + this.lensSize / 2 / scale;
+    let transY = -mouseY * this.zoomLevel + this.lensSize / 2 / scale;
+    zoomGroup.attr(
+      'transform',
+      `translate(${transX} ${transY}) scale(${this.zoomLevel})`
+    );
 
     // Move children to zoomGroup safely
     const children = Array.from(clonedSvg.children);
@@ -437,7 +465,7 @@ export class Dashboard implements OnInit {
     this.renderer.setStyle(magnifierEl, 'display', 'block');
     this.renderer.setStyle(magnifierEl, 'top', this.magnifierY + 'px');
     this.renderer.setStyle(magnifierEl, 'left', this.magnifierX + 'px');
-    this.renderer.setStyle(magnifierEl, 'z-index', '1000');  // Ensure magnifier is on top to capture events properly
+    this.renderer.setStyle(magnifierEl, 'z-index', '1000'); // Ensure magnifier is on top to capture events properly
 
     // Add mousemove listener to clonedSvg for hover simulation
     this.renderer.listen(clonedSvg, 'mousemove', (lensEvent: MouseEvent) => {
@@ -454,7 +482,9 @@ export class Dashboard implements OnInit {
       const originalPoint = svg.createSVGPoint();
       originalPoint.x = effectiveX;
       originalPoint.y = effectiveY;
-      const screenPoint = originalPoint.matrixTransform(svg.getScreenCTM() || new DOMMatrix());
+      const screenPoint = originalPoint.matrixTransform(
+        svg.getScreenCTM() || new DOMMatrix()
+      );
       const effectiveClientX = screenPoint.x;
       const effectiveClientY = screenPoint.y;
 
@@ -462,7 +492,10 @@ export class Dashboard implements OnInit {
       this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
 
       // Use elementFromPoint on the document to find the target in the original SVG
-      const target = document.elementFromPoint(effectiveClientX, effectiveClientY) as SVGElement | null;
+      const target = document.elementFromPoint(
+        effectiveClientX,
+        effectiveClientY
+      ) as SVGElement | null;
 
       // Restore pointer-events
       this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto');
@@ -473,8 +506,8 @@ export class Dashboard implements OnInit {
           target,
           clientX: lensEvent.clientX,
           clientY: lensEvent.clientY,
-          preventDefault: () => { },
-          stopPropagation: () => { },
+          preventDefault: () => {},
+          stopPropagation: () => {},
         } as unknown as MouseEvent);
       } else {
         this.hideTooltip();
@@ -496,7 +529,9 @@ export class Dashboard implements OnInit {
       const originalPoint = svg.createSVGPoint();
       originalPoint.x = effectiveX;
       originalPoint.y = effectiveY;
-      const screenPoint = originalPoint.matrixTransform(svg.getScreenCTM() || new DOMMatrix());
+      const screenPoint = originalPoint.matrixTransform(
+        svg.getScreenCTM() || new DOMMatrix()
+      );
       const effectiveClientX = screenPoint.x;
       const effectiveClientY = screenPoint.y;
 
@@ -504,7 +539,10 @@ export class Dashboard implements OnInit {
       this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
 
       // Use elementFromPoint on the document to find the target in the original SVG
-      const target = document.elementFromPoint(effectiveClientX, effectiveClientY) as SVGElement | null;
+      const target = document.elementFromPoint(
+        effectiveClientX,
+        effectiveClientY
+      ) as SVGElement | null;
 
       // Restore pointer-events
       this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto');
@@ -515,12 +553,11 @@ export class Dashboard implements OnInit {
           target,
           clientX: lensEvent.clientX,
           clientY: lensEvent.clientY,
-          preventDefault: () => { },
-          stopPropagation: () => { },
+          preventDefault: () => {},
+          stopPropagation: () => {},
         } as unknown as MouseEvent);
       }
     });
-
   }
 
   hideTooltip() {
@@ -534,7 +571,9 @@ export class Dashboard implements OnInit {
       this.renderer.setStyle(this.magnifier.nativeElement, 'display', 'none');
       this.magnifier.nativeElement.innerHTML = '';
     }
-    const svg = this.svgContainer.nativeElement.querySelector('svg') as SVGSVGElement;
+    const svg = this.svgContainer.nativeElement.querySelector(
+      'svg'
+    ) as SVGSVGElement;
     if (svg) {
       this.renderer.setStyle(svg, 'pointer-events', 'auto');
     }
@@ -549,15 +588,14 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {
-      });
+      dialogRef.afterClosed().subscribe(() => {});
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
   }
 
   closeDialog() {
-    console.log("Close > ", this.selectedParty)
+    console.log('Close > ', this.selectedParty);
     this.selectedParty = '';
     // const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
 

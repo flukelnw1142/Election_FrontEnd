@@ -17,11 +17,16 @@
     <div class="row">
         <div class="col-7">
             <div class="glass-card">
-                <div class="svg-container" *ngIf="selectedParty === ''" #svgContainer (mousemove)="onSvgHover($event)"
-                    (mouseleave)="hideTooltip(); hideMagnifier()" (click)="onSvgClick($event)">
+                <button class="btn-change" style="position: absolute;" (click)="changeSvg()">change</button>
+                <div class="svg-container" *ngIf="selectDashboard === 'dashboard'" #svgContainer
+                    (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip(); hideMagnifier()"
+                    (click)="onSvgClick($event)">
                     <div class="thailand-map-wrapper"> <!-- New wrapper class like original -->
                         <div [innerHTML]="svgContent"></div>
                     </div>
+                </div>
+                <div *ngIf="selectDashboard === 'dashboard_2'">
+                    <app-dashboard-v2></app-dashboard-v2>
                 </div>
             </div>
         </div>
@@ -31,6 +36,9 @@
             </div>
         </div>
     </div>
+
+
+
     <div class="magnifier" #magnifier [hidden]="!magnifierVisible"
         [ngStyle]="{ 'top': magnifierY + 'px', 'left': magnifierX + 'px' }"></div>
 

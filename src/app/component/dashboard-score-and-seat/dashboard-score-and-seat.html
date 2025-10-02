@@ -9,12 +9,16 @@
 
     <!-- กล่องพรรค -->
     <div class="party-card" [style.background]="getColor(party.partyName)">
-      <img [src]="getUrlHead(party.partyName)" alt="Party Logo" class="img-head">
-      <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo" class="img-party">
-      <!-- ซ้าย -->
       <div class="left-section">
+        <img [src]="getUrlHead(party.partyName)" alt="Party Logo" class="img-head">
+        <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"
+          class="img-party">
+      </div>
+      <!-- ซ้าย -->
+      <div class="middle-section">
         <div class="partyName">
-          {{ party.partyName }} ({{ party.zone_seats + party.partylist_seats }})
+          {{ party.partyName }} <span style="font-size: 1.5rem;"> ({{ party.zone_seats + party.partylist_seats
+            }})</span>
         </div>
 
         <div class="progress-bar-bg">
@@ -34,6 +38,6 @@
         <div class="partylist-seats">{{ party.partylist_seats }}</div>
       </div>
     </div>
-    <hr />
+    <hr style="margin: 2%;" />
   </div>
 </div>

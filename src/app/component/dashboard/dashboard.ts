@@ -107,7 +107,6 @@ export class Dashboard implements OnInit {
       this.partySeatCountsList = await firstValueFrom(
         this._dashboard.getPartySeatCountsList()
       );
-      console.log('partySeatCountsList : ', this.partySeatCountsList);
     }
   }
 
@@ -319,19 +318,17 @@ export class Dashboard implements OnInit {
   magnifierX = 0;
   magnifierY = 0;
   zoomLevel = 8;
-  lensSize = 300;  // Match CSS width/height
+  lensSize = 200;  // Match CSS width/height
 
   onSvgHover(event: MouseEvent): void {
     if (!this.svgContainer || !this.svgContainer.nativeElement) {
-      console.log('SVG container not found');  // Debug
       return;
     }
-
-    // Always show magnifier on any mousemove in container
+    
     this.showMagnifier(event);
 
-    // Tooltip logic (keep tied to specific targets)
     const target = event.target as SVGElement;
+
     if (
       target instanceof SVGPathElement ||
       target instanceof SVGTextElement ||
@@ -341,7 +338,6 @@ export class Dashboard implements OnInit {
       if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
         parent = parent.parentElement;
       }
-
       if (parent instanceof SVGGElement && parent.id.includes('_')) {
         const zoneId = parent.id;
         const areaID = this.allWinners[zoneId]?.areaID;
@@ -350,11 +346,12 @@ export class Dashboard implements OnInit {
 
         this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
           this.detailDistrict = data;
+
           this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
           this.tooltipX = event.clientX + 10;
           this.tooltipY = event.clientY + 10;
           this.tooltipVisible = true;
-          this.cd.detectChanges();  // Force update for tooltip
+          this.cd.detectChanges(); // Force update for tooltip
         });
       } else {
         this.hideTooltip();
@@ -366,18 +363,17 @@ export class Dashboard implements OnInit {
 
   showMagnifier(event: MouseEvent) {
     if (!this.svgContainer || !this.svgContainer.nativeElement) {
-      console.log('SVG container not available in showMagnifier');  // Debug
       return;
     }
 
     const svgContainerEl = this.svgContainer.nativeElement;
     const svg = svgContainerEl.querySelector('svg') as SVGSVGElement;
     if (!svg) {
-      console.log('SVG element not found inside container');  // Debug: This is key—if this logs, the issue is with [innerHTML]
       return;
     }
 
-    console.log('SVG found, showing magnifier');  // Debug: Confirm trigger
+    // Disable pointer-events on original SVG to avoid under detection
+    this.renderer.setStyle(svg, 'pointer-events', 'none');
 
     // Get mouse position relative to SVG (handling viewBox)
     const point = svg.createSVGPoint();
@@ -398,14 +394,12 @@ export class Dashboard implements OnInit {
     // Clamp mouse to viewBox bounds to avoid negative/outside
     mouseX = Math.max(vbMinX, Math.min(mouseX, vbMinX + vbWidth));
     mouseY = Math.max(vbMinY, Math.min(mouseY, vbMinY + vbHeight));
-    console.log('Clamped Mouse in SVG units:', mouseX, mouseY);
 
     // Position magnifier to center on mouse
     this.magnifierX = event.clientX - (this.lensSize / 2);
     this.magnifierY = event.clientY - (this.lensSize / 2);
     this.magnifierX = Math.max(0, Math.min(this.magnifierX, window.innerWidth - this.lensSize));
     this.magnifierY = Math.max(0, Math.min(this.magnifierY, window.innerHeight - this.lensSize));
-    console.log('Magnifier position (px):', this.magnifierX, this.magnifierY);
 
     // Clone SVG
     const magnifierEl = this.magnifier.nativeElement;
@@ -419,12 +413,14 @@ export class Dashboard implements OnInit {
     clonedSvg.style.height = '100%';
     magnifierEl.appendChild(clonedSvg);
 
-    // Use g for zoom and translate with improved centering
+    // Calculate uniform scale for magnifier based on lens size and viewBox
+    const scale = Math.min(this.lensSize / vbWidth, this.lensSize / vbHeight);
+
+    // Use g for zoom and translate with improved centering, accounting for units
     const zoomGroup = d3.select(clonedSvg).append('g');
-    let transX = -mouseX * this.zoomLevel + (this.lensSize / 2);
-    let transY = -mouseY * this.zoomLevel + (this.lensSize / 2);
+    let transX = -mouseX * this.zoomLevel + (this.lensSize / 2) / scale;
+    let transY = -mouseY * this.zoomLevel + (this.lensSize / 2) / scale;
     zoomGroup.attr('transform', `translate(${transX} ${transY}) scale(${this.zoomLevel})`);
-    console.log('Transform: translate(' + transX + ' ' + transY + ') scale(' + this.zoomLevel + ')');
 
     // Move children to zoomGroup safely
     const children = Array.from(clonedSvg.children);
@@ -441,6 +437,7 @@ export class Dashboard implements OnInit {
     this.renderer.setStyle(magnifierEl, 'display', 'block');
     this.renderer.setStyle(magnifierEl, 'top', this.magnifierY + 'px');
     this.renderer.setStyle(magnifierEl, 'left', this.magnifierX + 'px');
+    this.renderer.setStyle(magnifierEl, 'z-index', '1000');  // Ensure magnifier is on top to capture events properly
 
     // Add mousemove listener to clonedSvg for hover simulation
     this.renderer.listen(clonedSvg, 'mousemove', (lensEvent: MouseEvent) => {
@@ -461,11 +458,17 @@ export class Dashboard implements OnInit {
       const effectiveClientX = screenPoint.x;
       const effectiveClientY = screenPoint.y;
 
+      // Temporarily set pointer-events to none on magnifier to allow elementFromPoint to hit the original SVG
+      this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
+
       // Use elementFromPoint on the document to find the target in the original SVG
       const target = document.elementFromPoint(effectiveClientX, effectiveClientY) as SVGElement | null;
 
+      // Restore pointer-events
+      this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto');
+
       if (target) {
-        // Simulate the hover logic with the effective target
+        // Simulate the hover logic with the effective target, but use actual mouse position for tooltip
         this.onSvgHover({
           target,
           clientX: lensEvent.clientX,
@@ -497,8 +500,14 @@ export class Dashboard implements OnInit {
       const effectiveClientX = screenPoint.x;
       const effectiveClientY = screenPoint.y;
 
+      // Temporarily set pointer-events to none on magnifier to allow elementFromPoint to hit the original SVG
+      this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
+
       // Use elementFromPoint on the document to find the target in the original SVG
       const target = document.elementFromPoint(effectiveClientX, effectiveClientY) as SVGElement | null;
+
+      // Restore pointer-events
+      this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto');
 
       if (target) {
         // Simulate the click logic with the effective target
@@ -512,9 +521,6 @@ export class Dashboard implements OnInit {
       }
     });
 
-    console.log('Magnifier style: top ' + magnifierEl.style.top + ', left ' + magnifierEl.style.left + ', display ' + magnifierEl.style.display);
-    console.log('Magnifier content snippet: ' + magnifierEl.outerHTML.substring(0, 200));
-    console.log('Magnifier visible set to true');
   }
 
   hideTooltip() {
@@ -528,11 +534,13 @@ export class Dashboard implements OnInit {
       this.renderer.setStyle(this.magnifier.nativeElement, 'display', 'none');
       this.magnifier.nativeElement.innerHTML = '';
     }
-    console.log('Magnifier hidden');
+    const svg = this.svgContainer.nativeElement.querySelector('svg') as SVGSVGElement;
+    if (svg) {
+      this.renderer.setStyle(svg, 'pointer-events', 'auto');
+    }
   }
 
   openDialog() {
-    console.log('openDialog called');
     try {
       const dialogRef = this.dialog.open(DetailDialog, {
         width: '100vw',
@@ -542,7 +550,6 @@ export class Dashboard implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(() => {
-        console.log('Dialog closed');
       });
     } catch (error) {
       console.error('Error opening dialog:', error);
@@ -555,17 +562,17 @@ export class Dashboard implements OnInit {
     // const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
 
     // if (img) {
-    //   img.style.marginLeft = '0px';
+    // img.style.marginLeft = '0px';
     // }
     // if (this.allWinners && Object.keys(this.allWinners).length > 0) {
-    //   this.zone.run(() => {
-    //     firstValueFrom(
-    //       this.http.get('/assets/thailand.svg', { responseType: 'text' })
-    //     ).then((svgText) => {
-    //       this.settingSvg(svgText, false);
-    //       this.cd.detectChanges();
-    //     });
-    //   });
+    // this.zone.run(() => {
+    // firstValueFrom(
+    // this.http.get('/assets/thailand.svg', { responseType: 'text' })
+    // ).then((svgText) => {
+    // this.settingSvg(svgText, false);
+    // this.cd.detectChanges();
+    // });
+    // });
     // }
   }
 

@@ -53,10 +53,34 @@ export class Dashboard implements OnInit {
   ranking: number = 0;
   totalVote: any;
   selectDashboard: string = 'dashboard'; //dashboard_2
+  zoneId: any;
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
   @ViewChild('magnifier', { static: false }) magnifier!: ElementRef;
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
 
+  tooltipVisible = false;
+  tooltipText = '';
+  tooltipSubText = '';
+  tooltipImageUrl = '';
+  tooltipX = 0;
+  tooltipY = 0;
+
+  magnifierVisible = false;
+  magnifierX = 0;
+  magnifierY = 0;
+  zoomLevel = 8;
+  lensSize = 200;
+
+  private isMagnifierInitialized = false;
+  private clonedSvg: SVGSVGElement | null = null;
+  private zoomGroup: any;
+  private magnifierMousemoveUnsub: (() => void) | null = null;
+  private magnifierClickUnsub: (() => void) | null = null;
+  private magnifierMouseenterUnsub: (() => void) | null = null;
+  private magnifierMouseleaveUnsub: (() => void) | null = null;
+  private isOverSvg = false;
+  private isOverMagnifier = false;
+  
   constructor(
     private _dashboard: DashboardService,
     private http: HttpClient,
@@ -66,7 +90,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -322,59 +346,149 @@ export class Dashboard implements OnInit {
     }
   }
 
-  tooltipVisible = false;
-  tooltipText = '';
-  tooltipSubText = '';
-  tooltipImageUrl = '';
-  tooltipX = 0;
-  tooltipY = 0;
+  simmulateSvgClick(event: MouseEvent) {
+    const target = event.target as SVGElement;
+    if (
+      target.tagName === 'path' ||
+      target.tagName === 'text' ||
+      (target instanceof SVGTSpanElement &&
+        /^\d+$/.test((target.textContent || '').trim()))
+    ) {
+      let parent = target.parentNode as SVGElement;
+      if (target.tagName === 'tspan') {
+        const textEl = parent;
+        parent = textEl?.parentNode as SVGElement;
+      }
 
-  magnifierVisible = false;
-  magnifierX = 0;
-  magnifierY = 0;
-  zoomLevel = 8;
-  lensSize = 200; // Match CSS width/height
+      if (
+        parent &&
+        parent.tagName === 'g' &&
+        parent.id &&
+        parent.id.includes('_')
+      ) {
+        if (this.magnifierVisible) {
+          setTimeout(() => {
+            const svgEl = this.svgContainer.nativeElement.querySelector('svg') as SVGSVGElement;
+            if (svgEl) {
+              const gs = svgEl.querySelectorAll('g') as NodeListOf<SVGGElement>;
+              if (gs.length > 0) {
+                let setCount = 0;
+                gs.forEach((g) => {
+                  if (g.style.pointerEvents !== 'none') {
+                    g.style.pointerEvents = 'none';
+                    setCount++;
+                  }
+                });
+              } else {
+                console.warn('No <g> elements found in SVG');
+              }
+            } else {
+              console.warn('No SVG element found in svgContainer');
+            }
+          }, 0);
+        }
 
-  onSvgHover(event: MouseEvent): void {
+        if (parent.style.pointerEvents === 'none') {
+          return;
+        }
+
+        this.zoneId = parent.getAttribute('id') || 'ไม่ทราบพรรค';
+      } else {
+        this.zoneId = '';
+        alert(`คลิกจังหวัด: ไม่ทราบ`);
+      }
+    } else {
+      this.zoneId = '';
+    }
+  }
+
+  private handleHoverLogic(target: SVGElement | null, clientX: number, clientY: number): void {
+
+    if (!target) {
+      this.zoneId = '';
+      this.hideTooltip();
+      return;
+    }
+    const areaID = this.allWinners[this.zoneId]?.areaID;
+
+    let parent = target.parentElement as SVGElement | null;
+    if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
+      parent = parent.parentElement as SVGElement | null;
+    }
+    if (parent?.style.pointerEvents === 'none') {
+      this.zoneId = '';
+      this.hideTooltip();
+      return;
+    }
+
+    if (!areaID) {
+      this.zoneId = '';
+      return;
+    }
+
+    this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
+      this.detailDistrict = data;
+      this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
+      this.tooltipX = clientX + 10;
+      this.tooltipY = clientY + 10;
+      this.tooltipVisible = true;
+      this.cd.detectChanges();
+    });
+  }
+
+  onSvgMouseMove(event: MouseEvent): void {
     if (!this.svgContainer || !this.svgContainer.nativeElement) {
       return;
     }
 
     this.showMagnifier(event);
+    this.simmulateSvgClick(event);
 
     const target = event.target as SVGElement;
-
-    if (
-      target instanceof SVGPathElement ||
-      target instanceof SVGTextElement ||
-      (target instanceof SVGTSpanElement &&
-        /^\d+$/.test((target.textContent || '').trim()))
-    ) {
-      let parent = target.parentElement;
-      if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
-        parent = parent.parentElement;
-      }
-      if (parent instanceof SVGGElement && parent.id.includes('_')) {
-        const zoneId = parent.id;
-        const areaID = this.allWinners[zoneId]?.areaID;
-
-        if (!areaID) return;
-
-        this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
-          this.detailDistrict = data;
-
-          this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
-          this.tooltipX = event.clientX + 10;
-          this.tooltipY = event.clientY + 10;
-          this.tooltipVisible = true;
-          this.cd.detectChanges(); // Force update for tooltip
-        });
-      } else {
-        this.hideTooltip();
-      }
-    } else {
-      this.hideTooltip();
+    let parent = target.parentElement as SVGElement | null;
+    if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
+      parent = parent.parentElement as SVGElement | null;
     }
+    if (parent?.style.pointerEvents === 'none') {
+      this.zoneId = '';
+      this.hideTooltip();
+      return;
+    } else {
+      const areaID = this.allWinners[this.zoneId]?.areaID;
+
+      if (!areaID) {
+        this.zoneId = '';
+        return;
+      }
+
+      this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
+        this.detailDistrict = data;
+        this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
+        this.tooltipX = event.clientX + 10;
+        this.tooltipY = event.clientY + 10;
+        this.tooltipVisible = true;
+        this.cd.detectChanges();
+      });
+    }
+
+    if (this.magnifierVisible) {
+      setTimeout(() => {
+        const gs = this.svgContainer.nativeElement.querySelectorAll('g') as NodeListOf<SVGGElement>;
+        if (gs.length > 0) {
+          let setCount = 0;
+          gs.forEach((g) => {
+            if (g.style.pointerEvents !== 'none') {
+              g.style.pointerEvents = 'none';
+              setCount++;
+            }
+          });
+        } else {
+          console.warn('No <g> elements found in svgContainer');
+        }
+      }, 0);
+    }
+
+    this.handleHoverLogic(target, event.clientX, event.clientY);
   }
 
   showMagnifier(event: MouseEvent) {
@@ -388,195 +502,198 @@ export class Dashboard implements OnInit {
       return;
     }
 
-    // Disable pointer-events on original SVG to avoid under detection
-    this.renderer.setStyle(svg, 'pointer-events', 'none');
-
-    // Get mouse position relative to SVG (handling viewBox)
     const point = svg.createSVGPoint();
     point.x = event.clientX;
     point.y = event.clientY;
-    const svgPoint = point.matrixTransform(
-      svg.getScreenCTM()?.inverse() || new DOMMatrix()
-    );
+    const svgPoint = point.matrixTransform(svg.getScreenCTM()?.inverse() || new DOMMatrix());
     let mouseX = svgPoint.x;
     let mouseY = svgPoint.y;
 
-    // Parse original viewBox for clamp
-    const originalViewBoxStr =
-      svg.getAttribute('viewBox') || `0 0 104.9999 164.99999`;
+    const originalViewBoxStr = svg.getAttribute('viewBox') || `0 0 104.9999 164.99999`;
     const originalViewBox = originalViewBoxStr.split(' ').map(Number);
     const vbMinX = originalViewBox[0];
     const vbMinY = originalViewBox[1];
     const vbWidth = originalViewBox[2];
     const vbHeight = originalViewBox[3];
 
-    // Clamp mouse to viewBox bounds to avoid negative/outside
+
     mouseX = Math.max(vbMinX, Math.min(mouseX, vbMinX + vbWidth));
     mouseY = Math.max(vbMinY, Math.min(mouseY, vbMinY + vbHeight));
 
-    // Position magnifier to center on mouse
-    this.magnifierX = event.clientX - this.lensSize / 2;
-    this.magnifierY = event.clientY - this.lensSize / 2;
-    this.magnifierX = Math.max(
-      0,
-      Math.min(this.magnifierX, window.innerWidth - this.lensSize)
-    );
-    this.magnifierY = Math.max(
-      0,
-      Math.min(this.magnifierY, window.innerHeight - this.lensSize)
-    );
+    this.magnifierX = event.clientX - (this.lensSize / 2);
+    this.magnifierY = event.clientY - (this.lensSize / 2);
+    this.magnifierX = Math.max(0, Math.min(this.magnifierX, window.innerWidth - this.lensSize));
+    this.magnifierY = Math.max(0, Math.min(this.magnifierY, window.innerHeight - this.lensSize));
 
-    // Clone SVG
     const magnifierEl = this.magnifier.nativeElement;
-    magnifierEl.innerHTML = '';
-    const clonedSvg = svg.cloneNode(true) as SVGSVGElement;
-    clonedSvg.setAttribute('viewBox', originalViewBoxStr);
-    clonedSvg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    clonedSvg.removeAttribute('width');
-    clonedSvg.removeAttribute('height');
-    clonedSvg.style.width = '100%';
-    clonedSvg.style.height = '100%';
-    magnifierEl.appendChild(clonedSvg);
 
-    // Calculate uniform scale for magnifier based on lens size and viewBox
+    if (!this.isMagnifierInitialized) {
+      magnifierEl.innerHTML = '';
+      this.clonedSvg = svg.cloneNode(true) as SVGSVGElement;
+      this.clonedSvg.setAttribute('viewBox', originalViewBoxStr);
+      this.clonedSvg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      this.clonedSvg.removeAttribute('width');
+      this.clonedSvg.removeAttribute('height');
+      this.clonedSvg.style.width = '100%';
+      this.clonedSvg.style.height = '100%';
+      magnifierEl.appendChild(this.clonedSvg);
+
+      const scale = Math.min(this.lensSize / vbWidth, this.lensSize / vbHeight);
+
+      this.zoomGroup = d3.select(this.clonedSvg).append('g');
+
+      const children = Array.from(this.clonedSvg.children);
+      children.forEach((child) => {
+        if (child !== this.zoomGroup.node()) {
+          this.zoomGroup.node()?.appendChild(child);
+        }
+      });
+
+      this.magnifierMouseenterUnsub = this.renderer.listen(magnifierEl, 'mouseenter', () => {
+        this.isOverMagnifier = true;
+      });
+
+      this.magnifierMouseleaveUnsub = this.renderer.listen(magnifierEl, 'mouseleave', () => {
+        this.isOverMagnifier = false;
+        setTimeout(() => {
+          if (!this.isOverSvg && !this.isOverMagnifier) {
+            this.hideMagnifier();
+            this.hideTooltip();
+          }
+        }, 0);
+      });
+
+      this.magnifierMousemoveUnsub = this.renderer.listen(this.clonedSvg, 'mousemove', (lensEvent: MouseEvent) => {
+
+        const lensPoint = svg.createSVGPoint();
+        lensPoint.x = lensEvent.offsetX;
+        lensPoint.y = lensEvent.offsetY;
+
+        const transform = this.zoomGroup.attr('transform');
+        const transMatch = transform.match(/translate\(([^ ]+) ([^)]+)\)/);
+        const currentTransX = transMatch ? parseFloat(transMatch[1]) : 0;
+        const currentTransY = transMatch ? parseFloat(transMatch[2]) : 0;
+
+        const effectiveX = (lensPoint.x - currentTransX) / this.zoomLevel;
+        const effectiveY = (lensPoint.y - currentTransY) / this.zoomLevel;
+
+        const originalPoint = svg.createSVGPoint();
+        originalPoint.x = effectiveX;
+        originalPoint.y = effectiveY;
+        const screenPoint = originalPoint.matrixTransform(svg.getScreenCTM() || new DOMMatrix());
+        const effectiveClientX = screenPoint.x;
+        const effectiveClientY = screenPoint.y;
+
+        this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
+
+        const target = document.elementFromPoint(effectiveClientX, effectiveClientY) as SVGElement | null;
+
+        if (target) {
+          this.onSvgMouseMove({
+            target,
+            clientX: lensEvent.clientX,
+            clientY: lensEvent.clientY,
+            preventDefault: () => { },
+            stopPropagation: () => { },
+          } as unknown as MouseEvent);
+          this.simmulateSvgClick({
+            target,
+            clientX: lensEvent.clientX,
+            clientY: lensEvent.clientY,
+            preventDefault: () => { },
+            stopPropagation: () => { },
+          } as unknown as MouseEvent);
+        } else {
+          this.hideTooltip();
+        }
+      });
+
+      this.magnifierClickUnsub = this.renderer.listen(this.clonedSvg, 'click', (lensEvent: MouseEvent) => {
+
+        const lensPoint = svg.createSVGPoint();
+        lensPoint.x = lensEvent.offsetX;
+        lensPoint.y = lensEvent.offsetY;
+
+        const transform = this.zoomGroup.attr('transform');
+        const transMatch = transform.match(/translate\(([^ ]+) ([^)]+)\)/);
+        const currentTransX = transMatch ? parseFloat(transMatch[1]) : 0;
+        const currentTransY = transMatch ? parseFloat(transMatch[2]) : 0;
+
+        const effectiveX = (lensPoint.x - currentTransX) / this.zoomLevel;
+        const effectiveY = (lensPoint.y - currentTransY) / this.zoomLevel;
+
+        const originalPoint = svg.createSVGPoint();
+        originalPoint.x = effectiveX;
+        originalPoint.y = effectiveY;
+        const screenPoint = originalPoint.matrixTransform(svg.getScreenCTM() || new DOMMatrix());
+        const effectiveClientX = screenPoint.x;
+        const effectiveClientY = screenPoint.y;
+
+        this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
+
+        const target = document.elementFromPoint(effectiveClientX, effectiveClientY) as SVGElement | null;
+
+        this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto');
+
+        if (target) {
+          this.onSvgClick({
+            target,
+            clientX: lensEvent.clientX,
+            clientY: lensEvent.clientY,
+            preventDefault: () => { },
+            stopPropagation: () => { },
+          } as unknown as MouseEvent);
+        }
+      });
+
+      this.isMagnifierInitialized = true;
+    }
+
     const scale = Math.min(this.lensSize / vbWidth, this.lensSize / vbHeight);
-
-    // Use g for zoom and translate with improved centering, accounting for units
-    const zoomGroup = d3.select(clonedSvg).append('g');
-    let transX = -mouseX * this.zoomLevel + this.lensSize / 2 / scale;
-    let transY = -mouseY * this.zoomLevel + this.lensSize / 2 / scale;
-    zoomGroup.attr(
-      'transform',
-      `translate(${transX} ${transY}) scale(${this.zoomLevel})`
-    );
-
-    // Move children to zoomGroup safely
-    const children = Array.from(clonedSvg.children);
-    children.forEach((child) => {
-      if (child !== zoomGroup.node()) {
-        zoomGroup.node()?.appendChild(child);
-      }
-    });
+    let transX = -mouseX * this.zoomLevel + (this.lensSize / 2) / scale;
+    let transY = -mouseY * this.zoomLevel + (this.lensSize / 2) / scale;
+    this.zoomGroup.attr('transform', `translate(${transX} ${transY}) scale(${this.zoomLevel})`);
 
     this.magnifierVisible = true;
     this.cd.detectChanges();
 
-    // Force styles with Renderer2
     this.renderer.setStyle(magnifierEl, 'display', 'block');
     this.renderer.setStyle(magnifierEl, 'top', this.magnifierY + 'px');
     this.renderer.setStyle(magnifierEl, 'left', this.magnifierX + 'px');
-    this.renderer.setStyle(magnifierEl, 'z-index', '1000'); // Ensure magnifier is on top to capture events properly
-
-    // Add mousemove listener to clonedSvg for hover simulation
-    this.renderer.listen(clonedSvg, 'mousemove', (lensEvent: MouseEvent) => {
-      // Calculate effective mouse position in original SVG coordinates
-      const lensPoint = svg.createSVGPoint();
-      lensPoint.x = lensEvent.offsetX;
-      lensPoint.y = lensEvent.offsetY;
-
-      // Map back to original coordinates (reverse zoom and translate)
-      const effectiveX = (lensPoint.x - transX) / this.zoomLevel;
-      const effectiveY = (lensPoint.y - transY) / this.zoomLevel;
-
-      // Convert effective position back to screen clientX/Y for tooltip position and elementFromPoint
-      const originalPoint = svg.createSVGPoint();
-      originalPoint.x = effectiveX;
-      originalPoint.y = effectiveY;
-      const screenPoint = originalPoint.matrixTransform(
-        svg.getScreenCTM() || new DOMMatrix()
-      );
-      const effectiveClientX = screenPoint.x;
-      const effectiveClientY = screenPoint.y;
-
-      // Temporarily set pointer-events to none on magnifier to allow elementFromPoint to hit the original SVG
-      this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
-
-      // Use elementFromPoint on the document to find the target in the original SVG
-      const target = document.elementFromPoint(
-        effectiveClientX,
-        effectiveClientY
-      ) as SVGElement | null;
-
-      // Restore pointer-events
-      this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto');
-
-      if (target) {
-        // Simulate the hover logic with the effective target, but use actual mouse position for tooltip
-        this.onSvgHover({
-          target,
-          clientX: lensEvent.clientX,
-          clientY: lensEvent.clientY,
-          preventDefault: () => {},
-          stopPropagation: () => {},
-        } as unknown as MouseEvent);
-      } else {
-        this.hideTooltip();
-      }
-    });
-
-    // Add click listener to clonedSvg for click simulation
-    this.renderer.listen(clonedSvg, 'click', (lensEvent: MouseEvent) => {
-      // Calculate effective mouse position in original SVG coordinates
-      const lensPoint = svg.createSVGPoint();
-      lensPoint.x = lensEvent.offsetX;
-      lensPoint.y = lensEvent.offsetY;
-
-      // Map back to original coordinates (reverse zoom and translate)
-      const effectiveX = (lensPoint.x - transX) / this.zoomLevel;
-      const effectiveY = (lensPoint.y - transY) / this.zoomLevel;
-
-      // Convert effective position back to screen clientX/Y for elementFromPoint
-      const originalPoint = svg.createSVGPoint();
-      originalPoint.x = effectiveX;
-      originalPoint.y = effectiveY;
-      const screenPoint = originalPoint.matrixTransform(
-        svg.getScreenCTM() || new DOMMatrix()
-      );
-      const effectiveClientX = screenPoint.x;
-      const effectiveClientY = screenPoint.y;
-
-      // Temporarily set pointer-events to none on magnifier to allow elementFromPoint to hit the original SVG
-      this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
-
-      // Use elementFromPoint on the document to find the target in the original SVG
-      const target = document.elementFromPoint(
-        effectiveClientX,
-        effectiveClientY
-      ) as SVGElement | null;
-
-      // Restore pointer-events
-      this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto');
-
-      if (target) {
-        // Simulate the click logic with the effective target
-        this.onSvgClick({
-          target,
-          clientX: lensEvent.clientX,
-          clientY: lensEvent.clientY,
-          preventDefault: () => {},
-          stopPropagation: () => {},
-        } as unknown as MouseEvent);
-      }
-    });
+    this.renderer.setStyle(magnifierEl, 'z-index', '1000');
   }
 
   hideTooltip() {
     this.tooltipVisible = false;
   }
 
+
   hideMagnifier() {
     this.magnifierVisible = false;
     this.cd.detectChanges();
     if (this.magnifier && this.magnifier.nativeElement) {
       this.renderer.setStyle(this.magnifier.nativeElement, 'display', 'none');
+    }
+
+  }
+
+  ngOnDestroy() {
+    if (this.magnifierMousemoveUnsub) {
+      this.magnifierMousemoveUnsub();
+    }
+    if (this.magnifierClickUnsub) {
+      this.magnifierClickUnsub();
+    }
+    if (this.magnifierMouseenterUnsub) {
+      this.magnifierMouseenterUnsub();
+    }
+    if (this.magnifierMouseleaveUnsub) {
+      this.magnifierMouseleaveUnsub();
+    }
+    if (this.magnifier && this.magnifier.nativeElement) {
       this.magnifier.nativeElement.innerHTML = '';
     }
-    const svg = this.svgContainer.nativeElement.querySelector(
-      'svg'
-    ) as SVGSVGElement;
-    if (svg) {
-      this.renderer.setStyle(svg, 'pointer-events', 'auto');
-    }
+    this.isMagnifierInitialized = false;
   }
 
   openDialog() {
@@ -588,7 +705,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }

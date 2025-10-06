@@ -70,7 +70,7 @@ export class Dashboard implements OnInit {
   magnifierY = 0;
   zoomLevel = 8;
   lensSize = 200;
-
+  isMappingComplete: any;
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
   private zoomGroup: any;
@@ -80,7 +80,7 @@ export class Dashboard implements OnInit {
   private magnifierMouseleaveUnsub: (() => void) | null = null;
   private isOverSvg = false;
   private isOverMagnifier = false;
-  
+
   constructor(
     private _dashboard: DashboardService,
     private http: HttpClient,
@@ -146,7 +146,7 @@ export class Dashboard implements OnInit {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  async settingSvg(svgText: string, doAnimation = true) {
+  async settingSvg(svgText: string, doAnimation = true): Promise<void> {
     console.log('>> SVG Loaded', this.selectedParty);
     let districtIds = Object.keys(this.allWinners);
 
@@ -155,18 +155,17 @@ export class Dashboard implements OnInit {
     const svg = svgDoc.documentElement;
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
-    // ✅ ลบขนาดตายตัว เพื่อให้ responsive
+    // ลบขนาดตายตัว เพื่อให้ responsive
     svg.removeAttribute('width');
     svg.removeAttribute('height');
 
-    // ✅ ใส่ style เพื่อให้ SVG สูงเท่าจอ
+    // ใส่ style เพื่อให้ SVG สูงเท่าจอ
     if (this.selectedParty) {
       svg.style.height = '74vh';
     } else {
       svg.style.height = '74vh';
     }
     svg.style.width = 'auto';
-    // svg.style.display = 'block';
     svg.style.margin = '20px 0';
 
     const container = this.svgContainer.nativeElement;
@@ -178,7 +177,10 @@ export class Dashboard implements OnInit {
       p.style.stroke = 'none';
     });
 
-    // Process all districts to set styles and pointer-events
+    // เริ่มวัดเวลา
+    const startTime = performance.now();
+
+    // Process all districts
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -194,14 +196,12 @@ export class Dashboard implements OnInit {
             .replace(/stroke: *[^;]*;/g, '')
             .replace(/stroke-width: *[^;]*;/g, '');
 
-          // Apply color only if no selectedParty or if the district matches selectedParty
           if (
             !this.selectedParty ||
             this.allWinners[id].party === this.selectedParty
           ) {
             styleStr +=
               ' fill: ' + this.getColor(this.allWinners[id]) + ' !important;';
-            // Find the image URL from partyColorMap
             const party = Object.values(this.partyColorMap).find(
               (p) => p.PARTY_NAME === this.selectedParty
             );
@@ -216,18 +216,15 @@ export class Dashboard implements OnInit {
               (p) => p.partyName === this.selectedParty
             );
 
-            // Calculate totalSeats and assign individual values
             if (partyData) {
-              this.totalSeats =
-                partyData.zone_seats + partyData.partylist_seats;
+              this.totalSeats = partyData.zone_seats + partyData.partylist_seats;
               this.zoneSeats = partyData.zone_seats;
               this.partylistSeats = partyData.partylist_seats;
               this.ranking = partyData.ranking;
               this.totalVote = partyData.total_party_votes;
             }
           } else {
-            // Optional: Set a different style for non-selected districts (e.g., gray or transparent)
-            styleStr += ' fill: #d3d3d3 !important;'; // Light gray for non-selected districts
+            styleStr += ' fill: #d3d3d3 !important;';
           }
 
           path.setAttribute('style', styleStr);
@@ -237,7 +234,6 @@ export class Dashboard implements OnInit {
           path.style.setProperty('stroke-width', '0', 'important');
           g.setAttribute('data-party', this.allWinners[id].party || '');
 
-          // Disable pointer events for non-selected party regions when selectedParty is set
           if (
             this.selectedParty &&
             this.allWinners[id].party !== this.selectedParty
@@ -259,7 +255,14 @@ export class Dashboard implements OnInit {
       }
     }
 
+    const endTime = performance.now();
+    if (endTime) {
+      this.isMappingComplete = true;
+    }
+    console.log(`Time taken to map districts: ${(endTime - startTime).toFixed(2)} ms`);
+
     this.cd.detectChanges();
+
   }
 
   addAnimationToSvg(svg: SVGSVGElement) {
@@ -432,11 +435,14 @@ export class Dashboard implements OnInit {
       this.tooltipX = clientX + 10;
       this.tooltipY = clientY + 10;
       this.tooltipVisible = true;
-      this.cd.detectChanges();
     });
   }
 
   onSvgMouseMove(event: MouseEvent): void {
+    if (!this.isMappingComplete) {
+      return;
+    }
+
     if (!this.svgContainer || !this.svgContainer.nativeElement) {
       return;
     }
@@ -452,23 +458,17 @@ export class Dashboard implements OnInit {
     if (parent?.style.pointerEvents === 'none') {
       this.zoneId = '';
       this.hideTooltip();
+
       return;
     } else {
       const areaID = this.allWinners[this.zoneId]?.areaID;
-
       if (!areaID) {
         this.zoneId = '';
+        this.hideTooltip();
         return;
       }
+      this.handleHoverLogic(target, event.clientX, event.clientY);
 
-      this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
-        this.detailDistrict = data;
-        this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
-        this.tooltipX = event.clientX + 10;
-        this.tooltipY = event.clientY + 10;
-        this.tooltipVisible = true;
-        this.cd.detectChanges();
-      });
     }
 
     if (this.magnifierVisible) {
@@ -488,7 +488,6 @@ export class Dashboard implements OnInit {
       }, 0);
     }
 
-    this.handleHoverLogic(target, event.clientX, event.clientY);
   }
 
   showMagnifier(event: MouseEvent) {
@@ -655,12 +654,13 @@ export class Dashboard implements OnInit {
     this.zoomGroup.attr('transform', `translate(${transX} ${transY}) scale(${this.zoomLevel})`);
 
     this.magnifierVisible = true;
-    this.cd.detectChanges();
 
     this.renderer.setStyle(magnifierEl, 'display', 'block');
     this.renderer.setStyle(magnifierEl, 'top', this.magnifierY + 'px');
     this.renderer.setStyle(magnifierEl, 'left', this.magnifierX + 'px');
     this.renderer.setStyle(magnifierEl, 'z-index', '1000');
+    this.cd.detectChanges();
+
   }
 
   hideTooltip() {
@@ -670,7 +670,6 @@ export class Dashboard implements OnInit {
 
   hideMagnifier() {
     this.magnifierVisible = false;
-    this.cd.detectChanges();
     if (this.magnifier && this.magnifier.nativeElement) {
       this.renderer.setStyle(this.magnifier.nativeElement, 'display', 'none');
     }

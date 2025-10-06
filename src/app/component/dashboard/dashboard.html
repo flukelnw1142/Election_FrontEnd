@@ -17,7 +17,16 @@
     <div class="row">
         <div class="col-7">
             <div class="glass-card">
-                <button class="btn-change" style="position: absolute;" (click)="changeSvg()">change</button>
+                <button class="btn-change" style="position: absolute;" (click)="changeSvg()">
+                    <div class="icon-text-container">
+                        <mat-icon *ngIf="selectDashboard === 'dashboard'"
+                            style="width: 24px; height: 24px;">event_seat</mat-icon>
+                        <img *ngIf="selectDashboard === 'dashboard_2'" src="/assets/thai_mini.svg" alt="Country"
+                            class="change-icon" style="width: 24px; height: 24px;" />
+                        <span *ngIf="selectDashboard === 'dashboard'">ที่นั่ง</span>
+                        <span *ngIf="selectDashboard === 'dashboard_2'">แผนที่</span>
+                    </div>
+                </button>
                 <div class="svg-container" *ngIf="selectDashboard === 'dashboard'" #svgContainer
                     (mousemove)="onSvgMouseMove($event)" (click)="onSvgClick($event)">
                     <div class="thailand-map-wrapper"> <!-- New wrapper class like original -->
@@ -105,8 +114,7 @@
         </div>
         <div class="col-6">
             <div class="glass-card">
-                <div class="svg-container" #svgContainer 
-                    (click)="onSvgClick($event)">
+                <div class="svg-container" #svgContainer (click)="onSvgClick($event)">
                     <div [innerHTML]="svgContent"></div>
                 </div>
             </div>

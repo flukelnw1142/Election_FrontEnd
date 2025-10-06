@@ -296,12 +296,24 @@ export class Dashboard implements OnInit {
     return 'gray';
   }
 
-  changeSvg(): void {
-    this.selectDashboard =
-      this.selectDashboard === 'dashboard' ? 'dashboard_2' : 'dashboard';
+  async changeSvg(): Promise<void> {
+    this.selectDashboard = this.selectDashboard === 'dashboard' ? 'dashboard_2' : 'dashboard';
+    if (this.selectDashboard === 'dashboard' && this.allWinners && Object.keys(this.allWinners).length > 0) {
+      try {
+        const svgText = await firstValueFrom(
+          this.http.get('/assets/thailand.svg', { responseType: 'text' })
+        );
+        this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
+        await this.settingSvg(svgText, false);
+        this.cd.markForCheck();
+      } catch (error) {
+        console.error('Error loading SVG on view change:', error);
+      }
+    }
   }
-
   onSvgClick(event: MouseEvent) {
+    console.log(event);
+
     const target = event.target as SVGElement;
     if (
       target.tagName === 'path' ||
@@ -449,10 +461,52 @@ export class Dashboard implements OnInit {
       return;
     }
 
-    this.showMagnifier(event);
-    this.simmulateSvgClick(event);
+    const closeButton = document.querySelector('.btn-change') as HTMLElement;
+    if (closeButton) {
+      const rect = closeButton.getBoundingClientRect();
+      const buffer = 50;
+      if (
+        event.clientX >= rect.left - buffer &&
+        event.clientX <= rect.right + buffer &&
+        event.clientY >= rect.top - buffer &&
+        event.clientY <= rect.bottom + buffer
+      ) {
+        this.hideMagnifier();
+        return;
+      }
+    }
+    const mapProvinces = document.getElementById('map_provinces') as HTMLElement;
+    if (mapProvinces) {
+      const rect = mapProvinces.getBoundingClientRect();
+      const buffer = 10; 
+      const isNearMap = (
+        event.clientX >= rect.left - buffer &&
+        event.clientX <= rect.right + buffer &&
+        event.clientY >= rect.top - buffer &&
+        event.clientY <= rect.bottom + buffer
+      );
 
-    this.mouseMoveSubject.next(event);
+      const target = event.target as SVGElement;
+      const isDistrict = (
+        (target.tagName === 'path' || target.tagName === 'text' || (target instanceof SVGTSpanElement &&
+          /^\d+$/.test((target.textContent || '').trim()))) &&
+        target.closest('svg') &&
+        target.closest('g[id]')
+      );
+
+      if (isNearMap || isDistrict) {
+        this.showMagnifier(event);
+        this.simmulateSvgClick(event);
+        this.mouseMoveSubject.next(event);
+      } else {
+        this.hideMagnifier();
+        this.hideTooltip();
+      }
+    } else {
+      console.warn('map_provinces element not found');
+      this.hideMagnifier();
+      this.hideTooltip();
+    }
   }
 
   private handleTooltipLogic(event: MouseEvent): void {
@@ -724,7 +778,7 @@ export class Dashboard implements OnInit {
         .then(() => {
           this.isMagnifierInitialized = false;
           this.magnifierVisible = false;
-          this.cd.markForCheck(); 
+          this.cd.markForCheck();
         })
         .catch((error) => {
           console.error('Error loading SVG:', error);

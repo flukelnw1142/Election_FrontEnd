@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { debounceTime, firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
@@ -80,6 +80,8 @@ export class Dashboard implements OnInit {
   private magnifierMouseleaveUnsub: (() => void) | null = null;
   private isOverSvg = false;
   private isOverMagnifier = false;
+  private mouseMoveSubject = new Subject<MouseEvent>();
+  private destroy$ = new Subject<void>();
 
   constructor(
     private _dashboard: DashboardService,
@@ -139,6 +141,10 @@ export class Dashboard implements OnInit {
       this.partySeatCountsList = await firstValueFrom(
         this._dashboard.getPartySeatCountsList()
       );
+
+      this.mouseMoveSubject.pipe(debounceTime(10), takeUntil(this.destroy$)).subscribe((event: MouseEvent) => {
+        this.handleTooltipLogic(event);
+      });
     }
   }
 
@@ -155,16 +161,10 @@ export class Dashboard implements OnInit {
     const svg = svgDoc.documentElement;
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
-    // ลบขนาดตายตัว เพื่อให้ responsive
     svg.removeAttribute('width');
     svg.removeAttribute('height');
 
-    // ใส่ style เพื่อให้ SVG สูงเท่าจอ
-    if (this.selectedParty) {
-      svg.style.height = '74vh';
-    } else {
-      svg.style.height = '74vh';
-    }
+    svg.style.height = '74vh';
     svg.style.width = 'auto';
     svg.style.margin = '20px 0';
 
@@ -177,10 +177,8 @@ export class Dashboard implements OnInit {
       p.style.stroke = 'none';
     });
 
-    // เริ่มวัดเวลา
     const startTime = performance.now();
 
-    // Process all districts
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -256,13 +254,11 @@ export class Dashboard implements OnInit {
     }
 
     const endTime = performance.now();
-    if (endTime) {
-      this.isMappingComplete = true;
-    }
     console.log(`Time taken to map districts: ${(endTime - startTime).toFixed(2)} ms`);
 
-    this.cd.detectChanges();
-
+    this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg.outerHTML);
+    this.isMappingComplete = true;
+    this.cd.markForCheck();
   }
 
   addAnimationToSvg(svg: SVGSVGElement) {
@@ -327,21 +323,28 @@ export class Dashboard implements OnInit {
       ) {
         const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
         this.selectedParty = party;
-        const img = document.getElementsByClassName(
-          'logo-image'
-        )[0] as HTMLElement;
+        this.tooltipVisible = false;
+        this.hideMagnifier();
+
+        const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
         if (img) {
           img.style.marginLeft = '20px';
         }
+
         if (this.allWinners && Object.keys(this.allWinners).length > 0) {
-          this.zone.run(() => {
-            firstValueFrom(
-              this.http.get('/assets/thailand.svg', { responseType: 'text' })
-            ).then((svgText) => {
-              this.settingSvg(svgText, false);
-              this.cd.detectChanges();
+          firstValueFrom(
+            this.http.get('/assets/thailand.svg', { responseType: 'text' })
+          )
+            .then((svgText) => {
+              this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
+              return this.settingSvg(svgText, false);
+            })
+            .then(() => {
+              this.cd.markForCheck();
+            })
+            .catch((error) => {
+              console.error('Error loading SVG:', error);
             });
-          });
         }
       } else {
         alert(`คลิกจังหวัด: ไม่ทราบ`);
@@ -442,7 +445,6 @@ export class Dashboard implements OnInit {
     if (!this.isMappingComplete) {
       return;
     }
-
     if (!this.svgContainer || !this.svgContainer.nativeElement) {
       return;
     }
@@ -450,6 +452,10 @@ export class Dashboard implements OnInit {
     this.showMagnifier(event);
     this.simmulateSvgClick(event);
 
+    this.mouseMoveSubject.next(event);
+  }
+
+  private handleTooltipLogic(event: MouseEvent): void {
     const target = event.target as SVGElement;
     let parent = target.parentElement as SVGElement | null;
     if (target instanceof SVGTSpanElement && parent?.tagName === 'text') {
@@ -458,7 +464,6 @@ export class Dashboard implements OnInit {
     if (parent?.style.pointerEvents === 'none') {
       this.zoneId = '';
       this.hideTooltip();
-
       return;
     } else {
       const areaID = this.allWinners[this.zoneId]?.areaID;
@@ -468,26 +473,7 @@ export class Dashboard implements OnInit {
         return;
       }
       this.handleHoverLogic(target, event.clientX, event.clientY);
-
     }
-
-    if (this.magnifierVisible) {
-      setTimeout(() => {
-        const gs = this.svgContainer.nativeElement.querySelectorAll('g') as NodeListOf<SVGGElement>;
-        if (gs.length > 0) {
-          let setCount = 0;
-          gs.forEach((g) => {
-            if (g.style.pointerEvents !== 'none') {
-              g.style.pointerEvents = 'none';
-              setCount++;
-            }
-          });
-        } else {
-          console.warn('No <g> elements found in svgContainer');
-        }
-      }, 0);
-    }
-
   }
 
   showMagnifier(event: MouseEvent) {
@@ -693,6 +679,8 @@ export class Dashboard implements OnInit {
       this.magnifier.nativeElement.innerHTML = '';
     }
     this.isMagnifierInitialized = false;
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   openDialog() {
@@ -713,21 +701,35 @@ export class Dashboard implements OnInit {
   closeDialog() {
     console.log('Close > ', this.selectedParty);
     this.selectedParty = '';
-    // const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
+    this.img_party = '';
+    this.img_head = '';
+    this.partyBackgroundColor = '';
+    this.totalSeats = 0;
+    this.zoneSeats = 0;
+    this.partylistSeats = 0;
+    this.ranking = 0;
+    this.totalVote = null;
+    this.tooltipVisible = false;
+    this.hideMagnifier();
+    this.hideTooltip();
 
-    // if (img) {
-    // img.style.marginLeft = '0px';
-    // }
-    // if (this.allWinners && Object.keys(this.allWinners).length > 0) {
-    // this.zone.run(() => {
-    // firstValueFrom(
-    // this.http.get('/assets/thailand.svg', { responseType: 'text' })
-    // ).then((svgText) => {
-    // this.settingSvg(svgText, false);
-    // this.cd.detectChanges();
-    // });
-    // });
-    // }
+    if (this.allWinners && Object.keys(this.allWinners).length > 0) {
+      firstValueFrom(
+        this.http.get('/assets/thailand.svg', { responseType: 'text' })
+      )
+        .then((svgText) => {
+          this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
+          return this.settingSvg(svgText, false);
+        })
+        .then(() => {
+          this.isMagnifierInitialized = false;
+          this.magnifierVisible = false;
+          this.cd.markForCheck(); 
+        })
+        .catch((error) => {
+          console.error('Error loading SVG:', error);
+        });
+    }
   }
 
   getPartylistSeatsArray(): number[] {

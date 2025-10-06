@@ -296,7 +296,11 @@ export class Dashboard implements OnInit {
     return 'gray';
   }
 
-  async changeSvg(): Promise<void> {
+
+  async changeSvg(view: string): Promise<void> {
+    console.log(view);
+
+    this.selectDashboard = view; // ตั้งค่า view ตามพารามิเตอร์ที่ส่งมา
     this.selectDashboard = this.selectDashboard === 'dashboard' ? 'dashboard_2' : 'dashboard';
     if (this.selectDashboard === 'dashboard' && this.allWinners && Object.keys(this.allWinners).length > 0) {
       try {
@@ -478,7 +482,7 @@ export class Dashboard implements OnInit {
     const mapProvinces = document.getElementById('map_provinces') as HTMLElement;
     if (mapProvinces) {
       const rect = mapProvinces.getBoundingClientRect();
-      const buffer = 10; 
+      const buffer = 10;
       const isNearMap = (
         event.clientX >= rect.left - buffer &&
         event.clientX <= rect.right + buffer &&

@@ -17,16 +17,23 @@
     <div class="row">
         <div class="col-7">
             <div class="glass-card">
-                <button class="btn-change" style="position: absolute;" (click)="changeSvg()">
-                    <div class="icon-text-container">
-                        <mat-icon *ngIf="selectDashboard === 'dashboard'"
-                            style="width: 24px; height: 24px;">event_seat</mat-icon>
-                        <img *ngIf="selectDashboard === 'dashboard_2'" src="/assets/thai_mini.svg" alt="Country"
-                            class="change-icon" style="width: 24px; height: 24px;" />
-                        <span *ngIf="selectDashboard === 'dashboard'">ที่นั่ง</span>
-                        <span *ngIf="selectDashboard === 'dashboard_2'">แผนที่</span>
-                    </div>
-                </button>
+                <div class="button-container">
+                    <button class="btn-change" (click)="changeSvg('dashboard')"
+                        [class.active]="selectDashboard === 'dashboard'">
+                        <div class="icon-text-container">
+                            <mat-icon style="width: 24px; height: 24px;">event_seat</mat-icon>
+                            <span>ที่นั่ง</span>
+                        </div>
+                    </button>
+                    <button class="btn-change" (click)="changeSvg('dashboard_2')"
+                        [class.active]="selectDashboard === 'dashboard_2'">
+                        <div class="icon-text-container">
+                            <img src="/assets/thai_mini.svg" alt="Country" class="change-icon"
+                                style="width: 24px; height: 24px;" />
+                            <span>แผนที่</span>
+                        </div>
+                    </button>
+                </div>
                 <div class="svg-container" *ngIf="selectDashboard === 'dashboard'" #svgContainer
                     (mousemove)="onSvgMouseMove($event)" (click)="onSvgClick($event)">
                     <div class="thailand-map-wrapper"> <!-- New wrapper class like original -->

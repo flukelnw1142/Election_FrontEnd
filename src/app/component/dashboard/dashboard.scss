@@ -120,21 +120,6 @@ path:hover {
   }
 }
 
-/* tooltip */
-// .svg-tooltip {
-//   position: absolute;
-//   background-color: white;
-//   border: 1px solid #ccc;
-//   border-radius: 8px;
-//   padding: 12px;
-//   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-//   z-index: 1000;
-//   max-width: 320px;
-//   min-width: 260px;
-//   font-size: 14px;
-//   pointer-events: none;
-// }
-
 .tooltip-content {
   display: flex;
   flex-direction: column;
@@ -176,221 +161,6 @@ path:hover {
   width: 100vw;
   border-radius: 0;
 }
-
-// .main-container {
-//   display: flex;
-//   flex-direction: column;
-//   background: #fff;
-//   height: 80vh;
-//   border-radius: 2rem;
-
-
-//   .content-row {
-//     display: flex;
-//     flex: 1;
-//     gap: 0.4rem;
-
-//     .left-panel {
-//       display: flex;
-//       flex-direction: column;
-//       flex: 1;
-//       gap: 0.4rem;
-//       // position: relative;
-//       z-index: 1;
-//       // height: 80vh;
-
-//       .left-top-panel {
-//         flex: 3;
-//         border-radius: 1rem;
-//         margin: 1rem 0rem 0rem 1rem;
-//         position: relative;
-//         overflow: hidden;
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: space-between;
-
-//         .row {
-//           &:first-child {
-//             display: flex;
-//             align-items: center;
-
-//             .col-7 {
-//               text-align: left;
-//               padding: 0 1rem;
-
-//               p {
-//                 margin: 0;
-//                 padding: 0;
-//               }
-
-//               .center-info {
-//                 font-size: 2.5rem;
-//                 font-weight: bold;
-//                 color: #000;
-//               }
-
-//               p:first-child {
-//                 font-size: 1rem;
-//                 color: #000;
-//               }
-
-//               p:last-child {
-//                 font-size: 1.2rem;
-//                 color: #000;
-//               }
-//             }
-
-//             .col-5 {
-//               text-align: center;
-//               flex: 1;
-//               padding: 0 1rem;
-
-//               .center-info {
-//                 font-size: 3.5rem;
-//                 font-weight: bold;
-//                 color: #000;
-//                 margin: 0;
-//               }
-
-//               p:last-child {
-//                 font-size: 1.2rem;
-//                 color: #000;
-//                 margin: 0;
-//               }
-//             }
-//           }
-
-//           &:last-child {
-//             display: flex;
-//             justify-content: center;
-//             align-items: center;
-//           }
-//         }
-//       }
-
-//       .left-bottom-panel {
-//         flex: 2;
-//         background: #fefdfd;
-//         border-radius: 1rem;
-//         margin: 0rem 0rem 1rem 1rem;
-//         padding: 1rem;
-
-//         .part1 {
-//           display: flex;
-//           align-items: flex-start;
-//           justify-content: space-between;
-
-//           .zone-seats-info {
-//             p {
-//               margin: 0;
-//               font-size: 1.5rem;
-//               color: #000;
-//             }
-//           }
-
-//           .vote-info {
-//             margin-left: auto;
-//             text-align: right;
-//             padding-left: 1rem;
-//             flex-shrink: 0;
-
-//             p {
-//               margin: 0;
-//               font-size: 1rem;
-//               color: #000;
-//             }
-
-//             .center-info {
-//               font-size: 1.5rem;
-//               font-weight: bold;
-//               color: #000;
-//               margin: 0;
-//             }
-//           }
-//         }
-
-//         .orange-dots {
-//           display: flex;
-//           flex-wrap: wrap;
-//           margin-top: 0.5rem;
-//           justify-content: flex-start;
-//           gap: 0.2rem;
-
-//           .dot {
-//             // width: 30px;
-//             // height: 30px;
-//             width: 1.5vw;
-//             height: 1.5vw;
-//             border-radius: 50%;
-//             background-color: #ff6200;
-//           }
-//         }
-//       }
-//     }
-
-//     .right-panel {
-//       flex: 2;
-//       background: #fefdfd;
-//       margin: 1rem 1rem 1rem 0rem;
-//       user-select: none;
-//       border-radius: 1rem;
-//       position: relative;
-//       display: flex;
-//       flex-direction: column;
-//       // height: 80vh;
-
-//       .button-container {
-//         position: absolute;
-//         top: 10px;
-//         left: 10px;
-//         display: flex;
-//         align-items: center;
-//         gap: 10px;
-//         z-index: 1000;
-//       }
-
-//       // .party-logo {
-//       //   max-width: 150px;
-//       //   max-height: 150px;
-//       //   object-fit: contain;
-//       //   z-index: 1000;
-//       // }
-
-//       .row {
-//         position: relative;
-//         flex: 1;
-//         z-index: 1;
-//       }
-
-//       .zone-seats-info {
-//         position: absolute;
-//         bottom: 10px;
-//         left: 10px;
-//         padding: 0.5rem 1rem;
-//         background: rgba(255, 255, 255, 0.8);
-//         border-radius: 5px;
-//         font-size: 1.2rem;
-//         color: #000;
-//         z-index: 1000;
-
-//         p {
-//           margin: 0;
-//         }
-//       }
-
-//       .button-container-ri {
-//         position: absolute;
-//         top: 10px;
-//         right: 10px;
-//         display: flex;
-//         align-items: center;
-//         gap: 10px;
-//         z-index: 1000;
-//       }
-//     }
-//   }
-// }
-
 
 .ds-Button {
   user-select: none;
@@ -705,6 +475,56 @@ mat-icon {
       object-fit: cover;
       object-position: top;
       border-radius: 15px;
+    }
+  }
+
+
+}
+
+.show-partyList {
+
+  .card {
+    padding: 30px;
+  }
+
+  .two-column-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+
+  .candidate-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    padding: 1rem;
+    background: #ffffff37;
+    gap: 2rem;
+
+    .number {
+      background: #00000038;
+      height: 60px;
+      width: 2.5rem;
+      text-align: center;
+      align-content: center;
+      border-radius: 15px;
+    }
+
+    img {
+      height: 140px;
+      width: 100px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 15px;
+    }
+
+    .icon {
+      font-size: 50px;
+      width: 48px;
+      height: 48px;
+      color: #2ed47e;
     }
   }
 

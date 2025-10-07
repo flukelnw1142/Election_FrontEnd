@@ -13,7 +13,7 @@
     </div> -->
 
 <!-- PAGE 1 -->
-<div *ngIf="selectedParty === '' && selectedDistric === ''">
+<div *ngIf="selectedParty === '' && selectedDistric === '' && detailPartyListPerPartyName.length === 0">
     <div class="row">
         <div class="col-7">
             <div class="glass-card">
@@ -49,7 +49,8 @@
         </div>
         <div class="col-5">
             <div class="card-left glass-card">
-                <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)" (partySelectedCandidate)="onpartySelectedCandidate($event)"></app-dashboard-score-and-seat>
+                <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"
+                    (partySelectedCandidate)="onpartySelectedCandidate($event)"></app-dashboard-score-and-seat>
             </div>
         </div>
     </div>
@@ -156,6 +157,31 @@
     </div>
 </div>
 
+
+<!-- PAGE 4 -->
+<div *ngIf="detailPartyListPerPartyName.length > 0" style="position: relative;" class="show-partyList">
+    <button class="ds-Button" (click)="closeDialog()">X</button>
+    <div class="glass-card card" style="color: white;">
+        <div class="two-column-grid">
+            <div>
+                {{partySeatCounts.partylist_seats}}
+            </div>
+            <div class="scroll-container">
+                <div *ngFor="let candidate of detailPartyListPerPartyName; let i = index" class="candidate-item">
+                    <p class="number">{{ i + 1 }}</p>
+                    <ng-container *ngIf="i < partySeatCounts?.partylist_seats; else showDash">
+                        <p><mat-icon class="icon">check_circle</mat-icon></p>
+                    </ng-container>
+                    <ng-template #showDash>
+                        <p class="icon"></p>
+                    </ng-template>
+                    <img [src]="candidate.avatarURL" alt="Party Logo">
+                    <p>{{candidate.fullName }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

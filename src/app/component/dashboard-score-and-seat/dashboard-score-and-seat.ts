@@ -27,7 +27,7 @@ export class DashboardScoreAndSeat implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
   @Output() partySelected = new EventEmitter<string>();
-  @Output() partySelectedCandidate = new EventEmitter<number>();
+  @Output() partySelectedCandidate = new EventEmitter<string>();
   partySeatCountsList: PartySeatCountList[] = [];
   totalSeats: number = 0;
   partyColorMap: { [partyKeyword: string]: Color } = {};
@@ -92,7 +92,8 @@ export class DashboardScoreAndSeat implements OnInit {
   onSelectParty(partyName: string) {
     this.partySelected.emit(partyName);
   }
-  onSelectPartylistSeats(partyID: number): void {
-    this.partySelectedCandidate.emit(partyID);
+  onSelectPartylistSeats(partyName: string): void {
+    console.log(partyName)
+    this.partySelectedCandidate.emit(partyName);
   }
 }

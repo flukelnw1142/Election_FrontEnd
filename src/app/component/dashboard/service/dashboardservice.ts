@@ -57,7 +57,7 @@ export class DashboardService {
   }
 
   getRankByDistrict(id: string | number): Observable<any> {
-    return this._http.get<any>(`${this.baseUrl}/Election/detail?id=${id}`);
+    return this._http.get<any>(`${this.baseUrl}/Election/detailAll?id=${id}`);
   }
 
   getRankByDistrictTop3(id: string | number): Observable<any> {

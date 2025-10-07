@@ -13,7 +13,7 @@
     </div> -->
 
 <!-- PAGE 1 -->
-<div *ngIf="selectedParty === '' ">
+<div *ngIf="selectedParty === '' && selectedDistric === ''">
     <div class="row">
         <div class="col-7">
             <div class="glass-card">
@@ -64,7 +64,7 @@
             <div class="tooltip-text">
                 <p>{{ tooltipText }}</p>
                 <div class="tooltip-subtext">
-                    <div *ngFor="let candidate of detailDistrict">
+                    <div *ngFor="let candidate of detailDistrictTop3">
                         <!-- <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" /> -->
                         <img [src]="candidate.avatarURL" alt="Party Logo">
                         <div>
@@ -130,6 +130,26 @@
                 <!-- <div class="svg-container" #svgContainer (click)="onSvgClick($event)"> -->
                 <div class="svg-container" #svgContainer>
                     <div [innerHTML]="svgContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div *ngIf="selectedDistric !== '' " style="position: relative;" class="show-distric">
+    <button class="ds-Button" (click)="closeDialog()">X</button>
+    <div class="glass-card card" style="color: white;">
+        <p class="province">{{detailDistrict[0].province}}</p>
+        <p class="zone">เขต {{detailDistrict[0].zone}}</p>
+        <div class="scroll-container">
+            <div *ngFor="let candidate of detailDistrict; let i = index" class="candidate-item">
+                <p class="number" [style.background]="getColor(candidate.party_name)">{{ i + 1 }}</p>
+                <img [src]="candidate.avatarURL" alt="Party Logo">
+                <div>
+                    <p style="font-size: 1.3rem;">{{ candidate.fullname }}</p>
+                    <p style="font-weight: 300; color: rgb(199, 199, 199);">{{ candidate.party_name }}</p>
+                    <p>คะแนน: {{ candidate.totalVotes | number }}</p>
                 </div>
             </div>
         </div>

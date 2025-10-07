@@ -42,7 +42,9 @@ export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
   prevSvgContent = '';
   detailDistrict: Candidate[] = [];
+  detailDistrictTop3: Candidate[] = [];
   selectedParty: any = '';
+  selectedDistric: any = '';
   img_party: any = '';
   img_head: any = '';
   partyBackgroundColor: any = '';
@@ -303,7 +305,7 @@ export class Dashboard implements OnInit {
     }
   }
 
-  private getColor(winner: any): string {
+  getColor(winner: any): string {
     const partyName = typeof winner === 'string' ? winner : winner?.party || '';
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
@@ -479,8 +481,8 @@ export class Dashboard implements OnInit {
     }
 
     this._dashboard.getRankByDistrictTop3(areaID).subscribe((data) => {
-      console.log("(getRankByDistrictTop3) Data",data)
-      this.detailDistrict = data;
+      console.log('(getRankByDistrictTop3) Data', data);
+      this.detailDistrictTop3 = data;
       this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
       // 👇 คำนวณตำแหน่งเริ่มต้นของ tooltip
       let tooltipX = clientX + 10;
@@ -786,8 +788,17 @@ export class Dashboard implements OnInit {
               this.zoneId = group.id;
 
               // ทำเหมือนคลิกใน svg จริง
-              this.selectedParty = group.getAttribute('data-party') || '';
-              // this.selectedDistric 
+              // this.selectedParty = group.getAttribute('data-party') || '';
+              this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
+
+              //CLICK
+              this._dashboard
+                .getRankByDistrict(this.selectedDistric)
+                .subscribe((data) => {
+                  console.log('(getRankByDistrict) Data', data);
+                  this.detailDistrict = data;
+                });
+
               this.tooltipVisible = false;
               this.hideMagnifier();
 
@@ -894,6 +905,7 @@ export class Dashboard implements OnInit {
   closeDialog() {
     console.log('Close > ', this.selectedParty);
     this.selectedParty = '';
+    this.selectedDistric = '';
     this.img_party = '';
     this.img_head = '';
     this.partyBackgroundColor = '';

@@ -117,7 +117,7 @@ path:hover {
   height: 36px;
   margin-right: 10px;
   border-radius: 50%;
-  object-fit:cover;
+  object-fit: cover;
   object-position: top;
   border: 1px solid #ddd;
 }
@@ -447,13 +447,13 @@ mat-icon {
   color: #333;
 }
 
-.card {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 10px;
-}
+// .card {
+//   background-color: rgba(255, 255, 255, 0.2);
+//   border-radius: 15px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   padding: 20px;
+//   margin: 10px;
+// }
 
 .card-left {
   // background-color: rgba(255, 255, 255, 0.1);
@@ -621,4 +621,69 @@ mat-icon {
   min-width: 260px;
   font-size: 14px;
   pointer-events: none;
+}
+
+
+
+.show-distric {
+  .province {
+    font-size: 2.3rem;
+    font-weight: bolder;
+  }
+
+  .zone {
+    font-size: 2rem;
+    font-weight: 300;
+  }
+
+  .card {
+    padding: 30px;
+  }
+
+  .candidate-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    padding: 1rem;
+    background: #ffffff37;
+    gap: 2rem;
+
+    .number {
+      background: #000;
+      height: 60px;
+      width: 2.5rem;
+      text-align: center;
+      align-content: center;
+      border-radius: 15px;
+    }
+
+    img {
+      height: 140px;
+      width: 100px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 15px;
+    }
+  }
+
+
+}
+
+.scroll-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 70vh;
+  // width:100%;
+
+  /* ซ่อน scrollbar ทุกเบราว์เซอร์ */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE & Edge */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
 }

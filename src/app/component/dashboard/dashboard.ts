@@ -57,6 +57,7 @@ export class Dashboard implements OnInit {
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
   @ViewChild('magnifier', { static: false }) magnifier!: ElementRef;
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
+  private lastWinnersHash: string = '';
 
   tooltipVisible = false;
   tooltipText = '';
@@ -69,7 +70,7 @@ export class Dashboard implements OnInit {
   magnifierX = 0;
   magnifierY = 0;
   zoomLevel = 8;
-  lensSize = 200;
+  lensSize = 250;
   isMappingComplete: any;
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
@@ -92,7 +93,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -143,7 +144,6 @@ export class Dashboard implements OnInit {
       );
 
       this.mouseMoveSubject
-        .pipe( takeUntil(this.destroy$))
         .subscribe((event: MouseEvent) => {
           this.handleTooltipLogic(event);
         });
@@ -157,7 +157,11 @@ export class Dashboard implements OnInit {
   async settingSvg(svgText: string, doAnimation = true): Promise<void> {
     console.log('>> SVG Loaded', this.selectedParty);
     let districtIds = Object.keys(this.allWinners);
-
+    const currentWinnersHash = JSON.stringify(this.allWinners);
+    if (this.lastWinnersHash !== currentWinnersHash) {
+      console.log('Updating clonedSvg due to winners change');
+      this.lastWinnersHash = currentWinnersHash;
+    }
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
     const svg = svgDoc.documentElement;
@@ -166,7 +170,7 @@ export class Dashboard implements OnInit {
     svg.removeAttribute('width');
     svg.removeAttribute('height');
 
-    svg.style.height = '74vh';
+    svg.style.height = '82vh';
     svg.style.width = 'auto';
     svg.style.margin = '20px 0';
 
@@ -247,7 +251,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -272,6 +276,7 @@ export class Dashboard implements OnInit {
 
     this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg.outerHTML);
     this.isMappingComplete = true;
+    this.isMagnifierInitialized = false;
     this.cd.markForCheck();
   }
 
@@ -694,15 +699,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -849,7 +854,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }

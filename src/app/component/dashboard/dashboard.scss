@@ -458,7 +458,6 @@ mat-icon {
   // background-color: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   padding: 20px;
-  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -598,8 +597,8 @@ mat-icon {
 
 .magnifier {
   position: fixed;
-  width: 200px; // As per your request
-  height: 200px;
+  width: 250px; // As per your request
+  height: 250px;
   border-radius: 50%;
   border: 2px solid #ccc;
   background: white; // Or #eef0fa as in the example

@@ -23,6 +23,7 @@ path:hover {
   // height: 100%;
   overflow: visible !important;
   position: relative;
+  z-index: 1000;
   // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   // background-image: url('/background/TH.png');
   // background-size: cover;
@@ -31,14 +32,40 @@ path:hover {
 }
 
 .glass-card {
-  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   height: 100%;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-}
 
+  /*1*/
+  // background: rgba(255, 255, 255, 0.1);
+  // backdrop-filter: blur(35px);
+  // border: 2px solid rgba(255, 255, 255, 0.1);
+  // box-shadow: 0 0 80px rgba(0, 0, 0, 0.25);
+  // overflow: hidden;
+
+  /*2*/
+  background: rgba(255, 255, 255, 0.1);
+  /* พื้นหลังโปร่งแสง สีขาวอ่อน */
+  // background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15px);
+  /* เบลอพื้นหลังเบาๆ ให้ดูเหมือนกระจก */
+  -webkit-backdrop-filter: blur(15px);
+  /* สำหรับ Safari */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* ขอบบางๆ โปร่ง */
+  border-radius: 15px;
+  /* มุมโค้งมน */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  /* เงาเบาๆ เพื่อความลึก */
+  transition: all 0.3s ease;
+  /* การเปลี่ยนแปลงนุ่มนวล */
+  /*3*/
+  // backdrop-filter: blur(16px) saturate(180%);
+  // -webkit-backdrop-filter: blur(16px) saturate(180%);
+  // background-color: rgba(255, 255, 255, 0.75);
+  // border-radius: 12px;
+  // border: 1px solid rgba(209, 213, 219, 0.3);
+  // -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
 
 /* ANIMATION */
 .animated-path {
@@ -565,6 +592,7 @@ mat-icon {
 
 .svg-container {
   overflow: visible; // Prevent clipping
+
   // ...เดิม...
 }
 

@@ -36,7 +36,7 @@
                 </div>
                 <div class="svg-container" *ngIf="selectDashboard === 'dashboard'" #svgContainer
                     (mousemove)="onSvgMouseMove($event)" (click)="onSvgClick($event)">
-                    <div class="thailand-map-wrapper"> <!-- New wrapper class like original -->
+                    <div class="thailand-map-wrapper">
                         <div [innerHTML]="svgContent"></div>
                     </div>
                 </div>

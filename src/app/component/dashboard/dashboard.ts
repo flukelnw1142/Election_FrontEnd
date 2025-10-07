@@ -481,8 +481,19 @@ export class Dashboard implements OnInit {
     this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
       this.detailDistrict = data;
       this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
-      this.tooltipX = clientX + 10;
-      this.tooltipY = clientY + 10;
+      // 👇 คำนวณตำแหน่งเริ่มต้นของ tooltip
+      let tooltipX = clientX + 10;
+      let tooltipY = clientY + 10;
+      const tooltipWidth = 150; // เปลี่ยนตามขนาด tooltip จริง
+      const tooltipHeight = 250; // เปลี่ยนตามความสูง tooltip จริง
+      const padding = 10;
+      const maxX = window.innerWidth - tooltipWidth - padding;
+      const maxY = window.innerHeight - tooltipHeight - padding;
+
+      // 👇 ตัดให้ไม่เกินขอบ
+      this.tooltipX = Math.min(tooltipX, maxX);
+      this.tooltipY = Math.min(tooltipY, maxY);
+
       this.tooltipVisible = true;
     });
   }

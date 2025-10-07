@@ -31,40 +31,80 @@ path:hover {
   // background-repeat: no-repeat;
 }
 
+// .glass-card {
+//   border-radius: 15px;
+//   height: 100%;
+
+//   /*1*/
+//   // background: rgba(255, 255, 255, 0.1);
+//   // backdrop-filter: blur(35px);
+//   // border: 2px solid rgba(255, 255, 255, 0.1);
+//   // box-shadow: 0 0 80px rgba(0, 0, 0, 0.25);
+//   // overflow: hidden;
+
+//   /*2*/
+//   background: rgba(255, 255, 255, 0.1);
+//   /* พื้นหลังโปร่งแสง สีขาวอ่อน */
+//   // background: rgba(0, 0, 0, 0.2);
+//   backdrop-filter: blur(15px);
+//   /* เบลอพื้นหลังเบาๆ ให้ดูเหมือนกระจก */
+//   -webkit-backdrop-filter: blur(15px);
+//   /* สำหรับ Safari */
+//   border: 1px solid rgba(255, 255, 255, 0.2);
+//   /* ขอบบางๆ โปร่ง */
+//   border-radius: 15px;
+//   /* มุมโค้งมน */
+//   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+//   /* เงาเบาๆ เพื่อความลึก */
+//   transition: all 0.3s ease;
+//   /* การเปลี่ยนแปลงนุ่มนวล */
+//   /*3*/
+//   // backdrop-filter: blur(16px) saturate(180%);
+//   // -webkit-backdrop-filter: blur(16px) saturate(180%);
+//   // background-color: rgba(255, 255, 255, 0.75);
+//   // border-radius: 12px;
+//   // border: 1px solid rgba(209, 213, 219, 0.3);
+//   // -webkit-backdrop-filter: blur(16px) saturate(180%);
+// }
+
 .glass-card {
+  position: relative;
+  background: linear-gradient(0deg, #000, #272727);
   border-radius: 15px;
-  height: 100%;
+}
 
-  /*1*/
-  // background: rgba(255, 255, 255, 0.1);
-  // backdrop-filter: blur(35px);
-  // border: 2px solid rgba(255, 255, 255, 0.1);
-  // box-shadow: 0 0 80px rgba(0, 0, 0, 0.25);
-  // overflow: hidden;
-
-  /*2*/
-  background: rgba(255, 255, 255, 0.1);
-  /* พื้นหลังโปร่งแสง สีขาวอ่อน */
-  // background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(15px);
-  /* เบลอพื้นหลังเบาๆ ให้ดูเหมือนกระจก */
-  -webkit-backdrop-filter: blur(15px);
-  /* สำหรับ Safari */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  /* ขอบบางๆ โปร่ง */
+.glass-card:before,
+.glass-card:after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094,
+      #0000ff, #00ff00, #ffff00, #ff0000);
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: steam 120s linear infinite;
   border-radius: 15px;
-  /* มุมโค้งมน */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  /* เงาเบาๆ เพื่อความลึก */
-  transition: all 0.3s ease;
-  /* การเปลี่ยนแปลงนุ่มนวล */
-  /*3*/
-  // backdrop-filter: blur(16px) saturate(180%);
-  // -webkit-backdrop-filter: blur(16px) saturate(180%);
-  // background-color: rgba(255, 255, 255, 0.75);
-  // border-radius: 12px;
-  // border: 1px solid rgba(209, 213, 219, 0.3);
-  // -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+@keyframes steam {
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 400% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.glass-card:after {
+  filter: blur(20px);
 }
 
 /* ANIMATION */
@@ -602,7 +642,7 @@ mat-icon {
   height: 250px;
   border-radius: 50%;
   border: 2px solid #ccc;
-  background: white; // Or #eef0fa as in the example
+  background: black; // Or #eef0fa as in the example
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   pointer-events: auto;

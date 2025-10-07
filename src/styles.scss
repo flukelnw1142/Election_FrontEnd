@@ -13,7 +13,7 @@ body {
     margin: 0;
     // background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 90%);
     // background-image: url('/background/bg.png');
-    background-image: url('/background/bg3.jpg');
+    background-image: url('/background/bg4.png');
     // background-image: url('/background/bg2.jpg');
     // background-image: url('/background/bg1.jpg');
     background-size: cover;
@@ -31,6 +31,10 @@ g {
 }
 
 svg text[id^="text"] tspan {
+    fill: #FFFFFF !important;
+}
+
+g [id^="label_province"] tspan {
     fill: #FFFFFF !important;
 }
 

@@ -64,6 +64,10 @@ export class DashboardService {
     return this._http.get<any>(`${this.baseUrl}/Election/detailTop3?id=${id}`);
   }
 
+  getCadidateByPartyName(partyName: string): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/Election/cadidateByPartyName?name=${partyName}`);
+  }
+
   getPartyColors(): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/color`);
   }

@@ -16,7 +16,12 @@ import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgZone } from '@angular/core';
-import { Candidate, Color, Winner } from './dashboardInterface';
+import {
+  Candidate,
+  CandidatePartyList,
+  Color,
+  Winner,
+} from './dashboardInterface';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailDialog } from '../detail-dialog/detail-dialog';
 import { PartySeatCountList } from '../dashboard/dashboardInterface';
@@ -41,6 +46,8 @@ import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-sco
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
   prevSvgContent = '';
+  partySeatCounts: any = {};
+  detailPartyListPerPartyName: CandidatePartyList[] = [];
   detailDistrict: Candidate[] = [];
   detailDistrictTop3: Candidate[] = [];
   selectedParty: any = '';
@@ -95,7 +102,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -131,7 +138,12 @@ export class Dashboard implements OnInit {
                   responseType: 'text',
                 })
               ).then((svgText) => {
-                this.settingSvg(svgText, false);
+                if (
+                  this.selectedDistric === '' &&
+                  this.detailPartyListPerPartyName.length === 0
+                ) {
+                  this.settingSvg(svgText, false);
+                }
                 this.cd.detectChanges();
               });
             });
@@ -251,7 +263,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-              this.allWinners[id].party === this.selectedParty
+            this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -713,15 +725,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -802,16 +814,16 @@ export class Dashboard implements OnInit {
               this.tooltipVisible = false;
               this.hideMagnifier();
 
-              firstValueFrom(
-                this.http.get('/assets/thailand.svg', { responseType: 'text' })
-              )
-                .then((svgText) => {
-                  this.svgContent =
-                    this.sanitizer.bypassSecurityTrustHtml(svgText);
-                  return this.settingSvg(svgText, false);
-                })
-                .then(() => this.cd.markForCheck())
-                .catch((error) => console.error('Error loading SVG:', error));
+              // firstValueFrom(
+              //   this.http.get('/assets/thailand.svg', { responseType: 'text' })
+              // )
+              //   .then((svgText) => {
+              //     this.svgContent =
+              //       this.sanitizer.bypassSecurityTrustHtml(svgText);
+              //     return this.settingSvg(svgText, false);
+              //   })
+              //   .then(() => this.cd.markForCheck())
+              //   .catch((error) => console.error('Error loading SVG:', error));
             }
           }
         }
@@ -855,10 +867,20 @@ export class Dashboard implements OnInit {
       .catch((error) => console.error('Error loading SVG:', error));
   }
 
-  onpartySelectedCandidate(partyID: number) {
-    console.log('Open PopUp partyListCadidate', partyID);
-  }
+  onpartySelectedCandidate(partyName: string) {
+    console.log('Open PopUp partyListCadidate', partyName);
+    const selectedParty = this.partySeatCountsList.find(
+      (p) => p.partyName === partyName
+    );
+    this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
+      this.detailPartyListPerPartyName = data;
+      console.log('(getCadidateByPartyName) Data', data);
+    });
 
+    console.log(selectedParty);
+
+    this.partySeatCounts = selectedParty;
+  }
 
   hideTooltip() {
     this.tooltipVisible = false;
@@ -901,7 +923,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => { });
+      dialogRef.afterClosed().subscribe(() => {});
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -911,6 +933,7 @@ export class Dashboard implements OnInit {
     console.log('Close > ', this.selectedParty);
     this.selectedParty = '';
     this.selectedDistric = '';
+    this.detailPartyListPerPartyName = [];
     this.img_party = '';
     this.img_head = '';
     this.partyBackgroundColor = '';

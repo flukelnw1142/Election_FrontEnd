@@ -1,4 +1,3 @@
-
 export interface Winner {
   party: string;
   areaID: number;
@@ -31,4 +30,17 @@ export interface PartySeatCountList {
   total_party_votes: number;
   partylist_seats: number;
   ranking: number;
+}
+
+export interface CandidatePartyList {
+  id: number;
+  no: number;
+  title: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  active: string;
+  partyID: number;
+  avatarURL: string;
+  updateAt: string;
 }

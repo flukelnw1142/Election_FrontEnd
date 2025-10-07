@@ -65,7 +65,8 @@
                 <p>{{ tooltipText }}</p>
                 <div class="tooltip-subtext">
                     <div *ngFor="let candidate of detailDistrict">
-                        <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" />
+                        <!-- <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" /> -->
+                        <img [src]="candidate.avatarURL" alt="Party Logo">
                         <div>
                             <p>{{ candidate.party_name }}</p>
                             <p>{{ candidate.fullname }}</p>

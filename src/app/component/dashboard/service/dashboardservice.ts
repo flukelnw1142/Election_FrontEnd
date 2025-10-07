@@ -16,7 +16,10 @@ export class DashboardService {
   private winnersSubject = new BehaviorSubject<any>({});
   winners$ = this.winnersSubject.asObservable();
 
-  constructor(private _http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    private _http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     if (isPlatformBrowser(this.platformId)) {
       this.startConnection();
     }
@@ -55,6 +58,10 @@ export class DashboardService {
 
   getRankByDistrict(id: string | number): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/detail?id=${id}`);
+  }
+
+  getRankByDistrictTop3(id: string | number): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/Election/detailTop3?id=${id}`);
   }
 
   getPartyColors(): Observable<any> {

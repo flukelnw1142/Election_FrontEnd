@@ -117,7 +117,8 @@ path:hover {
   height: 36px;
   margin-right: 10px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit:cover;
+  object-position: top;
   border: 1px solid #ddd;
 }
 

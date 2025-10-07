@@ -478,7 +478,8 @@ export class Dashboard implements OnInit {
       return;
     }
 
-    this._dashboard.getRankByDistrict(areaID).subscribe((data) => {
+    this._dashboard.getRankByDistrictTop3(areaID).subscribe((data) => {
+      console.log("(getRankByDistrictTop3) Data",data)
       this.detailDistrict = data;
       this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
       // 👇 คำนวณตำแหน่งเริ่มต้นของ tooltip
@@ -786,6 +787,7 @@ export class Dashboard implements OnInit {
 
               // ทำเหมือนคลิกใน svg จริง
               this.selectedParty = group.getAttribute('data-party') || '';
+              // this.selectedDistric 
               this.tooltipVisible = false;
               this.hideMagnifier();
 

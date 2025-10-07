@@ -8,6 +8,7 @@ export interface Winner {
 
 export interface Candidate {
   logoURL: string;
+  avatarURL: string;
   fullname: string;
   party_name: string;
   totalVotes: number;

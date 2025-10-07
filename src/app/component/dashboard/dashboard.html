@@ -34,26 +34,31 @@
                         </div>
                     </button>
                 </div>
-                <div class="svg-container" *ngIf="selectDashboard === 'dashboard'" #svgContainer
-                    (mousemove)="onSvgMouseMove($event)" (click)="onSvgClick($event)">
+                <!-- <div class="svg-container" *ngIf="selectDashboard === 'dashboard'" #svgContainer
+                    (mousemove)="onSvgMouseMove($event)" (click)="onSvgClick($event)"> -->
+                <div class="svg-container" [hidden]="selectDashboard !== 'dashboard'" #svgContainer
+                    (mousemove)="onSvgMouseMove($event)">
                     <div class="thailand-map-wrapper">
                         <div [innerHTML]="svgContent"></div>
                     </div>
                 </div>
                 <div *ngIf="selectDashboard === 'dashboard_2'">
-                    <app-dashboard-v2></app-dashboard-v2>
+                    <app-dashboard-v2 (partySelected)="onPartySelected($event)"></app-dashboard-v2>
                 </div>
             </div>
         </div>
         <div class="col-5">
             <div class="card-left glass-card">
-                <app-dashboard-score-and-seat *ngIf="selectedParty === '' "></app-dashboard-score-and-seat>
+                <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"></app-dashboard-score-and-seat>
             </div>
         </div>
     </div>
+
+    <!-- MAGNIFIER -->
     <div class="magnifier" #magnifier [hidden]="!magnifierVisible"
         [ngStyle]="{ 'top': magnifierY + 'px', 'left': magnifierX + 'px' }"></div>
 
+    <!-- TOOLTIP -->
     <div class="svg-tooltip" *ngIf="tooltipVisible" [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
         <div class="tooltip-content">
             <div class="tooltip-text">
@@ -121,7 +126,8 @@
         </div>
         <div class="col-6">
             <div class="glass-card">
-                <div class="svg-container" #svgContainer (click)="onSvgClick($event)">
+                <!-- <div class="svg-container" #svgContainer (click)="onSvgClick($event)"> -->
+                <div class="svg-container" #svgContainer>
                     <div [innerHTML]="svgContent"></div>
                 </div>
             </div>

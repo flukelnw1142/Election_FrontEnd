@@ -8,7 +8,7 @@
     </div> -->
 
     <!-- กล่องพรรค -->
-    <div class="party-card" [style.background]="getColor(party.partyName)">
+    <div class="party-card" [style.background]="getColor(party.partyName)"   (click)="onSelectParty(party.partyName)">
       <div class="left-section">
         <img [src]="getUrlHead(party.partyName)" alt="Party Logo" class="img-head">
         <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"

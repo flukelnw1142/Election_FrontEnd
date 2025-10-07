@@ -93,7 +93,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -143,10 +143,9 @@ export class Dashboard implements OnInit {
         this._dashboard.getPartySeatCountsList()
       );
 
-      this.mouseMoveSubject
-        .subscribe((event: MouseEvent) => {
-          this.handleTooltipLogic(event);
-        });
+      this.mouseMoveSubject.subscribe((event: MouseEvent) => {
+        this.handleTooltipLogic(event);
+      });
     }
   }
 
@@ -155,7 +154,7 @@ export class Dashboard implements OnInit {
   }
 
   async settingSvg(svgText: string, doAnimation = true): Promise<void> {
-    console.log('>> SVG Loaded', this.selectedParty);
+    console.log('>> SVG Loaded "', this.selectedParty, '"');
     let districtIds = Object.keys(this.allWinners);
     const currentWinnersHash = JSON.stringify(this.allWinners);
     if (this.lastWinnersHash !== currentWinnersHash) {
@@ -199,38 +198,37 @@ export class Dashboard implements OnInit {
             .replace(/fill: *[^;]*;/g, '')
             .replace(/stroke: *[^;]*;/g, '')
             .replace(/stroke-width: *[^;]*;/g, '');
-
           if (
             !this.selectedParty ||
             this.allWinners[id].party === this.selectedParty
           ) {
             styleStr +=
               ' fill: ' + this.getColor(this.allWinners[id]) + ' !important;';
-            const party = Object.values(this.partyColorMap).find(
-              (p) => p.PARTY_NAME === this.selectedParty
-            );
-            this.img_party = this.sanitizer.bypassSecurityTrustUrl(
-              party?.IMG_PARTY || ''
-            );
-            this.img_head = this.sanitizer.bypassSecurityTrustUrl(
-              party?.IMG_HEAD || ''
-            );
-            this.partyBackgroundColor = party?.COLOR || '#fefdfd';
-            const partyData = this.partySeatCountsList.find(
-              (p) => p.partyName === this.selectedParty
-            );
-
-            if (partyData) {
-              this.totalSeats =
-                partyData.zone_seats + partyData.partylist_seats;
-              this.zoneSeats = partyData.zone_seats;
-              this.partylistSeats = partyData.partylist_seats;
-              this.ranking = partyData.ranking;
-              this.totalVote = partyData.total_party_votes;
-            }
           } else {
             styleStr += ' fill: #d3d3d3 !important;';
           }
+
+          const partyData = this.partySeatCountsList.find(
+            (p) => p.partyName === this.selectedParty
+          );
+
+          if (partyData) {
+            this.totalSeats = partyData.zone_seats + partyData.partylist_seats;
+            this.zoneSeats = partyData.zone_seats;
+            this.partylistSeats = partyData.partylist_seats;
+            this.ranking = partyData.ranking;
+            this.totalVote = partyData.total_party_votes;
+          }
+          const party = Object.values(this.partyColorMap).find(
+            (p) => p.PARTY_NAME === this.selectedParty
+          );
+          this.img_party = this.sanitizer.bypassSecurityTrustUrl(
+            party?.IMG_PARTY || ''
+          );
+          this.img_head = this.sanitizer.bypassSecurityTrustUrl(
+            party?.IMG_HEAD || ''
+          );
+          this.partyBackgroundColor = party?.COLOR || '#fefdfd';
 
           path.setAttribute('style', styleStr);
           text.setAttribute('style', styleText);
@@ -251,7 +249,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-              this.allWinners[id].party === this.selectedParty
+            this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -315,8 +313,9 @@ export class Dashboard implements OnInit {
     return 'gray';
   }
 
+  /*เปลี่ยน ที่นั่ง กับ แผนที่ */
   async changeSvg(view: string): Promise<void> {
-    console.log(view);
+    // console.log(view);
 
     this.selectDashboard = view; // ตั้งค่า view ตามพารามิเตอร์ที่ส่งมา
     this.selectDashboard =
@@ -338,60 +337,61 @@ export class Dashboard implements OnInit {
       }
     }
   }
-  onSvgClick(event: MouseEvent) {
-    console.log(event);
 
-    const target = event.target as SVGElement;
-    if (
-      target.tagName === 'path' ||
-      target.tagName === 'text' ||
-      (target instanceof SVGTSpanElement &&
-        /^\d+$/.test((target.textContent || '').trim()))
-    ) {
-      let parent = target.parentNode as SVGElement;
-      if (target.tagName === 'tspan') {
-        const textEl = parent;
-        parent = textEl?.parentNode as SVGElement;
-      }
+  // onSvgClick(event: MouseEvent) {
+  //   console.log("event",event);
 
-      if (
-        parent &&
-        parent.tagName === 'g' &&
-        parent.id &&
-        parent.id.includes('_')
-      ) {
-        const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
-        this.selectedParty = party;
-        this.tooltipVisible = false;
-        this.hideMagnifier();
+  //   const target = event.target as SVGElement;
+  //   if (
+  //     target.tagName === 'path' ||
+  //     target.tagName === 'text' ||
+  //     (target instanceof SVGTSpanElement &&
+  //       /^\d+$/.test((target.textContent || '').trim()))
+  //   ) {
+  //     let parent = target.parentNode as SVGElement;
+  //     if (target.tagName === 'tspan') {
+  //       const textEl = parent;
+  //       parent = textEl?.parentNode as SVGElement;
+  //     }
 
-        const img = document.getElementsByClassName(
-          'logo-image'
-        )[0] as HTMLElement;
-        if (img) {
-          img.style.marginLeft = '20px';
-        }
+  //     if (
+  //       parent &&
+  //       parent.tagName === 'g' &&
+  //       parent.id &&
+  //       parent.id.includes('_')
+  //     ) {
+  //       const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
+  //       this.selectedParty = party;
+  //       this.tooltipVisible = false;
+  //       this.hideMagnifier();
 
-        if (this.allWinners && Object.keys(this.allWinners).length > 0) {
-          firstValueFrom(
-            this.http.get('/assets/thailand.svg', { responseType: 'text' })
-          )
-            .then((svgText) => {
-              this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
-              return this.settingSvg(svgText, false);
-            })
-            .then(() => {
-              this.cd.markForCheck();
-            })
-            .catch((error) => {
-              console.error('Error loading SVG:', error);
-            });
-        }
-      } else {
-        alert(`คลิกจังหวัด: ไม่ทราบ`);
-      }
-    }
-  }
+  //       const img = document.getElementsByClassName(
+  //         'logo-image'
+  //       )[0] as HTMLElement;
+  //       if (img) {
+  //         img.style.marginLeft = '20px';
+  //       }
+
+  //       if (this.allWinners && Object.keys(this.allWinners).length > 0) {
+  //         firstValueFrom(
+  //           this.http.get('/assets/thailand.svg', { responseType: 'text' })
+  //         )
+  //           .then((svgText) => {
+  //             this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
+  //             return this.settingSvg(svgText, false);
+  //           })
+  //           .then(() => {
+  //             this.cd.markForCheck();
+  //           })
+  //           .catch((error) => {
+  //             console.error('Error loading SVG:', error);
+  //           });
+  //       }
+  //     } else {
+  //       alert(`คลิกจังหวัด: ไม่ทราบ`);
+  //     }
+  //   }
+  // }
 
   simmulateSvgClick(event: MouseEvent) {
     const target = event.target as SVGElement;
@@ -699,15 +699,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -813,6 +813,24 @@ export class Dashboard implements OnInit {
     this.cd.detectChanges();
   }
 
+  /* click "dashboard-score-and-seat" */
+  onPartySelected(partyName: string) {
+    console.log('Selected party from card:', partyName);
+    this.selectedParty = partyName;
+    this.tooltipVisible = false;
+    this.hideMagnifier();
+
+    firstValueFrom(
+      this.http.get('/assets/thailand.svg', { responseType: 'text' })
+    )
+      .then((svgText) => {
+        this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
+        return this.settingSvg(svgText, false);
+      })
+      .then(() => this.cd.markForCheck())
+      .catch((error) => console.error('Error loading SVG:', error));
+  }
+
   hideTooltip() {
     this.tooltipVisible = false;
   }
@@ -854,7 +872,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => { });
+      dialogRef.afterClosed().subscribe(() => {});
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -899,6 +917,9 @@ export class Dashboard implements OnInit {
   }
 
   formatTotalVotes(votes: number): string {
-    return votes.toLocaleString('en-US');
+    if (votes !== null && votes !== undefined) {
+      return votes.toLocaleString('en-US');
+    }
+    return '';
   }
 }

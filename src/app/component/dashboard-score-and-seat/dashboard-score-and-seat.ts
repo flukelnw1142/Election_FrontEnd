@@ -1,8 +1,10 @@
 import {
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Inject,
   OnInit,
+  Output,
   PLATFORM_ID,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -24,6 +26,7 @@ export class DashboardScoreAndSeat implements OnInit {
     private cdRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+  @Output() partySelected = new EventEmitter<string>();
 
   partySeatCountsList: PartySeatCountList[] = [];
   totalSeats: number = 0;
@@ -45,7 +48,7 @@ export class DashboardScoreAndSeat implements OnInit {
         return sum + p.zone_seats + p.partylist_seats;
       }, 0);
 
-      console.log('partySeatCountsList', this.partySeatCountsList);
+      // console.log('partySeatCountsList', this.partySeatCountsList);
 
       // ✅ บังคับให้ Angular render ใหม่
       this.cdRef.detectChanges();
@@ -83,5 +86,10 @@ export class DashboardScoreAndSeat implements OnInit {
       }
     }
     return '';
+  }
+
+  onSelectParty(partyName: string) {
+    // console.log("partyName",partyName)
+    this.partySelected.emit(partyName);
   }
 }

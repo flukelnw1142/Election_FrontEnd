@@ -4,6 +4,8 @@ import {
   PLATFORM_ID,
   OnInit,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -30,6 +32,8 @@ export class DashboardV2 implements OnInit {
     private _dashboard: DashboardService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  @Output() partySelected = new EventEmitter<string>();
 
   partySeatCountsList: PartySeatCountList[] = [];
   totalSeats: number = 0;
@@ -109,8 +113,8 @@ export class DashboardV2 implements OnInit {
 
       svg.setAttribute('viewBox', '0 0 900 500');
       // svg.style.margin = '20px 0';
-      svg.style.marginRight = '40px'
-      svg.style.marginTop = '60px'
+      svg.style.marginRight = '40px';
+      svg.style.marginTop = '60px';
       svg.style.height = '60vh';
 
       // 🧠 STEP 1: สร้าง flat list ของชื่อพรรค
@@ -172,15 +176,15 @@ export class DashboardV2 implements OnInit {
     if (target && target.id && target.id.startsWith('circle-')) {
       const circleId = target.id;
       const index = parseInt(circleId.replace('circle-', ''), 10);
-      console.log(index);
+      // console.log(index);
       // หา party จาก index
       let seatCounter = 0;
       for (const p of this.partySeatCountsList) {
-        console.log(p);
+        // console.log(p);
         const seats = p.zone_seats + p.partylist_seats;
         seatCounter += seats;
 
-        console.log(seatCounter);
+        // console.log(seatCounter);
 
         if (index <= seatCounter) {
           this.tooltipText = p.partyName;
@@ -199,5 +203,25 @@ export class DashboardV2 implements OnInit {
 
   hideTooltip() {
     this.tooltipVisible = false;
+  }
+
+  onSvgClick(event: MouseEvent): void {
+    const target = event.target as SVGElement;
+
+    if (target && target.id && target.id.startsWith('circle-')) {
+      const circleId = target.id;
+      const index = parseInt(circleId.replace('circle-', ''), 10);
+
+      let seatCounter = 0;
+      for (const p of this.partySeatCountsList) {
+        const seats = p.zone_seats + p.partylist_seats;
+        seatCounter += seats;
+
+        if (index <= seatCounter) {
+          this.partySelected.emit(p.partyName); // 🟢 emit ไป component แม่
+          break;
+        }
+      }
+    }
   }
 }

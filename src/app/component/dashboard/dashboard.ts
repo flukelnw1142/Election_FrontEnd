@@ -93,7 +93,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -249,7 +249,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -479,7 +479,7 @@ export class Dashboard implements OnInit {
     }
 
     this._dashboard.getRankByDistrictTop3(areaID).subscribe((data) => {
-      console.log("(getRankByDistrictTop3) Data",data)
+      console.log("(getRankByDistrictTop3) Data", data)
       this.detailDistrict = data;
       this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
       // 👇 คำนวณตำแหน่งเริ่มต้นของ tooltip
@@ -711,15 +711,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -844,6 +844,12 @@ export class Dashboard implements OnInit {
       .catch((error) => console.error('Error loading SVG:', error));
   }
 
+  onpartySelectedCandidate(partyID: number) {
+    console.log('Open PopUp partyListCadidate', partyID);
+    
+  }
+
+
   hideTooltip() {
     this.tooltipVisible = false;
   }
@@ -885,7 +891,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }

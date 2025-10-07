@@ -25,9 +25,9 @@ export class DashboardScoreAndSeat implements OnInit {
     private _dashboard: DashboardService,
     private cdRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
   @Output() partySelected = new EventEmitter<string>();
-
+  @Output() partySelectedCandidate = new EventEmitter<number>();
   partySeatCountsList: PartySeatCountList[] = [];
   totalSeats: number = 0;
   partyColorMap: { [partyKeyword: string]: Color } = {};
@@ -42,7 +42,8 @@ export class DashboardScoreAndSeat implements OnInit {
       this.partySeatCountsList = await firstValueFrom(
         this._dashboard.getPartySeatCountsList()
       );
-
+      console.log("this.partySeatCountsList : ",this.partySeatCountsList);
+      
       // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
       this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
         return sum + p.zone_seats + p.partylist_seats;
@@ -89,7 +90,9 @@ export class DashboardScoreAndSeat implements OnInit {
   }
 
   onSelectParty(partyName: string) {
-    // console.log("partyName",partyName)
     this.partySelected.emit(partyName);
+  }
+  onSelectPartylistSeats(partyID: number): void {
+    this.partySelectedCandidate.emit(partyID);
   }
 }

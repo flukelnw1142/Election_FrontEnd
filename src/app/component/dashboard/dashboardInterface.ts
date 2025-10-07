@@ -25,6 +25,7 @@ export interface Color {
 }
 
 export interface PartySeatCountList {
+  partyID: number;
   partyName: string;
   zone_seats: number;
   total_party_votes: number;

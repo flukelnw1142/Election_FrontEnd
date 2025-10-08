@@ -11,7 +11,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
-import { Color, PartySeatCountList } from './dashboard-v2Interface';
+import { Color, PartySeatCountList } from '../dashboard/dashboardInterface';
 import { DashboardService } from '../dashboard/service/dashboardservice';
 import { CommonModule } from '@angular/common';
 
@@ -166,6 +166,7 @@ export class DashboardV2 implements OnInit {
 
   tooltipVisible = false;
   tooltipText = '';
+  tooltipSeat = '';
   tooltipX = 0;
   tooltipY = 0;
 
@@ -180,16 +181,14 @@ export class DashboardV2 implements OnInit {
       // หา party จาก index
       let seatCounter = 0;
       for (const p of this.partySeatCountsList) {
-        // console.log(p);
         const seats = p.zone_seats + p.partylist_seats;
         seatCounter += seats;
-
-        // console.log(seatCounter);
 
         if (index <= seatCounter) {
           this.tooltipText = p.partyName;
           break;
         }
+        this.tooltipSeat = seats.toString();
       }
 
       this.tooltipX = event.clientX + 10;
@@ -224,4 +223,17 @@ export class DashboardV2 implements OnInit {
       }
     }
   }
+
+  getUrlParty(winner: any): string {
+    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    // console.log('partyName', partyName);
+    for (const keyword in this.partyColorMap) {
+      if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+        // console.log('IMG_PARTY', this.partyColorMap[keyword].IMG_PARTY);
+        return this.partyColorMap[keyword].IMG_PARTY;
+      }
+    }
+    return '';
+  }
+  
 }

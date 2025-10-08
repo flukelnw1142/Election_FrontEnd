@@ -1,12 +1,20 @@
 .custom-tooltip {
+  display: flex;
   position: fixed;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   padding: 6px 10px;
-  border-radius: 4px;
-  font-size: 13px;
+  border-radius: 15px;
+  font-size: 20px;
   pointer-events: none;
   z-index: 1000;
   white-space: nowrap;
   transform: translate(10px, 10px);
+  border: #fff 1px solid;
+  align-items: center;
+}
+
+.img-party {
+  height: 3rem;
+  object-fit: contain;
 }

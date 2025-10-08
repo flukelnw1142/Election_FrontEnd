@@ -838,37 +838,32 @@ export class Dashboard implements OnInit {
     const party = Object.values(this.partyColorMap).find(
       (p) => p.PARTY_NAME === this.partyName
     );
-    this.img_party = this.sanitizer.bypassSecurityTrustUrl(
-      party?.IMG_PARTY || ''
-    );
-    this.img_head = this.sanitizer.bypassSecurityTrustUrl(
-      party?.IMG_HEAD || ''
-    );
+
     this.partyBackgroundColor = party?.COLOR || '#fefdfd';
   }
 
-  // getUrlHead(winner: any): string {
-  //   const partyName = typeof winner === 'string' ? winner : winner?.party || '';
-  //   // console.log('partyName', partyName);
-  //   for (const keyword in this.partyColorMap) {
-  //     if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
-  //       return this.partyColorMap[keyword].IMG_HEAD;
-  //     }
-  //   }
-  //   return 'https://vote66.workpointtoday.com/assets/placeholder_candidate.svg?v=17';
-  // }
+  getUrlHead(winner: any): string {
+    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    // console.log('partyName', partyName);
+    for (const keyword in this.partyColorMap) {
+      if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+        return this.partyColorMap[keyword].IMG_HEAD;
+      }
+    }
+    return 'https://vote66.workpointtoday.com/assets/placeholder_candidate.svg?v=17';
+  }
 
-  // getUrlParty(winner: any): string {
-  //   const partyName = typeof winner === 'string' ? winner : winner?.party || '';
-  //   // console.log('partyName', partyName);
-  //   for (const keyword in this.partyColorMap) {
-  //     if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
-  //       // console.log('IMG_PARTY', this.partyColorMap[keyword].IMG_PARTY);
-  //       return this.partyColorMap[keyword].IMG_PARTY;
-  //     }
-  //   }
-  //   return '';
-  // }
+  getUrlParty(winner: any): string {
+    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    // console.log('partyName', partyName);
+    for (const keyword in this.partyColorMap) {
+      if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+        // console.log('IMG_PARTY', this.partyColorMap[keyword].IMG_PARTY);
+        return this.partyColorMap[keyword].IMG_PARTY;
+      }
+    }
+    return '';
+  }
 
   hideTooltip() {
     this.tooltipVisible = false;

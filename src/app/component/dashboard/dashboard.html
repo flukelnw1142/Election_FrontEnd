@@ -193,10 +193,10 @@
                 <div class="header">ส.ส. บัญชีรายชื่อ</div>
                 <div class="partyName">{{partySeatCounts.partyName}}</div>
                 <div style="display: flex; justify-content: center; position: relative;">
-                    <img [src]="img_head" *ngIf="img_head" alt="Head Logo" class="head-logo">
-                    <img [src]="img_party" *ngIf="img_party" alt="Party Logo" class="party-logo">
+                    <img [src]="getUrlHead(partySeatCounts.partyName)" alt="Head Logo" class="head-logo">
+                    <img [src]="getUrlParty(partySeatCounts.partyName)" *ngIf="getUrlParty(partySeatCounts.partyName) !== ''" alt="Party Logo" class="party-logo">
                 </div>
-                <div [style.background-color]="partyBackgroundColor" class="score">
+                <div [style.background-color]="getColor(partySeatCounts.partyName)" class="score">
                     <div class="row-score">
                         <p class="header">จำนวนส.ส. บัญชีรายชื่อ</p>
                         <p style="font-size: 3rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}</p>

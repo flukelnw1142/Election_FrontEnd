@@ -4,6 +4,8 @@
 </div>
 
 <div *ngIf="tooltipVisible && tooltipText !== '' " class="custom-tooltip"
-  [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
-  {{ tooltipText }}
+  [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }" [style.background]="getColor(tooltipText)">
+  <img [src]="getUrlParty(tooltipText)" *ngIf="getUrlParty(tooltipText) !== ''" class="img-party">
+  <div>{{ tooltipText }}</div>
+  <div style="margin-left: 10px;"> {{tooltipSeat}}</div>
 </div>

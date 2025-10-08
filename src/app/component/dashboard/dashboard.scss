@@ -68,10 +68,22 @@ path:hover {
 // }
 
 .glass-card {
-  position: relative;
-  background: linear-gradient(0deg, #000, #272727);
-  border-radius: 15px;
-  height: 100%;
+  // position: relative;
+  // background: linear-gradient(0deg, #000, #272727);
+  // background-image: url('/background/bg10.jpg');
+  // // background-size: cover;
+  // // background-position: center;
+  // // background-repeat: no-repeat;
+  // border-radius: 15px;
+  height: 98%;
+  color: #fff;
+  background: rgba(188, 184, 198, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 2px -2px 6px rgba(214, 214, 214, 0.2),
+    inset -3px 3px 3px rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+
 }
 
 .glass-card:before,
@@ -80,14 +92,17 @@ path:hover {
   position: absolute;
   left: -2px;
   top: -2px;
-  background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094,
-      #0000ff, #00ff00, #ffff00, #ff0000);
+  // background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094,
+  //     #0000ff, #00ff00, #ffff00, #ff0000);
   background-size: 400%;
   width: calc(100% + 4px);
   height: calc(100% + 4px);
   z-index: -1;
   animation: steam 120s linear infinite;
-  border-radius: 15px;
+  // border-radius: 15px;
+  border-radius: 20px;
+  background: linear-gradient(240deg, transparent, transparent, rgba(38, 21, 149, 0.8));
+
 }
 
 @keyframes steam {
@@ -106,6 +121,19 @@ path:hover {
 
 .glass-card:after {
   filter: blur(20px);
+}
+
+.slide-overlay {
+  align-items: flex-start;
+  justify-content: flex-end;
+  row-gap: 12px;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 98%;
+  background: linear-gradient(240deg, transparent, transparent, rgba(38, 21, 149, 0.8));
+  border-radius: 20px;
+  padding: 30px;
 }
 
 /* ANIMATION */

@@ -189,9 +189,10 @@ export class Dashboard implements OnInit {
     svg.removeAttribute('width');
     svg.removeAttribute('height');
 
-    svg.style.height = '82vh';
+    svg.style.height = '80vh';
     // svg.style.width = 'auto';
     svg.style.margin = '20px 0';
+    // svg.style.padding = 'auto';
     // svg.style.margin = '30px 0 30px 100px';
 
     const container = this.svgContainer.nativeElement;

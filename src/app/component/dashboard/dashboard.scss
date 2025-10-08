@@ -598,3 +598,105 @@ mat-icon {
   display: none;
   /* Chrome, Safari, Opera */
 }
+
+.electionBox {
+  position: relative;
+  width: 130px
+}
+
+.electionBox:before {
+  content: "";
+  display: block
+}
+
+.electionBox div,
+.electionBox img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  object-fit: contain
+}
+
+.electionBox.animated-true .BoxImage_paperTop_p img {
+  animation-name: votingBoxPaperTop;
+  animation-duration: 2s;
+  animation-iteration-count: infinite
+}
+
+.electionBox.animated-true .base img {
+  animation-name: votingBoxBottom;
+  animation-duration: 2s;
+  animation-iteration-count: infinite
+}
+
+.electionBox.animated-true .top img {
+  animation-name: votingBoxTop;
+  animation-duration: 2s;
+  animation-iteration-count: infinite
+}
+
+@keyframes votingBoxPaperTop {
+  0% {
+    transform: translate(0)
+  }
+
+  30% {
+    transform: translateY(-30%) rotate(-30deg)
+  }
+
+  40% {
+    transform: translateY(20%)
+  }
+
+  50% {
+    transform: translate(0)
+  }
+
+  to {
+    transform: translate(0)
+  }
+}
+
+@keyframes votingBoxTop {
+  0% {
+    transform: translate(0)
+  }
+
+  30% {
+    transform: translateY(-10%) rotate(-10deg)
+  }
+
+  40% {
+    transform: translateY(2%)
+  }
+
+  60% {
+    transform: translate(0)
+  }
+
+  to {
+    transform: translate(0)
+  }
+}
+
+@keyframes votingBoxBottom {
+  0% {
+    transform: translate(0)
+  }
+
+  30% {
+    transform: translateY(20%) rotate(15deg)
+  }
+
+  42% {
+    transform: translateY(-2%)
+  }
+
+  80% {
+    transform: translate(0)
+  }
+
+  to {
+    transform: translate(0)
+  }
+}

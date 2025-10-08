@@ -105,7 +105,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -266,7 +266,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -673,15 +673,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -801,6 +801,7 @@ export class Dashboard implements OnInit {
   onPartySelected(partyName: string) {
     console.log('Selected party from card:', partyName);
     this.selectedParty = partyName;
+    this.getDataMapping();
     this.tooltipVisible = false;
     this.hideMagnifier();
 
@@ -907,7 +908,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -959,5 +960,30 @@ export class Dashboard implements OnInit {
       return votes.toLocaleString('en-US');
     }
     return '';
+  }
+
+  getDataMapping() {
+    if (this.selectedParty) {
+      const partyData = this.partySeatCountsList.find(
+        (p) => p.partyName === this.selectedParty
+      );
+
+      if (partyData) {
+        this.totalSeats = partyData.zone_seats + partyData.partylist_seats;
+        this.zoneSeats = partyData.zone_seats;
+        this.partylistSeats = partyData.partylist_seats;
+        this.ranking = partyData.ranking;
+        this.totalVote = partyData.total_party_votes;
+      }
+      const party = Object.values(this.partyColorMap).find(
+        (p) => p.PARTY_NAME === this.selectedParty
+      );
+      this.img_party = this.sanitizer.bypassSecurityTrustUrl(
+        party?.IMG_PARTY || ''
+      );
+      this.img_head = this.sanitizer.bypassSecurityTrustUrl(
+        party?.IMG_HEAD || ''
+      );
+    }
   }
 }

@@ -108,7 +108,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -270,7 +270,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -677,15 +677,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -804,6 +804,17 @@ export class Dashboard implements OnInit {
   /* click "dashboard-score-and-seat" */
   onPartySelected(partyName: string) {
     console.log('Selected party from card:', partyName);
+    const status = document.getElementsByClassName('status-container')[0] as HTMLElement;;
+    const img = document.getElementsByClassName(
+      'logo-image'
+    )[0] as HTMLElement;
+    if (img) {
+      img.style.marginLeft = '20px';
+    }
+    if (status) {
+      status.style.display = 'none';
+    }
+
     this.selectedParty = partyName;
     this.getDataMapping();
     this.tooltipVisible = false;
@@ -823,8 +834,19 @@ export class Dashboard implements OnInit {
   /* คลิก บัญชีรายชื่อ */
   onpartySelectedCandidate(partyName: string) {
     console.log('Open PopUp partyListCadidate', partyName);
+
     if (!this.isMappingComplete) {
       return;
+    }
+    const status = document.getElementsByClassName('status-container')[0] as HTMLElement;;
+    const img = document.getElementsByClassName(
+      'logo-image'
+    )[0] as HTMLElement;
+    if (img) {
+      img.style.marginLeft = '0px';
+    }
+    if (status) {
+      status.style.display = 'inline';
     }
     this.partyName = partyName;
     const selectedParty = this.partySeatCountsList.find(
@@ -907,7 +929,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -930,7 +952,16 @@ export class Dashboard implements OnInit {
     this.tooltipVisible = false;
     this.hideMagnifier();
     this.hideTooltip();
-
+    const status = document.getElementsByClassName('status-container')[0] as HTMLElement;;
+    const img = document.getElementsByClassName(
+      'logo-image'
+    )[0] as HTMLElement;
+    if (img) {
+      img.style.marginLeft = '0px';
+    }
+    if (status) {
+      status.style.display = 'inline';
+    }
     if (this.allWinners && Object.keys(this.allWinners).length > 0) {
       firstValueFrom(
         this.http.get('/assets/thailand.svg', { responseType: 'text' })

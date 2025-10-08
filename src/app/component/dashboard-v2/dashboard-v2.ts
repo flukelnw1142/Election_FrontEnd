@@ -112,9 +112,9 @@ export class DashboardV2 implements OnInit {
       svg.removeAttribute('height');
 
       svg.setAttribute('viewBox', '0 0 900 500');
-      // svg.style.margin = '20px 0';
+      svg.style.margin = '150px 0';
       svg.style.marginRight = '40px';
-      svg.style.marginTop = '60px';
+      // svg.style.marginTop = '220px';
       svg.style.height = '60vh';
 
       // 🧠 STEP 1: สร้าง flat list ของชื่อพรรค

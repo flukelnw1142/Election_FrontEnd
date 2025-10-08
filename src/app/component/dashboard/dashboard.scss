@@ -585,7 +585,7 @@ mat-icon {
 .scroll-container {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 70vh;
+  height: 85vh;
   // width:100%;
 
   /* ซ่อน scrollbar ทุกเบราว์เซอร์ */
@@ -601,8 +601,8 @@ mat-icon {
 }
 
 .electionBox {
-  position: relative;
-  width: 130px
+  position: absolute;
+  width: 130px;
 }
 
 .electionBox:before {
@@ -700,4 +700,77 @@ mat-icon {
   to {
     transform: translate(0)
   }
+}
+
+
+// import
+.CampaignTitle {
+  display: flex;
+  font-size: 1vw;
+  align-items: center;
+  gap: 1rem;
+}
+
+.CampaignTitle .ln {
+  display: flex;
+  align-items: center;
+  gap: .25em
+}
+
+.CampaignTitle .texts {
+  font-size: 1.5em;
+  color: white !important;
+}
+
+.CampaignTitle .pfx1 {
+  background-color: #63e6ab;
+  color: white;
+  font-size: .9em;
+  border-radius: 2rem
+}
+
+.CampaignTitle .do,
+.CampaignTitle .pfx1 {
+  padding-left: .5em;
+  padding-right: .5em;
+  font-weight: 900
+}
+
+.CampaignTitle .do {
+  font-size: 1.3em;
+  position: relative;
+  line-height: 1em
+}
+
+.CampaignTitle .do:before {
+  position: absolute;
+  width: 100%;
+  height: 250%;
+  display: block;
+  content: "";
+  border: 1px solid #63e6ab;
+  left: 45%;
+  border-radius: 50%;
+  top: 80%;
+  z-index: -1;
+  transform: translate(-50%, -50%) rotate(-21deg)
+}
+
+.CampaignTitle .electionBoxContainer {
+  transform: translate(0) scale(1.2);
+  height: 8em;
+  position: relative;
+  z-index: 1000;
+}
+
+.CampaignTitle .electionBox,
+.CampaignTitle .electionBoxContainer {
+  width: 8em
+}
+
+.CampaignTitle .number {
+  font-size: 2em;
+  line-height: 1em;
+  margin-top: -.08em;
+  position: relative
 }

@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-7">
             <div class="glass-card">
-                <div class="electionBoxContainer">
+                <div class="electionBoxContainer" [hidden]="selectDashboard !== 'dashboard'">
                     <div class="electionBox animated-true">
                         <div style="transform-origin: center center; transform: translate(0px, 0px) scaleY(1); transition: transform 1s cubic-bezier(0.5, 1, 0.89, 1);"
                             class="insetall">
@@ -63,10 +63,41 @@
                 </div>
                 <!-- <div class="svg-container" *ngIf="selectDashboard === 'dashboard'" #svgContainer
                     (mousemove)="onSvgMouseMove($event)" (click)="onSvgClick($event)"> -->
+                <div style="display: flex; top: 100px ; right: 50px; height: 100%;  position: absolute;"
+                    [hidden]="selectDashboard !== 'dashboard'">
+                    <div class="CampaignTitle">
+                        <div class="texts">
+                            <div class="ln">
+                                <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);"
+                                    class="pfx1">รายงานผล</div>
+                                <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); font-size: 1em;"
+                                    class="do">เลือกตั้ง</div>
+                            </div>
+                            <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);"
+                                class="number text2 font_number_bd">2569</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="svg-container" [hidden]="selectDashboard !== 'dashboard'" #svgContainer
                     (mousemove)="onSvgMouseMove($event)">
                     <div class="thailand-map-wrapper">
                         <div [innerHTML]="svgContent"></div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center; height: 250px;"
+                    *ngIf="selectDashboard === 'dashboard_2'">
+                    <div class="CampaignTitle">
+                        <div class="texts">
+                            <div class="ln">
+                                <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);"
+                                    class="pfx1">รายงานผล</div>
+                                <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);"
+                                    class="do">เลือกตั้ง</div>
+                            </div>
+                            <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);"
+                                class="number text2 font_number_bd">2566</div>
+                        </div>
                     </div>
                 </div>
                 <div *ngIf="selectDashboard === 'dashboard_2'">
@@ -189,22 +220,27 @@
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="glass-card card" style="color: white;">
         <div class="two-column-grid">
-            <div class="left">
-                <div class="header">ส.ส. บัญชีรายชื่อ</div>
-                <div class="partyName">{{partySeatCounts.partyName}}</div>
-                <div style="display: flex; justify-content: center; position: relative;">
-                    <img [src]="getUrlHead(partySeatCounts.partyName)" alt="Head Logo" class="head-logo">
-                    <img [src]="getUrlParty(partySeatCounts.partyName)" *ngIf="getUrlParty(partySeatCounts.partyName) !== ''" alt="Party Logo" class="party-logo">
+            <div class="left" style="justify-content: space-between; display: flex; flex-direction: column; ">
+                <div>
+                    <div class="header">ส.ส. บัญชีรายชื่อ</div>
+                    <div class="partyName">{{partySeatCounts.partyName}}</div>
                 </div>
-                <div [style.background-color]="getColor(partySeatCounts.partyName)" class="score">
-                    <div class="row-score">
-                        <p class="header">จำนวนส.ส. บัญชีรายชื่อ</p>
-                        <p style="font-size: 3rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}</p>
+                <div>
+                    <div style="display: flex; justify-content: center; position: relative;">
+                        <img [src]="getUrlHead(partySeatCounts.partyName)" alt="Head Logo" class="head-logo">
+                        <img [src]="getUrlParty(partySeatCounts.partyName)"
+                            *ngIf="getUrlParty(partySeatCounts.partyName) !== ''" alt="Party Logo" class="party-logo">
                     </div>
-                    <hr>
-                    <div class="row-score">
-                        <p class="header">คะแนน</p>
-                        <p style="font-size: 2rem;">{{formatTotalVotes(partySeatCounts.total_party_votes)}}</p>
+                    <div [style.background-color]="getColor(partySeatCounts.partyName)" class="score">
+                        <div class="row-score">
+                            <p class="header">จำนวนส.ส. บัญชีรายชื่อ</p>
+                            <p style="font-size: 3rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}</p>
+                        </div>
+                        <hr>
+                        <div class="row-score">
+                            <p class="header">คะแนน</p>
+                            <p style="font-size: 2rem;">{{formatTotalVotes(partySeatCounts.total_party_votes)}}</p>
+                        </div>
                     </div>
                 </div>
             </div>

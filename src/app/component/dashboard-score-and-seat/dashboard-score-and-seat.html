@@ -1,11 +1,14 @@
 <div class="header-text">จำนวนที่นั่งรวมต่อพรรค</div>
+<div class="header-table">
+  <div style="display: flex;">
+    <p style="margin-right: 20px;"> อันดับ</p>
+    <p> พรรค</p>
+  </div>
+  <p> เขต / บัญชีรายชื่อ</p>
+</div>
 
-<div class="scroll-container">
+<div #scrollContainer class="scroll-container">
   <div *ngFor="let party of partySeatCountsList; let i = index;" class="party-card-container">
-    <!-- รูป -->
-    <!-- <div class="image-container">
-      <img src="/background/cat.png" class="cat-image" />
-    </div> -->
     <!-- กล่องพรรค -->
     <div class="party-card" [style.background]="getColor(party.partyName)" (click)="onSelectParty(party.partyName)">
       <div class="number">{{i+1}}</div>
@@ -39,6 +42,12 @@
         </div>
       </div>
     </div>
-    <hr style="margin: 2%;" />
+    <hr style="margin: 1%;" />
   </div>
+</div>
+
+<div
+  style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+  (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+  <mat-icon style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
 </div>

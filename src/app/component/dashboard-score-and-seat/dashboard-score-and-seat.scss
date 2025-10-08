@@ -54,6 +54,12 @@
     margin: 1vh;
 }
 
+.header-table {
+    color: #ffffff8e;
+    display: flex;
+    justify-content: space-between;
+}
+
 .img-head {
     height: 100px;
     width: 100px;
@@ -108,9 +114,11 @@
 }
 
 .number {
-    background: #ffffff;
+    // background: #ffffff;
     height: 60px;
     width: 2.5rem;
+    font-size: 2.5rem;
+    font-weight: bold;
     text-align: center;
     align-content: center;
     border-radius: 15px;

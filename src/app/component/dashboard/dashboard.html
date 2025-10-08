@@ -208,7 +208,7 @@
                     </div>
                 </div>
             </div>
-            <div class="scroll-container">
+            <div #scrollContainer class="scroll-container">
                 <div *ngFor="let candidate of detailPartyListPerPartyName; let i = index" class="candidate-item">
                     <p class="number">{{ i + 1 }}</p>
                     <ng-container *ngIf="i < partySeatCounts?.partylist_seats; else showDash">
@@ -220,6 +220,11 @@
                     <img [src]="candidate.avatarURL" alt="Party Logo" loading="lazy">
                     <p>{{candidate.fullName }}</p>
                 </div>
+            </div>
+            <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                <mat-icon
+                    style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
             </div>
         </div>
     </div>

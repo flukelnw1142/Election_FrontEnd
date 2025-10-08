@@ -1,22 +1,26 @@
 import {
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Inject,
   OnInit,
   Output,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { DashboardService } from '../dashboard/service/dashboardservice';
 import { Color, PartySeatCountList } from '../dashboard/dashboardInterface';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-dashboard-score-and-seat',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatIconModule, MatTooltipModule],
   templateUrl: './dashboard-score-and-seat.html',
   styleUrl: './dashboard-score-and-seat.scss',
 })
@@ -25,12 +29,13 @@ export class DashboardScoreAndSeat implements OnInit {
     private _dashboard: DashboardService,
     private cdRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
   @Output() partySelected = new EventEmitter<string>();
   @Output() partySelectedCandidate = new EventEmitter<string>();
   partySeatCountsList: PartySeatCountList[] = [];
   totalSeats: number = 0;
   partyColorMap: { [partyKeyword: string]: Color } = {};
+  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
 
   async ngOnInit(): Promise<void> {
     // ✅ 0. ดึงข้อมูลสี
@@ -42,8 +47,8 @@ export class DashboardScoreAndSeat implements OnInit {
       this.partySeatCountsList = await firstValueFrom(
         this._dashboard.getPartySeatCountsList()
       );
-      console.log("this.partySeatCountsList : ",this.partySeatCountsList);
-      
+      console.log('this.partySeatCountsList : ', this.partySeatCountsList);
+
       // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
       this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
         return sum + p.zone_seats + p.partylist_seats;
@@ -93,7 +98,10 @@ export class DashboardScoreAndSeat implements OnInit {
     this.partySelected.emit(partyName);
   }
   onSelectPartylistSeats(partyName: string): void {
-    console.log(partyName)
+    console.log(partyName);
     this.partySelectedCandidate.emit(partyName);
+  }
+  scrollToTopContainer() {
+    this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

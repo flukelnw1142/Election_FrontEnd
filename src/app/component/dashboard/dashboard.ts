@@ -108,7 +108,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -270,7 +270,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-              this.allWinners[id].party === this.selectedParty
+            this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -677,15 +677,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -763,6 +763,19 @@ export class Dashboard implements OnInit {
                   this.detailDistrict = data;
                 });
 
+              const status = document.getElementsByClassName(
+                'status-container'
+              )[0] as HTMLElement;
+              const img = document.getElementsByClassName(
+                'logo-image'
+              )[0] as HTMLElement;
+              if (img) {
+                img.style.marginLeft = '0px';
+              }
+              if (status) {
+                status.style.display = 'none';
+              }
+
               this.tooltipVisible = false;
               this.hideMagnifier();
 
@@ -804,10 +817,10 @@ export class Dashboard implements OnInit {
   /* click "dashboard-score-and-seat" */
   onPartySelected(partyName: string) {
     console.log('Selected party from card:', partyName);
-    const status = document.getElementsByClassName('status-container')[0] as HTMLElement;;
-    const img = document.getElementsByClassName(
-      'logo-image'
+    const status = document.getElementsByClassName(
+      'status-container'
     )[0] as HTMLElement;
+    const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
     if (img) {
       img.style.marginLeft = '20px';
     }
@@ -838,15 +851,15 @@ export class Dashboard implements OnInit {
     if (!this.isMappingComplete) {
       return;
     }
-    const status = document.getElementsByClassName('status-container')[0] as HTMLElement;;
-    const img = document.getElementsByClassName(
-      'logo-image'
+    const status = document.getElementsByClassName(
+      'status-container'
     )[0] as HTMLElement;
+    const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
     if (img) {
       img.style.marginLeft = '0px';
     }
     if (status) {
-      status.style.display = 'inline';
+      status.style.display = 'none';
     }
     this.partyName = partyName;
     const selectedParty = this.partySeatCountsList.find(
@@ -929,7 +942,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => { });
+      dialogRef.afterClosed().subscribe(() => {});
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -952,10 +965,10 @@ export class Dashboard implements OnInit {
     this.tooltipVisible = false;
     this.hideMagnifier();
     this.hideTooltip();
-    const status = document.getElementsByClassName('status-container')[0] as HTMLElement;;
-    const img = document.getElementsByClassName(
-      'logo-image'
+    const status = document.getElementsByClassName(
+      'status-container'
     )[0] as HTMLElement;
+    const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
     if (img) {
       img.style.marginLeft = '0px';
     }

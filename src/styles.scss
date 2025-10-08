@@ -19,6 +19,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    overflow: hidden;
 
 }
 
@@ -51,24 +52,4 @@ circle{
 
 text {
     fill: #FFFFFF !important;
-}
-
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
 }

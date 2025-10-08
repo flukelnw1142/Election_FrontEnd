@@ -175,9 +175,9 @@ path:hover {
   padding: 0.25rem 0.5rem;
   gap: 0.75rem;
   position: absolute;
-  top: -40px;
-  right: 0;
-  z-index: 1000;
+  top: 10px;
+  right: 10px;
+  z-index: 1005;
 }
 
 .button-container {
@@ -438,6 +438,16 @@ mat-icon {
 
 
 .show-distric {
+  width: 90vw;
+  height: 85vh;
+  margin: auto;
+
+  .header-table {
+    color: #ffffff8e;
+    display: flex;
+    justify-content: space-between;
+  }
+
   .province {
     font-size: 2.3rem;
     font-weight: bolder;
@@ -478,11 +488,11 @@ mat-icon {
       border-radius: 15px;
     }
   }
-
-
 }
 
 .show-partyList {
+  width: 90vw;
+  margin: auto;
 
   .card {
     padding: 30px;
@@ -532,11 +542,7 @@ mat-icon {
         }
       }
     }
-
-
-
   }
-
 
   .candidate-item {
     display: flex;
@@ -585,7 +591,7 @@ mat-icon {
 .scroll-container {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 85vh;
+  height: 80vh;
   // width:100%;
 
   /* ซ่อน scrollbar ทุกเบราว์เซอร์ */

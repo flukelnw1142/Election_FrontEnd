@@ -201,6 +201,15 @@
     <div class="glass-card card" style="color: white;">
         <p class="province">{{detailDistrict[0].province}}</p>
         <p class="zone">เขต {{detailDistrict[0].zone}}</p>
+
+        <div class="header-table">
+            <div style="display: flex;">
+                <p style="margin-right: 50px;"> อันดับ</p>
+                <!-- <p> พรรค</p> -->
+            </div>
+        </div>
+        <hr>
+
         <div class="scroll-container">
             <div *ngFor="let candidate of detailDistrict; let i = index" class="candidate-item">
                 <p class="number" [style.background]="getColor(candidate.party_name)">{{ i + 1 }}</p>

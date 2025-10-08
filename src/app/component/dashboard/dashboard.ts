@@ -7,6 +7,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
   Renderer2,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -42,10 +43,12 @@ import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-sco
     DashboardV2,
     DashboardScoreAndSeat,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard implements OnInit {
   svgContent: SafeHtml = '';
   prevSvgContent = '';
+  partyName = '';
   partySeatCounts: any = {};
   detailPartyListPerPartyName: CandidatePartyList[] = [];
   detailDistrict: Candidate[] = [];
@@ -275,7 +278,7 @@ export class Dashboard implements OnInit {
               this.allWinners[id].party === this.selectedParty)
           ) {
             path.classList.add('animated-path');
-            await this.delay(5);
+            await this.delay(1);
           }
         }
       }
@@ -351,61 +354,6 @@ export class Dashboard implements OnInit {
       }
     }
   }
-
-  // onSvgClick(event: MouseEvent) {
-  //   console.log("event",event);
-
-  //   const target = event.target as SVGElement;
-  //   if (
-  //     target.tagName === 'path' ||
-  //     target.tagName === 'text' ||
-  //     (target instanceof SVGTSpanElement &&
-  //       /^\d+$/.test((target.textContent || '').trim()))
-  //   ) {
-  //     let parent = target.parentNode as SVGElement;
-  //     if (target.tagName === 'tspan') {
-  //       const textEl = parent;
-  //       parent = textEl?.parentNode as SVGElement;
-  //     }
-
-  //     if (
-  //       parent &&
-  //       parent.tagName === 'g' &&
-  //       parent.id &&
-  //       parent.id.includes('_')
-  //     ) {
-  //       const party = parent.getAttribute('data-party') || 'ไม่ทราบพรรค';
-  //       this.selectedParty = party;
-  //       this.tooltipVisible = false;
-  //       this.hideMagnifier();
-
-  //       const img = document.getElementsByClassName(
-  //         'logo-image'
-  //       )[0] as HTMLElement;
-  //       if (img) {
-  //         img.style.marginLeft = '20px';
-  //       }
-
-  //       if (this.allWinners && Object.keys(this.allWinners).length > 0) {
-  //         firstValueFrom(
-  //           this.http.get('/assets/thailand.svg', { responseType: 'text' })
-  //         )
-  //           .then((svgText) => {
-  //             this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
-  //             return this.settingSvg(svgText, false);
-  //           })
-  //           .then(() => {
-  //             this.cd.markForCheck();
-  //           })
-  //           .catch((error) => {
-  //             console.error('Error loading SVG:', error);
-  //           });
-  //       }
-  //     } else {
-  //       alert(`คลิกจังหวัด: ไม่ทราบ`);
-  //     }
-  //   }
-  // }
 
   simmulateSvgClick(event: MouseEvent) {
     const target = event.target as SVGElement;
@@ -867,20 +815,56 @@ export class Dashboard implements OnInit {
       .catch((error) => console.error('Error loading SVG:', error));
   }
 
+  /* คลิก บัญชีรายชื่อ */
   onpartySelectedCandidate(partyName: string) {
     console.log('Open PopUp partyListCadidate', partyName);
+    if (!this.isMappingComplete) {
+      return;
+    }
+    this.partyName = partyName;
     const selectedParty = this.partySeatCountsList.find(
       (p) => p.partyName === partyName
     );
     this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
       this.detailPartyListPerPartyName = data;
       console.log('(getCadidateByPartyName) Data', data);
+      this.cd.markForCheck();
     });
-
-    console.log(selectedParty);
-
     this.partySeatCounts = selectedParty;
+    const party = Object.values(this.partyColorMap).find(
+      (p) => p.PARTY_NAME === this.partyName
+    );
+    this.img_party = this.sanitizer.bypassSecurityTrustUrl(
+      party?.IMG_PARTY || ''
+    );
+    this.img_head = this.sanitizer.bypassSecurityTrustUrl(
+      party?.IMG_HEAD || ''
+    );
+    this.partyBackgroundColor = party?.COLOR || '#fefdfd';
   }
+
+  // getUrlHead(winner: any): string {
+  //   const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+  //   // console.log('partyName', partyName);
+  //   for (const keyword in this.partyColorMap) {
+  //     if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+  //       return this.partyColorMap[keyword].IMG_HEAD;
+  //     }
+  //   }
+  //   return 'https://vote66.workpointtoday.com/assets/placeholder_candidate.svg?v=17';
+  // }
+
+  // getUrlParty(winner: any): string {
+  //   const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+  //   // console.log('partyName', partyName);
+  //   for (const keyword in this.partyColorMap) {
+  //     if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+  //       // console.log('IMG_PARTY', this.partyColorMap[keyword].IMG_PARTY);
+  //       return this.partyColorMap[keyword].IMG_PARTY;
+  //     }
+  //   }
+  //   return '';
+  // }
 
   hideTooltip() {
     this.tooltipVisible = false;
@@ -933,6 +917,7 @@ export class Dashboard implements OnInit {
     console.log('Close > ', this.selectedParty);
     this.selectedParty = '';
     this.selectedDistric = '';
+    this.partyName = '';
     this.detailPartyListPerPartyName = [];
     this.img_party = '';
     this.img_head = '';

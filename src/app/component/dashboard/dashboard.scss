@@ -491,6 +491,49 @@ mat-icon {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+
+    .left {
+      .header {
+        font-size: 2rem;
+      }
+
+      .partyName {
+        font-size: 1.5rem;
+      }
+
+      .party-logo {
+        max-width: 30%;
+        max-height: 30%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+      .head-logo {
+        height: 24.5rem;
+        object-fit: contain;
+        align-items: center;
+      }
+
+      .score {
+        border-radius: 1rem;
+        padding: 1rem;
+
+        .row-score {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .header {
+            font-size: 1.3rem;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+
+
+
   }
 
 
@@ -520,11 +563,18 @@ mat-icon {
       border-radius: 15px;
     }
 
-    .icon {
+    .icon-pass {
       font-size: 50px;
       width: 48px;
       height: 48px;
       color: #2ed47e;
+    }
+
+    .icon-unPass {
+      font-size: 50px;
+      width: 48px;
+      height: 48px;
+      color: #d42e2e;
     }
   }
 

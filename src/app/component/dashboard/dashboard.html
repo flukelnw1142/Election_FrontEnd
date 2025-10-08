@@ -61,22 +61,21 @@
                         </div>
                     </button>
                 </div>
-                <!-- <div class="svg-container" *ngIf="selectDashboard === 'dashboard'" #svgContainer
-                    (mousemove)="onSvgMouseMove($event)" (click)="onSvgClick($event)"> -->
-                <div style="display: flex; top: 100px ; right: 50px; height: 100%;  position: absolute;"
+                <div style="display: flex; top: 160px ; left: 20px; position: absolute;"
                     [hidden]="selectDashboard !== 'dashboard'">
                     <div class="CampaignTitle">
                         <div class="texts">
                             <div class="ln">
                                 <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);"
-                                    class="pfx1">รายงานผล</div>
-                                <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); font-size: 1em;"
-                                    class="do">เลือกตั้ง</div>
+                                    class="pfx1">เลือกตั้ง</div>
+                                <!-- <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); font-size: 1em;"
+                                    class="do">เลือกตั้ง</div> -->
                             </div>
                             <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);"
                                 class="number text2 font_number_bd">2569</div>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="svg-container" [hidden]="selectDashboard !== 'dashboard'" #svgContainer
@@ -96,7 +95,7 @@
                                     class="do">เลือกตั้ง</div>
                             </div>
                             <div style="visibility: visible; transform-origin: center center; transform: translate(0px, 0px); transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);"
-                                class="number text2 font_number_bd">2566</div>
+                                class="number text2 font_number_bd">2569</div>
                         </div>
                     </div>
                 </div>
@@ -210,7 +209,7 @@
         </div>
         <hr>
 
-        <div class="scroll-container">
+        <div #scrollContainer class="scroll-container">
             <div *ngFor="let candidate of detailDistrict; let i = index" class="candidate-item">
                 <p class="number" [style.background]="getColor(candidate.party_name)">{{ i + 1 }}</p>
                 <img [src]="candidate.avatarURL" alt="Party Logo">
@@ -219,6 +218,11 @@
                     <p style="font-weight: 300; color: rgb(199, 199, 199);">{{ candidate.party_name }}</p>
                     <p>คะแนน: {{ candidate.totalVotes | number }}</p>
                 </div>
+            </div>
+            <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                <mat-icon
+                    style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
             </div>
         </div>
     </div>

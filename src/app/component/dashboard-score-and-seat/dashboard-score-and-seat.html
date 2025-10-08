@@ -1,14 +1,14 @@
 <div class="header-text">จำนวนที่นั่งรวมต่อพรรค</div>
 
 <div class="scroll-container">
-  <div *ngFor="let party of partySeatCountsList" class="party-card-container">
+  <div *ngFor="let party of partySeatCountsList; let i = index;" class="party-card-container">
     <!-- รูป -->
     <!-- <div class="image-container">
       <img src="/background/cat.png" class="cat-image" />
     </div> -->
-
     <!-- กล่องพรรค -->
     <div class="party-card" [style.background]="getColor(party.partyName)" (click)="onSelectParty(party.partyName)">
+      <div class="number">{{i+1}}</div>
       <div class="left-section">
         <img [src]="getUrlHead(party.partyName)" alt="Party Logo" class="img-head">
         <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"

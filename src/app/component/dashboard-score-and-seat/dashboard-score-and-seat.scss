@@ -3,7 +3,7 @@
     overflow-x: hidden;
     height: 76vh;
     // width:100%;
-    
+
     /* ซ่อน scrollbar ทุกเบราว์เซอร์ */
     scrollbar-width: none;
     /* Firefox */
@@ -65,7 +65,7 @@
     height: 60px;
     width: 60px;
     position: absolute;
-    left: 80px;
+    left: 140px;
     top: 70px;
     border-radius: 100%;
     animation: bounce 1s ease-in;
@@ -107,9 +107,18 @@
     width: 30%;
 }
 
+.number {
+    background: #ffffff;
+    height: 60px;
+    width: 2.5rem;
+    text-align: center;
+    align-content: center;
+    border-radius: 15px;
+}
+
 .middle-section {
     white-space: nowrap;
-    width: 60%;
+    width: 50%;
     color: #ffffff;
 }
 

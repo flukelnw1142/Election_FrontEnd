@@ -95,7 +95,6 @@
         <div class="col-5">
             <div class="glass-card-t">
                 <div class="glass-card-b card-left">
-
                     <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"
                         (partySelectedCandidate)="onpartySelectedCandidate($event)"></app-dashboard-score-and-seat>
                 </div>
@@ -169,7 +168,7 @@
                     <div>
                         <div style="text-align: center;">
                             <p style=" font-size:1.5dvw; font-weight: 500; color: white;"> ส.ส.บัญชีรายชื่อ</p>
-                            <p style=" font-size:3.5dvw; font-weight: bold; color: white;">{{partylistSeats}}</p>
+                            <p style=" font-size:3.5dvw; font-weight: bold; color: white; cursor: pointer;" (click)="onpartySelectedCandidate('ClickCount')" >{{partylistSeats}}</p>
                             <!-- <p style=" font-size:1.5dvw; font-weight: 500; color: white;">/ 100 คน</p> -->
                         </div>
                         <div class="orange-dots">

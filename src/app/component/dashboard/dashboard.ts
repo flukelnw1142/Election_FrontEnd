@@ -87,6 +87,8 @@ export class Dashboard implements OnInit {
   zoomLevel = 8;
   lensSize = 250;
   isMappingComplete: any;
+  clickCountParty: any = '';
+
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
   private zoomGroup: any;
@@ -108,7 +110,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -322,7 +324,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -729,15 +731,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -913,7 +915,14 @@ export class Dashboard implements OnInit {
     if (status) {
       status.style.display = 'none';
     }
+
+    if (partyName === 'ClickCount') {
+      partyName = this.selectedParty;
+      this.clickCountParty = this.selectedParty
+    }
+
     this.partyName = partyName;
+    this.selectedParty = '';
     const selectedParty = this.partySeatCountsList.find(
       (p) => p.partyName === partyName
     );
@@ -994,7 +1003,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -1002,8 +1011,10 @@ export class Dashboard implements OnInit {
 
   closeDialog() {
     console.log('Close > ', this.selectedParty);
-    this.selectedParty = '';
-    this.selectedDistric = '';
+    console.log('Close2 > ', this.clickCountParty);
+    this.clickCountParty
+      ? ((this.selectedParty = this.clickCountParty), (this.clickCountParty = ''))
+      : (this.selectedParty = ''); this.selectedDistric = '';
     this.partyName = '';
     this.detailPartyListPerPartyName = [];
     this.img_party = '';
@@ -1027,7 +1038,7 @@ export class Dashboard implements OnInit {
     if (status) {
       status.style.display = 'inline';
     }
-    if (this.allWinners && Object.keys(this.allWinners).length > 0) {
+    if (this.allWinners && Object.keys(this.allWinners).length > 0 && this.selectedParty === '') {
       firstValueFrom(
         this.http.get('/assets/thailand.svg', { responseType: 'text' })
       )

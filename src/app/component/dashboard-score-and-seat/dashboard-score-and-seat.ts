@@ -104,4 +104,11 @@ export class DashboardScoreAndSeat implements OnInit {
   scrollToTopContainer() {
     this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  formatTotalVotes(votes: number): string {
+    if (votes !== null && votes !== undefined) {
+      return votes.toLocaleString('en-US');
+    }
+    return '';
+  }
 }

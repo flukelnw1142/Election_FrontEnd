@@ -25,7 +25,7 @@
         </div>
 
         <div class="progress-bar-bg">
-          <div class="progress-bar" [style.width.%]="((party.zone_seats + party.partylist_seats) / totalSeats) * 100"
+          <div class="progress-bar" [style.--progress-width]="((party.zone_seats + party.partylist_seats) / totalSeats) * 100 + '%'"
             [style.background]="getColor(party.partyName)"></div>
         </div>
 

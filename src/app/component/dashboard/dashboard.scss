@@ -66,7 +66,6 @@ path:hover {
 //   // border: 1px solid rgba(209, 213, 219, 0.3);
 //   // -webkit-backdrop-filter: blur(16px) saturate(180%);
 // }
-
 .glass-card-t {
   position: relative;
   background: linear-gradient(0deg, #000, #272727);
@@ -81,9 +80,12 @@ path:hover {
 .glass-card-b {
   position: relative;
   background: linear-gradient(0deg, #000, #272727);
-  // background-image: url('../../../../public/background/bg2.jpg');
   border-radius: 15px;
   height: 100%;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: inset 2px -2px 6px rgba(214, 214, 214, 0.2),
+    inset -3px 3px 3px rgba(255, 255, 255, 0.3);
 }
 
 .glass-card-b:before,
@@ -116,7 +118,7 @@ path:hover {
   }
 }
 
-.glass-card:after {
+.glass-card-b:after {
   filter: blur(20px);
 }
 

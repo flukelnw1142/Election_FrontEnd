@@ -127,6 +127,12 @@ export class Dashboard implements OnInit {
           this._dashboard.getDistrictWinners()
         );
 
+        // Code ใหม่ลองยิง
+        const winnersZone = await firstValueFrom(
+          this._dashboard.getWinnerZoneByPartyName('ไทยสร้างไทย')
+        );
+
+      
         console.log('winners', winners);
 
         if (winners.candidates && Object.keys(winners.candidates).length > 0) {

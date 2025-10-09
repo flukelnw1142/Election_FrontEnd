@@ -2,9 +2,9 @@
 <div *ngIf="selectedParty === '' && selectedDistric === '' && partyName === ''">
     <div class="row">
         <div class="col-7">
-            <div class="glass-card-t">
-                <div class="glass-card-b">
-                    <!-- <div class="electionBoxContainer" [hidden]="selectDashboard !== 'dashboard'">
+            <div class="glass-card-b">
+            <div class="rainbow">
+                <!-- <div class="electionBoxContainer" [hidden]="selectDashboard !== 'dashboard'">
                         <div class="electionBox animated-true">
                             <div style="transform-origin: center center; transform: translate(0px, 0px) scaleY(1); transition: transform 1s cubic-bezier(0.5, 1, 0.89, 1);"
                                 class="insetall">
@@ -31,24 +31,24 @@
                             </div>
                         </div>
                     </div> -->
-                    <div class="button-container">
-                        <button class="btn-change" (click)="changeSvg('dashboard')"
-                            [class.active]="selectDashboard === 'dashboard'">
-                            <div class="icon-text-container">
-                                <mat-icon style="width: 24px; height: 24px;">event_seat</mat-icon>
-                                <span>ที่นั่ง</span>
-                            </div>
-                        </button>
-                        <button class="btn-change" (click)="changeSvg('dashboard_2')"
-                            [class.active]="selectDashboard === 'dashboard_2'">
-                            <div class="icon-text-container">
-                                <img src="/assets/thai_mini.svg" alt="Country" class="change-icon"
-                                    style="width: 24px; height: 24px;" />
-                                <span>แผนที่</span>
-                            </div>
-                        </button>
-                    </div>
-                    <!-- <div style="display: flex; top: 160px ; left: 20px; position: absolute;"
+                <div class="button-container">
+                    <button class="btn-change" (click)="changeSvg('dashboard')"
+                        [class.active]="selectDashboard === 'dashboard'">
+                        <div class="icon-text-container">
+                            <mat-icon style="width: 24px; height: 24px;">event_seat</mat-icon>
+                            <span>ที่นั่ง</span>
+                        </div>
+                    </button>
+                    <button class="btn-change" (click)="changeSvg('dashboard_2')"
+                        [class.active]="selectDashboard === 'dashboard_2'">
+                        <div class="icon-text-container">
+                            <img src="/assets/thai_mini.svg" alt="Country" class="change-icon"
+                                style="width: 24px; height: 24px;" />
+                            <span>แผนที่</span>
+                        </div>
+                    </button>
+                </div>
+                <!-- <div style="display: flex; top: 160px ; left: 20px; position: absolute;"
                         [hidden]="selectDashboard !== 'dashboard'">
                         <div class="CampaignTitle">
                             <div class="texts">
@@ -63,13 +63,13 @@
 
                     </div> -->
 
-                    <div class="svg-container" [hidden]="selectDashboard !== 'dashboard'" #svgContainer
-                        (mousemove)="onSvgMouseMove($event)">
-                        <div class="thailand-map-wrapper">
-                            <div [innerHTML]="svgContent"></div>
-                        </div>
+                <div class="svg-container" [hidden]="selectDashboard !== 'dashboard'" #svgContainer
+                    (mousemove)="onSvgMouseMove($event)">
+                    <div class="thailand-map-wrapper">
+                        <div [innerHTML]="svgContent"></div>
                     </div>
-                    <!-- <div style="display: flex; justify-content: center; align-items: center; height: 250px;"
+                </div>
+                <!-- <div style="display: flex; justify-content: center; align-items: center; height: 250px;"
                         *ngIf="selectDashboard === 'dashboard_2'">
                         <div class="CampaignTitle">
                             <div class="texts">
@@ -84,45 +84,45 @@
                             </div>
                         </div>
                     </div> -->
-                    <div *ngIf="selectDashboard === 'dashboard_2'">
-                        <app-dashboard-v2 (partySelected)="onPartySelected($event)"></app-dashboard-v2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-5">
-            <div class="glass-card-t">
-                <div class="glass-card-b card-left">
-                    <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"
-                        (partySelectedCandidate)="onpartySelectedCandidate($event)"></app-dashboard-score-and-seat>
+                <div *ngIf="selectDashboard === 'dashboard_2'">
+                    <app-dashboard-v2 (partySelected)="onPartySelected($event)"></app-dashboard-v2>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-5">
+        <div class="glass-card-t">
+            <div class="glass-card-b card-left">
+                <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"
+                    (partySelectedCandidate)="onpartySelectedCandidate($event)"></app-dashboard-score-and-seat>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- MAGNIFIER -->
-    <div class="magnifier" #magnifier [hidden]="!magnifierVisible"
-        [ngStyle]="{ 'top': magnifierY + 'px', 'left': magnifierX + 'px' }"></div>
+<!-- MAGNIFIER -->
+<div class="magnifier" #magnifier [hidden]="!magnifierVisible"
+    [ngStyle]="{ 'top': magnifierY + 'px', 'left': magnifierX + 'px' }"></div>
 
-    <!-- TOOLTIP -->
-    <div class="svg-tooltip" *ngIf="tooltipVisible" [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
-        <div class="tooltip-content">
-            <div class="tooltip-text">
-                <p>{{ tooltipText }}</p>
-                <div class="tooltip-subtext">
-                    <div *ngFor="let candidate of detailDistrictTop3">
-                        <!-- <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" /> -->
-                        <img [src]="candidate.avatarURL" alt="Party Logo">
-                        <div>
-                            <p>{{ candidate.party_name }}</p>
-                            <p>{{ candidate.fullname }}</p>
-                            <p>คะแนน: {{ candidate.totalVotes | number }}</p>
-                        </div>
+<!-- TOOLTIP -->
+<div class="svg-tooltip" *ngIf="tooltipVisible" [ngStyle]="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
+    <div class="tooltip-content">
+        <div class="tooltip-text">
+            <p>{{ tooltipText }}</p>
+            <div class="tooltip-subtext">
+                <div *ngFor="let candidate of detailDistrictTop3">
+                    <!-- <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" /> -->
+                    <img [src]="candidate.avatarURL" alt="Party Logo">
+                    <div>
+                        <p>{{ candidate.party_name }}</p>
+                        <p>{{ candidate.fullname }}</p>
+                        <p>คะแนน: {{ candidate.totalVotes | number }}</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <!-- PAGE 2 -->

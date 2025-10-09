@@ -85,4 +85,8 @@ export class DashboardService {
       `${this.baseUrl}/Election/GetSummaryCountPartyZoneAndPartyList`
     );
   }
+
+  getWinnerZoneByPartyName(name: string): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/Election/cadidateZoneByPartyName?name=${name}`);
+  }
 }

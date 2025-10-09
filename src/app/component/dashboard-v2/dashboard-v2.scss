@@ -18,3 +18,14 @@
   height: 3rem;
   object-fit: contain;
 }
+
+.svg-container {
+  // width: 100%;
+  overflow: visible !important;
+  position: relative;
+  z-index: 1000;
+}
+
+svg{
+  width: 109% !important;
+}

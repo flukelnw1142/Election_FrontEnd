@@ -1,17 +1,3 @@
-<!-- <div class="row">
-    <div class="col-6">
-        <app-dashboard-v2 *ngIf="selectedParty === '' "></app-dashboard-v2>
-    </div>
-    <div class="col-6">
-        <app-dashboard-score-and-seat *ngIf="selectedParty === '' "></app-dashboard-score-and-seat>
-    </div>
-
-</div> -->
-<!-- <div class="svg-container" *ngIf="selectedParty === '' " #svgContainer (mousemove)="onSvgHover($event)"
-        (mouseleave)="hideTooltip()" (click)="onSvgClick($event)">
-        <div [innerHTML]="svgContent"></div>
-    </div> -->
-
 <!-- PAGE 1 -->
 <div *ngIf="selectedParty === '' && selectedDistric === '' && partyName === ''">
     <div class="row">
@@ -145,7 +131,7 @@
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="row">
         <div class="col-4">
-            <div class="glass-card-t" [style.color]="partyBackgroundColor">
+            <div class="glass-card-t" [style.color]="getColor(selectedParty)">
                 <div class="glass-card-b card-left ">
                     <div class="party-rank-row">
                         <div class="party-text-left">
@@ -155,7 +141,8 @@
                         </div>
                         <div class="party-text-right">
                             <p style=" font-size: 4.5dvw; font-weight: bold;">{{ totalSeats }}</p>
-                            <p style=" font-size:1.5dvw; font-weight: 500;">/ 500 คน</p>
+                            <p style=" font-size:1.5dvw; font-weight: 500;">ที่นั่ง</p>
+                            <!-- <p style=" font-size:1.5dvw; font-weight: 500;">/ 500 คน</p> -->
 
                         </div>
                     </div>
@@ -170,21 +157,22 @@
                     <div style="text-align: center;">
                         <p style=" font-size:1.5dvw; font-weight: 500; color: white;">ส.ส.เขต</p>
                         <p style=" font-size:3.5dvw; font-weight: bold; color: white;">{{zoneSeats}}</p>
-                        <p style=" font-size:1.5dvw; font-weight: 500; color: white;">/ 400 คน</p>
+                        <!-- <p style=" font-size:1.5dvw; font-weight: 500; color: white;">/ 400 คน</p> -->
                     </div>
                 </div>
             </div>
             <div class="glass-card-t" style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div class="glass-card-b card-m">
+                <div class="glass-card-b card-m"
+                    style="display: flex;  flex-direction: column; justify-content: space-between;">
                     <div>
                         <div style="text-align: center;">
                             <p style=" font-size:1.5dvw; font-weight: 500; color: white;"> ส.ส.บัญชีรายชื่อ</p>
                             <p style=" font-size:3.5dvw; font-weight: bold; color: white;">{{partylistSeats}}</p>
-                            <p style=" font-size:1.5dvw; font-weight: 500; color: white;">/ 100 คน</p>
+                            <!-- <p style=" font-size:1.5dvw; font-weight: 500; color: white;">/ 100 คน</p> -->
                         </div>
                         <div class="orange-dots">
                             <span class="dot" *ngFor="let i of getPartylistSeatsArray()"
-                                [style.background-color]="partyBackgroundColor"></span>
+                                [style.background-color]="getColor(selectedParty)"></span>
                         </div>
                     </div>
                     <p style="text-align: center; color: white;">({{ formatTotalVotes(totalVote) }} คะแนน)</p>

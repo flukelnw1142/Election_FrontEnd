@@ -334,7 +334,7 @@ export class Dashboard implements OnInit {
               this.allWinners[id].party === this.selectedParty)
           ) {
             path.classList.add('animated-path');
-            await this.delay(3);
+            await this.delay(1);
           }
         }
       }

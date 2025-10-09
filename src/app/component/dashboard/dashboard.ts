@@ -125,8 +125,33 @@ export class Dashboard implements OnInit {
           this._dashboard.getDistrictWinners()
         );
 
-        if (winners && Object.keys(winners).length > 0) {
-          this.allWinners = winners;
+        console.log('winners', winners);
+
+        if (winners.candidates && Object.keys(winners.candidates).length > 0) {
+          this.allWinners = winners.candidates;
+
+          const totalVoteZone = document.getElementById(
+            'totalVoteZone'
+          ) as HTMLElement | null;
+          const totalVotePartylist = document.getElementById(
+            'totalVotePartylist'
+          ) as HTMLElement | null;
+          const updateDate = document.getElementById(
+            'updateDate'
+          ) as HTMLElement | null;
+          if (totalVoteZone) {
+            totalVoteZone.innerText = this.formatTotalVotes(
+              winners.totalVoteZone
+            );
+          }
+          if (totalVotePartylist) {
+            totalVotePartylist.innerText = this.formatTotalVotes(
+              winners.totalVotePartylist
+            );
+          }
+          if (updateDate) {
+            updateDate.innerText = this.formatTime(winners.updateDate);
+          }
 
           const svgText = await firstValueFrom(
             this.http.get('/assets/thailand.svg', { responseType: 'text' })
@@ -136,9 +161,34 @@ export class Dashboard implements OnInit {
 
         this._dashboard.winners$.subscribe((winners) => {
           console.log('📡 Received signalR update');
-          if (winners && Object.keys(winners).length > 0) {
+          if (
+            winners.candidates &&
+            Object.keys(winners.candidates).length > 0
+          ) {
             this.zone.run(() => {
-              this.allWinners = winners;
+              const totalVoteZone = document.getElementById(
+                'totalVoteZone'
+              ) as HTMLElement | null;
+              const totalVotePartylist = document.getElementById(
+                'totalVotePartylist'
+              ) as HTMLElement | null;
+              const updateDate = document.getElementById(
+                'updateDate'
+              ) as HTMLElement | null;
+              if (totalVoteZone) {
+                totalVoteZone.innerText = this.formatTotalVotes(
+                  winners.totalVoteZone
+                );
+              }
+              if (totalVotePartylist) {
+                totalVotePartylist.innerText = this.formatTotalVotes(
+                  winners.totalVotePartylist
+                );
+              }
+              if (updateDate) {
+                updateDate.innerText = this.formatTime(winners.updateDate);
+              }
+              this.allWinners = winners.candidates;
               firstValueFrom(
                 this.http.get('/assets/thailand.svg', {
                   responseType: 'text',
@@ -191,7 +241,7 @@ export class Dashboard implements OnInit {
 
     svg.style.height = '82vh';
     // svg.style.height = '80vh';
-    // svg.style.width = 'auto';
+    svg.style.width = 'auto';
     svg.style.margin = '20px 0';
     // svg.style.padding = 'auto';
     // svg.style.margin = '30px 0 30px 100px';
@@ -284,7 +334,7 @@ export class Dashboard implements OnInit {
               this.allWinners[id].party === this.selectedParty)
           ) {
             path.classList.add('animated-path');
-            await this.delay(1);
+            await this.delay(3);
           }
         }
       }
@@ -1005,6 +1055,23 @@ export class Dashboard implements OnInit {
       return votes.toLocaleString('en-US');
     }
     return '';
+  }
+
+  formatTime(isoString: string): string {
+    const date = new Date(isoString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    const formatted = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    console.log("formatted",formatted);
+
+    return formatted;
   }
 
   getDataMapping() {

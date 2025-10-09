@@ -1,71 +1,34 @@
-svg {
-  width: 100%;
-  height: auto;
-}
+// svg {
+//   width: 100%;
+//   height: auto;
+// }
 
 p {
   padding: 0px;
   margin: 0;
 }
 
-path {
-  cursor: pointer;
-  transition: fill 0.3s;
-}
+// path {
+//   cursor: pointer;
+//   transition: fill 0.3s;
+// }
 
-path:hover {
-  fill: yellow !important;
-  /* สี hover */
-}
+// path:hover {
+//   fill: yellow !important;
+//   /* สี hover */
+// }
 
 .svg-container {
   width: 100%;
-  // height: 100%;
+  // width: fit-content;
   overflow: visible !important;
   position: relative;
   z-index: 1000;
-  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  // background-image: url('/background/TH.png');
-  // background-size: cover;
-  // background-position: center;
-  // background-repeat: no-repeat;
 }
 
-// .glass-card {
-//   border-radius: 15px;
-//   height: 100%;
-
-//   /*1*/
-//   // background: rgba(255, 255, 255, 0.1);
-//   // backdrop-filter: blur(35px);
-//   // border: 2px solid rgba(255, 255, 255, 0.1);
-//   // box-shadow: 0 0 80px rgba(0, 0, 0, 0.25);
-//   // overflow: hidden;
-
-//   /*2*/
-//   background: rgba(255, 255, 255, 0.1);
-//   /* พื้นหลังโปร่งแสง สีขาวอ่อน */
-//   // background: rgba(0, 0, 0, 0.2);
-//   backdrop-filter: blur(15px);
-//   /* เบลอพื้นหลังเบาๆ ให้ดูเหมือนกระจก */
-//   -webkit-backdrop-filter: blur(15px);
-//   /* สำหรับ Safari */
-//   border: 1px solid rgba(255, 255, 255, 0.2);
-//   /* ขอบบางๆ โปร่ง */
-//   border-radius: 15px;
-//   /* มุมโค้งมน */
-//   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-//   /* เงาเบาๆ เพื่อความลึก */
-//   transition: all 0.3s ease;
-//   /* การเปลี่ยนแปลงนุ่มนวล */
-//   /*3*/
-//   // backdrop-filter: blur(16px) saturate(180%);
-//   // -webkit-backdrop-filter: blur(16px) saturate(180%);
-//   // background-color: rgba(255, 255, 255, 0.75);
-//   // border-radius: 12px;
-//   // border: 1px solid rgba(209, 213, 219, 0.3);
-//   // -webkit-backdrop-filter: blur(16px) saturate(180%);
-// }
+.svg-container {
+  overflow: visible;
+}
 
 .glass-card {
   // position: relative;
@@ -78,65 +41,15 @@ path:hover {
   height: 100%;
   color: #fff;
   background: rgba(188, 184, 198, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   box-shadow: inset 2px -2px 6px rgba(214, 214, 214, 0.2),
     inset -3px 3px 3px rgba(255, 255, 255, 0.3);
   border-radius: 16px;
-
-}
-
-.glass-card:before,
-.glass-card:after {
-  content: '';
-  position: absolute;
-  left: -2px;
-  top: -2px;
-  // background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094,
-  //     #0000ff, #00ff00, #ffff00, #ff0000);
-  background-size: 400%;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  z-index: -1;
-  animation: steam 120s linear infinite;
-  // border-radius: 15px;
-  border-radius: 20px;
-  background: linear-gradient(240deg, transparent, transparent, rgba(38, 21, 149, 0.8));
-
-}
-
-@keyframes steam {
-  0% {
-    background-position: 0 0;
-  }
-
-  50% {
-    background-position: 400% 0;
-  }
-
-  100% {
-    background-position: 0 0;
-  }
-}
-
-.glass-card:after {
-  filter: blur(20px);
-}
-
-.slide-overlay {
-  align-items: flex-start;
-  justify-content: flex-end;
-  row-gap: 12px;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 98%;
-  background: linear-gradient(240deg, transparent, transparent, rgba(38, 21, 149, 0.8));
-  border-radius: 20px;
-  padding: 30px;
 }
 
 /* ANIMATION */
+// >>> spot distric
 .animated-path {
   opacity: 0;
   animation: fadeIn 0.3s ease-in-out forwards;
@@ -146,6 +59,129 @@ path:hover {
   to {
     opacity: 1;
   }
+}
+
+// >>> button Close
+.ds-Button {
+  user-select: none;
+  font-size: 0.8rem;
+  font-weight: 900;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 7px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  gap: 0.75rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1005;
+}
+
+/*
+
+PAGE 1
+
+*/
+
+// >>> change map or seat
+.button-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 10px;
+  z-index: 1003;
+  padding: 5px;
+}
+
+.btn-change {
+  user-select: none;
+  font-size: 0.8rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 7px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  background: #2ed47e;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  gap: 0.75rem;
+}
+
+.icon-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.change-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.btn-change:hover #icon {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+}
+
+.btn-change span {
+  font-size: 14px;
+  color: #000;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.btn-change.active {
+  background-color: #e0e0e0;
+  border-color: #888;
+}
+
+// >>> <app-dashboard-score-and-seat/>
+.card-scroe-and-seat {
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+// >>> magnifier
+.magnifier {
+  position: fixed;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  background: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  pointer-events: auto;
+  z-index: 1001;
+}
+
+// >>> Tooltip
+.svg-tooltip {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1003; // Increased to overlay on top of magnifier
+  max-width: 320px;
+  min-width: 260px;
+  font-size: 14px;
+  pointer-events: none;
 }
 
 .tooltip-content {
@@ -183,127 +219,26 @@ path:hover {
   font-size: 12px;
 }
 
-::ng-deep .full-screen-dialog .mat-dialog-container {
-  padding: 0;
-  height: 100vh;
-  width: 100vw;
-  border-radius: 0;
+.thailand-map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.ds-Button {
-  user-select: none;
-  font-size: 0.8rem;
-  font-weight: 900;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 7px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  background: rgb(255, 255, 255);
-  border-radius: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  gap: 0.75rem;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1005;
-}
+/*
 
-.button-container {
-  position: absolute;
-  top: 0;
-  right: 0;
-  /* ย้ายไปมุมขวา */
-  display: flex;
-  gap: 10px;
-  /* ระยะห่างระหว่างปุ่ม */
-  z-index: 1003;
-  /* ใช้ z-index เดิม */
-  padding: 5px;
-  /* เพิ่ม padding เพื่อให้ดูสวยงาม */
-}
+PAGE 2
 
-.btn-change {
-  user-select: none;
-  font-size: 0.8rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 7px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  background: #2ed47e;
-  border-radius: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  gap: 0.75rem;
-  transition: all 0.3s ease;
-  /* เพิ่ม transition สำหรับเอฟเฟกต์ */
-}
+*/
 
-.icon-text-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-mat-icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.change-icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.btn-change:hover mat-icon,
-.btn-change:hover .change-icon {
-  transform: scale(1.2);
-}
-
-.btn-change span {
-  font-size: 14px;
-  color: #000;
-  text-align: center;
-  transition: color 0.3s ease;
-}
-
-.btn-change:hover span {
-  color: #555;
-}
-
-.btn-change.active {
-  background-color: #e0e0e0;
-  border-color: #888;
-}
-
-.btn-change.active mat-icon,
-.btn-change.active .change-icon {
-  transform: scale(1.1);
-}
-
-.btn-change.active span {
-  color: #333;
-}
-
-// .card {
-//   background-color: rgba(255, 255, 255, 0.2);
-//   border-radius: 15px;
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//   padding: 20px;
-//   margin: 10px;
-// }
-
+// >>> col-4
 .card-left {
-  // background-color: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-
 
   .party-rank-row {
     display: flex;
@@ -318,15 +253,11 @@ mat-icon {
     max-width: 20%;
     max-height: 20%;
     position: absolute;
-    // object-fit: contain;
-    // z-index: 1000;
     bottom: 10px;
     right: 10px;
   }
 
   .head-logo {
-    // max-width: 270px;
-    // max-height: 270px;
     width: 90%;
     position: relative;
     bottom: -20px;
@@ -337,22 +268,16 @@ mat-icon {
 
   .party-text-left {
     text-align: left;
-    // color: #fff;
     font-size: 18px;
-    // text-shadow:
-    // 0 0 5px rgba(255, 255, 255, 0.356),
-    // 0.5px -0.5px 0 #ffffffbd,
-
   }
 
   .party-text-right {
-    text-align: left;
-    // color: #fff;
+    text-align: right;
     font-size: 18px;
-
   }
 }
 
+// >>> col-2
 .orange-dots {
   display: flex;
   flex-wrap: wrap;
@@ -361,8 +286,6 @@ mat-icon {
   gap: 0.2rem;
 
   .dot {
-    // width: 30px;
-    // height: 30px;
     width: 1.4dvw;
     height: 1.4dvw;
     border-radius: 50%;
@@ -372,109 +295,23 @@ mat-icon {
 }
 
 .card-m {
-  // background-color: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   padding: 20px;
-  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  // height: 50%; 
-  // height: 39.3vh;
 }
 
-.card-r {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  height: 100vh;
-}
+/*
 
-.card-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
+PAGE 3
 
-.card-header img {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  margin-right: 15px;
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-}
-
-.card-content {
-  color: #666;
-}
-
-.progress {
-  height: 10px;
-  background: #f0e7d8;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  background: #ffcc00;
-  width: 60%;
-}
-
-.thailand-map-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  // Add any original styles if needed, e.g., overflow: hidden or animation
-}
-
-.svg-container {
-  overflow: visible; // Prevent clipping
-
-  // ...เดิม...
-}
-
-.magnifier {
-  position: fixed;
-  width: 250px; // As per your request
-  height: 250px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  background: black; // Or #eef0fa as in the example
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  pointer-events: auto;
-  z-index: 1001;
-}
-
-.svg-tooltip {
-  position: absolute;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1003; // Increased to overlay on top of magnifier
-  max-width: 320px;
-  min-width: 260px;
-  font-size: 14px;
-  pointer-events: none;
-}
-
-
+*/
 
 .show-distric {
   width: 90vw;
   height: 85vh;
   margin: auto;
 
-  .header-table {
-    color: #ffffff8e;
-    display: flex;
-    justify-content: space-between;
+  .card {
+    padding: 30px;
   }
 
   .province {
@@ -487,8 +324,10 @@ mat-icon {
     font-weight: 300;
   }
 
-  .card {
-    padding: 30px;
+  .header-table {
+    color: #ffffff8e;
+    display: flex;
+    justify-content: space-between;
   }
 
   .candidate-item {
@@ -518,6 +357,12 @@ mat-icon {
     }
   }
 }
+
+/*
+
+PAGE 4
+
+*/
 
 .show-partyList {
   width: 90vw;
@@ -636,6 +481,10 @@ mat-icon {
   /* Chrome, Safari, Opera */
 }
 
+
+
+// import
+
 .electionBox {
   position: absolute;
   width: 130px;
@@ -739,7 +588,6 @@ mat-icon {
 }
 
 
-// import
 .CampaignTitle {
   display: flex;
   font-size: 1vw;

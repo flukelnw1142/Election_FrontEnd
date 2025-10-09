@@ -459,6 +459,10 @@ export class Dashboard implements OnInit {
   // Click Zone-Seat Page 2
   onClickZoneSeatPerParty(party: string) {
     console.log('party', party);
+
+    if (!this.isMappingComplete) {
+      return;
+    }
     this.selectedZoneSeat = party;
     this.clickOnPopup = this.selectedParty;
     this.selectedParty = '';

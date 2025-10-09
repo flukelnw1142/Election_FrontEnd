@@ -1,4 +1,4 @@
-<!-- PAGE 1 -->
+<!-- PAGE 1 : main -->
 <div *ngIf="selectedParty === '' && selectedDistric === '' && partyName === '' && selectedZoneSeat === ''">
     <div class="row">
         <div class="col-7">
@@ -93,7 +93,8 @@
         <div class="col-5">
             <div class="glass-card card-left">
                 <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"
-                    (partySelectedCandidate)="onpartySelectedCandidate($event)"></app-dashboard-score-and-seat>
+                    (partySelectedCandidate)="onpartySelectedCandidate($event)"
+                    (partySelectedCandidateZone)="onClickZoneSeatPerParty($event)"></app-dashboard-score-and-seat>
             </div>
         </div>
     </div>
@@ -123,7 +124,7 @@
     </div>
 </div>
 
-<!-- PAGE 2 -->
+<!-- PAGE 2 : show-dashboard-party -->
 <div *ngIf="selectedParty !== '' " style="position: relative;">
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="row">
@@ -185,32 +186,46 @@
     </div>
 </div>
 
-<!-- PAGE 3 : คลิกเขต จาก SVG -->
+<!-- PAGE 3 : show-distric -->
 <div *ngIf="selectedDistric !== '' " style="position: relative;" class="show-distric">
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="glass-card card" style="color: white;">
-        <p class="province">{{detailDistrict[0].province || ""}}</p>
-        <p class="zone">เขต {{detailDistrict[0].zone || ""}}</p>
+        <div style="display: flex; justify-content: space-between;">
+            <div>
+                <p class="province">{{detailDistrict[0].province || ""}}</p>
+                <p class="zone">เขต {{detailDistrict[0].zone || ""}}</p>
+            </div>
+            <!-- <div style="padding: 10px; font-size: 1.2rem;">
+                <p>จำนวนหน่อยที่นับไปแล้ว : {{detailDistrict[0].progress}} %</p>
+                <p>นับคะแนนแล้ว : {{detailDistrict[0].total_votes_in_area}}</p>
+            </div> -->
+        </div>
 
         <div class="header-table">
-            <div style="display: flex;">
-                <p style="margin-right: 50px;"> อันดับ</p>
-                <!-- <p> พรรค</p> -->
+            <p style="align-self: end;"> อันดับ</p>
+            <div style="font-size: 1.1rem; text-align: end;">
+                <p>จำนวนหน่อยที่นับไปแล้ว : {{detailDistrict[0].progress}} %</p>
+                <p>นับคะแนนแล้ว : {{detailDistrict[0].total_votes_in_area}}</p>
             </div>
         </div>
         <hr>
 
         <div #scrollContainer class="scroll-container">
             <div *ngFor="let candidate of detailDistrict; let i = index" class="candidate-item">
+
                 <p class="number" [style.background]="getColor(candidate.party_name)">{{ i + 1 }}</p>
                 <img [src]="candidate.avatarURL" alt="Party Logo">
                 <div>
                     <p style="font-size: 1.3rem;">{{ candidate.fullname }}</p>
-                    <p style="font-weight: 300; color: rgb(199, 199, 199);">{{ candidate.party_name }}</p>
+                    <p style="font-weight: 300; color: rgb(199, 199, 199); padding-top: 5px; padding-bottom: 5px;"><span
+                            class="no">เบอร์ {{candidate.no}}</span> {{
+                        candidate.party_name }}</p>
                     <!-- <p >คะแนน: {{ candidate.totalVotes | number }}</p> -->
                     <p [style.color]="i === 0 ? getColor(candidate.party_name) : null"
                         [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem'} : {}">
                         คะแนน: {{ candidate.totalVotes | number }}
+                        <span style="font-weight: 300; color: rgb(199, 199, 199); font-size:medium;"> ( {{
+                            candidate.vote_percentage}}% )</span>
                     </p>
                 </div>
             </div>
@@ -224,7 +239,7 @@
     </div>
 </div>
 
-<!-- PAGE 4 -->
+<!-- PAGE 4 : show-party-list -->
 <div *ngIf="partyName !== ''" style="position: relative;" class="show-partyList">
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="glass-card card" style="color: white;">
@@ -277,7 +292,7 @@
     </div>
 </div>
 
-<!-- PAGE 5 -->
+<!-- PAGE 5 : show-distric-per-party -->
 <div *ngIf="selectedZoneSeat !== ''" style="position: relative;" class="show-distric">
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="glass-card card" style="color: white;">

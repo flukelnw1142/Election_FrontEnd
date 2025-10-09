@@ -36,7 +36,7 @@
 
       <!-- ขวา -->
       <div class="right-section">
-        <div class="zone-seats">{{ party.zone_seats }}</div>
+        <div class="zone-seats" (click)="onSelectZoneSeats(party.partyName); $event.stopPropagation()">{{ party.zone_seats }}</div>
         <div class="partylist-seats" (click)="onSelectPartylistSeats(party.partyName); $event.stopPropagation()">
           {{ party.partylist_seats }}
         </div>

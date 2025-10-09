@@ -7,12 +7,17 @@ export interface Winner {
 
 export interface Candidate {
   logoURL: string;
-  avatarURL: string;
   fullname: string;
   party_name: string;
   totalVotes: number;
   province: string;
   zone: number;
+  canditID: number;
+  avatarURL: string;
+  progress: number;
+  total_votes_in_area: number;
+  vote_percentage: number;
+  no: number
 }
 
 export interface Color {

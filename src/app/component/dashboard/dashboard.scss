@@ -454,6 +454,13 @@ PAGE 3
     background: #ffffff37;
     gap: 2rem;
 
+    .no {
+      border: #ccc 1px solid;
+      border-radius: 30px;
+      padding: 0px 6px;
+      margin-right: 4px;
+    }
+
     .number {
       background: #000;
       height: 60px;

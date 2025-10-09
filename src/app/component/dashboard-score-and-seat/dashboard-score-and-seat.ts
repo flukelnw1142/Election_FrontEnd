@@ -32,6 +32,7 @@ export class DashboardScoreAndSeat implements OnInit {
   ) {}
   @Output() partySelected = new EventEmitter<string>();
   @Output() partySelectedCandidate = new EventEmitter<string>();
+  @Output() partySelectedCandidateZone = new EventEmitter<string>();
   partySeatCountsList: PartySeatCountList[] = [];
   totalSeats: number = 0;
   partyColorMap: { [partyKeyword: string]: Color } = {};
@@ -96,6 +97,10 @@ export class DashboardScoreAndSeat implements OnInit {
 
   onSelectParty(partyName: string) {
     this.partySelected.emit(partyName);
+  }
+  onSelectZoneSeats(partyName: string): void {
+    console.log("onSelectZoneSeats",partyName);
+    this.partySelectedCandidateZone.emit(partyName);
   }
   onSelectPartylistSeats(partyName: string): void {
     console.log(partyName);

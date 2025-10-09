@@ -55,8 +55,10 @@ export class Dashboard implements OnInit {
   detailPartyListPerPartyName: CandidatePartyList[] = [];
   detailDistrict: Candidate[] = [];
   detailDistrictTop3: Candidate[] = [];
+  detailWinnerZonePerParty: any[] = [];
   selectedParty: any = '';
   selectedDistric: any = '';
+  selectedZoneSeat: any = '';
   img_party: any = '';
   img_head: any = '';
   partyBackgroundColor: any = '';
@@ -87,9 +89,8 @@ export class Dashboard implements OnInit {
   zoomLevel = 8;
   lensSize = 250;
   isMappingComplete: any;
-  clickCountParty: any = '';
-  clickDistricPerParty: any = '';
-
+  // clickCountParty: any = '';
+  clickOnPopup: any = '';
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
   private zoomGroup: any;
@@ -127,14 +128,6 @@ export class Dashboard implements OnInit {
         const winners = await firstValueFrom(
           this._dashboard.getDistrictWinners()
         );
-
-        // Code ใหม่ลองยิง
-        const winnersZone = await firstValueFrom(
-          this._dashboard.getWinnerZoneByPartyName('ไทยสร้างไทย')
-        );
-
-      
-        console.log('winners', winners);
 
         if (winners.candidates && Object.keys(winners.candidates).length > 0) {
           this.allWinners = winners.candidates;
@@ -205,7 +198,8 @@ export class Dashboard implements OnInit {
               ).then((svgText) => {
                 if (
                   this.selectedDistric === '' &&
-                  this.detailPartyListPerPartyName.length === 0
+                  this.detailPartyListPerPartyName.length === 0 &&
+                  this.selectedZoneSeat === ''
                 ) {
                   this.settingSvg(svgText, false);
                 }
@@ -456,10 +450,25 @@ export class Dashboard implements OnInit {
           });
 
         // this.clickDistricPerParty = this.selectedParty;
-        this.clickCountParty = this.selectedParty;
+        this.clickOnPopup = this.selectedParty;
         this.selectedParty = '';
       }
     }
+  }
+
+  // Click Zone-Seat Page 2
+  onClickZoneSeatPerParty(party: string) {
+    console.log('party', party);
+    this.selectedZoneSeat = party;
+    this.clickOnPopup = this.selectedParty;
+    this.selectedParty = '';
+
+    // Code ใหม่ลองยิง
+    this._dashboard.getWinnerZoneByPartyName(party).subscribe((data) => {
+      console.log('(getWinnerZoneByPartyName) Data', data);
+      this.detailWinnerZonePerParty = data;
+      this.cd.markForCheck();
+    });
   }
 
   simmulateSvgClick(event: MouseEvent) {
@@ -972,7 +981,7 @@ export class Dashboard implements OnInit {
 
     if (partyName === 'ClickCount') {
       partyName = this.selectedParty;
-      this.clickCountParty = this.selectedParty;
+      this.clickOnPopup = this.selectedParty;
     }
 
     this.partyName = partyName;
@@ -1065,9 +1074,9 @@ export class Dashboard implements OnInit {
 
   closeDialog() {
     console.log('Close > ', this.selectedParty);
-    console.log('Close2 > ', this.clickCountParty);
-    console.log('Close2 > ', this.clickDistricPerParty);
+    console.log('Close2 > ', this.clickOnPopup);
     this.selectedDistric = '';
+    this.selectedZoneSeat = '';
     this.partyName = '';
     this.detailPartyListPerPartyName = [];
     this.tooltipVisible = false;
@@ -1105,9 +1114,8 @@ export class Dashboard implements OnInit {
         });
     }
 
-    this.clickCountParty !== ''
-      ? ((this.selectedParty = this.clickCountParty),
-        (this.clickCountParty = ''))
+    this.clickOnPopup !== ''
+      ? ((this.selectedParty = this.clickOnPopup), (this.clickOnPopup = ''))
       : (this.selectedParty = '');
     this.getDataMapping;
   }

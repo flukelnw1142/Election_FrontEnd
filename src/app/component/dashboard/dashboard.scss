@@ -67,151 +67,15 @@ p {
 //   // -webkit-backdrop-filter: blur(16px) saturate(180%);
 // }
 
-
-// .rainbow {
-//   position: relative;
-//   background: linear-gradient(0deg, #000, #272727);
-//   /* พื้นหลังสีดำทึบเหมือน .glass-card-b */
-//   border-radius: 15px;
-//   height: 100%;
-//   backdrop-filter: blur(5px);
-//   /* เอฟเฟกต์ glassmorphism */
-//   -webkit-backdrop-filter: blur(5px);
-//   /* รองรับ WebKit */
-//   box-shadow: inset 2px -2px 6px rgba(214, 214, 214, 0.2),
-//     inset -3px 3px 3px rgba(255, 255, 255, 0.3);
-//   /* เงาแบบ glassmorphism */
-//   padding: 2rem;
-//   margin: auto;
-//   display: grid;
-//   place-content: center;
-//   text-align: center;
-//   font-size: 1.5em;
-//   border: 4px solid transparent;
-//   /* ขอบโปร่งใสเพื่อให้ pseudo-elements เป็นขอบ */
-//   overflow: hidden;
-//   /* ป้องกัน pseudo-elements ล้น */
-// }
-
 .glass-card {
-  width: 100%;
-  height: 360px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 0 8px 4px rgba(255, 255, 255, 0.4);
-  position: relative;
-  overflow: hidden;
-}
-
-.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.8),
-      transparent);
-}
-
-.glass-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.8),
-      transparent,
-      rgba(255, 255, 255, 0.3));
-}
-
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.rainbow:before,
-.rainbow:after {
-  content: '';
-  position: absolute;
-  left: -4px;
-  top: -4px;
-  right: -4px;
-  bottom: -4px;
-  background: conic-gradient(from var(--angle),
-      #fb0094 0deg 36deg,
-      #0000ff 36deg 72deg,
-      #00ff00 72deg 108deg,
-      #ffff00 108deg 144deg,
-      #ff0000 144deg 180deg,
-      #fb0094 180deg 216deg,
-      #0000ff 216deg 252deg,
-      #00ff00 252deg 288deg,
-      #ffff00 288deg 324deg,
-      #ff0000 324deg 360deg);
-  z-index: -1;
-  /* วางด้านหลัง .rainbow */
-  animation: rotate 120s linear infinite;
-  /* หมุนด้วย --angle */
-  border-radius: 18px;
-  /* โค้งตาม .rainbow */
-  /* ใช้ mask เพื่อให้แสดงเฉพาะขอบ */
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-}
-
-.rainbow:after {
-  filter: blur(20px);
-  /* Blur สำหรับขอบสีรุ้งเหมือน .glass-card-b */
-  z-index: -2;
-
-}
-
-@keyframes rotate {
-  to {
-    --angle: 360deg;
-    /* หมุนมุมจาก 0deg ไป 360deg */
-  }
-}
-
-.rainbow {
-  animation: rotate 120s linear infinite, opacityChange 1s infinite alternate;
-}
-
-
-.glass-card-t {
-  position: relative;
-  background: linear-gradient(0deg, #000, #272727);
-  border-radius: 15px;
-  height: 100%;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  box-shadow: inset 2px -2px 6px rgba(214, 214, 214, 0.2),
-    inset -3px 3px 3px rgba(255, 255, 255, 0.3);
-}
-
-.glass-card-b {
   position: relative;
   background: linear-gradient(0deg, #000, #272727);
   border-radius: 15px;
   height: 100%;
 }
 
-.glass-card-b:before,
-.glass-card-b:after {
+.glass-card:before,
+.glass-card:after {
   content: '';
   position: absolute;
   left: -2px;
@@ -240,7 +104,7 @@ p {
   }
 }
 
-.glass-card-b:after {
+.glass-card:after {
   filter: blur(20px);
 }
 
@@ -256,23 +120,23 @@ p {
   overflow: visible;
 }
 
-.glass-card {
-  // position: relative;
-  // background: linear-gradient(0deg, #000, #272727);
-  // background-image: url('/background/bg10.jpg');
-  // // background-size: cover;
-  // // background-position: center;
-  // // background-repeat: no-repeat;
-  // border-radius: 15px;
-  height: 100%;
-  color: #fff;
-  background: rgba(188, 184, 198, 0.2);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  box-shadow: inset 2px -2px 6px rgba(214, 214, 214, 0.2),
-    inset -3px 3px 3px rgba(255, 255, 255, 0.3);
-  border-radius: 16px;
-}
+// .glass-card {
+//   // position: relative;
+//   // background: linear-gradient(0deg, #000, #272727);
+//   // background-image: url('/background/bg10.jpg');
+//   // // background-size: cover;
+//   // // background-position: center;
+//   // // background-repeat: no-repeat;
+//   // border-radius: 15px;
+//   height: 100%;
+//   color: #fff;
+//   background: rgba(188, 184, 198, 0.2);
+//   backdrop-filter: blur(5px);
+//   -webkit-backdrop-filter: blur(5px);
+//   box-shadow: inset 2px -2px 6px rgba(214, 214, 214, 0.2),
+//     inset -3px 3px 3px rgba(255, 255, 255, 0.3);
+//   border-radius: 16px;
+// }
 
 /* ANIMATION */
 // >>> spot distric
@@ -565,6 +429,14 @@ PAGE 3
   .zone {
     font-size: 2rem;
     font-weight: 300;
+  }
+
+  .header {
+    font-size: 2rem;
+  }
+
+  .partyName {
+    font-size: 1.5rem;
   }
 
   .header-table {

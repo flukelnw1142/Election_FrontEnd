@@ -63,6 +63,8 @@ export class Dashboard implements OnInit {
   selectedZoneSeat: any = '';
   selectedProvince: any = '';
   activeTab = 'district'; // 'district' or 'partylist'
+  detailWinnerZonePerProvince: any[] = []; // district
+  detailWinnerPartyPerProvince: any[] = []; // partylist
   img_party: any = '';
   img_head: any = '';
   partyBackgroundColor: any = '';
@@ -898,6 +900,8 @@ export class Dashboard implements OnInit {
             else {
               console.log('✅ Province name clicked:', textContent);
               this.selectedProvince = textContent;
+              this.onWinnerZoneByProvince(this.selectedProvince);
+              this.onWinnerPartyByProvince(this.selectedProvince);
               return;
             }
           }
@@ -907,6 +911,7 @@ export class Dashboard implements OnInit {
 
           if (group && group.id && group.getAttribute('data-party')) {
             this.zoneId = group.id;
+            console.log('zoneId', this.zoneId);
             this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
             console.log('selectedDistric', this.selectedDistric);
 
@@ -1007,6 +1012,56 @@ export class Dashboard implements OnInit {
     this.renderer.setStyle(magnifierEl, 'left', this.magnifierX + 'px');
     this.renderer.setStyle(magnifierEl, 'z-index', '1000');
     this.cd.detectChanges();
+  }
+
+  /* click Province On svg "District" */
+  onWinnerZoneByProvince(province: string) {
+    console.log('Open PopUp onWinnerZoneByProvince', province);
+    this._dashboard
+      .getAllwinnerZoneByProvinceName(province)
+      .subscribe((data) => {
+        // console.log('(getAllwinnerZoneByProvinceName) Data', data);
+        // this.detailWinnerZonePerProvince = data;
+
+        const grouped = new Map<string, any[]>();
+        for (const candidate of data) {
+          const key = `${candidate.province}_${candidate.zone}`;
+          if (!grouped.has(key)) {
+            grouped.set(key, []);
+          }
+          grouped.get(key)!.push(candidate);
+        }
+
+        // เรียง totalVotes มากสุดไว้บน
+        this.detailWinnerZonePerProvince = Array.from(grouped.entries()).map(
+          ([key, candidates]) => {
+            const [province, zone] = key.split('_');
+            return {
+              province,
+              zone,
+              candidates: candidates.sort(
+                (a, b) => b.totalVotes - a.totalVotes
+              ),
+            };
+          }
+        );
+
+        console.log(
+          'detailWinnerZonePerProvince',
+          this.detailWinnerZonePerProvince
+        );
+        this.cd.markForCheck();
+      });
+  }
+
+  /* click Province On svg "Party" */
+  onWinnerPartyByProvince(province: string) {
+    console.log('Open PopUp onWinnerPartyByProvince', province);
+    this._dashboard.getPartylistProvince(province).subscribe((data) => {
+      console.log('(getPartylistProvince) Data', data);
+      this.detailWinnerPartyPerProvince = data;
+      this.cd.markForCheck();
+    });
   }
 
   /* click Card "dashboard-score-and-seat" */

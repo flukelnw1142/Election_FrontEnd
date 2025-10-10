@@ -89,4 +89,12 @@ export class DashboardService {
   getWinnerZoneByPartyName(name: string): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/cadidateZoneByPartyName?name=${name}`);
   }
+
+  getAllwinnerZoneByProvinceName(provinceName: string): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/Election/getAllwinnerZoneByProvinceName?provinceName=${provinceName}`);
+  }
+
+  getPartylistProvince(provinceName: string): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/Election/partylistProvince?provincename=${provinceName}`);
+  }
 }

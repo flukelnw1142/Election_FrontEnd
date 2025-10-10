@@ -362,6 +362,7 @@ PAGE 2
     position: absolute;
     bottom: 10px;
     right: 10px;
+    border-radius: 100%;
   }
 
   .head-logo {
@@ -376,11 +377,13 @@ PAGE 2
   .party-text-left {
     text-align: left;
     font-size: 18px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   }
 
   .party-text-right {
     text-align: right;
     font-size: 18px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -477,6 +480,19 @@ PAGE 3
       object-position: top;
       border-radius: 15px;
     }
+
+    .logo-container {
+      width: 7rem;
+      height: 7rem;
+      display: inline-block;
+    }
+
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
   }
 }
 
@@ -514,6 +530,7 @@ PAGE 4
         position: absolute;
         bottom: 0;
         right: 0;
+        border-radius: 100%;
       }
 
       .head-logo {
@@ -591,34 +608,132 @@ PAGE 6
 
 */
 
-.tabs {
-  display: flex;
-  margin-top: 1rem;
+.show-province-all {
+  width: 90vw;
+  height: 85vh;
+  margin: auto;
+
+  .card {
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    font-size: 2rem;
+  }
+
+  .three-column-grid {
+    display: grid;
+    grid-template-columns: 1fr 3fr 3fr;
+    gap: 1rem;
+    flex: 1;
+    height: 100%;
+  }
+
+  .column {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .tabs {
+    display: flex;
+
+    .tab-button {
+      flex: 1;
+      padding: 0.2rem 1rem;
+      background: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .tab-button.active,
+    .tab-button:hover {
+      opacity: 1;
+      background: #555;
+    }
+
+    .tab-content {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+  }
+
+  // .scroll-container {
+  //   overflow-y: auto;
+  //   overflow-x: hidden;
+  //   height: 65vh;
+  //   // width:100%;
+
+  //   /* ซ่อน scrollbar ทุกเบราว์เซอร์ */
+  //   scrollbar-width: none;
+  //   /* Firefox */
+  //   -ms-overflow-style: none;
+  //   /* IE & Edge */
+  // }
+
+  // .scroll-container::-webkit-scrollbar {
+  //   display: none;
+  //   /* Chrome, Safari, Opera */
+  // }
+
+  .candidate-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    padding: 1rem;
+    background: #ffffff37;
+    gap: 2rem;
+
+    .no {
+      border: #ccc 1px solid;
+      border-radius: 30px;
+      padding: 0px 6px;
+      margin-right: 4px;
+    }
+
+    .number {
+      background: #000;
+      height: 3rem;
+      width: 2rem;
+      text-align: center;
+      align-content: center;
+      border-radius: 8px;
+      font-size: 1.5rem;
+    }
+
+    img {
+      height: 100px;
+      width: 60px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 15px;
+    }
+
+    .logo-container {
+      width: 7rem;
+      height: 7rem;
+      display: inline-block;
+    }
+
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
 }
-
-.tab-button {
-  flex: 1;
-  padding: 0.5rem 1rem;
-  background: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.3s;
-}
-
-.tab-button.active,
-.tab-button:hover {
-  opacity: 1;
-  background: #555;
-}
-
-.tab-content {
-  min-height: 150px;
-}
-
-
-
 
 
 .scroll-container {
@@ -638,7 +753,6 @@ PAGE 6
   display: none;
   /* Chrome, Safari, Opera */
 }
-
 
 
 

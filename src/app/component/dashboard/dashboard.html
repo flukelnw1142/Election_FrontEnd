@@ -133,19 +133,24 @@
             <div class="glass-card card-left" [style.color]="getColor(selectedParty)">
                 <div class="party-rank-row">
                     <div class="party-text-left">
-                        <p style=" font-size:1.5dvw; font-weight: 500;">อันดับ</p>
-                        <p style=" font-size:3.5dvw; font-weight: bold;">{{ ranking }}</p>
-                        <p style=" font-size:1.5dvw; font-weight: 500;">{{ selectedParty }}</p>
+                        <p style=" font-size:2.5dvw; font-weight: 700; ">
+                            อันดับ</p>
+                        <p style=" font-size:4.5dvw; font-weight: 900;">{{ ranking }}</p>
+                        <p style=" font-size:1.8dvw; font-weight: 500;">{{ selectedParty }}</p>
                     </div>
                     <div class="party-text-right">
                         <p style=" font-size: 4.5dvw; font-weight: bold;">{{ totalSeats }}</p>
-                        <p style=" font-size:1.5dvw; font-weight: 500;">ที่นั่ง</p>
+                        <p style=" font-size:1.8dvw; font-weight: 500;">ที่นั่ง</p>
                         <!-- <p style=" font-size:1.5dvw; font-weight: 500;">/ 500 คน</p> -->
 
                     </div>
                 </div>
-                <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo" class="head-logo">
-                <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlParty(selectedParty) !== ''" alt="Party Logo" class="party-logo">
+                <!-- <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
+                    class="head-logo"> -->
+                <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
+                    class="head-logo">
+                <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlParty(selectedParty) !== ''" alt="Party Logo"
+                    class="party-logo">
             </div>
         </div>
         <div class="col-2" style="display: flex; flex-direction: column; gap: 1rem; ">
@@ -201,7 +206,7 @@
         <div class="header-table">
             <p style="align-self: end;"> อันดับ</p>
             <div style="font-size: 1.1rem; text-align: end;">
-                <p>จำนวนหน่อยที่นับไปแล้ว : {{detailDistrict[0].progress}} %</p>
+                <p>จำนวนหน่วยที่นับไปแล้ว : {{detailDistrict[0].progress}} %</p>
                 <p>นับคะแนนแล้ว : {{formatTotalVotes(detailDistrict[0].total_votes_in_area)}}</p>
             </div>
         </div>
@@ -318,11 +323,100 @@
 </div>
 
 <!-- PAGE 6 : show-Province ALL (Zone / Party) -->
-<div *ngIf="selectedProvince !== ''" style="position: relative;" class="show-distric">
+<div *ngIf="selectedProvince !== ''" style="position: relative;" class="show-province-all">
     <button class="ds-Button" (click)="closeDialog()">X</button>
+
     <div class="glass-card card" style="color: white;">
         <p class="header">{{selectedProvince}}</p>
-        <div class="tabs">
+        <div class="three-column-grid">
+            <div class="column">คอลัมน์ 1 (กว้าง)</div>
+            <div class="column">คอลัมน์ 2 (ปานกลาง)</div>
+            <div class="column">
+                <div class="tabs">
+                    <button class="tab-button" [class.active]="activeTab === 'district'"
+                        (click)="activeTab = 'district'">
+                        ส.ส. เขต
+                    </button>
+                    <button class="tab-button" [class.active]="activeTab === 'partyList'"
+                        (click)="activeTab = 'partyList'">
+                        ส.ส. บัญชีรายชื่อ
+                    </button>
+                </div>
+                <div class="tab-content" style="margin-top: 20px;">
+                    <div *ngIf=" activeTab==='district'">
+                        <div #scrollContainer class="scroll-container" style="height: 65vh;">
+                            <div *ngFor="let district of detailWinnerZonePerProvince; let i = index"
+                                class="candidate-item">
+                                <div>
+                                    <p style="font-size: 1.rem;"> {{ district.province }} เขต {{ district.zone }} </p>
+                                    <div *ngFor="let candidate of  district.candidates; let i = index"
+                                        style="display: flex; align-items: center; gap: 1rem; margin: .5rem;">
+                                        <p class="number" [style.background]="getColor(candidate.party_name)">{{ i + 1
+                                            }}</p>
+
+                                        <div>
+                                            <p style=" font-size: 1.1rem;">{{ candidate.fullname }}</p>
+                                            <p style="font-weight: 300; color: rgb(199, 199, 199);">
+                                                {{candidate.party_name}}</p>
+                                            <p>คะแนน: {{ candidate.totalVotes | number }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                                (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                                <mat-icon
+                                    style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
+                            </div>
+                        </div>
+                        <ng-template #noDistrictCandidates>
+                            <p>ไม่มีข้อมูลผู้สมัคร ส.ส. เขตในพื้นที่นี้</p>
+                        </ng-template>
+                    </div>
+
+                    <div *ngIf="activeTab === 'partyList'">
+                        <div style="font-size: 1rem; text-align: end; color: #ffffffcb; padding-bottom: .5rem;">
+                            <p>จำนวนหน่วยที่นับไปแล้ว : {{detailWinnerPartyPerProvince[0]?.progress || ""}} %</p>
+                            <p>นับคะแนนแล้ว : {{formatTotalVotes(detailWinnerPartyPerProvince[0]?.total_votes_in_area
+                                )|| ""}}
+                            </p>
+                        </div>
+                        <div #scrollContainer class="scroll-container" style="height: 60vh;">
+                            <div *ngFor="let party of  detailWinnerPartyPerProvince; let i = index"
+                                class="candidate-item">
+                                <p class="number" [style.background]="getColor(party.partyName)">{{ i + 1 }}</p>
+                                <div class="logo-container">
+                                    <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName)"
+                                        alt="Party Logo" class="logo-img">
+                                    <img [src]="'background/default-logo.png'"
+                                        *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo" class="logo-img">
+                                </div>
+                                <div>
+                                    <p style="font-size: 1.3rem;">{{ party.partyName }} </p>
+                                    <div style="display: flex;gap: 0.5rem; justify-content: space-between;">
+                                        <p>คะแนน: {{ party.totalVote | number }}</p>
+                                        <span style="font-size: 1rem; font-weight: 300; color: #ffffffce;">( {{
+                                            party.vote_percentage}}% )</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                                (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                                <mat-icon
+                                    style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
+                            </div>
+                        </div>
+                        <ng-template #noPartyListCandidates>
+                            <p>ไม่มีข้อมูลผู้สมัคร ส.ส. บัญชีรายชื่อในพื้นที่นี้</p>
+                        </ng-template>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- <div class="tabs">
             <button class="tab-button" [class.active]="activeTab === 'district'" (click)="activeTab = 'district'">
                 ส.ส. เขต
             </button>
@@ -330,51 +424,72 @@
                 ส.ส. บัญชีรายชื่อ
             </button>
         </div>
-        <hr>
-        <!-- <div style="color: #ffffff;">
-            <mat-tab-group>
-                <mat-tab label="ส.ส. เขต">
-                    เขต
-                </mat-tab>
-                <mat-tab label="ส.ส. บัญชีรายชื่อ">
-                    รายชื่อ
-                </mat-tab>
-            </mat-tab-group>
-        </div> -->
-
-
-        <div class="tab-content">
+        <div class="tab-content" style="margin-top: 20px;">
             <div *ngIf="activeTab === 'district'">
-                <p>เขต</p>
+                <div #scrollContainer class="scroll-container" style="height: 65vh;">
+                    <div *ngFor="let district of detailWinnerZonePerProvince; let i = index" class="candidate-item">
+                        <div>
+                            {{ district.province }} เขต {{ district.zone }}
+                            <div *ngFor="let candidate of  district.candidates; let i = index"
+                                style="display: flex; align-items: center; gap: 1rem; margin: 1rem;">
+                                <p class="number" [style.background]="getColor(candidate.party_name)">{{ i + 1 }}</p>
+                                <img [src]="candidate.avatarURL" alt="Party Logo">
+                                <div>
+                                    <p style="font-size: 1.3rem;">{{ candidate.fullname }}</p>
+                                    <p style="font-weight: 300; color: rgb(199, 199, 199);">{{ candidate.party_name }}
+                                    </p>
+                                    <p>คะแนน: {{ candidate.totalVotes | number }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                        (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                        <mat-icon
+                            style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
+                    </div>
+                </div>
                 <ng-template #noDistrictCandidates>
                     <p>ไม่มีข้อมูลผู้สมัคร ส.ส. เขตในพื้นที่นี้</p>
                 </ng-template>
             </div>
 
             <div *ngIf="activeTab === 'partyList'">
-                <p>รายชื่อ</p>
-
+                <div style="font-size: 1rem; text-align: end;">
+                    <p>จำนวนหน่วยที่นับไปแล้ว : {{detailWinnerPartyPerProvince[0]?.progress || ""}} %</p>
+                    <p>นับคะแนนแล้ว : {{formatTotalVotes(detailWinnerPartyPerProvince[0]?.total_votes_in_area )|| ""}}
+                    </p>
+                </div>
+                <div #scrollContainer class="scroll-container" style="height: 65vh;">
+                    <div *ngFor="let party of  detailWinnerPartyPerProvince; let i = index" class="candidate-item">
+                        <p class="number" [style.background]="getColor(party.partyName)">{{ i + 1 }}</p>
+                        <div class="logo-container">
+                            <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName)"
+                                alt="Party Logo" class="logo-img">
+                            <img [src]="'background/default-logo.png'" *ngIf="getUrlParty(party.partyName) === ''"
+                                alt="Head Logo" class="logo-img">
+                        </div>
+                        <div>
+                            <p style="font-size: 1.3rem;">{{ party.partyName }} </p>
+                            <div style="display: flex;gap: 0.5rem; justify-content: space-between;">
+                                <p>คะแนน: {{ party.totalVote | number }}</p><span
+                                    style="font-size: 1rem; font-weight: 300; color: #ffffffce;">( {{
+                                    party.vote_percentage}}% )</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                        (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                        <mat-icon
+                            style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
+                    </div>
+                </div>
                 <ng-template #noPartyListCandidates>
                     <p>ไม่มีข้อมูลผู้สมัคร ส.ส. บัญชีรายชื่อในพื้นที่นี้</p>
                 </ng-template>
             </div>
-        </div>
-        <!-- <div #scrollContainer class="scroll-container">
-            <div *ngFor="let candidate of detailWinnerZonePerParty; let i = index" class="candidate-item">
-                <p class="number" [style.background]="getColor(candidate.party_name)">{{ i + 1 }}</p>
-                <img [src]="candidate.avatarURL" alt="Party Logo">
-                <div>
-                    <p style="font-size: 1.3rem;">{{ candidate.fullname }}</p>
-                    <p style="font-weight: 300; color: rgb(199, 199, 199);">{{ candidate.name }}
-                        {{candidate.areaNo}}</p>
-                    <p>คะแนน: {{ candidate.totalVotes | number }}</p>
-                </div>
-            </div>
-            <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
-                <mat-icon
-                    style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
-            </div>
         </div> -->
+
     </div>
+
 </div>

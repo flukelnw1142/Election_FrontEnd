@@ -667,6 +667,20 @@ PAGE 6
   }
 
   /*column 3*/
+
+  // คลิก เขต
+  .province {
+    font-size: 1.5rem;
+    font-weight: bolder;
+  }
+
+  .header-table {
+    color: #ffffff8e;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  // คลิก จังหวัด
   .tabs {
     display: flex;
 

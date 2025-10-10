@@ -1021,7 +1021,7 @@ export class Dashboard implements OnInit {
     this._dashboard
       .getAllwinnerZoneByProvinceName(province)
       .subscribe((data) => {
-        // console.log('(getAllwinnerZoneByProvinceName) Data', data);
+        console.log('(getAllwinnerZoneByProvinceName) Data', data);
         // this.detailWinnerZonePerProvince = data;
 
         const grouped = new Map<string, any[]>();

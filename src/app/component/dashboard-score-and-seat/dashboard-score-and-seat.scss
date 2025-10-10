@@ -101,7 +101,17 @@
         height: 100px;
         width: 100px;
         border-radius: 100%;
+        overflow: hidden;
         animation: bounce 1s ease-in;
+        // object-fit: cover;
+    }
+
+    .img-head img {
+        width: 120%;
+        height: 120%;
+        object-fit: cover;
+        object-position: top;
+        transform: translate(-10%, 0%);
     }
 
     .img-party {

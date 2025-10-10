@@ -13,7 +13,9 @@
     <div class="party-card" [style.background]="getColor(party.partyName)" (click)="onSelectParty(party.partyName)">
       <div class="number">{{i+1}}</div>
       <div class="left-section">
-        <img [src]="getUrlHead(party.partyName)" alt="Party Logo" class="img-head">
+        <div class="img-head">
+          <img [src]="getUrlHead(party.partyName)" alt="Party Head" style="object-fit: cover;">
+        </div>
         <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"
           class="img-party">
       </div>
@@ -25,7 +27,8 @@
         </div>
 
         <div class="progress-bar-bg">
-          <div class="progress-bar" [style.--progress-width]="((party.zone_seats + party.partylist_seats) / totalSeats) * 100 + '%'"
+          <div class="progress-bar"
+            [style.--progress-width]="((party.zone_seats + party.partylist_seats) / totalSeats) * 100 + '%'"
             [style.background]="getColor(party.partyName)"></div>
         </div>
 
@@ -36,7 +39,8 @@
 
       <!-- ขวา -->
       <div class="right-section">
-        <div class="zone-seats" (click)="onSelectZoneSeats(party.partyName); $event.stopPropagation()">{{ party.zone_seats }}</div>
+        <div class="zone-seats" (click)="onSelectZoneSeats(party.partyName); $event.stopPropagation()">{{
+          party.zone_seats }}</div>
         <div class="partylist-seats" (click)="onSelectPartylistSeats(party.partyName); $event.stopPropagation()">
           {{ party.partylist_seats }}
         </div>

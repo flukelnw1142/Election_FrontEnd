@@ -30,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DashboardV2 } from '../dashboard-v2/dashboard-v2';
 import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-score-and-seat';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-dashboard',
@@ -44,6 +45,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     DashboardV2,
     DashboardScoreAndSeat,
     MatTooltipModule,
+    MatTabsModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -59,6 +61,8 @@ export class Dashboard implements OnInit {
   selectedParty: any = '';
   selectedDistric: any = '';
   selectedZoneSeat: any = '';
+  selectedProvince: any = '';
+  activeTab = 'district'; // 'district' or 'partylist'
   img_party: any = '';
   img_head: any = '';
   partyBackgroundColor: any = '';
@@ -199,7 +203,8 @@ export class Dashboard implements OnInit {
                 if (
                   this.selectedDistric === '' &&
                   this.detailPartyListPerPartyName.length === 0 &&
-                  this.selectedZoneSeat === ''
+                  this.selectedZoneSeat === '' &&
+                  this.selectedProvince === ''
                 ) {
                   this.settingSvg(svgText, false);
                 }
@@ -415,10 +420,12 @@ export class Dashboard implements OnInit {
   //Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
     console.log('onSvgClick ---------------------');
-    console.log('event', event);
+    // console.log('event', event);
     this.detailDistrict = [];
 
     const target = event.target as SVGElement;
+    console.log('target', target);
+
     if (
       target.tagName === 'path' ||
       target.tagName === 'text' ||
@@ -453,6 +460,10 @@ export class Dashboard implements OnInit {
         this.clickOnPopup = this.selectedParty;
         this.selectedParty = '';
       }
+    } else {
+      // กรณีอื่น เช่น คลิกบนชื่อจังหวัด ที่ไม่ใช่ตัวเลขหรือ path
+      const provinceName = (target.textContent || '').trim();
+      console.log('✅ Province name clicked:', provinceName);
     }
   }
 
@@ -780,7 +791,8 @@ export class Dashboard implements OnInit {
           const effectiveClientX = screenPoint.x;
           const effectiveClientY = screenPoint.y;
 
-          this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
+          // this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
+          this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto'); //tspan ชื่อจังหวัด
 
           // const target = document.elementFromPoint(
           //   effectiveClientX,
@@ -859,56 +871,121 @@ export class Dashboard implements OnInit {
         'click',
         (lensEvent: MouseEvent) => {
           const target = lensEvent.target as SVGElement | null;
+          // console.log('🔍 Magnifier Clicked', target);
 
-          if (target) {
-            // หา group <g> จาก clonedSvg
-            const group = this.findParentGroup(target);
+          if (!target) return;
 
-            if (group && group.id && group.getAttribute('data-party')) {
-              this.zoneId = group.id;
+          if (
+            target.tagName.toLowerCase() === 'text' ||
+            target.tagName.toLowerCase() === 'tspan'
+          ) {
+            const textElement =
+              target.tagName.toLowerCase() === 'text'
+                ? target
+                : (target.parentElement as unknown as SVGElement);
 
-              // ทำเหมือนคลิกใน svg จริง
-              // this.selectedParty = group.getAttribute('data-party') || '';
-              this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
+            const textContent = textElement?.textContent?.trim() || '';
 
-              console.log('selectedDistric', this.selectedDistric);
-
-              //CLICK
-              this._dashboard
-                .getRankByDistrict(this.selectedDistric)
-                .subscribe((data) => {
-                  console.log('(getRankByDistrict) Data', data);
-                  this.detailDistrict = data;
-                });
-
-              const status = document.getElementsByClassName(
-                'status-container'
-              )[0] as HTMLElement;
-              const img = document.getElementsByClassName(
-                'logo-image'
-              )[0] as HTMLElement;
-              if (img) {
-                img.style.marginLeft = '0px';
-              }
-              if (status) {
-                status.style.display = 'none';
-              }
-
-              this.tooltipVisible = false;
-              this.hideMagnifier();
-
-              // firstValueFrom(
-              //   this.http.get('/assets/thailand.svg', { responseType: 'text' })
-              // )
-              //   .then((svgText) => {
-              //     this.svgContent =
-              //       this.sanitizer.bypassSecurityTrustHtml(svgText);
-              //     return this.settingSvg(svgText, false);
-              //   })
-              //   .then(() => this.cd.markForCheck())
-              //   .catch((error) => console.error('Error loading SVG:', error));
+            // ✅ ถ้าเป็นตัวเลข (เลขล้วน) → ส่งต่อไปเข้าเงื่อนไข group/path ด้านล่าง
+            if (/^\d+$/.test(textContent)) {
+              console.log(
+                'ℹ️ Clicked number label (not province):',
+                textContent
+              );
+              // ไม่ return
+            }
+            // ✅ ถ้าเป็นชื่อจังหวัด → ทำงานปกติ
+            else {
+              console.log('✅ Province name clicked:', textContent);
+              this.selectedProvince = textContent;
+              return;
             }
           }
+
+          // ✅ เงื่อนไขต่อมา: คลิก path หรือ g
+          const group = this.findParentGroup(target);
+
+          if (group && group.id && group.getAttribute('data-party')) {
+            this.zoneId = group.id;
+            this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
+            console.log('selectedDistric', this.selectedDistric);
+
+            this._dashboard
+              .getRankByDistrict(this.selectedDistric)
+              .subscribe((data) => {
+                this.detailDistrict = data;
+              });
+
+            this.tooltipVisible = false;
+            this.hideMagnifier();
+          }
+
+          // // ✅ CASE: คลิกบน <text> หรือ <tspan>
+          // if (
+          //   target.tagName.toLowerCase() === 'text' ||
+          //   target.tagName.toLowerCase() === 'tspan'
+          // ) {
+          //   const textElement =
+          //     target.tagName.toLowerCase() === 'text'
+          //       ? target
+          //       : (target.parentElement as unknown as SVGElement);
+
+          //   const provinceName =
+          //     textElement?.textContent?.trim() || '[ไม่รู้จักจังหวัด]';
+          //   console.log('✅ Province name clicked:', provinceName);
+
+          //   return;
+          // }
+
+          // if (target) {
+          //   // หา group <g> จาก clonedSvg
+          //   const group = this.findParentGroup(target);
+
+          //   if (group && group.id && group.getAttribute('data-party')) {
+          //     this.zoneId = group.id;
+
+          //     // ทำเหมือนคลิกใน svg จริง
+          //     // this.selectedParty = group.getAttribute('data-party') || '';
+          //     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
+
+          //     console.log('selectedDistric', this.selectedDistric);
+
+          //     //CLICK
+          //     this._dashboard
+          //       .getRankByDistrict(this.selectedDistric)
+          //       .subscribe((data) => {
+          //         console.log('(getRankByDistrict) Data', data);
+          //         this.detailDistrict = data;
+          //       });
+
+          //     const status = document.getElementsByClassName(
+          //       'status-container'
+          //     )[0] as HTMLElement;
+          //     const img = document.getElementsByClassName(
+          //       'logo-image'
+          //     )[0] as HTMLElement;
+          //     if (img) {
+          //       img.style.marginLeft = '0px';
+          //     }
+          //     if (status) {
+          //       status.style.display = 'none';
+          //     }
+
+          //     this.tooltipVisible = false;
+          //     this.hideMagnifier();
+
+          //     // firstValueFrom(
+          //     //   this.http.get('/assets/thailand.svg', { responseType: 'text' })
+          //     // )
+          //     //   .then((svgText) => {
+          //     //     this.svgContent =
+          //     //       this.sanitizer.bypassSecurityTrustHtml(svgText);
+          //     //     return this.settingSvg(svgText, false);
+          //     //   })
+          //     //   .then(() => this.cd.markForCheck())
+          //     //   .catch((error) => console.error('Error loading SVG:', error));
+          //   }
+          // }
         }
       );
 
@@ -1011,6 +1088,9 @@ export class Dashboard implements OnInit {
     // console.log('partyName', partyName);
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+        if (this.partyColorMap[keyword].IMG_HEAD === '') {
+          return 'https://vote66.workpointtoday.com/assets/placeholder_candidate.svg?v=17';
+        }
         return this.partyColorMap[keyword].IMG_HEAD;
       }
     }
@@ -1081,6 +1161,8 @@ export class Dashboard implements OnInit {
     console.log('Close2 > ', this.clickOnPopup);
     this.selectedDistric = '';
     this.selectedZoneSeat = '';
+    this.selectedProvince = '';
+    this.activeTab = 'district';
     this.partyName = '';
     this.detailPartyListPerPartyName = [];
     this.tooltipVisible = false;

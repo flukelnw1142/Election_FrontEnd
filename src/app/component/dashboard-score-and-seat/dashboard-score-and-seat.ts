@@ -74,9 +74,11 @@ export class DashboardScoreAndSeat implements OnInit {
 
   getUrlHead(winner: any): string {
     const partyName = typeof winner === 'string' ? winner : winner?.party || '';
-    // console.log('partyName', partyName);
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+        if (this.partyColorMap[keyword].IMG_HEAD === '') {
+          return 'https://vote66.workpointtoday.com/assets/placeholder_candidate.svg?v=17';
+        }
         return this.partyColorMap[keyword].IMG_HEAD;
       }
     }
@@ -99,7 +101,7 @@ export class DashboardScoreAndSeat implements OnInit {
     this.partySelected.emit(partyName);
   }
   onSelectZoneSeats(partyName: string): void {
-    console.log("onSelectZoneSeats",partyName);
+    console.log('onSelectZoneSeats', partyName);
     this.partySelectedCandidateZone.emit(partyName);
   }
   onSelectPartylistSeats(partyName: string): void {

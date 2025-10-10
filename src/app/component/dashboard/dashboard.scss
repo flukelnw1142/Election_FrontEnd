@@ -116,9 +116,9 @@ p {
   z-index: 1000;
 }
 
-.svg-container {
-  overflow: visible;
-}
+// .svg-container {
+//   overflow: visible;
+// }
 
 // .glass-card {
 //   // position: relative;
@@ -585,6 +585,42 @@ PAGE 4
 
 }
 
+/*
+
+PAGE 6
+
+*/
+
+.tabs {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  background: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.tab-button.active,
+.tab-button:hover {
+  opacity: 1;
+  background: #555;
+}
+
+.tab-content {
+  min-height: 150px;
+}
+
+
+
+
+
 .scroll-container {
   overflow-y: auto;
   overflow-x: hidden;
@@ -602,6 +638,7 @@ PAGE 4
   display: none;
   /* Chrome, Safari, Opera */
 }
+
 
 
 

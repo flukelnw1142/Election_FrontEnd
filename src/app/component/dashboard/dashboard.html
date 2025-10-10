@@ -371,7 +371,8 @@
                     <div class="tab-content" style="margin-top: 20px;">
                         <div *ngIf=" activeTab==='district'">
                             <div style="font-size: 1rem; text-align: end; color: #ffffffcb; padding-bottom: .5rem;">
-                                <p>จำนวนหน่วยที่นับไปแล้ว : {{detailWinnerZonePerProvince[0]?.candidates[0].progress || ""}} %</p>
+                                <p>จำนวนหน่วยที่นับไปแล้ว : {{detailWinnerZonePerProvince[0]?.candidates[0].progress ||
+                                    ""}} %</p>
                                 <p>นับคะแนนแล้ว :
                                     {{formatTotalVotes(detailWinnerZonePerProvince[0]?.candidates[0].total_votes_in_area
                                     )|| ""}}
@@ -388,7 +389,7 @@
                                             <p class="number" [style.background]="getColor(candidate.party_name)">{{ i +
                                                 1
                                                 }}</p>
-
+                                            <img [src]="candidate.avatarURL" alt="Party Logo">
                                             <div>
                                                 <p style=" font-size: 1.1rem;">{{ candidate.fullname }}</p>
                                                 <p

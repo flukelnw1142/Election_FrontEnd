@@ -65,6 +65,7 @@ export class Dashboard implements OnInit {
   activeTab = 'district'; // 'district' or 'partylist'
   detailWinnerZonePerProvince: any[] = []; // district
   detailWinnerPartyPerProvince: any[] = []; // partylist
+  selectedRegion: string = 'กรุงเทพฯ'; // region-tab
   img_party: any = '';
   img_head: any = '';
   partyBackgroundColor: any = '';

@@ -329,8 +329,34 @@
     <div class="glass-card card" style="color: white;">
         <p class="header">{{selectedProvince}}</p>
         <div class="three-column-grid">
-            <div class="column">คอลัมน์ 1 (กว้าง)</div>
-            <div class="column">คอลัมน์ 2 (ปานกลาง)</div>
+            <div class="column">
+                <div class="region-tabs">
+                    <p class="region-tab" [class.active]="selectedRegion === 'กรุงเทพฯ'"
+                        (click)="selectedRegion = 'กรุงเทพฯ'">
+                        กรุงเทพฯ
+                    </p>
+                    <p class="region-tab" [class.active]="selectedRegion === 'กลาง'" (click)="selectedRegion = 'กลาง'">
+                        กลาง
+                    </p>
+                    <p class="region-tab" [class.active]="selectedRegion === 'ตะวันออก'"
+                        (click)="selectedRegion = 'ตะวันออก'">
+                        ตะวันออก
+                    </p>
+                    <p class="region-tab" [class.active]="selectedRegion === 'อีสาน'"
+                        (click)="selectedRegion = 'อีสาน'">
+                        อีสาน
+                    </p>
+                    <p class="region-tab" [class.active]="selectedRegion === 'เหนือ'"
+                        (click)="selectedRegion = 'เหนือ'">
+                        เหนือ
+                    </p>
+                    <p class="region-tab" [class.active]="selectedRegion === 'ใต้'" (click)="selectedRegion = 'ใต้'">
+                        ใต้
+                    </p>
+                </div>
+
+            </div>
+            <div class="column">คอลัมน์ 2 (ปานกลาง) >>> {{selectedRegion}}</div>
             <div class="column">
                 <div class="tabs">
                     <button class="tab-button" [class.active]="activeTab === 'district'"
@@ -394,9 +420,10 @@
                                 <div>
                                     <p style="font-size: 1.3rem;">{{ party.partyName }} </p>
                                     <div style="display: flex;gap: 0.5rem; justify-content: space-between;">
-                                        <p>คะแนน: {{ party.totalVote | number }}</p>
-                                        <span style="font-size: 1rem; font-weight: 300; color: #ffffffce;">( {{
-                                            party.vote_percentage}}% )</span>
+                                        <p>คะแนน: {{ party.totalVote | number }} <span
+                                                style="font-size: 1rem; font-weight: 300; color: #ffffffce;">( {{
+                                                party.vote_percentage}}% )</span></p>
+
                                     </div>
                                 </div>
                             </div>

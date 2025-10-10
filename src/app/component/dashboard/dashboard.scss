@@ -640,6 +640,33 @@ PAGE 6
     overflow: hidden;
   }
 
+  /*column 1*/
+  .region-tabs {
+    display: flex;
+    margin-top: 1rem;
+    gap: 1rem;
+    flex-direction: column;
+
+  }
+
+  .region-tab {
+    padding: 0.5rem 1rem;
+    background: #333;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: 0.3s;
+    user-select: none;
+  }
+
+  .region-tab:hover,
+  .region-tab.active {
+    opacity: 1;
+    background: #555;
+  }
+
+  /*column 3*/
   .tabs {
     display: flex;
 

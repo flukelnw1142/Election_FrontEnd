@@ -680,7 +680,8 @@ PAGE 6
     border-radius: 5px;
     overflow: hidden;
     margin: 0; // reset margin
-    padding: 30px
+    padding: 30px;
+    height: 90%;
   }
 
   .region-map-wrapper {
@@ -700,7 +701,7 @@ PAGE 6
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
+      width: 100%; //ปรับขนาดให้เต็ม container
       height: 100%;
     }
 

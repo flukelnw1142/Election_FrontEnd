@@ -917,14 +917,15 @@ export class Dashboard implements OnInit {
               this.selectedProvince = textContent;
               this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
               console.log('selectedDistric', this.selectedDistric);
-              this.findRegionByProvince(this.selectedProvince);
-              this.onWinnerZoneByProvince(this.selectedProvince);
-              this.onWinnerPartyByProvince(this.selectedProvince);
-              this.loadAndSetRegionSvg(this.selectedProvince);
+              this.handleProvinceClick(this.selectedProvince);
+              // this.findRegionByProvince(this.selectedProvince);
+              // this.onWinnerZoneByProvince(this.selectedProvince);
+              // this.onWinnerPartyByProvince(this.selectedProvince);
+              // this.loadAndSetRegionSvg(this.selectedProvince);
 
-              console.log('selectedProvince', this.selectedProvince);
-              console.log('selectedDistric', this.selectedDistric);
-              console.log('activeTab', this.activeTab);
+              // console.log('selectedProvince', this.selectedProvince);
+              // console.log('selectedDistric', this.selectedDistric);
+              // console.log('activeTab', this.activeTab);
               return;
             }
           }
@@ -938,20 +939,7 @@ export class Dashboard implements OnInit {
           if (group && group.id && group.getAttribute('data-party')) {
             this.zoneId = group.id;
             console.log('zoneId', this.zoneId);
-            this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
-            console.log('selectedDistric', this.selectedDistric);
-            console.log('selected', this.allWinners[this.zoneId].provinceName);
-
-            this._dashboard
-              .getRankByDistrict(this.selectedDistric)
-              .subscribe((data) => {
-                this.detailDistrict = data;
-              });
-            this.loadAndSetRegionSvg(this.allWinners[this.zoneId].provinceName); //อยากรู้ จังหวัด
-            // this.loadAndSetRegionSvg(this.allWinners[this.zoneId].regionName); //อยากรู้ จังหวัด
-
-            this.tooltipVisible = false;
-            this.hideMagnifier();
+            this.handleDistrictClick(this.zoneId);
           }
         }
       );
@@ -1495,7 +1483,7 @@ export class Dashboard implements OnInit {
           const districtNumber = matchedElement
             .querySelector('text')
             ?.textContent?.trim();
-          this.handleDistrictClick(districtId, districtNumber || null);
+          this.handleDistrictClick(districtId);
           return;
         } else if (/^[A-Z]+_name$/.test(id)) {
           // ✅ ชื่อจังหวัด เช่น BKK_name
@@ -1504,7 +1492,7 @@ export class Dashboard implements OnInit {
             .querySelector('text')
             ?.textContent?.trim();
           if (provinceName) {
-            this.handleProvinceClick(id.replace('_name', ''), provinceName);
+            this.handleProvinceClick(provinceName);
           }
 
           return;
@@ -1518,13 +1506,10 @@ export class Dashboard implements OnInit {
     console.warn('ไม่พบข้อมูลเขตหรือจังหวัดที่คลิก');
   }
 
-  private handleDistrictClick(
-    districtId: string,
-    districtNumber: string | null
-  ) {
+  private handleDistrictClick(districtId: string) {
     this.selectedProvince = '';
     console.log('✅ เขตที่คลิก:', districtId);
-    console.log('📌 หมายเลขเขต:', districtNumber);
+    // console.log('📌 หมายเลขเขต:', districtNumber);
 
     this.zoneId = districtId;
     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
@@ -1544,8 +1529,8 @@ export class Dashboard implements OnInit {
     this.hideMagnifier();
   }
 
-  private handleProvinceClick(provinceId: string, provinceName: string) {
-    console.log('📍 จังหวัดที่คลิก:', provinceId);
+  private handleProvinceClick(provinceName: string) {
+    // console.log('📍 จังหวัดที่คลิก:', provinceId);
     console.log('📝 ชื่อจังหวัด:', provinceName);
     console.log('zoneId:', this.zoneId);
     this.zoneId = '';

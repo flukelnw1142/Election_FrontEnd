@@ -187,6 +187,12 @@
                     <!-- <div class="svg-container" #svgContainer> -->
                     <div [innerHTML]="svgContent"></div>
                 </div>
+                <div
+                    style="justify-content: end;display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; ">
+                    <mat-icon
+                        style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>อัปเดตล่าสุด ณ
+                    วันที่ 27 พ.ค. 66 14:10 น.
+                </div>
             </div>
         </div>
     </div>
@@ -270,6 +276,12 @@
                         </div>
                     </div>
                 </div>
+                <div
+                    style="display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; position: absolute; bottom: 0; right: 50%;">
+                    <mat-icon
+                        style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>อัปเดตล่าสุด ณ
+                    วันที่ 27 พ.ค. 66 14:10 น.
+                </div>
             </div>
             <div #scrollContainer class="scroll-container">
                 <div *ngFor="let candidate of detailPartyListPerPartyName; let i = index" class="candidate-item">
@@ -330,29 +342,12 @@
         <div class="three-column-grid">
             <div class="column">
                 <div class="region-tabs">
-                    <p class="region-tab" [class.active]="selectedRegion === 'กรุงเทพฯ'"
-                        (click)="selectedRegion = 'กรุงเทพฯ'">
-                        กรุงเทพฯ
-                    </p>
-                    <p class="region-tab" [class.active]="selectedRegion === 'กลาง'" (click)="selectedRegion = 'กลาง'">
-                        กลาง
-                    </p>
-                    <p class="region-tab" [class.active]="selectedRegion === 'ตะวันออก'"
-                        (click)="selectedRegion = 'ตะวันออก'">
-                        ตะวันออก
-                    </p>
-                    <p class="region-tab" [class.active]="selectedRegion === 'อีสาน'"
-                        (click)="selectedRegion = 'อีสาน'">
-                        อีสาน
-                    </p>
-                    <p class="region-tab" [class.active]="selectedRegion === 'เหนือ'"
-                        (click)="selectedRegion = 'เหนือ'">
-                        เหนือ
-                    </p>
-                    <p class="region-tab" [class.active]="selectedRegion === 'ใต้'" (click)="selectedRegion = 'ใต้'">
-                        ใต้
+                    <p class="region-tab" *ngFor="let region of regionList" [class.active]="selectedRegion === region"
+                        (click)="selectedRegion = region">
+                        {{ region }}
                     </p>
                 </div>
+
 
             </div>
             <div class="column">คอลัมน์ 2 (ปานกลาง) >>> {{selectedRegion}}</div>

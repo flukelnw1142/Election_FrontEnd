@@ -65,7 +65,9 @@ export class DashboardService {
   }
 
   getCadidateByPartyName(partyName: string): Observable<any> {
-    return this._http.get<any>(`${this.baseUrl}/Election/cadidateByPartyName?name=${partyName}`);
+    return this._http.get<any>(
+      `${this.baseUrl}/Election/cadidateByPartyName?name=${partyName}`
+    );
   }
 
   getPartyColors(): Observable<any> {
@@ -87,14 +89,26 @@ export class DashboardService {
   }
 
   getWinnerZoneByPartyName(name: string): Observable<any> {
-    return this._http.get<any>(`${this.baseUrl}/Election/cadidateZoneByPartyName?name=${name}`);
+    return this._http.get<any>(
+      `${this.baseUrl}/Election/cadidateZoneByPartyName?name=${name}`
+    );
   }
 
   getAllwinnerZoneByProvinceName(provinceName: string): Observable<any> {
-    return this._http.get<any>(`${this.baseUrl}/Election/getAllwinnerZoneByProvinceName?provinceName=${provinceName}`);
+    return this._http.get<any>(
+      `${this.baseUrl}/Election/getAllwinnerZoneByProvinceName?provinceName=${provinceName}`
+    );
   }
 
   getPartylistProvince(provinceName: string): Observable<any> {
-    return this._http.get<any>(`${this.baseUrl}/Election/partylistProvince?provincename=${provinceName}`);
+    return this._http.get<any>(
+      `${this.baseUrl}/Election/partylistProvince?provincename=${provinceName}`
+    );
+  }
+
+  getRegionByProvince(provinceName: string): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseUrl}/Election/getRegionByProvinceName?provincename=${provinceName}`
+    );
   }
 }

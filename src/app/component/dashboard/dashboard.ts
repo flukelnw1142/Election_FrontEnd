@@ -32,6 +32,7 @@ import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-sco
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
@@ -50,6 +51,10 @@ import { MatTabsModule } from '@angular/material/tabs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard implements OnInit {
+
+  regionList: string[] = ['กรุงเทพฯ', 'กลาง', 'ตะวันออก', 'อีสาน', 'เหนือ', 'ใต้'];
+
+
   svgContent: SafeHtml = '';
   prevSvgContent = '';
   partyName = '';
@@ -345,7 +350,7 @@ export class Dashboard implements OnInit {
               this.allWinners[id].party === this.selectedParty)
           ) {
             path.classList.add('animated-path');
-            await this.delay(1);
+            // await this.delay(0.1);
           }
         }
       }
@@ -901,6 +906,7 @@ export class Dashboard implements OnInit {
             else {
               console.log('✅ Province name clicked:', textContent);
               this.selectedProvince = textContent;
+              this.findRegionByProvince(this.selectedProvince);
               this.onWinnerZoneByProvince(this.selectedProvince);
               this.onWinnerPartyByProvince(this.selectedProvince);
               return;
@@ -1013,6 +1019,13 @@ export class Dashboard implements OnInit {
     this.renderer.setStyle(magnifierEl, 'left', this.magnifierX + 'px');
     this.renderer.setStyle(magnifierEl, 'z-index', '1000');
     this.cd.detectChanges();
+  }
+
+  findRegionByProvince(province: string): string {
+    this._dashboard.getRegionByProvince(province).subscribe((data) => {
+      console.log('(getRegionByProvince) Data', data);
+    });
+    return '';
   }
 
   /* click Province On svg "District" */

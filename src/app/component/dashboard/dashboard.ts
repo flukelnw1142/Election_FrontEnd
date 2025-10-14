@@ -919,6 +919,10 @@ export class Dashboard implements OnInit {
               this.onWinnerZoneByProvince(this.selectedProvince);
               this.onWinnerPartyByProvince(this.selectedProvince);
               this.loadAndSetRegionSvg(this.selectedProvince);
+
+              console.log('selectedProvince', this.selectedProvince);
+              console.log('selectedDistric', this.selectedDistric);
+              console.log('activeTab', this.activeTab);
               return;
             }
           }

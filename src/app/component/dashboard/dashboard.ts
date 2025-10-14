@@ -32,7 +32,6 @@ import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-sco
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
@@ -51,11 +50,17 @@ import { MatTabsModule } from '@angular/material/tabs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard implements OnInit {
-
-  regionList: string[] = ['กรุงเทพฯ', 'กลาง', 'ตะวันออก', 'อีสาน', 'เหนือ', 'ใต้'];
-
+  regionList: string[] = [
+    'กรุงเทพฯ',
+    'กลาง',
+    'ตะวันออก',
+    'อีสาน',
+    'เหนือ',
+    'ใต้',
+  ];
 
   svgContent: SafeHtml = '';
+  svgContentRegion: SafeHtml = '';
   prevSvgContent = '';
   partyName = '';
   partySeatCounts: any = {};
@@ -141,6 +146,8 @@ export class Dashboard implements OnInit {
           this._dashboard.getDistrictWinners()
         );
 
+        console.log('Initial winners data:', winners);
+
         if (winners.candidates && Object.keys(winners.candidates).length > 0) {
           this.allWinners = winners.candidates;
 
@@ -210,9 +217,10 @@ export class Dashboard implements OnInit {
               ).then((svgText) => {
                 if (
                   this.selectedDistric === '' &&
-                  this.detailPartyListPerPartyName.length === 0 &&
-                  this.selectedZoneSeat === '' &&
-                  this.selectedProvince === ''
+                  this.detailPartyListPerPartyName.length === 0
+                  // &&
+                  // this.selectedZoneSeat === '' &&
+                  // this.selectedProvince === ''
                 ) {
                   this.settingSvg(svgText, false);
                 }
@@ -235,9 +243,9 @@ export class Dashboard implements OnInit {
     }
   }
 
-  private delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+  // private delay(ms: number): Promise<void> {
+  //   return new Promise((resolve) => setTimeout(resolve, ms));
+  // }
 
   async settingSvg(svgText: string, doAnimation = true): Promise<void> {
     console.log('>> SVG Loaded "', this.selectedParty, '"');
@@ -272,10 +280,10 @@ export class Dashboard implements OnInit {
     });
 
     const startTime = performance.now();
-
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
+      // console.log('Processing district ID:', id, g);
       if (g) {
         const path = g.querySelector('path');
         const text = g.querySelector('tspan');
@@ -350,7 +358,7 @@ export class Dashboard implements OnInit {
               this.allWinners[id].party === this.selectedParty)
           ) {
             path.classList.add('animated-path');
-            // await this.delay(0.1);
+            // await this.delay(1);
           }
         }
       }
@@ -879,7 +887,7 @@ export class Dashboard implements OnInit {
         'click',
         (lensEvent: MouseEvent) => {
           const target = lensEvent.target as SVGElement | null;
-          // console.log('🔍 Magnifier Clicked', target);
+          console.log('🔍 Magnifier Clicked', target);
 
           if (!target) return;
 
@@ -901,19 +909,27 @@ export class Dashboard implements OnInit {
                 textContent
               );
               // ไม่ return
-            }
-            // ✅ ถ้าเป็นชื่อจังหวัด → ทำงานปกติ
-            else {
+            } else {
+              /**
+               * CLICK PROVINCE
+               * ✅ เงื่อนไขแรก: คลิกบน <text> หรือ <tspan> ที่ไม่ใช่ตัวเลข
+               */
               console.log('✅ Province name clicked:', textContent);
               this.selectedProvince = textContent;
+              this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
+              console.log('selectedDistric', this.selectedDistric);
               this.findRegionByProvince(this.selectedProvince);
               this.onWinnerZoneByProvince(this.selectedProvince);
               this.onWinnerPartyByProvince(this.selectedProvince);
+              this.loadAndSetRegionSvg(this.selectedProvince);
               return;
             }
           }
 
-          // ✅ เงื่อนไขต่อมา: คลิก path หรือ g
+          /**
+           * CLICK DISTRICT
+           * ✅ เงื่อนไขที่สอง: คลิกบน path หรือ g (กรณีคลิกบน path โดยตรง หรือตัวเลข)
+           */
           const group = this.findParentGroup(target);
 
           if (group && group.id && group.getAttribute('data-party')) {
@@ -927,77 +943,11 @@ export class Dashboard implements OnInit {
               .subscribe((data) => {
                 this.detailDistrict = data;
               });
+            this.loadAndSetRegionSvg('กรุงเทพมหานคร'); //อยากรู้ จังหวัด
 
             this.tooltipVisible = false;
             this.hideMagnifier();
           }
-
-          // // ✅ CASE: คลิกบน <text> หรือ <tspan>
-          // if (
-          //   target.tagName.toLowerCase() === 'text' ||
-          //   target.tagName.toLowerCase() === 'tspan'
-          // ) {
-          //   const textElement =
-          //     target.tagName.toLowerCase() === 'text'
-          //       ? target
-          //       : (target.parentElement as unknown as SVGElement);
-
-          //   const provinceName =
-          //     textElement?.textContent?.trim() || '[ไม่รู้จักจังหวัด]';
-          //   console.log('✅ Province name clicked:', provinceName);
-
-          //   return;
-          // }
-
-          // if (target) {
-          //   // หา group <g> จาก clonedSvg
-          //   const group = this.findParentGroup(target);
-
-          //   if (group && group.id && group.getAttribute('data-party')) {
-          //     this.zoneId = group.id;
-
-          //     // ทำเหมือนคลิกใน svg จริง
-          //     // this.selectedParty = group.getAttribute('data-party') || '';
-          //     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
-
-          //     console.log('selectedDistric', this.selectedDistric);
-
-          //     //CLICK
-          //     this._dashboard
-          //       .getRankByDistrict(this.selectedDistric)
-          //       .subscribe((data) => {
-          //         console.log('(getRankByDistrict) Data', data);
-          //         this.detailDistrict = data;
-          //       });
-
-          //     const status = document.getElementsByClassName(
-          //       'status-container'
-          //     )[0] as HTMLElement;
-          //     const img = document.getElementsByClassName(
-          //       'logo-image'
-          //     )[0] as HTMLElement;
-          //     if (img) {
-          //       img.style.marginLeft = '0px';
-          //     }
-          //     if (status) {
-          //       status.style.display = 'none';
-          //     }
-
-          //     this.tooltipVisible = false;
-          //     this.hideMagnifier();
-
-          //     // firstValueFrom(
-          //     //   this.http.get('/assets/thailand.svg', { responseType: 'text' })
-          //     // )
-          //     //   .then((svgText) => {
-          //     //     this.svgContent =
-          //     //       this.sanitizer.bypassSecurityTrustHtml(svgText);
-          //     //     return this.settingSvg(svgText, false);
-          //     //   })
-          //     //   .then(() => this.cd.markForCheck())
-          //     //   .catch((error) => console.error('Error loading SVG:', error));
-          //   }
-          // }
         }
       );
 
@@ -1019,13 +969,6 @@ export class Dashboard implements OnInit {
     this.renderer.setStyle(magnifierEl, 'left', this.magnifierX + 'px');
     this.renderer.setStyle(magnifierEl, 'z-index', '1000');
     this.cd.detectChanges();
-  }
-
-  findRegionByProvince(province: string): string {
-    this._dashboard.getRegionByProvince(province).subscribe((data) => {
-      console.log('(getRegionByProvince) Data', data);
-    });
-    return '';
   }
 
   /* click Province On svg "District" */
@@ -1228,6 +1171,11 @@ export class Dashboard implements OnInit {
   closeDialog() {
     console.log('Close > ', this.selectedParty);
     console.log('Close2 > ', this.clickOnPopup);
+
+    this.clickOnPopup !== ''
+      ? ((this.selectedParty = this.clickOnPopup), (this.clickOnPopup = ''))
+      : (this.selectedParty = '');
+    this.getDataMapping;
     this.selectedDistric = '';
     this.selectedZoneSeat = '';
     this.selectedProvince = '';
@@ -1268,11 +1216,6 @@ export class Dashboard implements OnInit {
           console.error('Error loading SVG:', error);
         });
     }
-
-    this.clickOnPopup !== ''
-      ? ((this.selectedParty = this.clickOnPopup), (this.clickOnPopup = ''))
-      : (this.selectedParty = '');
-    this.getDataMapping;
   }
 
   getPartylistSeatsArray(): number[] {
@@ -1338,5 +1281,160 @@ export class Dashboard implements OnInit {
 
   scrollToTopContainer() {
     this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  findRegionByProvince(province: string): Promise<string> {
+    return new Promise((resolve) => {
+      this._dashboard.getRegionByProvince(province).subscribe((data) => {
+        console.log('(getRegionByProvince) Data', data);
+        const region = data?.region || 'กรุงเทพฯ'; // หรือ logic การ map province to region
+        resolve(region);
+      });
+    });
+  }
+  private async loadAndSetRegionSvg(province: string): Promise<void> {
+    try {
+      console.log('Loading SVG for province:', province);
+
+      // หา region จาก province ก่อน
+      const region = await this.findRegionByProvince(province);
+
+      if (region) {
+        this.selectedRegion = region;
+        const svgText = await this.loadSvgByRegion(region);
+
+        // Process SVG และได้ SVG element ที่ process แล้ว
+        const processedSvg = await this.processSvgForRegion(svgText, province);
+
+        // Update UI
+        this.zone.run(() => {
+          this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+            processedSvg.outerHTML
+          );
+          this.cd.markForCheck();
+        });
+      }
+    } catch (error) {
+      console.error('Error loading region SVG:', error);
+    }
+  }
+
+  private async processSvgForRegion(
+    svgText: string,
+    province: string
+  ): Promise<SVGSVGElement> {
+    const parser = new DOMParser();
+    const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+    const svg = svgDoc.documentElement as unknown as SVGSVGElement;
+
+    console.log('Processing SVG for province:', province);
+    console.log('SVG Element:', svg);
+
+    // Setup SVG styles for region
+    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svg.style.margin = '40%  0';
+
+    // Remove strokes
+    const paths = svg.querySelectorAll('path');
+    paths.forEach((p) => {
+      p.style.stroke = 'none';
+    });
+
+    let districtIds = Object.keys(this.allWinners);
+    for (let i = 0; i < districtIds.length; i++) {
+      const id = districtIds[i];
+      const g = svg.querySelector('#' + id) as SVGGElement | null;
+      console.log('Processing district ID:', id, g);
+
+      if (g) {
+        const path = g.querySelector('circle');
+        // console.log('PATH:', path);
+        // console.log('SELECT:', this.selectedParty, this.allWinners[id].party);
+        if (path) {
+          let fillStyle = '';
+          path.removeAttribute('fill');
+          path.removeAttribute('stroke');
+
+          // FILL
+          path.style.fill = fillStyle.includes(this.selectedParty)
+            ? this.getColor(this.allWinners[id])
+            : '#d3d3d3';
+          path.style.strokeWidth = '1px';
+
+          // Set data attributes
+          g.setAttribute('data-party', this.allWinners[id].party || '');
+          g.setAttribute('data-district-id', id);
+
+          // // Explicit pointer-events as BOTH style AND attribute for reliability
+          const pointerEvents =
+            !this.selectedParty ||
+            this.allWinners[id].party === this.selectedParty
+              ? 'auto'
+              : 'none';
+          g.style.pointerEvents = pointerEvents;
+          g.setAttribute('pointer-events', pointerEvents);
+        }
+      }
+    }
+
+    return svg;
+  }
+
+  private svgCache = new Map<string, string>();
+
+  async loadSvgByRegion(region: string): Promise<string> {
+    const svgPath = this.getSvgPathByRegion(region);
+
+    if (!this.svgCache.has(svgPath)) {
+      try {
+        const svgText = await firstValueFrom(
+          this.http.get(svgPath, { responseType: 'text' })
+        );
+        this.svgCache.set(svgPath, svgText);
+        console.log(`Loaded SVG for region: ${region} from ${svgPath}`);
+      } catch (error) {
+        console.error(`Failed to load SVG for ${region}:`, error);
+        return await firstValueFrom(
+          this.http.get('/assets/thailand.svg', { responseType: 'text' })
+        );
+      }
+    }
+
+    return this.svgCache.get(svgPath)!;
+  }
+
+  private getSvgPathByRegion(region: string): string {
+    const paths: { [key: string]: string } = {
+      กรุงเทพฯ: '/assets/Bangkok.svg',
+      กลาง: '/assets/Central.svg',
+      ตะวันออก: '/assets/Eastern.svg',
+      อีสาน: '/assets/Isan.svg',
+      เหนือ: '/assets/Northern.svg',
+      ใต้: '/assets/Southern.svg',
+    };
+    return paths[region] || '/assets/thailand.svg';
+  }
+
+  backToMainMap(): void {
+    this.svgContentRegion = '';
+    this.selectedProvince = '';
+    this.selectedRegion = 'กรุงเทพฯ';
+
+    // Reload main SVG
+    firstValueFrom(
+      this.http.get('/assets/thailand.svg', { responseType: 'text' })
+    )
+      .then((svgText) => {
+        this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
+        return this.settingSvg(svgText, false);
+      })
+      .then(() => {
+        this.isMagnifierInitialized = false;
+        this.magnifierVisible = false;
+        this.cd.markForCheck();
+      })
+      .catch((error) => {
+        console.error('Error loading main SVG:', error);
+      });
   }
 }

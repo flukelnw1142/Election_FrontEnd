@@ -1,4 +1,5 @@
 export interface Winner {
+  key: string;
   party: string;
   areaID: number;
   name: string;
@@ -17,7 +18,7 @@ export interface Candidate {
   progress: number;
   total_votes_in_area: number;
   vote_percentage: number;
-  no: number
+  no: number;
 }
 
 export interface Color {

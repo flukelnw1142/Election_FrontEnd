@@ -1282,15 +1282,6 @@ export class Dashboard implements OnInit {
     this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  findRegionByProvince(province: string): Promise<string> {
-    return new Promise((resolve) => {
-      this._dashboard.getRegionByProvince(province).subscribe((data) => {
-        console.log('(getRegionByProvince) Data', data);
-        const region = data[0]?.RegionName || 'กรุงเทพฯ'; // หรือ logic การ map province to region
-        resolve(region);
-      });
-    });
-  }
   private async loadAndSetRegionSvg(province: string): Promise<void> {
     try {
       console.log('Loading SVG for province:', province);
@@ -1318,6 +1309,16 @@ export class Dashboard implements OnInit {
     } catch (error) {
       console.error('Error loading region SVG:', error);
     }
+  }
+
+  findRegionByProvince(province: string): Promise<string> {
+    return new Promise((resolve) => {
+      this._dashboard.getRegionByProvince(province).subscribe((data) => {
+        console.log('(getRegionByProvince) Data', data);
+        const region = data[0]?.RegionName || 'กรุงเทพฯ'; // หรือ logic การ map province to region
+        resolve(region);
+      });
+    });
   }
 
   private async processSvgForRegion(

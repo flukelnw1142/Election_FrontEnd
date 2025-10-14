@@ -264,11 +264,8 @@ export class Dashboard implements OnInit {
     svg.removeAttribute('height');
 
     svg.style.height = '82vh';
-    // svg.style.height = '80vh';
     svg.style.width = 'auto';
     svg.style.margin = '20px 0';
-    // svg.style.padding = 'auto';
-    // svg.style.margin = '30px 0 30px 100px';
 
     const container = this.svgContainer.nativeElement;
     container.innerHTML = '';
@@ -937,13 +934,15 @@ export class Dashboard implements OnInit {
             console.log('zoneId', this.zoneId);
             this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
             console.log('selectedDistric', this.selectedDistric);
+            console.log('selected', this.allWinners[this.zoneId].provinceName);
 
             this._dashboard
               .getRankByDistrict(this.selectedDistric)
               .subscribe((data) => {
                 this.detailDistrict = data;
               });
-            this.loadAndSetRegionSvg('กรุงเทพมหานคร'); //อยากรู้ จังหวัด
+            this.loadAndSetRegionSvg(this.allWinners[this.zoneId].provinceName); //อยากรู้ จังหวัด
+            // this.loadAndSetRegionSvg(this.allWinners[this.zoneId].regionName); //อยากรู้ จังหวัด
 
             this.tooltipVisible = false;
             this.hideMagnifier();
@@ -1287,7 +1286,7 @@ export class Dashboard implements OnInit {
     return new Promise((resolve) => {
       this._dashboard.getRegionByProvince(province).subscribe((data) => {
         console.log('(getRegionByProvince) Data', data);
-        const region = data?.region || 'กรุงเทพฯ'; // หรือ logic การ map province to region
+        const region = data[0]?.RegionName || 'กรุงเทพฯ'; // หรือ logic การ map province to region
         resolve(region);
       });
     });
@@ -1298,6 +1297,8 @@ export class Dashboard implements OnInit {
 
       // หา region จาก province ก่อน
       const region = await this.findRegionByProvince(province);
+
+      console.log('Found region for province', province, ':', region);
 
       if (region) {
         this.selectedRegion = region;
@@ -1328,11 +1329,17 @@ export class Dashboard implements OnInit {
     const svg = svgDoc.documentElement as unknown as SVGSVGElement;
 
     console.log('Processing SVG for province:', province);
-    console.log('SVG Element:', svg);
+    // console.log('SVG Element:', svg);
 
     // Setup SVG styles for region
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-    svg.style.margin = '40%  0';
+    svg.removeAttribute('width');
+    svg.removeAttribute('height');
+    const originalViewBox = svg.getAttribute('viewBox') || '0 0 900 900';
+    svg.setAttribute('viewBox', originalViewBox);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.style.display = 'block';
+    svg.style.margin = '0 auto';
 
     // Remove strokes
     const paths = svg.querySelectorAll('path');
@@ -1344,7 +1351,7 @@ export class Dashboard implements OnInit {
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
-      console.log('Processing district ID:', id, g);
+      // console.log('Processing district ID:', id, g);
 
       if (g) {
         const path = g.querySelector('circle');
@@ -1405,9 +1412,9 @@ export class Dashboard implements OnInit {
 
   private getSvgPathByRegion(region: string): string {
     const paths: { [key: string]: string } = {
-      กรุงเทพฯ: '/assets/Bangkok.svg',
+      กรุงเทพมหานคร: '/assets/Bangkok.svg',
       กลาง: '/assets/Central.svg',
-      ตะวันออก: '/assets/Eastern.svg',
+      ภาคตะวันออก: '/assets/Eastern.svg',
       อีสาน: '/assets/Isan.svg',
       เหนือ: '/assets/Northern.svg',
       ใต้: '/assets/Southern.svg',

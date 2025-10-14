@@ -61,7 +61,7 @@
 </g></g>
 
 
-<g id="CBI_name" style="cursor: pointer;"><rect x="2" y="316" width="70" height="35" rx="4" fill="white"></rect>
+<g id="CBI_name" style="cursor: pointer;"><rect x="2" y="316" width="70" height="35" rx="4"  fill="transparent"></rect>
 <text x="36" y="340" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ชลบุรี</text>
 </g></g>
 
@@ -83,7 +83,7 @@
 <circle cx="180" cy="55" r="18" fill="rgb(146, 146, 157)"/>
 <text x="180" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
 </g></g>
-<g id="PRI_name" style="cursor: pointer;"><rect x="161" width="112" height="35" rx="4" fill="white"></rect>
+<g id="PRI_name" style="cursor: pointer;"><rect x="161" width="112" height="35" rx="4"  fill="transparent"></rect>
 <text x="217" y="25" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ปราจีนบุรี</text>
 </g></g>
 
@@ -113,7 +113,7 @@
 <text x="180" y="161" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
 </g></g>
 
-<g id="CCO_name" style="cursor: pointer;"><rect x="162" y="99" width="120" height="35" rx="4" fill="white"></rect>
+<g id="CCO_name" style="cursor: pointer;"><rect x="162" y="99" width="120" height="35" rx="4"  fill="transparent"></rect>
 <text x="222" y="125" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ฉะเชิงเทรา</text>
 </g></g>
 
@@ -134,7 +134,7 @@
 <g id="text_20">
 <circle cx="340" cy="95" r="18" fill="rgb(146, 146, 157)"/>
 <text x="340" y="101" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
-</g></g><g id="SKW_name" style="cursor: pointer;"><rect x="307.5" y="40" width="90" height="35" rx="4" fill="white"></rect>
+</g></g><g id="SKW_name" style="cursor: pointer;"><rect x="307.5" y="40" width="90" height="35" rx="4"  fill="transparent"></rect>
 <text x="353" y="65 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สระแก้ว</text>
 </g></g>
 
@@ -169,7 +169,7 @@
 <text x="220" y="401" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
 </g></g>
 
-<g id="RYG_name" style="cursor: pointer;"><rect x="200.5" y="340" width="76" height="35" rx="4" fill="white"></rect>
+<g id="RYG_name" style="cursor: pointer;"><rect x="200.5" y="340" width="76" height="35" rx="4"  fill="transparent"></rect>
 <text x="238" y="365 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ระยอง</text>
 </g></g>
 
@@ -192,7 +192,7 @@
 <text x="220" y="261" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
 </g></g>
 
-<g id="CTI_name" style="cursor: pointer;"><rect x="240" y="240" width="87" height="35" rx="4" fill="white"></rect>
+<g id="CTI_name" style="cursor: pointer;"><rect x="240" y="240" width="87" height="35" rx="4"  fill="transparent"></rect>
 <text x="283" y="265 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">จันทบุรี</text>
 </g></g>
 
@@ -202,6 +202,6 @@
 <circle cx="300" cy="515" r="18" fill="rgb(146, 146, 157)"/>
 <text x="300" y="521" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
 
-</g></g><g id="TRT_name" style="cursor: pointer;"><rect x="320" y="497" width="70" height="35" rx="4" fill="white"></rect>
+</g></g><g id="TRT_name" style="cursor: pointer;"><rect x="320" y="497" width="70" height="35" rx="4"  fill="transparent"></rect>
 <text x="357" y="520 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ตราด</text>
 </g></g></g></svg>

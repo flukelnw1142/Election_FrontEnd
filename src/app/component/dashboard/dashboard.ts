@@ -88,6 +88,8 @@ export class Dashboard implements OnInit {
   selectDashboard: string = 'dashboard'; //dashboard_2
   zoneId: any;
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
+  @ViewChild('svgContainerRegion', { static: false })
+  svgContainerRegion!: ElementRef;
   @ViewChild('magnifier', { static: false }) magnifier!: ElementRef;
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
@@ -1286,6 +1288,11 @@ export class Dashboard implements OnInit {
     this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  /**
+   * SVG REGION
+   * โหลด SVG แยกตามภาค (region) และ province
+   */
+
   private async loadAndSetRegionSvg(province: string): Promise<void> {
     try {
       console.log('Loading SVG for province:', province);
@@ -1458,5 +1465,83 @@ export class Dashboard implements OnInit {
       .catch((error) => {
         console.error('Error loading main SVG:', error);
       });
+  }
+
+  onSvgClickRegion(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    let current = target;
+    let matchedElement: HTMLElement | null = null;
+
+    while (current && current.tagName !== 'svg') {
+      const id = current.getAttribute('id');
+
+      if (id) {
+        if (/^[A-Z]+_\d+$/.test(id)) {
+          // ✅ เขต เช่น BKK_2
+          matchedElement = current;
+          const districtId = id;
+          const districtNumber = matchedElement
+            .querySelector('text')
+            ?.textContent?.trim();
+          this.handleDistrictClick(districtId, districtNumber || null);
+          return;
+        } else if (/^[A-Z]+_name$/.test(id)) {
+          // ✅ ชื่อจังหวัด เช่น BKK_name
+          matchedElement = current;
+          const provinceName = matchedElement
+            .querySelector('text')
+            ?.textContent?.trim();
+          if (provinceName) {
+            this.handleProvinceClick(id.replace('_name', ''), provinceName);
+          }
+
+          return;
+        }
+      }
+
+      current = current.parentElement as HTMLElement;
+      // console.log('Traversing up:', current);
+    }
+
+    console.warn('ไม่พบข้อมูลเขตหรือจังหวัดที่คลิก');
+  }
+
+  private handleDistrictClick(
+    districtId: string,
+    districtNumber: string | null
+  ) {
+    console.log('✅ เขตที่คลิก:', districtId);
+    console.log('📌 หมายเลขเขต:', districtNumber);
+
+    this.zoneId = districtId;
+    this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
+    console.log('selectedDistric', this.selectedDistric);
+
+    this._dashboard
+      .getRankByDistrict(this.selectedDistric)
+      .subscribe((data) => {
+        this.detailDistrict = data;
+      });
+
+    const provinceName = this.allWinners[this.zoneId]?.provinceName;
+    console.log('🌍 Province of zone:', provinceName);
+    this.loadAndSetRegionSvg(provinceName);
+
+    this.tooltipVisible = false;
+    this.hideMagnifier();
+  }
+
+  private handleProvinceClick(provinceId: string, provinceName: string) {
+    console.log('📍 จังหวัดที่คลิก:', provinceId);
+    console.log('📝 ชื่อจังหวัด:', provinceName);
+
+    this.selectedProvince = provinceName;
+    this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
+
+    this.findRegionByProvince(provinceName);
+    this.onWinnerZoneByProvince(provinceName);
+    this.onWinnerPartyByProvince(provinceName);
+    this.loadAndSetRegionSvg(provinceName);
   }
 }

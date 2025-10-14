@@ -1356,6 +1356,7 @@ export class Dashboard implements OnInit {
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svg.style.display = 'block';
     svg.style.margin = '0 auto';
+    svg.style.height = '68vh';
 
     // Remove strokes
     const paths = svg.querySelectorAll('path');
@@ -1375,6 +1376,7 @@ export class Dashboard implements OnInit {
           let fillStyle = '';
           const originalColor = this.getColor(this.allWinners[id]);
           const isSelectedZone = id === this.zoneId;
+          const hasSelectedZone = !!this.zoneId;
           path.removeAttribute('fill');
           path.removeAttribute('stroke');
 
@@ -1384,11 +1386,20 @@ export class Dashboard implements OnInit {
             : '#d3d3d3';
           path.style.strokeWidth = '1px';
 
-          // Set opacity based on zoneId
-          path.style.opacity = isSelectedZone ? '1' : '0.5';
-          path.style.strokeWidth = isSelectedZone ? '3px' : '1px';
-          path.style.stroke = '#ffffff';
-          path.style.strokeOpacity = isSelectedZone ? '1' : '0';
+          // OPACITY & STROKE
+          if (hasSelectedZone) {
+            // ถ้ามี zoneId → จางเขตอื่น
+            path.style.opacity = isSelectedZone ? '1' : '0.5';
+            path.style.strokeWidth = isSelectedZone ? '3px' : '1px';
+            path.style.stroke = '#ffffff';
+            path.style.strokeOpacity = isSelectedZone ? '1' : '0';
+          } else {
+            // ถ้ายังไม่เลือก zone → แสดงเท่ากันทุกเขต
+            path.style.opacity = '1';
+            // path.style.strokeWidth = '1px';
+            // path.style.stroke = '#ffffff';
+            // path.style.strokeOpacity = '1';
+          }
 
           // Set data attributes
           g.setAttribute('data-party', this.allWinners[id].party || '');
@@ -1439,7 +1450,7 @@ export class Dashboard implements OnInit {
       ภาคตะวันออก: '/assets/Eastern.svg',
       ภาคตะวันออกเฉียงเหนือ: '/assets/Isan.svg',
       ภาคเหนือ: '/assets/Northern.svg',
-      ภาคใต้: '/assets/Southern.svg',
+      ภาคใต้: '/assets/South.svg',
     };
     return paths[region] || '/assets/thailand.svg';
   }
@@ -1511,6 +1522,7 @@ export class Dashboard implements OnInit {
     districtId: string,
     districtNumber: string | null
   ) {
+    this.selectedProvince = '';
     console.log('✅ เขตที่คลิก:', districtId);
     console.log('📌 หมายเลขเขต:', districtNumber);
 
@@ -1535,6 +1547,9 @@ export class Dashboard implements OnInit {
   private handleProvinceClick(provinceId: string, provinceName: string) {
     console.log('📍 จังหวัดที่คลิก:', provinceId);
     console.log('📝 ชื่อจังหวัด:', provinceName);
+    console.log('zoneId:', this.zoneId);
+    this.zoneId = '';
+    this.loadAndSetRegionSvg(provinceName);
 
     this.selectedProvince = provinceName;
     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;

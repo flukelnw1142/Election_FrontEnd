@@ -197,6 +197,6 @@
 <text x="20" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
 </g></g>
 
-<g id="BKK_name" style="cursor: pointer;"><rect width="182" height="35" rx="4" fill="white"></rect>
+<g id="BKK_name" style="cursor: pointer;"><rect width="182" height="35" rx="4" fill="transparent"></rect>
 <text x="90" y="23" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">กรุงเทพมหานคร</text>
 </g></g></svg>

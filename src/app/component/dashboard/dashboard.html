@@ -342,8 +342,12 @@
         <div class="three-column-grid">
             <div class="column">
                 <div class="region-tabs">
-                    <p class="region-tab" *ngFor="let region of regionList" [class.active]="selectedRegion === region"
+                    <!-- <p class="region-tab" *ngFor="let region of regionList" [class.active]="selectedRegion === region"
                         (click)="selectedRegion = region">
+                        {{ region }}
+                    </p> -->
+                    <p class="region-tab" *ngFor="let region of regionList" [class.active]="selectedRegion === region"
+                        (click)="onRegionSelect(region)">
                         {{ region }}
                     </p>
                 </div>
@@ -351,7 +355,8 @@
 
             </div>
             <div class="column">คอลัมน์ 2 (ปานกลาง) >>> {{selectedRegion}}
-                <div class="svg-container" #svgContainerRegion (click)="onSvgClickRegion($event)" (mousemove)="onSvgMouseMove($event)">
+                <div class="svg-container" #svgContainerRegion (click)="onSvgClickRegion($event)"
+                    (mousemove)="onSvgMouseMove($event)">
                     <div class="region-map-wrapper">
                         <div [innerHTML]="svgContentRegion"></div>
                     </div>

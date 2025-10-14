@@ -917,14 +917,15 @@ export class Dashboard implements OnInit {
               this.selectedProvince = textContent;
               this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
               console.log('selectedDistric', this.selectedDistric);
-              this.findRegionByProvince(this.selectedProvince);
-              this.onWinnerZoneByProvince(this.selectedProvince);
-              this.onWinnerPartyByProvince(this.selectedProvince);
-              this.loadAndSetRegionSvg(this.selectedProvince);
+              this.handleProvinceClick(this.selectedProvince);
+              // this.findRegionByProvince(this.selectedProvince);
+              // this.onWinnerZoneByProvince(this.selectedProvince);
+              // this.onWinnerPartyByProvince(this.selectedProvince);
+              // this.loadAndSetRegionSvg(this.selectedProvince);
 
-              console.log('selectedProvince', this.selectedProvince);
-              console.log('selectedDistric', this.selectedDistric);
-              console.log('activeTab', this.activeTab);
+              // console.log('selectedProvince', this.selectedProvince);
+              // console.log('selectedDistric', this.selectedDistric);
+              // console.log('activeTab', this.activeTab);
               return;
             }
           }
@@ -938,20 +939,7 @@ export class Dashboard implements OnInit {
           if (group && group.id && group.getAttribute('data-party')) {
             this.zoneId = group.id;
             console.log('zoneId', this.zoneId);
-            this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
-            console.log('selectedDistric', this.selectedDistric);
-            console.log('selected', this.allWinners[this.zoneId].provinceName);
-
-            this._dashboard
-              .getRankByDistrict(this.selectedDistric)
-              .subscribe((data) => {
-                this.detailDistrict = data;
-              });
-            this.loadAndSetRegionSvg(this.allWinners[this.zoneId].provinceName); //อยากรู้ จังหวัด
-            // this.loadAndSetRegionSvg(this.allWinners[this.zoneId].regionName); //อยากรู้ จังหวัด
-
-            this.tooltipVisible = false;
-            this.hideMagnifier();
+            this.handleDistrictClick(this.zoneId);
           }
         }
       );
@@ -1307,7 +1295,7 @@ export class Dashboard implements OnInit {
         const svgText = await this.loadSvgByRegion(region);
 
         // Process SVG และได้ SVG element ที่ process แล้ว
-        const processedSvg = await this.processSvgForRegion(svgText, province);
+        const processedSvg = await this.processSvgForRegion(svgText);
 
         // Update UI
         this.zone.run(() => {
@@ -1334,7 +1322,7 @@ export class Dashboard implements OnInit {
 
   private async processSvgForRegion(
     svgText: string,
-    province: string
+    // province: string
   ): Promise<SVGSVGElement> {
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
@@ -1342,7 +1330,7 @@ export class Dashboard implements OnInit {
 
     console.log(
       'Processing SVG for province:',
-      province,
+      // province,
       'zoneId:',
       this.zoneId
     );
@@ -1356,6 +1344,7 @@ export class Dashboard implements OnInit {
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svg.style.display = 'block';
     svg.style.margin = '0 auto';
+    svg.style.height = '68vh';
 
     // Remove strokes
     const paths = svg.querySelectorAll('path');
@@ -1363,7 +1352,11 @@ export class Dashboard implements OnInit {
       p.style.stroke = 'none';
     });
 
+    console.log('selectedProvince:', this.selectedProvince);
+    console.log('allWinners:', this.allWinners);
+
     let districtIds = Object.keys(this.allWinners);
+    console.log('districtIds:', districtIds);
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -1374,25 +1367,81 @@ export class Dashboard implements OnInit {
         if (path) {
           let fillStyle = '';
           const originalColor = this.getColor(this.allWinners[id]);
+          const district = this.allWinners[id];
+          const isSelectedProvinceDistrict = this.selectedProvince
+            ? district.provinceName === this.selectedProvince
+            : false;
+          const hasSelectedProvince = !!this.selectedProvince;
           const isSelectedZone = id === this.zoneId;
+          const hasSelectedZone = !!this.zoneId;
           path.removeAttribute('fill');
           path.removeAttribute('stroke');
 
-          // FILL
+          // // FILL
+          // path.style.fill = fillStyle.includes(this.selectedParty)
+          //   ? originalColor
+          //   : '#d3d3d3';
+          // path.style.strokeWidth = '1px';
+
+          // // OPACITY & STROKE
+          // if (hasSelectedZone) {
+          //   // ถ้ามี zoneId → จางเขตอื่น
+          //   path.style.opacity = isSelectedZone ? '1' : '0.5';
+          //   path.style.strokeWidth = isSelectedZone ? '3px' : '1px';
+          //   path.style.stroke = '#ffffff';
+          //   path.style.strokeOpacity = isSelectedZone ? '1' : '0';
+          // } else {
+          //   // ถ้ายังไม่เลือก zone → แสดงเท่ากันทุกเขต
+          //   path.style.opacity = '1';
+          // }
+
+          // // Set data attributes
+          // g.setAttribute('data-party', this.allWinners[id].party || '');
+          // g.setAttribute('data-district-id', id);
+
+          // FILL - แสดงสีตาม party หรือ default
           path.style.fill = fillStyle.includes(this.selectedParty)
             ? originalColor
             : '#d3d3d3';
-          path.style.strokeWidth = '1px';
 
-          // Set opacity based on zoneId
-          path.style.opacity = isSelectedZone ? '1' : '0.5';
-          path.style.strokeWidth = isSelectedZone ? '3px' : '1px';
-          path.style.stroke = '#ffffff';
-          path.style.strokeOpacity = isSelectedZone ? '1' : '0';
+          // จัดการ OPACITY และ STROKE ตาม priority
+          if (hasSelectedProvince) {
+            // Priority 1: มี selectedProvince
+            if (isSelectedProvinceDistrict) {
+              // จังหวัดที่เลือก: แสดงปกติ
+              path.style.opacity = '1';
+              path.style.strokeWidth = isSelectedZone ? '3px' : '1px';
+              path.style.stroke = isSelectedZone ? '#ffffff' : '#666';
+              path.style.strokeOpacity = '1';
+            } else {
+              // จังหวัดอื่น: จางลง
+              path.style.opacity = '0.3';
+              path.style.strokeWidth = '1px';
+              path.style.stroke = '#999';
+              path.style.strokeOpacity = '0.5';
+            }
+          } else if (hasSelectedZone) {
+            // Priority 2: มี zoneId แต่ไม่มี province
+            path.style.opacity = isSelectedZone ? '1' : '0.5';
+            path.style.strokeWidth = isSelectedZone ? '3px' : '1px';
+            path.style.stroke = '#ffffff';
+            path.style.strokeOpacity = isSelectedZone ? '1' : '0';
+          } else {
+            // Default: แสดงทุกเขตปกติ
+            path.style.opacity = '1';
+            path.style.strokeWidth = '1px';
+            path.style.stroke = '#666';
+            path.style.strokeOpacity = '0.5';
+          }
 
           // Set data attributes
-          g.setAttribute('data-party', this.allWinners[id].party || '');
+          g.setAttribute('data-party', district.party || '');
           g.setAttribute('data-district-id', id);
+          g.setAttribute('data-province', district.provinceName || '');
+          g.setAttribute(
+            'data-province-selected',
+            isSelectedProvinceDistrict.toString()
+          );
 
           // // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
@@ -1439,7 +1488,7 @@ export class Dashboard implements OnInit {
       ภาคตะวันออก: '/assets/Eastern.svg',
       ภาคตะวันออกเฉียงเหนือ: '/assets/Isan.svg',
       ภาคเหนือ: '/assets/Northern.svg',
-      ภาคใต้: '/assets/Southern.svg',
+      ภาคใต้: '/assets/South.svg',
     };
     return paths[region] || '/assets/thailand.svg';
   }
@@ -1484,7 +1533,7 @@ export class Dashboard implements OnInit {
           const districtNumber = matchedElement
             .querySelector('text')
             ?.textContent?.trim();
-          this.handleDistrictClick(districtId, districtNumber || null);
+          this.handleDistrictClick(districtId);
           return;
         } else if (/^[A-Z]+_name$/.test(id)) {
           // ✅ ชื่อจังหวัด เช่น BKK_name
@@ -1493,7 +1542,7 @@ export class Dashboard implements OnInit {
             .querySelector('text')
             ?.textContent?.trim();
           if (provinceName) {
-            this.handleProvinceClick(id.replace('_name', ''), provinceName);
+            this.handleProvinceClick(provinceName);
           }
 
           return;
@@ -1501,18 +1550,14 @@ export class Dashboard implements OnInit {
       }
 
       current = current.parentElement as HTMLElement;
-      // console.log('Traversing up:', current);
     }
 
     console.warn('ไม่พบข้อมูลเขตหรือจังหวัดที่คลิก');
   }
 
-  private handleDistrictClick(
-    districtId: string,
-    districtNumber: string | null
-  ) {
+  private handleDistrictClick(districtId: string) {
+    this.selectedProvince = '';
     console.log('✅ เขตที่คลิก:', districtId);
-    console.log('📌 หมายเลขเขต:', districtNumber);
 
     this.zoneId = districtId;
     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
@@ -1532,9 +1577,11 @@ export class Dashboard implements OnInit {
     this.hideMagnifier();
   }
 
-  private handleProvinceClick(provinceId: string, provinceName: string) {
-    console.log('📍 จังหวัดที่คลิก:', provinceId);
+  private handleProvinceClick(provinceName: string) {
+    // console.log('📍 จังหวัดที่คลิก:', provinceId);
     console.log('📝 ชื่อจังหวัด:', provinceName);
+    console.log('zoneId:', this.zoneId);
+    this.zoneId = '';
 
     this.selectedProvince = provinceName;
     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
@@ -1543,5 +1590,31 @@ export class Dashboard implements OnInit {
     this.onWinnerZoneByProvince(provinceName);
     this.onWinnerPartyByProvince(provinceName);
     this.loadAndSetRegionSvg(provinceName);
+  }
+
+  /**
+   * CLICK REGION
+   */
+
+  async onRegionSelect(region: string) {
+    console.log('Selected region from dropdown:', region);
+    this.selectedRegion = region;
+
+    // Reset province และ zone selection เมื่อเลือก region ใหม่
+    this.selectedProvince = null;
+    this.zoneId = null;
+    this.selectedRegion = region;
+    const svgText = await this.loadSvgByRegion(region);
+
+    // Process SVG และได้ SVG element ที่ process แล้ว
+    const processedSvg = await this.processSvgForRegion(svgText);
+
+    // Update UI
+    this.zone.run(() => {
+      this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+        processedSvg.outerHTML
+      );
+      this.cd.markForCheck();
+    });
   }
 }

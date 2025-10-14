@@ -4,6 +4,8 @@ export interface Winner {
   areaID: number;
   name: string;
   score: number;
+  regionName: string;
+  provinceName: string;
 }
 
 export interface Candidate {

@@ -612,6 +612,7 @@ PAGE 6
   width: 90vw;
   height: 85vh;
   margin: auto;
+  position: relative;
 
   .card {
     padding: 30px;
@@ -638,6 +639,8 @@ PAGE 6
     border-radius: 8px;
     height: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   /*column 1*/
@@ -664,6 +667,52 @@ PAGE 6
   .region-tab.active {
     opacity: 1;
     background: #555;
+  }
+
+  /*column 2*/
+  .svg-container {
+    flex: 1; // เต็มพื้นที่ column
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2); // debug background
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0; // reset margin
+    padding: 30px
+  }
+
+  .region-map-wrapper {
+    display: flex;
+    justify-content: center; // อยู่ตรงกลางแนวนอน
+    align-items: center; // อยู่ตรงกลางแนวตั้ง
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    // ทำให้ SVG responsive
+    max-width: 100%;
+    max-height: 100%;
+
+    // Center SVG content
+    >div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    svg {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin: 0 auto; // ตรงกลาง SVG
+      
+    }
   }
 
   /*column 3*/

@@ -51,12 +51,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 })
 export class Dashboard implements OnInit {
   regionList: string[] = [
-    'กรุงเทพฯ',
-    'กลาง',
-    'ตะวันออก',
-    'อีสาน',
-    'เหนือ',
-    'ใต้',
+    'กรุงเทพมหานคร',
+    'ภาคกลาง',
+    'ภาคตะวันออก',
+    'ภาคตะวันออกเฉียงเหนือ',
+    'ภาคเหนือ',
+    'ภาคใต้',
   ];
 
   svgContent: SafeHtml = '';
@@ -1333,8 +1333,12 @@ export class Dashboard implements OnInit {
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
     const svg = svgDoc.documentElement as unknown as SVGSVGElement;
 
-    console.log('Processing SVG for province:', province);
-    // console.log('SVG Element:', svg);
+    console.log(
+      'Processing SVG for province:',
+      province,
+      'zoneId:',
+      this.zoneId
+    );
 
     // Setup SVG styles for region
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
@@ -1360,18 +1364,24 @@ export class Dashboard implements OnInit {
 
       if (g) {
         const path = g.querySelector('circle');
-        // console.log('PATH:', path);
-        // console.log('SELECT:', this.selectedParty, this.allWinners[id].party);
         if (path) {
           let fillStyle = '';
+          const originalColor = this.getColor(this.allWinners[id]);
+          const isSelectedZone = id === this.zoneId;
           path.removeAttribute('fill');
           path.removeAttribute('stroke');
 
           // FILL
           path.style.fill = fillStyle.includes(this.selectedParty)
-            ? this.getColor(this.allWinners[id])
+            ? originalColor
             : '#d3d3d3';
           path.style.strokeWidth = '1px';
+
+          // Set opacity based on zoneId
+          path.style.opacity = isSelectedZone ? '1' : '0.5';
+          path.style.strokeWidth = isSelectedZone ? '3px' : '1px';
+          path.style.stroke = '#ffffff';
+          path.style.strokeOpacity = isSelectedZone ? '1' : '0';
 
           // Set data attributes
           g.setAttribute('data-party', this.allWinners[id].party || '');
@@ -1418,11 +1428,11 @@ export class Dashboard implements OnInit {
   private getSvgPathByRegion(region: string): string {
     const paths: { [key: string]: string } = {
       กรุงเทพมหานคร: '/assets/Bangkok.svg',
-      กลาง: '/assets/Central.svg',
+      ภาคกลาง: '/assets/Central.svg',
       ภาคตะวันออก: '/assets/Eastern.svg',
-      อีสาน: '/assets/Isan.svg',
-      เหนือ: '/assets/Northern.svg',
-      ใต้: '/assets/Southern.svg',
+      ภาคตะวันออกเฉียงเหนือ: '/assets/Isan.svg',
+      ภาคเหนือ: '/assets/Northern.svg',
+      ภาคใต้: '/assets/Southern.svg',
     };
     return paths[region] || '/assets/thailand.svg';
   }

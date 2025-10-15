@@ -111,4 +111,11 @@ export class DashboardService {
       `${this.baseUrl}/Election/getRegionByProvinceName?provincename=${provinceName}`
     );
   }
+
+  
+  getWinnerZoneByRegionName(regionName: string): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseUrl}/Election/getAllWinnerProvinceByRegion?regionname=${regionName}`
+    );
+  }
 }

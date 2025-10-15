@@ -76,6 +76,7 @@ export class Dashboard implements OnInit {
   detailWinnerZonePerProvince: any[] = []; // district
   detailWinnerPartyPerProvince: any[] = []; // partylist
   selectedRegion: string = 'กรุงเทพฯ'; // region-tab
+  detailWinnerZonePerRegion: any = []; // district
   img_party: any = '';
   img_head: any = '';
   partyBackgroundColor: any = '';
@@ -1016,6 +1017,63 @@ export class Dashboard implements OnInit {
     });
   }
 
+  /* click Region */
+  onWinnerZoneByRegion(region: string) {
+    console.log('Open PopUp onWinnerZoneByRegion', region);
+    this._dashboard.getWinnerZoneByRegionName(region).subscribe((data) => {
+      console.log('(getWinnerZoneByRegionName) Data', data);
+
+      const structuredArray: any[] = [];
+
+      const grouped: {
+        [province: string]: {
+          [zone: number]: any[];
+        };
+      } = {};
+
+      // ✅ 1. จัดกลุ่ม province + zone และเรียงคะแนน
+      data.forEach((candidate: any) => {
+        const { province, zone } = candidate;
+
+        if (!grouped[province]) {
+          grouped[province] = {};
+        }
+
+        if (!grouped[province][zone]) {
+          grouped[province][zone] = [];
+        }
+
+        grouped[province][zone].push(candidate);
+      });
+
+      // ✅ 2. แปลงเป็น array + sort คะแนน
+      for (const province in grouped) {
+        for (const zone in grouped[province]) {
+          const candidates = grouped[province][zone];
+
+          // เรียงคะแนนจากมากไปน้อย
+          candidates.sort((a, b) => b.totalVotes - a.totalVotes);
+
+          structuredArray.push({
+            province,
+            zone: Number(zone),
+            candidates,
+          });
+        }
+      }
+
+      // ✅ 3. เซ็ตเข้า array ที่ใช้ *ngFor ได้เลย
+      this.detailWinnerZonePerRegion = structuredArray;
+
+      console.log(
+        '📦 detailWinnerZonePerRegion',
+        this.detailWinnerZonePerRegion
+      );
+
+      // this.cd.markForCheck();
+    });
+  }
+
   /* click Card "dashboard-score-and-seat" */
   onPartySelected(partyName: string) {
     console.log('Selected party from card:', partyName);
@@ -1561,6 +1619,7 @@ export class Dashboard implements OnInit {
     // console.log('📍 จังหวัดที่คลิก:', provinceId);
     console.log('📝 ชื่อจังหวัด:', provinceName);
     console.log('zoneId:', this.zoneId);
+    this.detailWinnerZonePerRegion = [];
     this.zoneId = '';
 
     this.selectedProvince = provinceName;
@@ -1578,7 +1637,7 @@ export class Dashboard implements OnInit {
   async onRegionSelect(region: string) {
     console.log('onRegionSelect---------------------');
     console.log('Selected region from dropdown:', region);
-    this.selectedRegion = region;
+    this.onWinnerZoneByRegion(region);
 
     this.detailWinnerZonePerProvince = [];
     this.detailWinnerPartyPerProvince = [];

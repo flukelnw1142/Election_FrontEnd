@@ -195,9 +195,12 @@ export class Dashboard implements OnInit {
               const totalVotePartylist = document.getElementById(
                 'totalVotePartylist'
               ) as HTMLElement | null;
-              const updateDate = document.getElementById(
-                'updateDate'
-              ) as HTMLElement | null;
+              const updateDateEls =
+                document.getElementsByClassName('updateDate');
+              for (let i = 0; i < updateDateEls.length; i++) {
+                const el = updateDateEls[i] as HTMLElement;
+                el.innerText = this.formatTime(winners.updateDate);
+              }
               if (totalVoteZone) {
                 totalVoteZone.innerText = this.formatTotalVotes(
                   winners.totalVoteZone
@@ -208,9 +211,7 @@ export class Dashboard implements OnInit {
                   winners.totalVotePartylist
                 );
               }
-              if (updateDate) {
-                updateDate.innerText = this.formatTime(winners.updateDate);
-              }
+
               this.allWinners = winners.candidates;
               firstValueFrom(
                 this.http.get('/assets/thailand.svg', {
@@ -1176,6 +1177,8 @@ export class Dashboard implements OnInit {
     this.activeTab = 'district';
     this.partyName = '';
     this.detailPartyListPerPartyName = [];
+    this.detailWinnerZonePerProvince = [];
+    this.detailWinnerPartyPerProvince = [];
     this.tooltipVisible = false;
     this.hideMagnifier();
     this.hideTooltip();
@@ -1353,10 +1356,10 @@ export class Dashboard implements OnInit {
     });
 
     console.log('selectedProvince:', this.selectedProvince);
-    console.log('allWinners:', this.allWinners);
+    // console.log('allWinners:', this.allWinners);
 
     let districtIds = Object.keys(this.allWinners);
-    console.log('districtIds:', districtIds);
+    // console.log('districtIds:', districtIds);
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -1563,10 +1566,9 @@ export class Dashboard implements OnInit {
     this.selectedProvince = provinceName;
     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
 
-    this.findRegionByProvince(provinceName);
+    this.loadAndSetRegionSvg(provinceName);
     this.onWinnerZoneByProvince(provinceName);
     this.onWinnerPartyByProvince(provinceName);
-    this.loadAndSetRegionSvg(provinceName);
   }
 
   /**
@@ -1574,8 +1576,12 @@ export class Dashboard implements OnInit {
    */
 
   async onRegionSelect(region: string) {
+    console.log('onRegionSelect---------------------');
     console.log('Selected region from dropdown:', region);
     this.selectedRegion = region;
+
+    this.detailWinnerZonePerProvince = [];
+    this.detailWinnerPartyPerProvince = [];
 
     // Reset province และ zone selection เมื่อเลือก region ใหม่
     this.selectedProvince = null;

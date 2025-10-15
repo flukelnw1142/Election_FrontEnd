@@ -77,6 +77,7 @@ export class Dashboard implements OnInit {
   detailWinnerPartyPerProvince: any[] = []; // partylist
   selectedRegion: string = 'กรุงเทพฯ'; // region-tab
   detailWinnerZonePerRegion: any = []; // district
+  detailWinnerPartyPerRegion: any = []; // partylist
   img_party: any = '';
   img_head: any = '';
   partyBackgroundColor: any = '';
@@ -1064,13 +1065,67 @@ export class Dashboard implements OnInit {
 
       // ✅ 3. เซ็ตเข้า array ที่ใช้ *ngFor ได้เลย
       this.detailWinnerZonePerRegion = structuredArray;
+      this.cd.markForCheck();
+    });
+  }
 
-      console.log(
-        '📦 detailWinnerZonePerRegion',
-        this.detailWinnerZonePerRegion
-      );
+  /* click Region */
+  // onWinnerPartyByRegion(region: string) {
+  //   console.log('Open PopUp onWinnerPartyByRegion', region);
+  //   this._dashboard.getWinnerPartyByRegionName(region).subscribe((data) => {
+  //     console.log('(getWinnerPartyByRegionName) Data', data);
+  //     const groupedByProvince: {
+  //       [province: string]: any[];
+  //     } = {};
 
-      // this.cd.markForCheck();
+  //     data.forEach((item: { provName: any; }) => {
+  //       const { provName } = item;
+
+  //       if (!groupedByProvince[provName]) {
+  //         groupedByProvince[provName] = [];
+  //       }
+
+  //       groupedByProvince[provName].push(item);
+  //     });
+  //     this.detailWinnerPartyPerRegion = groupedByProvince;
+  //     this.cd.markForCheck();
+  //   });
+  // }
+  onWinnerPartyByRegion(region: string) {
+    console.log('Open PopUp onWinnerPartyByRegion', region);
+
+    this._dashboard.getWinnerPartyByRegionName(region).subscribe((data) => {
+      console.log('(getWinnerPartyByRegionName) Data', data);
+
+      // ประกาศ type ชัดเจน
+      const groupedByProvince: {
+        [province: string]: {
+          province: string;
+          progress: number;
+          total_votes_in_province: number;
+          parties: any[];
+        };
+      } = {};
+
+      data.forEach((item: { provName: any; progress: any; total_votes_in_province: any; }) => {
+        const { provName, progress, total_votes_in_province } = item;
+
+        if (!groupedByProvince[provName]) {
+          groupedByProvince[provName] = {
+            province: provName,
+            progress,
+            total_votes_in_province,
+            parties: [],
+          };
+        }
+
+        groupedByProvince[provName].parties.push(item);
+      });
+
+      // แปลงเป็น array เพื่อให้ใช้ *ngFor ได้ง่าย
+      this.detailWinnerPartyPerRegion = Object.values(groupedByProvince);
+
+      this.cd.markForCheck();
     });
   }
 
@@ -1237,6 +1292,7 @@ export class Dashboard implements OnInit {
     this.detailPartyListPerPartyName = [];
     this.detailWinnerZonePerProvince = [];
     this.detailWinnerPartyPerProvince = [];
+    this.detailWinnerPartyPerRegion = [];
     this.tooltipVisible = false;
     this.hideMagnifier();
     this.hideTooltip();
@@ -1620,6 +1676,7 @@ export class Dashboard implements OnInit {
     console.log('📝 ชื่อจังหวัด:', provinceName);
     console.log('zoneId:', this.zoneId);
     this.detailWinnerZonePerRegion = [];
+    this.detailWinnerPartyPerRegion = [];
     this.zoneId = '';
 
     this.selectedProvince = provinceName;
@@ -1637,7 +1694,14 @@ export class Dashboard implements OnInit {
   async onRegionSelect(region: string) {
     console.log('onRegionSelect---------------------');
     console.log('Selected region from dropdown:', region);
+
+    if (region === 'กรุงเทพมหานคร') {
+      this.handleProvinceClick('กรุงเทพมหานคร');
+      return;
+    }
+
     this.onWinnerZoneByRegion(region);
+    this.onWinnerPartyByRegion(region);
 
     this.detailWinnerZonePerProvince = [];
     this.detailWinnerPartyPerProvince = [];

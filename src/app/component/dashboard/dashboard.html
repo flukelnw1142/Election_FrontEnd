@@ -381,7 +381,8 @@
                     </div>
                     <div class="tab-content" style="margin-top: 20px;">
                         <div *ngIf=" activeTab==='district'">
-                            <div *ngIf="detailWinnerZonePerRegion?.length === 0" style="font-size: 1rem; text-align: end; color: #ffffffcb; padding-bottom: .5rem;">
+                            <div *ngIf="detailWinnerZonePerRegion?.length === 0"
+                                style="font-size: 1rem; text-align: end; color: #ffffffcb; padding-bottom: .5rem;">
                                 <p>จำนวนหน่วยที่นับไปแล้ว : {{detailWinnerZonePerProvince[0]?.candidates[0].progress ||
                                     ""}} %</p>
                                 <p>นับคะแนนแล้ว :
@@ -463,43 +464,86 @@
                         </div>
 
                         <div *ngIf="activeTab === 'partyList'">
-                            <div style="font-size: 1rem; text-align: end; color: #ffffffcb; padding-bottom: .5rem;">
+                            <div *ngIf="detailWinnerPartyPerRegion?.length === 0"
+                                style="font-size: 1rem; text-align: end; color: #ffffffcb; padding-bottom: .5rem;">
                                 <p>จำนวนหน่วยที่นับไปแล้ว : {{detailWinnerPartyPerProvince[0]?.progress || ""}} %</p>
                                 <p>นับคะแนนแล้ว :
                                     {{formatTotalVotes(detailWinnerPartyPerProvince[0]?.total_votes_in_area
                                     )|| ""}}
                                 </p>
                             </div>
-                            <div #scrollContainer class="scroll-container" style="height: 64vh;">
-                                <div *ngFor="let party of  detailWinnerPartyPerProvince; let i = index"
-                                    class="candidate-item">
-                                    <p class="number" [style.background]="getColor(party.partyName)">{{ i + 1 }}</p>
-                                    <div class="logo-container">
-                                        <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName)"
-                                            alt="Party Logo" class="logo-img">
-                                        <img [src]="'background/default-logo.png'"
-                                            *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo"
-                                            class="logo-img">
-                                    </div>
-                                    <div>
-                                        <p style="font-size: 1.3rem;">{{ party.partyName }} </p>
-                                        <div style="display: flex;gap: 0.5rem; justify-content: space-between;">
-                                            <p>คะแนน: {{ party.totalVote | number }} <span
-                                                    style="font-size: 1rem; font-weight: 300; color: #ffffffce;">( {{
-                                                    party.vote_percentage}}% )</span></p>
 
+                            <div *ngIf="detailWinnerPartyPerRegion?.length > 0; else showPartyListData" #scrollContainer
+                                class="scroll-container" style="height: 64vh;">
+
+                                <div *ngFor="let provinceData of detailWinnerPartyPerRegion" style="margin-bottom: 1rem;">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <p class="province-title">{{ provinceData.province }}</p>
+                                        <p style="color: #ccc; font-size: 0.9rem;">
+                                            <!-- จำนวนหน่วยที่นับแล้ว: {{ provinceData.progress }}% <br /> -->
+                                            นับคะแนนแล้ว: {{ formatTotalVotes(provinceData.total_votes_in_province) }}
+                                        </p>
+                                    </div>
+                                    <hr style="margin: 0; margin-top: 0.5rem;margin-bottom: 0.5rem;" />
+                                    <div *ngFor="let party of provinceData.parties; let i = index"
+                                        class="candidate-item">
+                                        <p class="number" [style.background]="getColor(party.partyName)">{{ i + 1 }}</p>
+                                        <div class="logo-container">
+                                            <img [src]="getUrlParty(party.partyName)"
+                                                *ngIf="getUrlParty(party.partyName)" alt="Party Logo"
+                                                class="logo-img" />
+                                            <img src="background/default-logo.png" *ngIf="!getUrlParty(party.partyName)"
+                                                alt="Head Logo" class="logo-img" />
+                                        </div>
+                                        <div>
+                                            <p style="font-size: 1.3rem;">{{ party.partyName }}</p>
+                                            <p>
+                                                คะแนน: {{ party.totalVote | number }}
+                                                <span style="font-size: 1rem; font-weight: 300; color: #ffffffce;">
+                                                    ( {{ party.vote_percentage }}% )
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
                                     (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
                                     <mat-icon
                                         style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                 </div>
                             </div>
-                            <ng-template #noPartyListCandidates>
-                                <p>ไม่มีข้อมูลผู้สมัคร ส.ส. บัญชีรายชื่อในพื้นที่นี้</p>
+                            <ng-template #showPartyListData>
+                                <div #scrollContainer class="scroll-container" style="height: 64vh;">
+                                    <div *ngFor="let party of  detailWinnerPartyPerProvince; let i = index"
+                                        class="candidate-item">
+                                        <p class="number" [style.background]="getColor(party.partyName)">{{ i + 1 }}</p>
+                                        <div class="logo-container">
+                                            <img [src]="getUrlParty(party.partyName)"
+                                                *ngIf="getUrlParty(party.partyName)" alt="Party Logo" class="logo-img">
+                                            <img [src]="'background/default-logo.png'"
+                                                *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo"
+                                                class="logo-img">
+                                        </div>
+                                        <div>
+                                            <p style="font-size: 1.3rem;">{{ party.partyName }} </p>
+                                            <div style="display: flex;gap: 0.5rem; justify-content: space-between;">
+                                                <p>คะแนน: {{ party.totalVote | number }} <span
+                                                        style="font-size: 1rem; font-weight: 300; color: #ffffffce;">(
+                                                        {{
+                                                        party.vote_percentage}}% )</span></p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                                        (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                                        <mat-icon
+                                            style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
+                                    </div>
+                                </div>
                             </ng-template>
+
                         </div>
                     </div>
                 </div>

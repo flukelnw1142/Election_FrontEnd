@@ -25,8 +25,9 @@ export class DashboardService {
     }
   }
   private startConnection() {
+    const hubUrl = `${this.baseUrl.replace('/api', '')}/electionHub`; 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${this.baseUrl}/electionHub`, {
+      .withUrl(hubUrl, {
         transport: signalR.HttpTransportType.WebSockets,
         withCredentials: true,
       })

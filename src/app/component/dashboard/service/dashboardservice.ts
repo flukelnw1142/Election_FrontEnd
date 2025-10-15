@@ -26,7 +26,7 @@ export class DashboardService {
   }
   private startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7057/electionHub', {
+      .withUrl(`${this.baseUrl}/electionHub`, {
         transport: signalR.HttpTransportType.WebSockets,
         withCredentials: true,
       })

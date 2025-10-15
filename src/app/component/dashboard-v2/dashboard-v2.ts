@@ -31,7 +31,7 @@ export class DashboardV2 implements OnInit {
     private cdr: ChangeDetectorRef,
     private _dashboard: DashboardService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   @Output() partySelected = new EventEmitter<string>();
 
@@ -175,22 +175,30 @@ export class DashboardV2 implements OnInit {
   onSvgHover(event: MouseEvent): void {
     const target = event.target as SVGElement;
 
-    // ตัวอย่างตรวจจับ element มี id circle-x
     if (target && target.id && target.id.startsWith('circle-')) {
       const circleId = target.id;
       const index = parseInt(circleId.replace('circle-', ''), 10);
-      // console.log(index);
-      // หา party จาก index
+
       let seatCounter = 0;
+      let foundParty = null;
+
       for (const p of this.partySeatCountsList) {
         const seats = p.zone_seats + p.partylist_seats;
         seatCounter += seats;
 
         if (index <= seatCounter) {
+          foundParty = p; 
           this.tooltipText = p.partyName;
           break;
         }
+      }
+
+  
+      if (foundParty) {
+        const seats = foundParty.zone_seats + foundParty.partylist_seats;
         this.tooltipSeat = seats.toString();
+      } else {
+        this.tooltipSeat = '0'; 
       }
 
       this.tooltipX = event.clientX + 10;
@@ -199,6 +207,7 @@ export class DashboardV2 implements OnInit {
     } else {
       this.tooltipVisible = false;
       this.tooltipText = '';
+      this.tooltipSeat = ''; 
     }
   }
 

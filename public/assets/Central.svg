@@ -306,19 +306,19 @@
 
 
     <g id="province-74">
-      <g id="area-7403" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+      <g id="SKN_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_40">
           <circle cx="500" cy="714" r="18" fill="rgb(146, 146, 157)"/>
           <text x="500" y="720" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
-      <g id="area-7402" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+      <g id="SKN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_41">
           <circle cx="460" cy="714" r="18" fill="rgb(146, 146, 157)"/>
           <text x="460" y="720" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
-      <g id="area-7401" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+      <g id="SKN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_42">
           <circle cx="500" cy="674" r="18" fill="rgb(146, 146, 157)"/>
           <text x="500" y="680" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>

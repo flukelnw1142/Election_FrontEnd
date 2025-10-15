@@ -434,12 +434,11 @@ export class Dashboard implements OnInit {
 
   //Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
-    console.log('onSvgClick ---------------------');
+    console.log('onSvgClick (with out zoom) ---------------------');
     // console.log('event', event);
     this.detailDistrict = [];
 
     const target = event.target as SVGElement;
-    console.log('target', target);
 
     if (
       target.tagName === 'path' ||
@@ -463,15 +462,8 @@ export class Dashboard implements OnInit {
         this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
 
         //CLICK-SVG
-        this._dashboard
-          .getRankByDistrict(this.selectedDistric)
-          .subscribe((data) => {
-            console.log('(getRankByDistrict) Data', data);
-            this.detailDistrict = data;
-            this.cd.markForCheck();
-          });
+        this.handleDistrictClick(this.zoneId || '');
 
-        // this.clickDistricPerParty = this.selectedParty;
         this.clickOnPopup = this.selectedParty;
         this.selectedParty = '';
       }
@@ -1278,7 +1270,6 @@ export class Dashboard implements OnInit {
 
   /**
    * SVG REGION
-   * โหลด SVG แยกตามภาค (region) และ province
    */
 
   private async loadAndSetRegionSvg(province: string): Promise<void> {
@@ -1321,7 +1312,7 @@ export class Dashboard implements OnInit {
   }
 
   private async processSvgForRegion(
-    svgText: string,
+    svgText: string
     // province: string
   ): Promise<SVGSVGElement> {
     const parser = new DOMParser();
@@ -1491,29 +1482,6 @@ export class Dashboard implements OnInit {
       ภาคใต้: '/assets/South.svg',
     };
     return paths[region] || '/assets/thailand.svg';
-  }
-
-  backToMainMap(): void {
-    this.svgContentRegion = '';
-    this.selectedProvince = '';
-    this.selectedRegion = 'กรุงเทพฯ';
-
-    // Reload main SVG
-    firstValueFrom(
-      this.http.get('/assets/thailand.svg', { responseType: 'text' })
-    )
-      .then((svgText) => {
-        this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
-        return this.settingSvg(svgText, false);
-      })
-      .then(() => {
-        this.isMagnifierInitialized = false;
-        this.magnifierVisible = false;
-        this.cd.markForCheck();
-      })
-      .catch((error) => {
-        console.error('Error loading main SVG:', error);
-      });
   }
 
   onSvgClickRegion(event: MouseEvent) {

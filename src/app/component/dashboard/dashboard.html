@@ -187,11 +187,16 @@
                     <!-- <div class="svg-container" #svgContainer> -->
                     <div [innerHTML]="svgContent"></div>
                 </div>
-                <div
+                <!-- <div
                     style="justify-content: end;display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; ">
                     <mat-icon
                         style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>อัปเดตล่าสุด ณ
                     วันที่ 27 พ.ค. 66 14:10 น.
+                </div> -->
+                <div
+                    style="justify-content: end;display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; ">
+                    <mat-icon style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>
+                    อัปเดตล่าสุด ณ วันที่ &nbsp;<span class="ti_bf updateDate"> xx/xx/20xx tt:tt:tt</span>
                 </div>
             </div>
         </div>
@@ -277,10 +282,9 @@
                     </div>
                 </div>
                 <div
-                    style="display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; position: absolute; bottom: 0; right: 50%;">
-                    <mat-icon
-                        style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>อัปเดตล่าสุด ณ
-                    วันที่ 27 พ.ค. 66 14:10 น.
+                    style="justify-content: end;display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; ">
+                    <mat-icon style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>
+                    อัปเดตล่าสุด ณ วันที่ &nbsp;<span class="ti_bf updateDate"> xx/xx/20xx tt:tt:tt</span>
                 </div>
             </div>
             <div #scrollContainer class="scroll-container">
@@ -354,7 +358,7 @@
 
 
             </div>
-            <div class="column">คอลัมน์ 2 (ปานกลาง) >>> {{selectedRegion}}
+            <div class="column">
                 <div class="svg-container" #svgContainerRegion (click)="onSvgClickRegion($event)"
                     (mousemove)="onSvgMouseMove($event)">
                     <div class="region-map-wrapper">

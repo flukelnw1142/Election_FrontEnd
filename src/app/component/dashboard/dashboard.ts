@@ -469,8 +469,17 @@ export class Dashboard implements OnInit {
       }
     } else {
       // กรณีอื่น เช่น คลิกบนชื่อจังหวัด ที่ไม่ใช่ตัวเลขหรือ path
-      const provinceName = (target.textContent || '').trim();
-      console.log('✅ Province name clicked:', provinceName);
+      const group = target.closest('g') as SVGElement | null;
+      if (group?.id === 'label_province') {
+        const provinceName = (target.textContent || '').trim();
+        // const provinceId = target.id;
+
+        console.log('✅ Province name clicked:', provinceName);
+
+        this.handleProvinceClick(provinceName);
+        this.clickOnPopup = this.selectedParty;
+        this.selectedParty = '';
+      }
     }
   }
 

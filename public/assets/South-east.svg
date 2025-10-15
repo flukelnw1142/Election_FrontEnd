@@ -1,0 +1,961 @@
+<svg width="920" height="836" viewBox="0 0 920 836" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g id="region-3">
+    <g id="province-42">
+      <g id="LEI_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text">
+          <circle cx="140" cy="195" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="140" y="201" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="LEI_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_2">
+          <circle cx="100" cy="195" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="100" y="201" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="LEI_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_3">
+          <circle cx="140" cy="155" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="140" y="160" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="LEI_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_4">
+          <circle cx="100" cy="155" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="100" y="160" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="LEI_name" style="cursor: pointer;">
+        <rect x="96" y="100" width="49" height="35" rx="4"  fill="transparent"></rect>
+        <text x="120" y="125" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">เลย</text>
+      </g>
+    </g>
+
+
+    <g id="province-36">
+      <g id="CPM_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_5">
+          <circle cx="100" cy="335" r="18" fill="rgb(146, 146, 157)"/>
+         <text x="100" y="341" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="CPM_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_6">
+          <circle cx="60" cy="335" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="60" y="341" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="CPM_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_7">
+          <circle cx="20" cy="335" r="18" fill="rgb(146, 146, 157)"/>
+         <text x="20" y="341" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="CPM_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_8">
+          <circle cx="140" cy="295" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="140" y="301" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="CPM_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_9">
+          <circle cx="100" cy="295" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="100" y="301" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="CPM_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_10">
+          <circle cx="60" cy="295" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="60" y="301" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="CPM_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_11">
+          <circle cx="20" cy="295" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="20" y="301" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="CPM_name" style="cursor: pointer;">
+        <rect x="44" y="240" width="73" height="35" rx="4"  fill="transparent"></rect>
+        <text x="80" y="267" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ชัยภูมิ</text>
+      </g>
+    </g>
+
+
+    <g id="province-30">
+      <g id="NMA_16" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_12">
+          <circle cx="420" cy="595" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="420" y="601" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">16</text>
+        </g>
+      </g>
+      <g id="NMA_15" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_13">
+          <circle cx="380" cy="595" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="380" y="601" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">15</text>
+        </g>
+      </g>
+      <g id="NMA_14" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_14">
+          <circle cx="340" cy="595" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="340" y="601" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">14</text>
+        </g>
+      </g>
+      <g id="NMA_13" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_15">
+          <circle cx="300" cy="595" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="300" y="601" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">13</text>
+        </g>
+      </g>
+      <g id="NMA_12" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_16">
+          <circle cx="420" cy="555" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="420" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">12</text>
+        </g>
+      </g>
+      <g id="NMA_11" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_17">
+          <circle cx="380" cy="555" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="380" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">11</text>
+        </g>
+      </g>
+      <g id="NMA_10" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_18">
+          <circle cx="340" cy="555" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="340" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">10</text>
+        </g>
+      </g>
+      <g id="NMA_9" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_19">
+          <circle cx="300" cy="555" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="300" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">9</text>
+        </g>
+      </g>
+      <g id="NMA_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_20">
+          <circle cx="260" cy="555" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="260" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">8</text>
+        </g>
+      </g>
+      <g id="NMA_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_21">
+          <circle cx="220" cy="555" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="220" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="NMA_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_22">
+          <circle cx="420" cy="515" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="420" y="521" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="NMA_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_23">
+          <circle cx="380" cy="515" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="380" y="521" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="NMA_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_24">
+          <circle cx="340" cy="515" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="340" y="521" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="NMA_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_25">
+          <circle cx="300" cy="515" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="300" y="521" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="NMA_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_26">
+          <circle cx="260" cy="515" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="260" y="521" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="NMA_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_27">
+          <circle cx="220" cy="515" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="220" y="521" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="NMA_name" style="cursor: pointer;">
+        <rect x="250" y="460" width="140" height="35" rx="4"  fill="transparent"></rect>
+        <text x="320" y="487" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">นครราชสีมา</text>
+      </g>
+    </g>
+
+
+    <g id="province-43">
+      <g id="NKI_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_28">
+          <circle cx="300" cy="154" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="300" y="160" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="NKI_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_29">
+          <circle cx="300" cy="114" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="300" y="120" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="NKI_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_30">
+          <circle cx="260" cy="114" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="260" y="120" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="NKI_name" style="cursor: pointer;">
+        <rect x="204" y="60" width="113" height="35" rx="4"  fill="transparent"></rect>
+        <text x="260" y="87" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">หนองคาย</text>
+      </g>
+    </g>
+
+
+    <g id="province-38">
+      <g id="area-3803" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_31">
+          <circle cx="580" cy="55" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="580" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="area-3802" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_32">
+          <circle cx="540" cy="55" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="540" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="area-3801" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_33">
+          <circle cx="500" cy="55" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="500" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="BKN_name" style="cursor: pointer;">
+        <rect x="496" width="87" height="35" rx="4"  fill="transparent"></rect>
+        <text x="539" y="26" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">บึงกาฬ</text>
+      </g>
+    </g>
+
+
+    <g id="province-35">
+      <g id="YST_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_34">
+          <circle cx="820" cy="375" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="820" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="YST_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_35">
+          <circle cx="820" cy="335" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="820" y="341" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="YST_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_36">
+          <circle cx="780" cy="335" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="780" y="341" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="YST_name" style="cursor: pointer;">
+        <rect x="752.5" y="280" width="78" height="35" rx="4"  fill="transparent"></rect>
+        <text x="791" y="307" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ยโสธร</text>
+      </g>
+    </g>
+
+
+    <g id="province-44">
+      <g id="MKM_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_37">
+          <circle cx="540" cy="455" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="540" y="461" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="MKM_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_38">
+          <circle cx="500" cy="455" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="500" y="461" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="MKM_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_39">
+          <circle cx="540" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="540" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="MKM_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_40">
+          <circle cx="500" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="500" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="MKM_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_41">
+          <circle cx="460" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="460" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="MKM_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_42">
+          <circle cx="420" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="420" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="MKM_name" style="cursor: pointer;">
+        <rect x="403" y="360" width="141" height="35" rx="4"  fill="transparent"></rect>
+        <text x="473" y="385" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">มหาสารคาม</text>
+      </g>
+    </g>
+
+
+    <g id="province-39">
+      <g id="NBP_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_43">
+          <circle cx="260" cy="295" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="260" y="300" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="NBP_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_44">
+          <circle cx="300" cy="255" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="300" y="260" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="NBP_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_45">
+          <circle cx="260" cy="255" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="260" y="260" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="NBP_name" style="cursor: pointer;">
+        <rect x="209" y="199" width="143" height="35" rx="4"  fill="transparent"></rect>
+        <text x="280" y="226" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">หนองบัวลำภู</text>
+      </g>
+    </g>
+
+
+    <g id="province-49">
+      <g id="MDH_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_46">
+          <circle cx="860" cy="233" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="860" y="238" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="MDH_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_47">
+          <circle cx="820" cy="233" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="820" y="238" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="MDH_name" style="cursor: pointer;">
+        <rect x="765.5" y="178" width="113" height="35" rx="4"  fill="transparent"></rect>
+        <text x="822" y="204" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">มุกดาหาร</text>
+      </g>
+    </g>
+
+
+    <g id="province-48">
+      <g id="NPM_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_48">
+          <circle cx="780" cy="95" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="780" y="101" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="NPM_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_49">
+          <circle cx="740" cy="95" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="740" y="101" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="NPM_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_50">
+          <circle cx="740" cy="55" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="740" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="NPM_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_51">
+          <circle cx="700" cy="55" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="700" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="NPM_name" style="cursor: pointer;">
+        <rect x="649.5" width="107" height="35" rx="4"  fill="transparent"></rect>
+        <text x="703" y="25" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">นครพนม</text>
+      </g>
+    </g>
+
+
+    <g id="province-46">
+      <g id="KSN_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_52">
+          <circle cx="540" cy="315" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="540" y="321" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="KSN_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_53">
+          <circle cx="500" cy="315" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="500" y="321" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="KSN_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_54">
+          <circle cx="460" cy="315" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="460" y="321" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="KSN_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_55">
+          <circle cx="420" cy="315" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="420" y="321" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="KSN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_56">
+          <circle cx="540" cy="275" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="540" y="281" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="KSN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_57">
+          <circle cx="500" cy="275" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="500" y="281" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="KSN_name" style="cursor: pointer;">
+        <rect x="374" y="260" width="106" height="35" rx="4"  fill="transparent"></rect>
+        <text x="425" y="286" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">กาฬสินธุ์</text>
+      </g>
+    </g>
+
+
+    <g id="province-45">
+      <g id="RET_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_58">
+          <circle cx="680" cy="455" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="680" y="461" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">8</text>
+        </g>
+      </g>
+      <g id="RET_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_59">
+          <circle cx="640" cy="455" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="640" y="461" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="RET_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_60">
+          <circle cx="680" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="680" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="RET_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_61">
+          <circle cx="640" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="640" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="RET_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_62">
+          <circle cx="680" cy="375" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="680" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="RET_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_63">
+          <circle cx="640" cy="375" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="640" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="RET_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_64">
+          <circle cx="680" cy="335" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="680" y="341" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="RET_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_65">
+          <circle cx="640" cy="335" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="640" y="341" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="RET_name" style="cursor: pointer;">
+        <rect x="611" y="280" width="93" height="35" rx="4"  fill="transparent"></rect>
+        <text x="657" y="306" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ร้อยเอ็ด</text>
+      </g>
+    </g>
+
+
+    <g id="province-41">
+      <g id="UDN_10" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_66">
+          <circle cx="540" cy="215" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="540" y="221" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">10</text>
+        </g>
+      </g>
+      <g id="UDN_9" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_67">
+          <circle cx="500" cy="215" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="500" y="221" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">9</text>
+        </g>
+      </g>
+      <g id="UDN_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_68">
+          <circle cx="460" cy="215" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="460" y="221" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">8</text>
+        </g>
+      </g>
+      <g id="UDN_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_69">
+          <circle cx="420" cy="215" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="420" y="221" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="UDN_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_70">
+          <circle cx="540" cy="175" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="540" y="181" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="UDN_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_71">
+          <circle cx="500" cy="175" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="500" y="181" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="UDN_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_72">
+          <circle cx="460" cy="175" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="460" y="181" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="UDN_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_73">
+          <circle cx="420" cy="175" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="420" y="181" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="UDN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_74">
+          <circle cx="540" cy="135" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="540" y="141" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="UDN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_75">
+          <circle cx="500" cy="135" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="500" y="141" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="UDN_name" style="cursor: pointer;">
+        <rect x="379" y="118" width="99" height="35" rx="4"  fill="transparent"></rect>
+        <text x="428" y="143" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">อุดรธานี</text>
+      </g>
+    </g>
+
+
+    <g id="province-31">
+      <g id="BRM_10" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_76">
+          <circle cx="600" cy="675" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="600" y="681" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">10</text>
+        </g>
+      </g>
+      <g id="BRM_9" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_77">
+          <circle cx="560" cy="675" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="560" y="681" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">9</text>
+        </g>
+      </g>
+      <g id="BRM_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_78">
+          <circle cx="600" cy="635" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="600" y="641" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">8</text>
+        </g>
+      </g>
+      <g id="BRM_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_79">
+          <circle cx="560" cy="635" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="560" y="641" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="BRM_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_80">
+          <circle cx="520" cy="635" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="520" y="641" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="BRM_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_81">
+          <circle cx="600" cy="595" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="600" y="601" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="BRM_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_82">
+          <circle cx="560" cy="595" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="560" y="601" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="BRM_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_83">
+          <circle cx="520" cy="595" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="520" y="601" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="BRM_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_84">
+          <circle cx="600" cy="555" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="600" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="BRM_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_85">
+          <circle cx="560" cy="555" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="560" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="BRM_name" style="cursor: pointer;">
+        <rect x="538" y="500" width="85" height="35" rx="4"  fill="transparent"></rect>
+        <text x="580" y="528" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">บุรีรัมย์</text>
+      </g>
+    </g>
+
+
+    <g id="province-34">
+      <g id="UBN_11" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_86">
+          <circle cx="880" cy="615" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="880" y="621" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">11</text>
+        </g>
+      </g>
+      <g id="UBN_10" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_87">
+          <circle cx="840" cy="615" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="840" y="621" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">10</text>
+        </g>
+      </g>
+      <g id="UBN_9" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_88">
+          <circle cx="800" cy="615" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="800" y="621" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">9</text>
+        </g>
+      </g>
+      <g id="UBN_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_89">
+          <circle cx="760" cy="615" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="760" y="621" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">8</text>
+        </g>
+      </g>
+      <g id="UBN_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_90">
+          <circle cx="720" cy="615" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="720" y="621" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="UBN_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_91">
+          <circle cx="680" cy="615" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="680" y="621" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="UBN_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_92">
+          <circle cx="840" cy="575" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="840" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="UBN_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_93">
+          <circle cx="800" cy="575" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="800" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="UBN_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_94">
+          <circle cx="760" cy="575" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="760" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="UBN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_95">
+          <circle cx="720" cy="575" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="720" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="UBN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_96">
+          <circle cx="680" cy="575" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="680" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="UBN_name" style="cursor: pointer;">
+        <rect x="660" y="520" width="141" height="35" rx="4"  fill="transparent"></rect>
+        <text x="730" y="547" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">อุบลราชธานี</text>
+      </g>
+    </g>
+
+
+    <g id="province-32">
+      <g id="SRN_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_97">
+          <circle cx="700" cy="815" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="700" y="821" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">8</text>
+        </g>
+      </g>
+      <g id="SRN_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_98">
+          <circle cx="660" cy="815" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="660" y="821" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="SRN_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_99">
+          <circle cx="620" cy="815" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="620" y="821" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="SRN_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_100">
+          <circle cx="580" cy="815" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="580" y="821" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="SRN_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_101">
+          <circle cx="700" cy="775" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="700" y="781" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="SRN_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_102">
+          <circle cx="660" cy="775" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="660" y="781" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="SRN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_103">
+          <circle cx="620" cy="775" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="620" y="781" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="SRN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_104">
+          <circle cx="580" cy="775" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="580" y="781" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="SRN_name" style="cursor: pointer;">
+        <rect x="597" y="720" width="85" height="35" rx="4"  fill="transparent"></rect>
+        <text x="638" y="747" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สุรินทร์</text>
+      </g>
+    </g>
+
+
+
+    <g id="province-33">
+      <g id="SSK_9" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_105">
+          <circle cx="780" cy="795" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="780" y="801" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">9</text>
+        </g>
+      </g>
+      <g id="SSK_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_106">
+          <circle cx="900" cy="755" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="900" y="761" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">8</text>
+        </g>
+      </g>
+      <g id="SSK_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_107">
+          <circle cx="860" cy="755" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="860" y="761" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="SSK_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_108">
+          <circle cx="820" cy="755" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="820" y="761" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="SSK_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_109">
+          <circle cx="780" cy="755" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="780" y="761" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="SSK_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_110">
+          <circle cx="900" cy="715" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="900" y="721" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="SSK_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_111">
+          <circle cx="860" cy="715" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="860" y="721" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="SSK_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_112">
+          <circle cx="820" cy="715" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="820" y="721" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="SSK_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_113">
+          <circle cx="780" cy="715" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="780" y="721" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="SSK_name" style="cursor: pointer;">
+        <rect x="788" y="660" width="103" height="35" rx="4"  fill="transparent"></rect>
+        <text x="839" y="688" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ศรีสะเกษ</text>
+      </g>
+    </g>
+
+
+    <g id="province-47">
+      <g id="SNK_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_114">
+          <circle cx="720" cy="235" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="720" y="241" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="SNK_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_115">
+          <circle cx="680" cy="235" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="680" y="241" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="SNK_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_116">
+          <circle cx="640" cy="235" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="640" y="241" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="SNK_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_117">
+          <circle cx="720" cy="195" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="720" y="201" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="SNK_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_118">
+          <circle cx="680" cy="195" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="680" y="201" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="SNK_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_119">
+          <circle cx="640" cy="195" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="640" y="201" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="SNK_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_120">
+          <circle cx="720" cy="155" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="720" y="161" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="SNK_name" style="cursor: pointer;">
+        <rect x="594" y="138" width="103" height="35" rx="4"  fill="transparent"></rect>
+        <text x="645" y="164" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สกลนคร</text>
+      </g>
+    </g>
+
+
+    <g id="province-40">
+      <g id="KKN_11" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_121">
+          <circle cx="340" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="340" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">11</text>
+        </g>
+      </g>
+      <g id="KKN_10" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_122">
+          <circle cx="300" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="300" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">10</text>
+        </g>
+      </g>
+      <g id="KKN_9" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_123">
+          <circle cx="260" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="260" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">9</text>
+        </g>
+      </g>
+      <g id="KKN_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_124">
+          <circle cx="220" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="220" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">8</text>
+        </g>
+      </g>
+      <g id="KKN_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_125">
+          <circle cx="180" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="180" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
+        </g>
+      </g>
+      <g id="KKN_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_126">
+          <circle cx="140" cy="415" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="140" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
+        </g>
+      </g>
+      <g id="KKN_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_127">
+          <circle cx="340" cy="375" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="340" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
+      <g id="KKN_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_128">
+          <circle cx="300" cy="375" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="300" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+        </g>
+      </g>
+      <g id="KKN_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_129">
+          <circle cx="260" cy="375" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="260" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+        </g>
+      </g>
+      <g id="KKN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_130">
+          <circle cx="220" cy="375" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="220" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="KKN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_131">
+          <circle cx="180" cy="375" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="180" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="KKN_name" style="cursor: pointer;">
+        <rect x="162" y="320" width="99" height="35" rx="4"  fill="transparent"></rect>
+        <text x="211" y="348" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ขอนแก่น</text>
+      </g>
+    </g>
+
+
+    <g id="province-37">
+      <g id="ACR_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_132">
+          <circle cx="880" cy="475" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="880" y="481" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+        </g>
+      </g>
+      <g id="ACR_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_133">
+          <circle cx="840" cy="475" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="840" y="481" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+        </g>
+      </g>
+      <g id="ACR_name" style="cursor: pointer;">
+        <rect x="768" y="420" width="139" height="35" rx="4"  fill="transparent"></rect>
+        <text x="837" y="448" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">อำนาจเจริญ</text>
+      </g>
+    </g>
+  </g>
+</svg>

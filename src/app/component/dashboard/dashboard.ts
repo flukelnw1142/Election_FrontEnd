@@ -1636,6 +1636,7 @@ export class Dashboard implements OnInit {
 
   private handleDistrictClick(districtId: string) {
     this.selectedProvince = '';
+    this.detailDistrict = [];
     console.log('✅ เขตที่คลิก:', districtId);
 
     this.zoneId = districtId;

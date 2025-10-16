@@ -323,7 +323,8 @@
                 <img [src]="candidate.avatarURL" alt="Party Logo">
                 <div>
                     <p style="font-size: 1.3rem;">{{ candidate.fullname }}</p>
-                    <p style="font-weight: 300; color: rgb(199, 199, 199); cursor: pointer;" (click)="onClickDistrict(candidate.districtId)">{{ candidate.name }}
+                    <p style="font-weight: 300; color: rgb(199, 199, 199); cursor: pointer;"
+                        (click)="onClickDistrict(candidate.districtId)">{{ candidate.name }}
                         {{candidate.areaNo}}</p>
                     <p>คะแนน: {{ candidate.totalVotes | number }}</p>
                 </div>
@@ -482,7 +483,8 @@
                                 <div *ngFor="let provinceData of detailWinnerPartyPerRegion"
                                     style="margin-bottom: 1rem;">
                                     <div style="display: flex; justify-content: space-between;">
-                                        <p class="province-title" (click)="onClickProvince(provinceData.province)" style="cursor: pointer;" >{{ provinceData.province }}</p>
+                                        <p class="province-title" (click)="onClickProvince(provinceData.province)"
+                                            style="cursor: pointer;">{{ provinceData.province }}</p>
                                         <p style="color: #ccc; font-size: 0.9rem;">
                                             <!-- จำนวนหน่วยที่นับแล้ว: {{ provinceData.progress }}% <br /> -->
                                             นับคะแนนแล้ว: {{ formatTotalVotes(provinceData.total_votes_in_province) }}
@@ -554,17 +556,18 @@
                 </div>
                 <!-- เลือกเขต -->
                 <div *ngIf="selectedDistric !== '' && selectedProvince === ''">
-                    <div style="display: flex; justify-content: space-between;">
+                    <div style="display: flex; justify-content: space-between;" *ngIf="detailDistrict">
                         <div>
-                            <p class="province">{{detailDistrict[0].province || ""}} เขต {{detailDistrict[0].zone ||
-                                ""}}</p>
+                            <!-- <p class="province" >{{detailDistrict[0].province || ""}} เขตxx {{detailDistrict[0].zone ||
+                                ""}}</p> -->
+                            <p class="province">{{provinceName || ""}} เขต {{zoneName || ""}}</p>
                         </div>
                     </div>
                     <div class="header-table">
                         <p style="align-self: end;"> อันดับ</p>
                         <div style="font-size: 1rem; text-align: end;">
-                            <p>จำนวนหน่วยที่นับไปแล้ว : {{detailDistrict[0].progress}} %</p>
-                            <p>นับคะแนนแล้ว : {{formatTotalVotes(detailDistrict[0].total_votes_in_area)}}</p>
+                            <p>จำนวนหน่วยที่นับไปแล้ว : {{progress}} %</p>
+                            <p>นับคะแนนแล้ว : {{formatTotalVotes(totalvoteZone)}}</p>
                         </div>
                     </div>
                     <hr>

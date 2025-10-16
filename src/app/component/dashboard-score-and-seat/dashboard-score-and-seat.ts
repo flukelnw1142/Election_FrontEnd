@@ -48,7 +48,6 @@ export class DashboardScoreAndSeat implements OnInit {
       this.partySeatCountsList = await firstValueFrom(
         this._dashboard.getPartySeatCountsList()
       );
-      console.log('this.partySeatCountsList : ', this.partySeatCountsList);
 
       // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
       this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
@@ -101,11 +100,9 @@ export class DashboardScoreAndSeat implements OnInit {
     this.partySelected.emit(partyName);
   }
   onSelectZoneSeats(partyName: string): void {
-    console.log('onSelectZoneSeats', partyName);
     this.partySelectedCandidateZone.emit(partyName);
   }
   onSelectPartylistSeats(partyName: string): void {
-    console.log(partyName);
     this.partySelectedCandidate.emit(partyName);
   }
   scrollToTopContainer() {

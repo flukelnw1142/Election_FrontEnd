@@ -94,7 +94,6 @@ export class DashboardV2 implements OnInit {
   // }
 
   async loadSvg() {
-    console.log('>> SVG Loaded _V2');
     try {
       const rawSvg = await firstValueFrom(
         this.http.get('assets/halfCircle500.svg', { responseType: 'text' })

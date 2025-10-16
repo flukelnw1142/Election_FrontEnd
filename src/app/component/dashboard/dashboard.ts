@@ -112,6 +112,10 @@ export class Dashboard implements OnInit {
   isMappingComplete: any;
   // clickCountParty: any = '';
   clickOnPopup: any = '';
+  provinceName: string = '';
+  zoneName: string = '';
+  progress: string = '';
+  totalvoteZone: number = 0;
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
   private zoomGroup: any;
@@ -133,7 +137,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -150,8 +154,6 @@ export class Dashboard implements OnInit {
           this._dashboard.getDistrictWinners()
         );
 
-        console.log('Initial winners data:', winners);
-
         if (winners.candidates && Object.keys(winners.candidates).length > 0) {
           this.allWinners = winners.candidates;
 
@@ -165,7 +167,6 @@ export class Dashboard implements OnInit {
           for (let i = 0; i < updateDateEls.length; i++) {
             const el = updateDateEls[i] as HTMLElement;
             el.innerText = this.formatTime(winners.updateDate);
-            console.log('Setting updateDate:', winners.updateDate);
           }
           if (totalVoteZone) {
             totalVoteZone.innerText = this.formatTotalVotes(
@@ -185,7 +186,6 @@ export class Dashboard implements OnInit {
         }
 
         this._dashboard.winners$.subscribe((winners) => {
-          console.log('📡 Received signalR update');
           if (
             winners.candidates &&
             Object.keys(winners.candidates).length > 0
@@ -253,11 +253,9 @@ export class Dashboard implements OnInit {
   // }
 
   async settingSvg(svgText: string, doAnimation = true): Promise<void> {
-    console.log('>> SVG Loaded "', this.selectedParty, '"');
     let districtIds = Object.keys(this.allWinners);
     const currentWinnersHash = JSON.stringify(this.allWinners);
     if (this.lastWinnersHash !== currentWinnersHash) {
-      console.log('Updating clonedSvg due to winners change');
       this.lastWinnersHash = currentWinnersHash;
     }
     const parser = new DOMParser();
@@ -285,7 +283,6 @@ export class Dashboard implements OnInit {
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
-      // console.log('Processing district ID:', id, g);
       if (g) {
         const path = g.querySelector('path');
         const text = g.querySelector('tspan');
@@ -348,7 +345,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -367,9 +364,6 @@ export class Dashboard implements OnInit {
     }
 
     const endTime = performance.now();
-    console.log(
-      `Time taken to map districts: ${(endTime - startTime).toFixed(2)} ms`
-    );
 
     this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg.outerHTML);
     this.isMappingComplete = true;
@@ -488,7 +482,6 @@ export class Dashboard implements OnInit {
     }
 
     this._dashboard.getRankByDistrictTop3(areaID).subscribe((data) => {
-      console.log('(getRankByDistrictTop3) Data', data);
       this.detailDistrictTop3 = data;
       this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
       // 👇 คำนวณตำแหน่งเริ่มต้นของ tooltip
@@ -721,15 +714,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -787,7 +780,6 @@ export class Dashboard implements OnInit {
         'click',
         (lensEvent: MouseEvent) => {
           const target = lensEvent.target as SVGElement | null;
-          console.log('🔍 Magnifier Clicked', target);
 
           if (!target) return;
 
@@ -804,20 +796,14 @@ export class Dashboard implements OnInit {
 
             // ✅ ถ้าเป็นตัวเลข (เลขล้วน) → ส่งต่อไปเข้าเงื่อนไข group/path ด้านล่าง
             if (/^\d+$/.test(textContent)) {
-              console.log(
-                'ℹ️ Clicked number label (not province):',
-                textContent
-              );
               // ไม่ return
             } else {
               /**
                * CLICK PROVINCE
                * ✅ เงื่อนไขแรก: คลิกบน <text> หรือ <tspan> ที่ไม่ใช่ตัวเลข
                */
-              console.log('✅ Province name clicked:', textContent);
               this.selectedProvince = textContent;
               this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
-              console.log('selectedDistric', this.selectedDistric);
               this.activeTab = 'district';
               this.handleProvinceClick(this.selectedProvince);
               return;
@@ -832,7 +818,6 @@ export class Dashboard implements OnInit {
 
           if (group && group.id && group.getAttribute('data-party')) {
             this.zoneId = group.id;
-            console.log('zoneId', this.zoneId);
             this.handleDistrictClick(this.zoneId);
           }
         }
@@ -899,15 +884,13 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
   }
 
   closeDialog() {
-    console.log('Close > ', this.selectedParty);
-    console.log('Close2 > ', this.clickOnPopup);
 
     this.clickOnPopup !== ''
       ? ((this.selectedParty = this.clickOnPopup), (this.clickOnPopup = ''))
@@ -986,7 +969,6 @@ export class Dashboard implements OnInit {
     const seconds = String(date.getSeconds()).padStart(2, '0');
 
     const formatted = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-    console.log('formatted', formatted);
 
     return formatted;
   }
@@ -1003,7 +985,6 @@ export class Dashboard implements OnInit {
 
   getUrlHead(winner: any): string {
     const partyName = typeof winner === 'string' ? winner : winner?.party || '';
-    // console.log('partyName', partyName);
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         if (this.partyColorMap[keyword].IMG_HEAD === '') {
@@ -1017,10 +998,8 @@ export class Dashboard implements OnInit {
 
   getUrlParty(winner: any): string {
     const partyName = typeof winner === 'string' ? winner : winner?.party || '';
-    // console.log('partyName', partyName);
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
-        // console.log('IMG_PARTY', this.partyColorMap[keyword].IMG_PARTY);
         return this.partyColorMap[keyword].IMG_PARTY;
       }
     }
@@ -1093,7 +1072,6 @@ export class Dashboard implements OnInit {
 
   // Click Card "dashboard-score-and-seat" (Open Page 2)
   onPartySelected(partyName: string) {
-    console.log('Selected party from card:', partyName);
     if (!this.isMappingComplete) {
       return;
     }
@@ -1125,8 +1103,6 @@ export class Dashboard implements OnInit {
   }
   // Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
-    console.log('onSvgClick (with out zoom) ---------------------');
-    // console.log('event', event);
     this.detailDistrict = [];
 
     const target = event.target as SVGElement;
@@ -1165,7 +1141,6 @@ export class Dashboard implements OnInit {
         const provinceName = (target.textContent || '').trim();
         // const provinceId = target.id;
 
-        console.log('✅ Province name clicked:', provinceName);
         this.activeTab = 'district';
         this.handleProvinceClick(provinceName);
         this.clickOnPopup = this.selectedParty;
@@ -1175,7 +1150,6 @@ export class Dashboard implements OnInit {
   }
   // Click Zone-Seat Page 2 (ส.ส.เขต)
   onClickZoneSeatPerParty(party: string) {
-    console.log('party', party);
 
     if (!this.isMappingComplete) {
       return;
@@ -1185,14 +1159,12 @@ export class Dashboard implements OnInit {
     this.selectedParty = '';
 
     this._dashboard.getWinnerZoneByPartyName(party).subscribe((data) => {
-      console.log('(getWinnerZoneByPartyName) Data', data);
       this.detailWinnerZonePerParty = data;
       this.cd.markForCheck();
     });
   }
   // Click PartyList-Seat Page 2 (ส.ส.บัญชีรายชื่อ)
   onpartySelectedCandidate(partyName: string) {
-    console.log('Open PopUp partyListCadidate', partyName);
 
     if (!this.isMappingComplete) {
       return;
@@ -1217,7 +1189,6 @@ export class Dashboard implements OnInit {
     this.selectedParty = '';
     this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
       this.detailPartyListPerPartyName = data;
-      console.log('(getCadidateByPartyName) Data', data);
       this.cd.markForCheck();
     });
     const selectedParty = this.partySeatCountsList.find(
@@ -1287,8 +1258,6 @@ export class Dashboard implements OnInit {
   }
   // Click ภูมิภาค
   async onRegionSelect(region: string) {
-    console.log('onRegionSelect---------------------');
-    console.log('Selected region from dropdown:', region);
 
     if (region === 'กรุงเทพมหานคร') {
       this.handleProvinceClick('กรุงเทพมหานคร');
@@ -1327,11 +1296,9 @@ export class Dashboard implements OnInit {
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต 2 อันดับแรก ของแต่ละเขต BY Province
   private onWinnerZoneByProvince(province: string) {
-    console.log('Open PopUp onWinnerZoneByProvince', province);
     this._dashboard
       .getAllwinnerZoneByProvinceName(province)
       .subscribe((data) => {
-        console.log('(getAllwinnerZoneByProvinceName) Data', data);
         // this.detailWinnerZonePerProvince = data;
 
         const grouped = new Map<string, any[]>();
@@ -1359,18 +1326,12 @@ export class Dashboard implements OnInit {
           }
         );
 
-        console.log(
-          'detailWinnerZonePerProvince',
-          this.detailWinnerZonePerProvince
-        );
         this.cd.markForCheck();
       });
   }
   // Data PartyList-Seat (ส.ส.บัญชีรายชื่อ) แสดงข้อมูลคะแนะตามลำดับพรรค ของแต่ละจังหวัด BY Province
   private onWinnerPartyByProvince(province: string) {
-    console.log('Open PopUp onWinnerPartyByProvince', province);
     this._dashboard.getPartylistProvince(province).subscribe((data) => {
-      console.log('(getPartylistProvince) Data', data);
       this.detailWinnerPartyPerProvince = data;
       this.cd.markForCheck();
     });
@@ -1378,9 +1339,7 @@ export class Dashboard implements OnInit {
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต 2 อันดับแรก ของแต่ละเขต BY Region
   private onWinnerZoneByRegion(region: string) {
-    console.log('Open PopUp onWinnerZoneByRegion', region);
     this._dashboard.getWinnerZoneByRegionName(region).subscribe((data) => {
-      console.log('(getWinnerZoneByRegionName) Data', data);
 
       const structuredArray: any[] = [];
 
@@ -1424,16 +1383,13 @@ export class Dashboard implements OnInit {
 
       // ✅ 3. เซ็ตเข้า array ที่ใช้ *ngFor ได้เลย
       this.detailWinnerZonePerRegion = structuredArray;
-      console.log('getWinnerZoneByRegionName (STRUCTURE)', structuredArray);
       this.cd.markForCheck();
     });
   }
   // Data PartyList-Seat (ส.ส.บัญชีรายชื่อ) แสดงข้อมูล พรรค 2 อันดับแรก ของแต่ละจังหวัด BY Region
   private onWinnerPartyByRegion(region: string) {
-    console.log('Open PopUp onWinnerPartyByRegion', region);
 
     this._dashboard.getWinnerPartyByRegionName(region).subscribe((data) => {
-      console.log('(getWinnerPartyByRegionName) Data', data);
 
       // ประกาศ type ชัดเจน
       const groupedByProvince: {
@@ -1476,20 +1432,22 @@ export class Dashboard implements OnInit {
   private handleDistrictClick(districtId: string) {
     this.selectedProvince = '';
     this.detailDistrict = [];
-    console.log('✅ เขตที่คลิก:', districtId);
 
     this.zoneId = districtId;
     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
-    console.log('selectedDistric', this.selectedDistric);
 
     this._dashboard
       .getRankByDistrict(this.selectedDistric)
       .subscribe((data) => {
         this.detailDistrict = data;
+
+        this.provinceName = data[0].province;
+        this.zoneName = data[0].zone;
+        this.progress = data[0].progress;
+        this.totalvoteZone = data[0].total_votes_in_area;
       });
 
     const provinceName = this.allWinners[this.zoneId]?.provinceName;
-    console.log('🌍 Province of zone:', provinceName);
     this.loadAndSetRegionSvg(provinceName);
 
     this.tooltipVisible = false;
@@ -1497,8 +1455,6 @@ export class Dashboard implements OnInit {
   }
   // Data จังหวัด
   private handleProvinceClick(provinceName: string) {
-    console.log('📝 ชื่อจังหวัด:', provinceName);
-    console.log('zoneId:', this.zoneId);
     this.detailDistrict = [];
     this.detailWinnerZonePerRegion = [];
     this.detailWinnerPartyPerRegion = [];
@@ -1521,12 +1477,9 @@ export class Dashboard implements OnInit {
 
   private async loadAndSetRegionSvg(province: string): Promise<void> {
     try {
-      console.log('Loading SVG for province:', province);
 
       // หา region จาก province ก่อน
       const region = await this.findRegionByProvince(province);
-
-      console.log('Found region for province', province, ':', region);
 
       if (region) {
         this.selectedRegion = region;
@@ -1551,7 +1504,6 @@ export class Dashboard implements OnInit {
   findRegionByProvince(province: string): Promise<string> {
     return new Promise((resolve) => {
       this._dashboard.getRegionByProvince(province).subscribe((data) => {
-        console.log('(getRegionByProvince) Data', data);
         const region = data[0]?.RegionName || 'กรุงเทพฯ'; // หรือ logic การ map province to region
         resolve(region);
       });
@@ -1565,13 +1517,6 @@ export class Dashboard implements OnInit {
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
     const svg = svgDoc.documentElement as unknown as SVGSVGElement;
-
-    console.log(
-      'Processing SVG for province:',
-      // province,
-      'zoneId:',
-      this.zoneId
-    );
 
     // Setup SVG styles for region
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
@@ -1590,7 +1535,6 @@ export class Dashboard implements OnInit {
       p.style.stroke = 'none';
     });
 
-    console.log('selectedProvince:', this.selectedProvince);
     // console.log('allWinners:', this.allWinners);
 
     let districtIds = Object.keys(this.allWinners);
@@ -1662,7 +1606,7 @@ export class Dashboard implements OnInit {
           // // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -1685,7 +1629,6 @@ export class Dashboard implements OnInit {
           this.http.get(svgPath, { responseType: 'text' })
         );
         this.svgCache.set(svgPath, svgText);
-        console.log(`Loaded SVG for region: ${region} from ${svgPath}`);
       } catch (error) {
         console.error(`Failed to load SVG for ${region}:`, error);
         return await firstValueFrom(

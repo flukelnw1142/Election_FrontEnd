@@ -47,8 +47,6 @@ export class DashboardService {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('✅ SignalR connection established');
-        console.log('Connection ID:', this.hubConnection.connectionId);
         this.registerOnServerEvents();
       })
       .catch((err) =>

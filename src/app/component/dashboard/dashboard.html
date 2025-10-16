@@ -555,11 +555,11 @@
                     </div>
                 </div>
                 <!-- เลือกเขต -->
-                <div *ngIf="selectedDistric !== '' && selectedProvince === ''">
-                    <div style="display: flex; justify-content: space-between;" *ngIf="detailDistrict">
+                <span class="loader" *ngIf="loading"></span>
+                <div *ngIf="selectedDistric !== '' && selectedProvince === '' && !loading">
+
+                    <div style="display: flex; justify-content: space-between;" >
                         <div>
-                            <!-- <p class="province" >{{detailDistrict[0].province || ""}} เขตxx {{detailDistrict[0].zone ||
-                                ""}}</p> -->
                             <p class="province">{{provinceName || ""}} เขต {{zoneName || ""}}</p>
                         </div>
                     </div>

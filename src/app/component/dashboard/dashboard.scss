@@ -712,7 +712,7 @@ PAGE 6
       height: auto;
       display: block;
       margin: 0 auto; // ตรงกลาง SVG
-      
+
     }
   }
 
@@ -1021,4 +1021,39 @@ PAGE 6
   line-height: 1em;
   margin-top: -.08em;
   position: relative
+}
+
+.loader {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #FFF;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  top: 45%;
+  left: 40%;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #FF3D00;
+  width: 3px;
+  height: 40px;
+  transform: translateX(-50%);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

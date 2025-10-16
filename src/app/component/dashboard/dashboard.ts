@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { debounceTime, firstValueFrom, Subject, takeUntil } from 'rxjs';
+import { debounceTime, firstValueFrom, Subject, takeUntil, timeout } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
@@ -116,6 +116,7 @@ export class Dashboard implements OnInit {
   zoneName: string = '';
   progress: string = '';
   totalvoteZone: number = 0;
+  loading: boolean = false;
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
   private zoomGroup: any;
@@ -1218,6 +1219,7 @@ export class Dashboard implements OnInit {
   }
   // Click เขต / จังหวัด บน SVG (ในแต่ละภาค)
   onSvgClickRegion(event: MouseEvent) {
+    this.loading = true;
     const target = event.target as HTMLElement;
 
     let current = target;
@@ -1235,6 +1237,8 @@ export class Dashboard implements OnInit {
             .querySelector('text')
             ?.textContent?.trim();
           this.handleDistrictClick(districtId);
+
+
           return;
         } else if (/^[A-Z]+_name$/.test(id)) {
           // ✅ ชื่อจังหวัด เช่น BKK_name
@@ -1250,10 +1254,15 @@ export class Dashboard implements OnInit {
           return;
         }
       }
-
+      // this.loading = false;
       current = current.parentElement as HTMLElement;
+      setTimeout(() => {
+        this.loading = false;
+      }, 100);
     }
-
+    setTimeout(() => {
+      this.loading = false;
+    }, 0);
     console.warn('ไม่พบข้อมูลเขตหรือจังหวัดที่คลิก');
   }
   // Click ภูมิภาค

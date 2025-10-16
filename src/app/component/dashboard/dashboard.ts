@@ -1232,6 +1232,12 @@ export class Dashboard implements OnInit {
   }
   // Click เขต
   onClickDistrict(districtId: string) {
+    // console.log('onClickDistrict---------------------');
+    // console.log('selectedZoneSeat', this.selectedZoneSeat);
+    if (this.selectedZoneSeat !== '') {
+      this.clickOnPopup = this.selectedZoneSeat;
+      this.selectedZoneSeat = '';
+    }
     this.handleDistrictClick(districtId);
   }
   // Click จังหวัด
@@ -1702,8 +1708,4 @@ export class Dashboard implements OnInit {
     };
     return paths[region] || '/assets/thailand.svg';
   }
-
-  /**
-   * CLICK REGION
-   */
 }

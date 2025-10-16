@@ -323,7 +323,7 @@
                 <img [src]="candidate.avatarURL" alt="Party Logo">
                 <div>
                     <p style="font-size: 1.3rem;">{{ candidate.fullname }}</p>
-                    <p style="font-weight: 300; color: rgb(199, 199, 199);">{{ candidate.name }}
+                    <p style="font-weight: 300; color: rgb(199, 199, 199); cursor: pointer;" (click)="onClickDistrict(candidate.districtId)">{{ candidate.name }}
                         {{candidate.areaNo}}</p>
                     <p>คะแนน: {{ candidate.totalVotes | number }}</p>
                 </div>

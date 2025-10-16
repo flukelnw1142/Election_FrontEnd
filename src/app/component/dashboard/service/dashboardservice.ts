@@ -25,13 +25,23 @@ export class DashboardService {
     }
   }
   private startConnection() {
-    const hubUrl = `${this.baseUrl.replace('/api', '')}/electionHub`; 
+    const hubUrl = `${this.baseUrl.replace('/api', '')}/electionHub`;
+    // this.hubConnection = new signalR.HubConnectionBuilder()
+    //   .withUrl(hubUrl, {
+    //     transport: signalR.HttpTransportType.WebSockets,
+    //     withCredentials: true,
+    //   })
+    //   .withAutomaticReconnect()
+    //   .build();
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(hubUrl, {
-        transport: signalR.HttpTransportType.WebSockets,
-        withCredentials: true,
+        transport:
+          signalR.HttpTransportType.WebSockets |
+          signalR.HttpTransportType.ServerSentEvents |
+          signalR.HttpTransportType.LongPolling,
       })
       .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
       .build();
 
     this.hubConnection
@@ -113,14 +123,13 @@ export class DashboardService {
     );
   }
 
-  
   getWinnerZoneByRegionName(regionName: string): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/Election/getAllWinnerProvinceByRegion?regionname=${regionName}`
     );
   }
 
-    getWinnerPartyByRegionName(regionName: string): Observable<any> {
+  getWinnerPartyByRegionName(regionName: string): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/Election/getAllWinnerPartylistByRegion?regionname=${regionName}`
     );

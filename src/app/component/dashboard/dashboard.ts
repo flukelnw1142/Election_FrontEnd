@@ -1070,27 +1070,6 @@ export class Dashboard implements OnInit {
   }
 
   /* click Region */
-  // onWinnerPartyByRegion(region: string) {
-  //   console.log('Open PopUp onWinnerPartyByRegion', region);
-  //   this._dashboard.getWinnerPartyByRegionName(region).subscribe((data) => {
-  //     console.log('(getWinnerPartyByRegionName) Data', data);
-  //     const groupedByProvince: {
-  //       [province: string]: any[];
-  //     } = {};
-
-  //     data.forEach((item: { provName: any; }) => {
-  //       const { provName } = item;
-
-  //       if (!groupedByProvince[provName]) {
-  //         groupedByProvince[provName] = [];
-  //       }
-
-  //       groupedByProvince[provName].push(item);
-  //     });
-  //     this.detailWinnerPartyPerRegion = groupedByProvince;
-  //     this.cd.markForCheck();
-  //   });
-  // }
   onWinnerPartyByRegion(region: string) {
     console.log('Open PopUp onWinnerPartyByRegion', region);
 
@@ -1107,20 +1086,26 @@ export class Dashboard implements OnInit {
         };
       } = {};
 
-      data.forEach((item: { provName: any; progress: any; total_votes_in_province: any; }) => {
-        const { provName, progress, total_votes_in_province } = item;
+      data.forEach(
+        (item: {
+          provName: any;
+          progress: any;
+          total_votes_in_province: any;
+        }) => {
+          const { provName, progress, total_votes_in_province } = item;
 
-        if (!groupedByProvince[provName]) {
-          groupedByProvince[provName] = {
-            province: provName,
-            progress,
-            total_votes_in_province,
-            parties: [],
-          };
+          if (!groupedByProvince[provName]) {
+            groupedByProvince[provName] = {
+              province: provName,
+              progress,
+              total_votes_in_province,
+              parties: [],
+            };
+          }
+
+          groupedByProvince[provName].parties.push(item);
         }
-
-        groupedByProvince[provName].parties.push(item);
-      });
+      );
 
       // แปลงเป็น array เพื่อให้ใช้ *ngFor ได้ง่าย
       this.detailWinnerPartyPerRegion = Object.values(groupedByProvince);
@@ -1672,18 +1657,19 @@ export class Dashboard implements OnInit {
   }
 
   private handleProvinceClick(provinceName: string) {
-    // console.log('📍 จังหวัดที่คลิก:', provinceId);
     console.log('📝 ชื่อจังหวัด:', provinceName);
     console.log('zoneId:', this.zoneId);
+    this.detailDistrict = [];
     this.detailWinnerZonePerRegion = [];
     this.detailWinnerPartyPerRegion = [];
     this.zoneId = '';
+    this.activeTab = 'district';
 
     this.selectedProvince = provinceName;
     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
 
-    this.loadAndSetRegionSvg(provinceName);
     this.onWinnerZoneByProvince(provinceName);
+    this.loadAndSetRegionSvg(provinceName);
     this.onWinnerPartyByProvince(provinceName);
   }
 
@@ -1700,6 +1686,7 @@ export class Dashboard implements OnInit {
       return;
     }
 
+    this.activeTab = 'district';
     this.onWinnerZoneByRegion(region);
     this.onWinnerPartyByRegion(region);
 

@@ -161,9 +161,12 @@ export class Dashboard implements OnInit {
           const totalVotePartylist = document.getElementById(
             'totalVotePartylist'
           ) as HTMLElement | null;
-          const updateDate = document.getElementById(
-            'updateDate'
-          ) as HTMLElement | null;
+          const updateDateEls = document.getElementsByClassName('updateDate');
+          for (let i = 0; i < updateDateEls.length; i++) {
+            const el = updateDateEls[i] as HTMLElement;
+            el.innerText = this.formatTime(winners.updateDate);
+            console.log('Setting updateDate:', winners.updateDate);
+          }
           if (totalVoteZone) {
             totalVoteZone.innerText = this.formatTotalVotes(
               winners.totalVoteZone
@@ -173,9 +176,6 @@ export class Dashboard implements OnInit {
             totalVotePartylist.innerText = this.formatTotalVotes(
               winners.totalVotePartylist
             );
-          }
-          if (updateDate) {
-            updateDate.innerText = this.formatTime(winners.updateDate);
           }
 
           const svgText = await firstValueFrom(

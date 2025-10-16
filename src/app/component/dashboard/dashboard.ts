@@ -1483,28 +1483,6 @@ export class Dashboard implements OnInit {
           path.removeAttribute('fill');
           path.removeAttribute('stroke');
 
-          // // FILL
-          // path.style.fill = fillStyle.includes(this.selectedParty)
-          //   ? originalColor
-          //   : '#d3d3d3';
-          // path.style.strokeWidth = '1px';
-
-          // // OPACITY & STROKE
-          // if (hasSelectedZone) {
-          //   // ถ้ามี zoneId → จางเขตอื่น
-          //   path.style.opacity = isSelectedZone ? '1' : '0.5';
-          //   path.style.strokeWidth = isSelectedZone ? '3px' : '1px';
-          //   path.style.stroke = '#ffffff';
-          //   path.style.strokeOpacity = isSelectedZone ? '1' : '0';
-          // } else {
-          //   // ถ้ายังไม่เลือก zone → แสดงเท่ากันทุกเขต
-          //   path.style.opacity = '1';
-          // }
-
-          // // Set data attributes
-          // g.setAttribute('data-party', this.allWinners[id].party || '');
-          // g.setAttribute('data-district-id', id);
-
           // FILL - แสดงสีตาม party หรือ default
           path.style.fill = fillStyle.includes(this.selectedParty)
             ? originalColor
@@ -1521,14 +1499,14 @@ export class Dashboard implements OnInit {
               path.style.strokeOpacity = '1';
             } else {
               // จังหวัดอื่น: จางลง
-              path.style.opacity = '0.3';
+              path.style.opacity = '0.25';
               path.style.strokeWidth = '1px';
               path.style.stroke = '#999';
               path.style.strokeOpacity = '0.5';
             }
           } else if (hasSelectedZone) {
             // Priority 2: มี zoneId แต่ไม่มี province
-            path.style.opacity = isSelectedZone ? '1' : '0.5';
+            path.style.opacity = isSelectedZone ? '1' : '0.25';
             path.style.strokeWidth = isSelectedZone ? '3px' : '1px';
             path.style.stroke = '#ffffff';
             path.style.strokeOpacity = isSelectedZone ? '1' : '0';

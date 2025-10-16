@@ -1060,6 +1060,7 @@ export class Dashboard implements OnInit {
           structuredArray.push({
             province,
             zone: Number(zone),
+            districtId: candidates[0]?.districtId || null,
             candidates,
           });
         }
@@ -1067,6 +1068,7 @@ export class Dashboard implements OnInit {
 
       // ✅ 3. เซ็ตเข้า array ที่ใช้ *ngFor ได้เลย
       this.detailWinnerZonePerRegion = structuredArray;
+      console.log('getWinnerZoneByRegionName (STRUCTURE)', structuredArray);
       this.cd.markForCheck();
     });
   }
@@ -1601,7 +1603,7 @@ export class Dashboard implements OnInit {
    * CLICK DISTRICT
    */
 
-  handleDistrictClick(districtId: string) {
+  private handleDistrictClick(districtId: string) {
     this.selectedProvince = '';
     this.detailDistrict = [];
     console.log('✅ เขตที่คลิก:', districtId);
@@ -1624,7 +1626,7 @@ export class Dashboard implements OnInit {
     this.hideMagnifier();
   }
 
-    /**
+  /**
    * CLICK PROVINCE
    */
 
@@ -1720,5 +1722,12 @@ export class Dashboard implements OnInit {
     }
 
     console.warn('ไม่พบข้อมูลเขตหรือจังหวัดที่คลิก');
+  }
+
+  onClickProvince(provinceName: string) {
+    this.handleProvinceClick(provinceName);
+  }
+  onClickDistrict(districtId: string) {
+    this.handleDistrictClick(districtId);
   }
 }

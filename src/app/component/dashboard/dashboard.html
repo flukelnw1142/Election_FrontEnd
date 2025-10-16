@@ -396,7 +396,9 @@
                                 <div *ngFor="let district of detailWinnerZonePerRegion; let i = index"
                                     class="candidate-item">
                                     <div>
-                                        <p style="font-size: 1.rem;"> {{ district.province }} เขต {{ district.zone }}
+                                        <p style="font-size: 1.rem; cursor: pointer;"
+                                            (click)="onClickDistrict(district.districtId)"> {{ district.province }}
+                                            เขต {{ district.zone }}
                                         </p>
                                         <div *ngFor="let candidate of  district.candidates; let i = index"
                                             style="display: flex; align-items: center; gap: 1rem; margin: .5rem;">
@@ -432,7 +434,7 @@
                                         class="candidate-item">
                                         <div>
                                             <p style="font-size: 1.rem; cursor: pointer;"
-                                                (click)="handleDistrictClick(district.districtId)"> {{ district.province
+                                                (click)="onClickDistrict(district.districtId)"> {{ district.province
                                                 }} เขต {{ district.zone}}
                                             </p>
                                             <div *ngFor="let candidate of  district.candidates; let i = index"
@@ -480,7 +482,7 @@
                                 <div *ngFor="let provinceData of detailWinnerPartyPerRegion"
                                     style="margin-bottom: 1rem;">
                                     <div style="display: flex; justify-content: space-between;">
-                                        <p class="province-title">{{ provinceData.province }}</p>
+                                        <p class="province-title" (click)="onClickProvince(provinceData.province)" style="cursor: pointer;" >{{ provinceData.province }}</p>
                                         <p style="color: #ccc; font-size: 0.9rem;">
                                             <!-- จำนวนหน่วยที่นับแล้ว: {{ provinceData.progress }}% <br /> -->
                                             นับคะแนนแล้ว: {{ formatTotalVotes(provinceData.total_votes_in_province) }}

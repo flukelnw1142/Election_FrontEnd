@@ -390,7 +390,8 @@
                                     )|| ""}}
                                 </p>
                             </div>
-                            <div *ngIf="detailWinnerZonePerRegion?.length > 0; else showProvinceData" #scrollContainer
+                            <!-- CLICK REGION -->
+                            <div *ngIf="detailWinnerZonePerRegion?.length > 0; else showZoneData" #scrollContainer
                                 class="scroll-container" style="height: 70vh;">
                                 <div *ngFor="let district of detailWinnerZonePerRegion; let i = index"
                                     class="candidate-item">
@@ -424,20 +425,20 @@
                                         style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                 </div>
                             </div>
-                            <ng-template #showProvinceData>
+                            <!-- CLICK PROVINCE -->
+                            <ng-template #showZoneData>
                                 <div #scrollContainer class="scroll-container" style="height: 64vh; ">
                                     <div *ngFor="let district of detailWinnerZonePerProvince; let i = index"
                                         class="candidate-item">
                                         <div>
-                                            <p style="font-size: 1.rem;"> {{ district.province }} เขต {{ district.zone
-                                                }}
+                                            <p style="font-size: 1.rem; cursor: pointer;"
+                                                (click)="handleDistrictClick(district.districtId)"> {{ district.province
+                                                }} เขต {{ district.zone}}
                                             </p>
                                             <div *ngFor="let candidate of  district.candidates; let i = index"
                                                 style="display: flex; align-items: center; gap: 1rem; margin: .5rem;">
-                                                <p class="number" [style.background]="getColor(candidate.party_name)">{{
-                                                    i +
-                                                    1
-                                                    }}</p>
+                                                <p class="number" [style.background]="getColor(candidate.party_name)">
+                                                    {{i + 1}}</p>
                                                 <img [src]="candidate.avatarURL" alt="Party Logo">
                                                 <div>
                                                     <p style=" font-size: 1.1rem;">{{ candidate.fullname }}</p>
@@ -472,11 +473,12 @@
                                     )|| ""}}
                                 </p>
                             </div>
-
+                            <!-- CLICK REGION -->
                             <div *ngIf="detailWinnerPartyPerRegion?.length > 0; else showPartyListData" #scrollContainer
                                 class="scroll-container" style="height: 70vh;">
 
-                                <div *ngFor="let provinceData of detailWinnerPartyPerRegion" style="margin-bottom: 1rem;">
+                                <div *ngFor="let provinceData of detailWinnerPartyPerRegion"
+                                    style="margin-bottom: 1rem;">
                                     <div style="display: flex; justify-content: space-between;">
                                         <p class="province-title">{{ provinceData.province }}</p>
                                         <p style="color: #ccc; font-size: 0.9rem;">
@@ -513,6 +515,7 @@
                                         style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                 </div>
                             </div>
+                            <!-- CLICK PROVINCE -->
                             <ng-template #showPartyListData>
                                 <div #scrollContainer class="scroll-container" style="height: 64vh;">
                                     <div *ngFor="let party of  detailWinnerPartyPerProvince; let i = index"

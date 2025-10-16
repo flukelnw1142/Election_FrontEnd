@@ -979,7 +979,7 @@ export class Dashboard implements OnInit {
 
         const grouped = new Map<string, any[]>();
         for (const candidate of data) {
-          const key = `${candidate.province}_${candidate.zone}`;
+          const key = `${candidate.province}/${candidate.zone}/${candidate.districtId}`;
           if (!grouped.has(key)) {
             grouped.set(key, []);
           }
@@ -989,8 +989,10 @@ export class Dashboard implements OnInit {
         // เรียง totalVotes มากสุดไว้บน
         this.detailWinnerZonePerProvince = Array.from(grouped.entries()).map(
           ([key, candidates]) => {
-            const [province, zone] = key.split('_');
+            // console.log(key, candidates);
+            const [province, zone, districtId] = key.split('/');
             return {
+              districtId,
               province,
               zone,
               candidates: candidates.sort(
@@ -1595,46 +1597,11 @@ export class Dashboard implements OnInit {
     return paths[region] || '/assets/thailand.svg';
   }
 
-  onSvgClickRegion(event: MouseEvent) {
-    const target = event.target as HTMLElement;
+  /**
+   * CLICK DISTRICT
+   */
 
-    let current = target;
-    let matchedElement: HTMLElement | null = null;
-
-    while (current && current.tagName !== 'svg') {
-      const id = current.getAttribute('id');
-
-      if (id) {
-        if (/^[A-Z]+_\d+$/.test(id)) {
-          // ✅ เขต เช่น BKK_2
-          matchedElement = current;
-          const districtId = id;
-          const districtNumber = matchedElement
-            .querySelector('text')
-            ?.textContent?.trim();
-          this.handleDistrictClick(districtId);
-          return;
-        } else if (/^[A-Z]+_name$/.test(id)) {
-          // ✅ ชื่อจังหวัด เช่น BKK_name
-          matchedElement = current;
-          const provinceName = matchedElement
-            .querySelector('text')
-            ?.textContent?.trim();
-          if (provinceName) {
-            this.handleProvinceClick(provinceName);
-          }
-
-          return;
-        }
-      }
-
-      current = current.parentElement as HTMLElement;
-    }
-
-    console.warn('ไม่พบข้อมูลเขตหรือจังหวัดที่คลิก');
-  }
-
-  private handleDistrictClick(districtId: string) {
+  handleDistrictClick(districtId: string) {
     this.selectedProvince = '';
     this.detailDistrict = [];
     console.log('✅ เขตที่คลิก:', districtId);
@@ -1656,6 +1623,10 @@ export class Dashboard implements OnInit {
     this.tooltipVisible = false;
     this.hideMagnifier();
   }
+
+    /**
+   * CLICK PROVINCE
+   */
 
   private handleProvinceClick(provinceName: string) {
     console.log('📝 ชื่อจังหวัด:', provinceName);
@@ -1710,5 +1681,44 @@ export class Dashboard implements OnInit {
       );
       this.cd.markForCheck();
     });
+  }
+
+  onSvgClickRegion(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    let current = target;
+    let matchedElement: HTMLElement | null = null;
+
+    while (current && current.tagName !== 'svg') {
+      const id = current.getAttribute('id');
+
+      if (id) {
+        if (/^[A-Z]+_\d+$/.test(id)) {
+          // ✅ เขต เช่น BKK_2
+          matchedElement = current;
+          const districtId = id;
+          const districtNumber = matchedElement
+            .querySelector('text')
+            ?.textContent?.trim();
+          this.handleDistrictClick(districtId);
+          return;
+        } else if (/^[A-Z]+_name$/.test(id)) {
+          // ✅ ชื่อจังหวัด เช่น BKK_name
+          matchedElement = current;
+          const provinceName = matchedElement
+            .querySelector('text')
+            ?.textContent?.trim();
+          if (provinceName) {
+            this.handleProvinceClick(provinceName);
+          }
+
+          return;
+        }
+      }
+
+      current = current.parentElement as HTMLElement;
+    }
+
+    console.warn('ไม่พบข้อมูลเขตหรือจังหวัดที่คลิก');
   }
 }

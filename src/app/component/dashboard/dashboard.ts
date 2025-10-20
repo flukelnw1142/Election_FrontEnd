@@ -11,7 +11,13 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { debounceTime, firstValueFrom, Subject, takeUntil, timeout } from 'rxjs';
+import {
+  debounceTime,
+  firstValueFrom,
+  Subject,
+  takeUntil,
+  timeout,
+} from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
 import { DashboardService } from './service/dashboardservice';
@@ -73,6 +79,8 @@ export class Dashboard implements OnInit {
   selectedZoneSeat: any = '';
   selectedProvince: any = '';
   activeTab = 'district'; // 'district' or 'partylist'
+  detailWinnerZonePerDistrict: any[] = []; // district
+  detailWinnerPartyPerDistrict: any[] = []; // partylist
   detailWinnerZonePerProvince: any[] = []; // district
   detailWinnerPartyPerProvince: any[] = []; // partylist
   selectedRegion: string = 'กรุงเทพฯ'; // region-tab
@@ -115,7 +123,9 @@ export class Dashboard implements OnInit {
   provinceName: string = '';
   zoneName: string = '';
   progress: string = '';
+  progress_party: string = '';
   totalvoteZone: number = 0;
+  totalvoteZone_party: number = 0;
   loading: boolean = false;
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
@@ -138,7 +148,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -177,10 +187,14 @@ export class Dashboard implements OnInit {
             'percentPartylist'
           ) as HTMLElement | null;
           if (totalVoteZone) {
-            totalVoteZone.innerText = `${this.formatTotalVotes(winners.totalVoteZone)} | `
+            totalVoteZone.innerText = `${this.formatTotalVotes(
+              winners.totalVoteZone
+            )} | `;
           }
           if (totalVotePartylist) {
-            totalVotePartylist.innerText = `${this.formatTotalVotes(winners.totalVotePartylist)} | `;
+            totalVotePartylist.innerText = `${this.formatTotalVotes(
+              winners.totalVotePartylist
+            )} | `;
           }
           if (percentZone) {
             percentZone.innerText = winners.percentZone;
@@ -220,10 +234,14 @@ export class Dashboard implements OnInit {
                 el.innerText = this.formatTime(winners.updateDate);
               }
               if (totalVoteZone) {
-                totalVoteZone.innerText = `${this.formatTotalVotes(winners.totalVoteZone)} | `
+                totalVoteZone.innerText = `${this.formatTotalVotes(
+                  winners.totalVoteZone
+                )} | `;
               }
               if (totalVotePartylist) {
-                totalVotePartylist.innerText = `${this.formatTotalVotes(winners.totalVotePartylist)} | `;
+                totalVotePartylist.innerText = `${this.formatTotalVotes(
+                  winners.totalVotePartylist
+                )} | `;
               }
 
               if (percentZone) {
@@ -365,7 +383,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-              this.allWinners[id].party === this.selectedParty
+            this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -734,15 +752,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -904,14 +922,13 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => { });
+      dialogRef.afterClosed().subscribe(() => {});
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
   }
 
   closeDialog() {
-
     this.clickOnPopup !== ''
       ? ((this.selectedParty = this.clickOnPopup), (this.clickOnPopup = ''))
       : (this.selectedParty = '');
@@ -1170,7 +1187,6 @@ export class Dashboard implements OnInit {
   }
   // Click Zone-Seat Page 2 (ส.ส.เขต)
   onClickZoneSeatPerParty(party: string) {
-
     if (!this.isMappingComplete) {
       return;
     }
@@ -1185,7 +1201,6 @@ export class Dashboard implements OnInit {
   }
   // Click PartyList-Seat Page 2 (ส.ส.บัญชีรายชื่อ)
   onpartySelectedCandidate(partyName: string) {
-
     if (!this.isMappingComplete) {
       return;
     }
@@ -1257,7 +1272,6 @@ export class Dashboard implements OnInit {
             ?.textContent?.trim();
           this.handleDistrictClick(districtId);
 
-
           return;
         } else if (/^[A-Z]+_name$/.test(id)) {
           // ✅ ชื่อจังหวัด เช่น BKK_name
@@ -1286,7 +1300,6 @@ export class Dashboard implements OnInit {
   }
   // Click ภูมิภาค
   async onRegionSelect(region: string) {
-
     if (region === 'กรุงเทพมหานคร') {
       this.handleProvinceClick('กรุงเทพมหานคร');
       return;
@@ -1321,6 +1334,37 @@ export class Dashboard implements OnInit {
    * GET DATA
    * main : onWinnerZoneByProvince, onWinnerPartyByProvince, onWinnerZoneByRegion, onWinnerPartyByRegion, handleDistrictClick
    */
+
+  // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY District
+  private onWinnerZoneByDistrict(areaId: number) {
+    this.detailWinnerZonePerDistrict = [];
+
+    this._dashboard.getRankByDistrict(areaId).subscribe((data) => {
+      this.detailWinnerZonePerDistrict = data;
+
+      this.provinceName = data[0].province;
+      this.zoneName = data[0].zone;
+      this.progress = data[0].progress;
+      this.totalvoteZone = data[0].total_votes_in_area;
+    });
+  }
+  // Data แสดงข้อมูล แสดงคะแนนบัญชีรายชื่อทั้งหมด BY District
+  private onWinnerPartyByDistrict(areaId: number) {
+    this.detailWinnerZonePerDistrict = [];
+
+    this._dashboard.getPartyListForDistrict(areaId).subscribe((data) => {
+      console.log('onWinnerPartyByDistrict', data);
+      this.detailWinnerPartyPerDistrict = data
+      // this.detailWinnerZonePerDistrict = data;
+      this.progress_party = data[0].progress;
+      this.totalvoteZone_party = data[0].total_votes_in_area;
+
+      // this.provinceName = data[0].province;
+      // this.zoneName = data[0].zone;
+      // this.progress = data[0].progress;
+      // this.totalvoteZone = data[0].total_votes_in_area;
+    });
+  }
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต 2 อันดับแรก ของแต่ละเขต BY Province
   private onWinnerZoneByProvince(province: string) {
@@ -1357,7 +1401,7 @@ export class Dashboard implements OnInit {
         this.cd.markForCheck();
       });
   }
-  // Data PartyList-Seat (ส.ส.บัญชีรายชื่อ) แสดงข้อมูลคะแนะตามลำดับพรรค ของแต่ละจังหวัด BY Province
+  // Data แสดงข้อมูลคะแนะตามลำดับพรรค ของแต่ละจังหวัด BY Province
   private onWinnerPartyByProvince(province: string) {
     this._dashboard.getPartylistProvince(province).subscribe((data) => {
       this.detailWinnerPartyPerProvince = data;
@@ -1368,7 +1412,6 @@ export class Dashboard implements OnInit {
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต 2 อันดับแรก ของแต่ละเขต BY Region
   private onWinnerZoneByRegion(region: string) {
     this._dashboard.getWinnerZoneByRegionName(region).subscribe((data) => {
-
       const structuredArray: any[] = [];
 
       const grouped: {
@@ -1414,11 +1457,9 @@ export class Dashboard implements OnInit {
       this.cd.markForCheck();
     });
   }
-  // Data PartyList-Seat (ส.ส.บัญชีรายชื่อ) แสดงข้อมูล พรรค 2 อันดับแรก ของแต่ละจังหวัด BY Region
+  // Data แสดงข้อมูล พรรค 2 อันดับแรก ของแต่ละจังหวัด BY Region
   private onWinnerPartyByRegion(region: string) {
-
     this._dashboard.getWinnerPartyByRegionName(region).subscribe((data) => {
-
       // ประกาศ type ชัดเจน
       const groupedByProvince: {
         [province: string]: {
@@ -1464,16 +1505,19 @@ export class Dashboard implements OnInit {
     this.zoneId = districtId;
     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
 
-    this._dashboard
-      .getRankByDistrict(this.selectedDistric)
-      .subscribe((data) => {
-        this.detailDistrict = data;
+    this.onWinnerZoneByDistrict(this.selectedDistric);
+    this.onWinnerPartyByDistrict(this.selectedDistric);
 
-        this.provinceName = data[0].province;
-        this.zoneName = data[0].zone;
-        this.progress = data[0].progress;
-        this.totalvoteZone = data[0].total_votes_in_area;
-      });
+    // this._dashboard
+    //   .getRankByDistrict(this.selectedDistric)
+    //   .subscribe((data) => {
+    //     this.detailDistrict = data;
+
+    //     this.provinceName = data[0].province;
+    //     this.zoneName = data[0].zone;
+    //     this.progress = data[0].progress;
+    //     this.totalvoteZone = data[0].total_votes_in_area;
+    //   });
 
     const provinceName = this.allWinners[this.zoneId]?.provinceName;
     this.loadAndSetRegionSvg(provinceName);
@@ -1505,7 +1549,6 @@ export class Dashboard implements OnInit {
 
   private async loadAndSetRegionSvg(province: string): Promise<void> {
     try {
-
       // หา region จาก province ก่อน
       const region = await this.findRegionByProvince(province);
 
@@ -1634,7 +1677,7 @@ export class Dashboard implements OnInit {
           // // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-              this.allWinners[id].party === this.selectedParty
+            this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;

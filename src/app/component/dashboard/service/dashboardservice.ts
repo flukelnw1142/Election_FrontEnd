@@ -132,4 +132,8 @@ export class DashboardService {
       `${this.baseUrl}/Election/getAllWinnerPartylistByRegion?regionname=${regionName}`
     );
   }
+  
+  getPartyListForDistrict(id: string | number): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/Election/partyListForDistrict?id=${id}`);
+  }
 }

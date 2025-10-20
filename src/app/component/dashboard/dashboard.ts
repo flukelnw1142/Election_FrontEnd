@@ -169,17 +169,26 @@ export class Dashboard implements OnInit {
             const el = updateDateEls[i] as HTMLElement;
             el.innerText = this.formatTime(winners.updateDate);
           }
+
+          const percentZone = document.getElementById(
+            'percentZone'
+          ) as HTMLElement | null;
+          const percentPartylist = document.getElementById(
+            'percentPartylist'
+          ) as HTMLElement | null;
           if (totalVoteZone) {
-            totalVoteZone.innerText = this.formatTotalVotes(
-              winners.totalVoteZone
-            );
+            totalVoteZone.innerText = `${this.formatTotalVotes(winners.totalVoteZone)} | `
           }
           if (totalVotePartylist) {
-            totalVotePartylist.innerText = this.formatTotalVotes(
-              winners.totalVotePartylist
-            );
+            totalVotePartylist.innerText = `${this.formatTotalVotes(winners.totalVotePartylist)} | `;
+          }
+          if (percentZone) {
+            percentZone.innerText = winners.percentZone;
           }
 
+          if (percentPartylist) {
+            percentPartylist.innerText = winners.percentPartylist;
+          }
           const svgText = await firstValueFrom(
             this.http.get('/assets/thailand.svg', { responseType: 'text' })
           );
@@ -198,6 +207,12 @@ export class Dashboard implements OnInit {
               const totalVotePartylist = document.getElementById(
                 'totalVotePartylist'
               ) as HTMLElement | null;
+              const percentZone = document.getElementById(
+                'percentZone'
+              ) as HTMLElement | null;
+              const percentPartylist = document.getElementById(
+                'percentPartylist'
+              ) as HTMLElement | null;
               const updateDateEls =
                 document.getElementsByClassName('updateDate');
               for (let i = 0; i < updateDateEls.length; i++) {
@@ -205,14 +220,18 @@ export class Dashboard implements OnInit {
                 el.innerText = this.formatTime(winners.updateDate);
               }
               if (totalVoteZone) {
-                totalVoteZone.innerText = this.formatTotalVotes(
-                  winners.totalVoteZone
-                );
+                totalVoteZone.innerText = `${this.formatTotalVotes(winners.totalVoteZone)} | `
               }
               if (totalVotePartylist) {
-                totalVotePartylist.innerText = this.formatTotalVotes(
-                  winners.totalVotePartylist
-                );
+                totalVotePartylist.innerText = `${this.formatTotalVotes(winners.totalVotePartylist)} | `;
+              }
+
+              if (percentZone) {
+                percentZone.innerText = winners.percentZone;
+              }
+
+              if (percentPartylist) {
+                percentPartylist.innerText = winners.percentPartylist;
               }
 
               this.allWinners = winners.candidates;

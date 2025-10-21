@@ -667,29 +667,23 @@
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="glass-card card" style="color: white;">
         <div class="column-grid">
-            <div class="left" style="justify-content: space-between; display: flex; flex-direction: column; ">
+            <div class="left" style="display: flex; justify-content: space-between; flex-direction: column;">
                 <div>
-                    <!-- <div class="header">ส.ส. บัญชีรายชื่อ</div> -->
-                    <div class="partyName">{{partySeatCounts.partyName}}
+                    <div>
+                        <div class="partyName">{{partySeatCounts.partyName}}
+                        </div>
+                        <span class="no" style="font-size: 1rem; color: #ffffff;"> เบอร์
+                            {{getNo(partySeatCounts.partyName)}}</span>
                     </div>
-                    <span class="no" style="font-size: 1rem; color: #ffffff;"> เบอร์
-                        {{getNo(partySeatCounts.partyName)}}</span>
-
-                </div>
-                <div>
-                    <div style="display: flex; justify-content: center; position: relative;">
-                        <img [src]="getUrlHead(partySeatCounts.partyName)" alt="Head Logo" class="head-logo">
-                        <img [src]="getUrlParty(partySeatCounts.partyName)"
-                            *ngIf="getUrlParty(partySeatCounts.partyName) !== ''" alt="Party Logo" class="party-logo">
-                    </div>
-                    <div [style.background-color]="getColor(partySeatCounts.partyName)" class="score">
+                    <div [style.background-color]="getColor(partySeatCounts.partyName)" class="score"
+                        style="margin-top: 15px;">
                         <div class="row-score" style="background-color: #fffffff4; border-radius: 1rem 1rem 0rem 0rem;"
                             [style.color]="getColor(partySeatCounts.partyName)">
-                            <p class="header">จำนวนส.ส. เขต</p>
+                            <p class="header">ส.ส. เขต</p>
                             <div style="text-align: end;">
-                                <p style="font-size: 2.5rem; font-weight: 600; ">{{partySeatCounts.zone_seats}}
-                                    <span style="font-size: 2rem; font-weight: 300;"> ที่นั่ง</span>
-                                <p style="font-size: 1.2rem; font-weight: 300;">{{formatTotalVotes(totalVoteZoneSeat)}}
+                                <p style="font-size: 1.5rem; font-weight: 600; ">{{partySeatCounts.zone_seats}}
+                                    <span style="font-size: 1rem; font-weight: 300;"> ที่นั่ง</span>
+                                <p style="font-size: .8rem; font-weight: 300;">{{formatTotalVotes(totalVoteZoneSeat)}}
                                     คะแนน
                                 </p>
                             </div>
@@ -697,29 +691,30 @@
                         <hr style="margin: 0;">
                         <div class="row-score" style="background-color: #fffffff4;"
                             [style.color]="getColor(partySeatCounts.partyName)">
-                            <p class="header">จำนวนส.ส. บัญชีรายชื่อ</p>
+                            <p class="header">ส.ส. บัญชีรายชื่อ</p>
                             <div style="text-align: end;">
-                                <p style="font-size: 2.5rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}
-                                    <span style="font-size: 2rem; font-weight: 300;"> ที่นั่ง</span>
+                                <p style="font-size: 1.5rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}
+                                    <span style="font-size: 1rem; font-weight: 300;"> ที่นั่ง</span>
                                 </p>
-                                <p style="font-size: 1.2rem; font-weight: 300;">{{partySeatCounts.total_party_votes}}
+                                <p style="font-size: .8rem; font-weight: 300;">{{partySeatCounts.total_party_votes}}
                                     คะแนน
                                 </p>
                             </div>
                         </div>
                         <div class="row-score">
                             <p class="header">ส.ส. ทั้งหมด</p>
-                            <p style="font-size: 2.5rem; font-weight: 600;">{{partySeatCounts.zone_seats +
+                            <p style="font-size: 1.5rem; font-weight: 600;">{{partySeatCounts.zone_seats +
                                 partySeatCounts.partylist_seats}}
-                                <span style="font-size: 2rem; font-weight: 300;"> ที่นั่ง</span>
+                                <span style="font-size: 1rem; font-weight: 300;"> ที่นั่ง</span>
                             </p>
                         </div>
                     </div>
                 </div>
-                <div
-                    style="justify-content: end;display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; ">
-                    <mat-icon style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>
-                    อัพเดตล่าสุด ณ วันที่ &nbsp;<span class="ti_bf updateDate"></span>
+
+                <div style="display: flex; justify-content: center; position: relative; margin-bottom: -30px;">
+                    <img [src]="getUrlHead(partySeatCounts.partyName)" alt="Head Logo" class="head-logo">
+                    <img [src]="getUrlParty(partySeatCounts.partyName)"
+                        *ngIf="getUrlParty(partySeatCounts.partyName) !== ''" alt="Party Logo" class="party-logo">
                 </div>
             </div>
 

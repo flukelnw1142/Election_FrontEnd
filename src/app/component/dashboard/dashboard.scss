@@ -865,7 +865,7 @@ PAGE 7
       }
 
       .head-logo {
-        height: 24.5rem;
+        height: 30rem;
         object-fit: contain;
         align-items: center;
         max-width: 100%;
@@ -875,6 +875,7 @@ PAGE 7
         border-radius: 1rem;
         // padding:  .3rem 1rem;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        width: 250px;
 
         .row-score {
           display: flex;
@@ -883,7 +884,7 @@ PAGE 7
           padding: .3rem 1rem;
 
           .header {
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 400;
           }
         }

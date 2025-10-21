@@ -79,6 +79,7 @@ export class Dashboard implements OnInit {
   selectedZoneSeat: any = '';
   selectedProvince: any = '';
   selectedPartyListAndZoneSeat: any = '';
+  keepPartyListAndZoneSeat: any = '';
   activeTab = 'district'; // 'district' or 'partylist'
   detailWinnerZonePerDistrict: any[] = []; // district
   detailWinnerPartyPerDistrict: any[] = []; // partylist
@@ -935,13 +936,17 @@ export class Dashboard implements OnInit {
 
   closeDialog() {
     this.clickOnPopup !== ''
-      ? ((this.selectedParty = this.clickOnPopup), (this.clickOnPopup = ''))
-      : (this.selectedParty = '');
+      ? ((this.selectedParty = this.clickOnPopup),
+        (this.clickOnPopup = ''),
+        (this.keepPartyListAndZoneSeat = ''))
+      : this.keepPartyListAndZoneSeat !== ''
+      ? ((this.selectedPartyListAndZoneSeat = this.keepPartyListAndZoneSeat),
+        (this.keepPartyListAndZoneSeat = ''))
+      : ((this.selectedParty = ''), (this.selectedPartyListAndZoneSeat = ''));
     this.getDataMapping;
     this.selectedDistric = '';
     this.selectedZoneSeat = '';
     this.selectedProvince = '';
-    this.selectedPartyListAndZoneSeat = '';
     this.activeTab = 'district';
     this.partyName = '';
     this.detailPartyListPerPartyName = [];
@@ -964,7 +969,8 @@ export class Dashboard implements OnInit {
     if (
       this.allWinners &&
       Object.keys(this.allWinners).length > 0 &&
-      this.selectedParty === ''
+      this.selectedParty === '' &&
+      this.selectedPartyListAndZoneSeat === ''
     ) {
       firstValueFrom(
         this.http.get('/assets/thailand.svg', { responseType: 'text' })
@@ -1180,7 +1186,7 @@ export class Dashboard implements OnInit {
     this.selectedPartyListAndZoneSeat = partyName;
     this.clickOnPopup = this.selectedParty;
     this.selectedParty = '';
-    
+
     console.log('partyName', partyName);
     this.onZoneSeatPerParty(partyName);
     this.onPartyListSeatPerParty(partyName);
@@ -1285,11 +1291,11 @@ export class Dashboard implements OnInit {
   }
   // Click เขต
   onClickDistrict(districtId: string) {
-    // console.log('onClickDistrict---------------------');
-    // console.log('selectedZoneSeat', this.selectedZoneSeat);
-    if (this.selectedZoneSeat !== '') {
-      this.clickOnPopup = this.selectedZoneSeat;
-      this.selectedZoneSeat = '';
+    console.log('onClickDistrict---------------------');
+    console.log('districtId', districtId);
+    if (this.selectedPartyListAndZoneSeat !== '') {
+      this.keepPartyListAndZoneSeat = this.selectedPartyListAndZoneSeat;
+      this.selectedPartyListAndZoneSeat = '';
     }
     this.handleDistrictClick(districtId);
   }

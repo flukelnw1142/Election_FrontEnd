@@ -843,6 +843,14 @@ PAGE 7
     padding: 30px;
   }
 
+  .no {
+    border: #797979 1px solid;
+    border-radius: 30px;
+    padding: 0px 6px;
+    margin-right: 4px;
+    color: #3f3f3f;
+  }
+
   .column-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -876,7 +884,7 @@ PAGE 7
 
       .score {
         border-radius: 1rem;
-        padding: 1rem;
+        padding:  .3rem 1rem;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 
         .row-score {

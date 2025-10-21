@@ -29,6 +29,7 @@ export interface Color {
   COLOR: string;
   IMG_PARTY: string;
   IMG_HEAD: string;
+  no: number;
 }
 
 export interface PartySeatCountList {

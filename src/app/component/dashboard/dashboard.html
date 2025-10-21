@@ -675,7 +675,11 @@
             <div class="left" style="justify-content: space-between; display: flex; flex-direction: column; ">
                 <div>
                     <!-- <div class="header">ส.ส. บัญชีรายชื่อ</div> -->
-                    <div class="partyName">{{partySeatCounts.partyName}}</div>
+                    <div class="partyName">{{partySeatCounts.partyName}}
+                    </div>
+                    <span class="no" style="font-size: 1rem; color: #ffffff;"> เบอร์
+                        {{getNo(partySeatCounts.partyName)}}</span>
+
                 </div>
                 <div>
                     <div style="display: flex; justify-content: center; position: relative;">
@@ -685,14 +689,28 @@
                     </div>
                     <div [style.background-color]="getColor(partySeatCounts.partyName)" class="score">
                         <div class="row-score">
+                            <p class="header">จำนวนส.ส. เขต</p>
+                            <div style="text-align: end;">
+                                <p style="font-size: 2.5rem; font-weight: 600;">{{partySeatCounts.zone_seats}}
+                                <p style="font-size: 1.2rem; font-weight: 300;">{{formatTotalVotes(totalVoteZoneSeat)}}
+                                    คะแนน
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row-score">
                             <p class="header">จำนวนส.ส. บัญชีรายชื่อ</p>
-                            <p style="font-size: 3rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}
-                            </p>
+                            <div style="text-align: end;">
+                                <p style="font-size: 2.5rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}
+                                </p>
+                                <p style="font-size: 1.2rem; font-weight: 300;">{{partySeatCounts.total_party_votes}}
+                                    คะแนน
+                                </p>
+                            </div>
                         </div>
                         <hr>
                         <div class="row-score">
-                            <p class="header">คะแนน</p>
-                            <p style="font-size: 2rem;">{{formatTotalVotes(partySeatCounts.total_party_votes)}}
+                            <p class="header">ส.ส. ทั้งหมด</p>
+                            <p style="font-size: 2.5rem; font-weight: 600;">{{partySeatCounts.zone_seats + partySeatCounts.partylist_seats}} ที่นั่ง
                             </p>
                         </div>
                     </div>
@@ -708,16 +726,46 @@
                 <div class="tabs">
                     <button class="tab-button" [class.active]="activeTab === 'district'"
                         (click)="activeTab = 'district'">
-                        ส.ส. เขต
+                        ส.ส. เขต ({{detailWinnerZonePerParty.length}})
                     </button>
                     <button class="tab-button" [class.active]="activeTab === 'partyList'"
                         (click)="activeTab = 'partyList'">
-                        คะแนนบัญชีรายชื่อ
+                        คะแนนบัญชีรายชื่อ ({{partySeatCounts.partylist_seats}})
                     </button>
                 </div>
 
                 <div class="tab-content" style="margin-top: 20px;">
-                    <div *ngIf=" activeTab==='district'">
+                    <div *ngIf="activeTab === 'district'">
+                        <div style="position: relative;">
+                            <div #partylistScroll class="scroll-container" style="height: 74vh;">
+                                <div *ngFor="let candidate of detailWinnerZonePerParty; let i = index"
+                                    class="candidate-item">
+                                    <p class="number">{{ i + 1 }}
+                                    </p>
+                                    <img [src]="candidate.avatarURL" alt="Party Logo">
+                                    <div>
+                                        <p style="font-size: 1.3rem; color: #000;">{{ candidate.fullname }}</p>
+                                        <p><span class="no">เบอร์ {{candidate.no}}</span>
+                                            <span style="font-weight: 300; color: #3f3f3f; cursor: pointer;"
+                                                (click)="onClickDistrict(candidate.districtId)">
+                                                {{ candidate.name }} {{candidate.areaNo}} </span>
+                                        </p>
+                                        <p style="font-size: 1.3rem; color: #000;">คะแนน: {{ candidate.totalVotes
+                                            |number }}
+                                            <span
+                                                style="font-weight: 300; color: #3f3f3f; font-size:medium;">({{candidate.vote_percentage}}%)</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                                    (click)="scrollToTopContainer('partylist')" matTooltip="เลื่อนไปด้านบน">
+                                    <mat-icon
+                                        style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf=" activeTab==='partyList'">
                         <div style="position: relative;">
                             <div #zoneScroll class="scroll-container" style="height: 74vh;">
                                 <div *ngFor="let candidate of detailPartyListPerPartyName; let i = index"
@@ -738,32 +786,6 @@
                                 </div>
                                 <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
                                     (click)="scrollToTopContainer('zone')" matTooltip="เลื่อนไปด้านบน">
-                                    <mat-icon
-                                        style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div *ngIf="activeTab === 'partyList'">
-                        <div style="position: relative;">
-                            <div #partylistScroll class="scroll-container" style="height: 74vh;">
-                                <div *ngFor="let candidate of detailWinnerZonePerParty; let i = index"
-                                    class="candidate-item">
-                                    <p class="number">{{ i + 1 }}
-                                    </p>
-                                    <img [src]="candidate.avatarURL" alt="Party Logo">
-                                    <div>
-                                        <p style="font-size: 1.3rem; color: #000;">{{ candidate.fullname }}</p>
-                                        <p style="font-weight: 300; color: rgb(63, 63, 63); cursor: pointer;"
-                                            (click)="onClickDistrict(candidate.districtId)">{{ candidate.name }}
-                                            {{candidate.areaNo}}</p>
-                                        <p style="font-size: 1.3rem; color: #000;">คะแนน: {{ candidate.totalVotes |
-                                            number }}</p>
-                                    </div>
-                                </div>
-                                <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                                    (click)="scrollToTopContainer('partylist')" matTooltip="เลื่อนไปด้านบน">
                                     <mat-icon
                                         style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                 </div>

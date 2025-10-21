@@ -91,6 +91,7 @@ export class Dashboard implements OnInit {
   img_head: any = '';
   partyBackgroundColor: any = '';
   partySeatCountsList: PartySeatCountList[] = [];
+  totalVoteZoneSeat: number = 0;
   totalSeats: number = 0;
   zoneSeats: number = 0;
   partylistSeats: number = 0;
@@ -1048,6 +1049,20 @@ export class Dashboard implements OnInit {
     return '';
   }
 
+  getNo(winner: any): string {
+    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    if (!partyName || !this.partyColorMap) return '-';
+
+    for (const key in this.partyColorMap) {
+      const entry = this.partyColorMap[key];
+      if (entry.PARTY_NAME === partyName) {
+        return entry.no?.toString() || '-';
+      }
+    }
+
+    return '-';
+  }
+
   // scrollToTopContainer() {
   //   this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   // }
@@ -1153,6 +1168,8 @@ export class Dashboard implements OnInit {
     if (!this.isMappingComplete) {
       return;
     }
+    this.detailWinnerZonePerParty = [];
+    this.detailPartyListPerPartyName = [];
 
     this.selectedPartyListAndZoneSeat = partyName;
     console.log('partyName', partyName);
@@ -1361,6 +1378,7 @@ export class Dashboard implements OnInit {
     this._dashboard.getWinnerZoneByPartyName(partyName).subscribe((data) => {
       console.log('onZoneSeatPerParty', data);
       this.detailWinnerZonePerParty = data;
+      this.totalVoteZoneSeat = data[0].total_votes_all;
       this.cd.markForCheck();
     });
   }
@@ -1379,6 +1397,7 @@ export class Dashboard implements OnInit {
       (p) => p.PARTY_NAME === this.partyName
     );
     this.partyBackgroundColor = party?.COLOR || '#fefdfd';
+    console.log(selectedParty);
   }
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY District

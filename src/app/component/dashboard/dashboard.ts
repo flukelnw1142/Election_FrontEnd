@@ -1068,7 +1068,13 @@ export class Dashboard implements OnInit {
   // }
 
   scrollToTopContainer(type: 'zone' | 'partylist' | '') {
-    const target = type === 'zone' ? this.zoneScroll : this.partylistScroll;
+    const target =
+      type === 'zone'
+        ? this.zoneScroll
+        : type === 'partylist'
+        ? this.partylistScroll
+        : this.scrollContainer;
+    // console.log(target);
     target.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -1172,6 +1178,9 @@ export class Dashboard implements OnInit {
     this.detailPartyListPerPartyName = [];
 
     this.selectedPartyListAndZoneSeat = partyName;
+    this.clickOnPopup = this.selectedParty;
+    this.selectedParty = '';
+    
     console.log('partyName', partyName);
     this.onZoneSeatPerParty(partyName);
     this.onPartyListSeatPerParty(partyName);
@@ -1469,7 +1478,7 @@ export class Dashboard implements OnInit {
   // Data แสดงข้อมูลคะแนะตามลำดับพรรค ของแต่ละจังหวัด BY Province
   private onWinnerPartyByProvince(province: string) {
     this._dashboard.getPartylistProvince(province).subscribe((data) => {
-      console.log('onWinnerPartyByProvince', data);
+      // console.log('onWinnerPartyByProvince', data);
 
       const groupedMap = new Map<
         number,
@@ -1554,40 +1563,30 @@ export class Dashboard implements OnInit {
   // Data แสดงข้อมูล พรรค 2 อันดับแรก ของแต่ละจังหวัด BY Region
   private onWinnerPartyByRegion(region: string) {
     this._dashboard.getWinnerPartyByRegionName(region).subscribe((data) => {
-      // ประกาศ type ชัดเจน
-      const groupedByProvince: {
-        [province: string]: {
-          province: string;
-          progress: number;
-          total_votes_in_province: number;
-          parties: any[];
-        };
-      } = {};
+      // console.log('onWinnerPartyByRegion', data);
+      const groupedMap = new Map<
+        string,
+        { Province: string; areaNo: number; parties: any[] }
+      >();
 
-      data.forEach(
-        (item: {
-          provName: any;
-          progress: any;
-          total_votes_in_province: any;
-        }) => {
-          const { provName, progress, total_votes_in_province } = item;
-
-          if (!groupedByProvince[provName]) {
-            groupedByProvince[provName] = {
-              province: provName,
-              progress,
-              total_votes_in_province,
-              parties: [],
-            };
-          }
-
-          groupedByProvince[provName].parties.push(item);
+      data.forEach((item: { provName: any; areaNo: any }) => {
+        const key = `${item.provName}-${item.areaNo}`;
+        if (!groupedMap.has(key)) {
+          groupedMap.set(key, {
+            Province: item.provName,
+            areaNo: item.areaNo,
+            parties: [],
+          });
         }
+        groupedMap.get(key)!.parties.push(item);
+      });
+
+      this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
+
+      console.log(
+        'detailWinnerPartyPerRegion',
+        this.detailWinnerPartyPerRegion
       );
-
-      // แปลงเป็น array เพื่อให้ใช้ *ngFor ได้ง่าย
-      this.detailWinnerPartyPerRegion = Object.values(groupedByProvince);
-
       this.cd.markForCheck();
     });
   }

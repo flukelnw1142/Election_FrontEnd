@@ -884,17 +884,18 @@ PAGE 7
 
       .score {
         border-radius: 1rem;
-        padding:  .3rem 1rem;
+        // padding:  .3rem 1rem;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 
         .row-score {
           display: flex;
           justify-content: space-between;
           align-items: center;
+          padding: .3rem 1rem;
 
           .header {
-            font-size: 1.3rem;
-            font-weight: 300;
+            font-size: 1.5rem;
+            font-weight: 400;
           }
         }
       }

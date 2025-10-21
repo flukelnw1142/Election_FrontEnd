@@ -688,29 +688,35 @@
                             *ngIf="getUrlParty(partySeatCounts.partyName) !== ''" alt="Party Logo" class="party-logo">
                     </div>
                     <div [style.background-color]="getColor(partySeatCounts.partyName)" class="score">
-                        <div class="row-score">
+                        <div class="row-score" style="background-color: #fffffff4; border-radius: 1rem 1rem 0rem 0rem;"
+                            [style.color]="getColor(partySeatCounts.partyName)">
                             <p class="header">จำนวนส.ส. เขต</p>
                             <div style="text-align: end;">
-                                <p style="font-size: 2.5rem; font-weight: 600;">{{partySeatCounts.zone_seats}}
+                                <p style="font-size: 2.5rem; font-weight: 600; ">{{partySeatCounts.zone_seats}}
+                                    <span style="font-size: 2rem; font-weight: 300;"> ที่นั่ง</span>
                                 <p style="font-size: 1.2rem; font-weight: 300;">{{formatTotalVotes(totalVoteZoneSeat)}}
                                     คะแนน
                                 </p>
                             </div>
                         </div>
-                        <div class="row-score">
+                        <hr style="margin: 0;">
+                        <div class="row-score" style="background-color: #fffffff4;"
+                            [style.color]="getColor(partySeatCounts.partyName)">
                             <p class="header">จำนวนส.ส. บัญชีรายชื่อ</p>
                             <div style="text-align: end;">
                                 <p style="font-size: 2.5rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}
+                                    <span style="font-size: 2rem; font-weight: 300;"> ที่นั่ง</span>
                                 </p>
                                 <p style="font-size: 1.2rem; font-weight: 300;">{{partySeatCounts.total_party_votes}}
                                     คะแนน
                                 </p>
                             </div>
                         </div>
-                        <hr>
                         <div class="row-score">
                             <p class="header">ส.ส. ทั้งหมด</p>
-                            <p style="font-size: 2.5rem; font-weight: 600;">{{partySeatCounts.zone_seats + partySeatCounts.partylist_seats}} ที่นั่ง
+                            <p style="font-size: 2.5rem; font-weight: 600;">{{partySeatCounts.zone_seats +
+                                partySeatCounts.partylist_seats}}
+                                <span style="font-size: 2rem; font-weight: 300;"> ที่นั่ง</span>
                             </p>
                         </div>
                     </div>

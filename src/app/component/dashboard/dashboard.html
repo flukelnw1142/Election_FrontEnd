@@ -342,14 +342,9 @@
     <button class="ds-Button" (click)="closeDialog()">X</button>
 
     <div class="glass-card card" style="color: white;">
-        <!-- <p class="header">{{selectedProvince}}</p> -->
         <div class="three-column-grid">
             <div class="column">
                 <div class="region-tabs">
-                    <!-- <p class="region-tab" *ngFor="let region of regionList" [class.active]="selectedRegion === region"
-                        (click)="selectedRegion = region">
-                        {{ region }}
-                    </p> -->
                     <p class="region-tab" *ngFor="let region of regionList" [class.active]="selectedRegion === region"
                         (click)="onRegionSelect(region)">
                         {{ region }}
@@ -581,7 +576,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <div #scrollContainer class="scroll-container" style="height: 63vh;">
+                            <div #scrollContainer class="scroll-container" style="height: 58vh;">
                                 <div *ngFor="let candidate of detailWinnerZonePerDistrict; let i = index"
                                     class="candidate-item">
 
@@ -628,7 +623,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <div #scrollContainer class="scroll-container" style="height: 64vh;">
+                            <div #scrollContainer class="scroll-container" style="height: 58vh;">
                                 <div *ngFor="let party of  detailWinnerPartyPerDistrict; let i = index"
                                     class="candidate-item">
                                     <p class="number" [style.background]="getColor(party.partyName)">{{ i + 1 }}</p>

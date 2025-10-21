@@ -682,7 +682,7 @@ PAGE 6
     border-radius: 5px;
     overflow: hidden;
     margin: 0; // reset margin
-    padding: 30px;
+    padding: 20px;
     height: 90%;
   }
 
@@ -761,24 +761,6 @@ PAGE 6
 
   }
 
-  // .scroll-container {
-  //   overflow-y: auto;
-  //   overflow-x: hidden;
-  //   height: 65vh;
-  //   // width:100%;
-
-  //   /* ซ่อน scrollbar ทุกเบราว์เซอร์ */
-  //   scrollbar-width: none;
-  //   /* Firefox */
-  //   -ms-overflow-style: none;
-  //   /* IE & Edge */
-  // }
-
-  // .scroll-container::-webkit-scrollbar {
-  //   display: none;
-  //   /* Chrome, Safari, Opera */
-  // }
-
   .candidate-item {
     display: flex;
     align-items: center;
@@ -786,7 +768,7 @@ PAGE 6
     border-radius: 15px;
     padding: 1rem;
     background: #ffffff37;
-    gap: 2rem;
+    gap: 1.5rem;
 
     .no {
       border: #ccc 1px solid;
@@ -806,11 +788,13 @@ PAGE 6
     }
 
     img {
-      height: 100px;
-      width: 60px;
+      // height: 100px;
+      // width: 60px;
+      height: 5rem;
+      width: 4rem;
       object-fit: cover;
       object-position: top;
-      border-radius: 15px;
+      border-radius: 10px;
     }
 
     .logo-container {

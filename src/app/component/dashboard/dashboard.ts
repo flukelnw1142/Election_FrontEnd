@@ -1706,7 +1706,7 @@ export class Dashboard implements OnInit {
             if (isSelectedProvinceDistrict) {
               // จังหวัดที่เลือก: แสดงปกติ
               path.style.opacity = '1';
-              path.style.strokeWidth = isSelectedZone ? '7px' : '1px';
+              path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
               path.style.stroke = isSelectedZone ? '#ffffff' : '#666';
               path.style.strokeOpacity = '1';
             } else {
@@ -1719,7 +1719,7 @@ export class Dashboard implements OnInit {
           } else if (hasSelectedZone) {
             // Priority 2: มี zoneId แต่ไม่มี province
             path.style.opacity = isSelectedZone ? '1' : '1';
-            path.style.strokeWidth = isSelectedZone ? '7px' : '1px';
+            path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
             path.style.stroke = '#ffffff';
             path.style.strokeOpacity = isSelectedZone ? '1' : '0';
           } else {

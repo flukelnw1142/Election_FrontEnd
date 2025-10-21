@@ -1175,10 +1175,11 @@ export class Dashboard implements OnInit {
       .catch((error) => console.error('Error loading SVG:', error));
   }
   // Click PartyListAndPartyZone
-  onClickPartyListAndPartyZone(partyName: string) {
+  onClickPartyListAndPartyZone(partyName: string, command: string) {
     if (!this.isMappingComplete) {
       return;
     }
+    this.activeTab = command !== '' ? 'partyList' : 'district'; //'partyList',  'district'
     this.detailWinnerZonePerParty = [];
     this.detailPartyListPerPartyName = [];
 

@@ -78,6 +78,7 @@ export class Dashboard implements OnInit {
   selectedDistric: any = '';
   selectedZoneSeat: any = '';
   selectedProvince: any = '';
+  selectedPartyListAndZoneSeat: any = '';
   activeTab = 'district'; // 'district' or 'partylist'
   detailWinnerZonePerDistrict: any[] = []; // district
   detailWinnerPartyPerDistrict: any[] = []; // partylist
@@ -102,6 +103,8 @@ export class Dashboard implements OnInit {
   svgContainerRegion!: ElementRef;
   @ViewChild('magnifier', { static: false }) magnifier!: ElementRef;
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
+  @ViewChild('zoneScroll') zoneScroll!: ElementRef;
+  @ViewChild('partylistScroll') partylistScroll!: ElementRef;
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
   private lastWinnersHash: string = '';
 
@@ -617,6 +620,7 @@ export class Dashboard implements OnInit {
       this.handleHoverLogic(target, event.clientX, event.clientY);
     }
   }
+
   private findParentGroup(element: SVGElement): SVGGElement | null {
     let current: any = element;
     while (current && current.tagName !== 'g') {
@@ -936,6 +940,7 @@ export class Dashboard implements OnInit {
     this.selectedDistric = '';
     this.selectedZoneSeat = '';
     this.selectedProvince = '';
+    this.selectedPartyListAndZoneSeat = '';
     this.activeTab = 'district';
     this.partyName = '';
     this.detailPartyListPerPartyName = [];
@@ -1043,8 +1048,13 @@ export class Dashboard implements OnInit {
     return '';
   }
 
-  scrollToTopContainer() {
-    this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+  // scrollToTopContainer() {
+  //   this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+  // }
+
+  scrollToTopContainer(type: 'zone' | 'partylist' | '') {
+    const target = type === 'zone' ? this.zoneScroll : this.partylistScroll;
+    target.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   getDataMapping() {
@@ -1138,6 +1148,17 @@ export class Dashboard implements OnInit {
       .then(() => this.cd.markForCheck())
       .catch((error) => console.error('Error loading SVG:', error));
   }
+  // Click PartyListAndPartyZone
+  onClickPartyListAndPartyZone(partyName: string) {
+    if (!this.isMappingComplete) {
+      return;
+    }
+
+    this.selectedPartyListAndZoneSeat = partyName;
+    console.log('partyName', partyName);
+    this.onZoneSeatPerParty(partyName);
+    this.onPartyListSeatPerParty(partyName);
+  }
   // Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
     this.detailDistrict = [];
@@ -1185,7 +1206,7 @@ export class Dashboard implements OnInit {
       }
     }
   }
-  // Click Zone-Seat Page 2 (ส.ส.เขต)
+  // Click Zone-Seat Page 2 (ส.ส.เขต) ----
   onClickZoneSeatPerParty(party: string) {
     if (!this.isMappingComplete) {
       return;
@@ -1199,7 +1220,7 @@ export class Dashboard implements OnInit {
       this.cd.markForCheck();
     });
   }
-  // Click PartyList-Seat Page 2 (ส.ส.บัญชีรายชื่อ)
+  // Click PartyList-Seat Page 2 (ส.ส.บัญชีรายชื่อ)  ----
   onpartySelectedCandidate(partyName: string) {
     if (!this.isMappingComplete) {
       return;
@@ -1335,6 +1356,31 @@ export class Dashboard implements OnInit {
    * main : onWinnerZoneByProvince, onWinnerPartyByProvince, onWinnerZoneByRegion, onWinnerPartyByRegion, handleDistrictClick
    */
 
+  // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY Party
+  private onZoneSeatPerParty(partyName: string) {
+    this._dashboard.getWinnerZoneByPartyName(partyName).subscribe((data) => {
+      console.log('onZoneSeatPerParty', data);
+      this.detailWinnerZonePerParty = data;
+      this.cd.markForCheck();
+    });
+  }
+  // Data แสดงข้อมูล ส.ส.บัญชีรายชื่อ BY Party
+  private onPartyListSeatPerParty(partyName: string) {
+    this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
+      console.log('onPartyListSeatPerParty', data);
+      this.detailPartyListPerPartyName = data;
+      this.cd.markForCheck();
+    });
+    const selectedParty = this.partySeatCountsList.find(
+      (p) => p.partyName === partyName
+    );
+    this.partySeatCounts = selectedParty;
+    const party = Object.values(this.partyColorMap).find(
+      (p) => p.PARTY_NAME === this.partyName
+    );
+    this.partyBackgroundColor = party?.COLOR || '#fefdfd';
+  }
+
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY District
   private onWinnerZoneByDistrict(areaId: number) {
     this.detailWinnerZonePerDistrict = [];
@@ -1354,7 +1400,7 @@ export class Dashboard implements OnInit {
 
     this._dashboard.getPartyListForDistrict(areaId).subscribe((data) => {
       console.log('onWinnerPartyByDistrict', data);
-      this.detailWinnerPartyPerDistrict = data
+      this.detailWinnerPartyPerDistrict = data;
       // this.detailWinnerZonePerDistrict = data;
       this.progress_party = data[0].progress;
       this.totalvoteZone_party = data[0].total_votes_in_area;

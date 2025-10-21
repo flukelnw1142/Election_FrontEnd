@@ -38,10 +38,17 @@
       </div>
 
       <!-- ขวา -->
-      <div class="right-section">
+      <!-- <div class="right-section">
         <div class="zone-seats" (click)="onSelectZoneSeats(party.partyName); $event.stopPropagation()">{{
           party.zone_seats }}</div>
         <div class="partylist-seats" (click)="onSelectPartylistSeats(party.partyName); $event.stopPropagation()">
+          {{ party.partylist_seats }}
+        </div>
+      </div> -->
+      <div class="right-section" (click)="onSelectPartyListAndPartyZone(party.partyName); $event.stopPropagation()">
+        <div class="zone-seats">{{
+          party.zone_seats }}</div>
+        <div class="partylist-seats">
           {{ party.partylist_seats }}
         </div>
       </div>

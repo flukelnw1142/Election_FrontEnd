@@ -1,6 +1,6 @@
 <!-- PAGE 1 : main -->
 <div
-    *ngIf="selectedParty === '' && selectedDistric === '' && partyName === '' && selectedZoneSeat === '' && selectedProvince === ''">
+    *ngIf="selectedParty === '' && selectedDistric === '' && partyName === '' && selectedZoneSeat === '' && selectedProvince === '' && selectedPartyListAndZoneSeat === '' ">
     <div class="row">
         <div class="col-7">
             <div class="glass-card">
@@ -94,8 +94,7 @@
         <div class="col-5">
             <div class="glass-card card-left">
                 <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"
-                    (partySelectedCandidate)="onpartySelectedCandidate($event)"
-                    (partySelectedCandidateZone)="onClickZoneSeatPerParty($event)"></app-dashboard-score-and-seat>
+                    (partyListAndPartyZone)="onClickPartyListAndPartyZone($event)"></app-dashboard-score-and-seat>
             </div>
         </div>
     </div>
@@ -252,7 +251,7 @@
 </div> -->
 
 <!-- PAGE 4 : show-party-list -->
-<div *ngIf="partyName !== ''" style="position: relative;" class="show-partyList">
+<!-- <div *ngIf="partyName !== ''" style="position: relative;" class="show-partyList">
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="glass-card card" style="color: white;">
         <div class="two-column-grid">
@@ -301,16 +300,16 @@
                 </div>
             </div>
             <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                (click)="scrollToTopContainer('')" matTooltip="เลื่อนไปด้านบน">
                 <mat-icon
                     style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- PAGE 5 : show-distric-per-party -->
-<div *ngIf="selectedZoneSeat !== ''" style="position: relative;" class="show-distric">
+<!-- <div *ngIf="selectedZoneSeat !== ''" style="position: relative;" class="show-distric">
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="glass-card card" style="color: white;">
         <p class="header">ส.ส. เขต</p>
@@ -330,13 +329,13 @@
                 </div>
             </div>
             <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                (click)="scrollToTopContainer('')" matTooltip="เลื่อนไปด้านบน">
                 <mat-icon
                     style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- PAGE 6 : show-Province ALL (Zone / Party) -->
 <div *ngIf="selectedProvince !== '' || selectedDistric !== ''" style="position: relative;" class="show-province-all">
@@ -423,7 +422,7 @@
                                     </div>
                                 </div>
                                 <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                                    (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                                    (click)="scrollToTopContainer('')" matTooltip="เลื่อนไปด้านบน">
                                     <mat-icon
                                         style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                 </div>
@@ -459,7 +458,7 @@
                                         </div>
                                     </div>
                                     <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                                        (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                                        (click)="scrollToTopContainer('')" matTooltip="เลื่อนไปด้านบน">
                                         <mat-icon
                                             style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                     </div>
@@ -514,7 +513,7 @@
                                 </div>
 
                                 <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                                    (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                                    (click)="scrollToTopContainer('')" matTooltip="เลื่อนไปด้านบน">
                                     <mat-icon
                                         style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                 </div>
@@ -544,7 +543,7 @@
                                         </div>
                                     </div>
                                     <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                                        (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                                        (click)="scrollToTopContainer('')" matTooltip="เลื่อนไปด้านบน">
                                         <mat-icon
                                             style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                     </div>
@@ -608,7 +607,7 @@
                                     </div>
                                 </div>
                                 <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                                    (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                                    (click)="scrollToTopContainer('')" matTooltip="เลื่อนไปด้านบน">
                                     <mat-icon
                                         style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                 </div>
@@ -652,7 +651,7 @@
                                     </div>
                                 </div>
                                 <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
-                                    (click)="scrollToTopContainer()" matTooltip="เลื่อนไปด้านบน">
+                                    (click)="scrollToTopContainer('')" matTooltip="เลื่อนไปด้านบน">
                                     <mat-icon
                                         style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
                                 </div>
@@ -666,4 +665,115 @@
         </div>
     </div>
 
+</div>
+
+<!-- PAGE 7 : show-party-list & show-district-per-party -->
+<div *ngIf="selectedPartyListAndZoneSeat !== '' " style="position: relative;" class="show-partyList-ZoneSeat">
+    <button class="ds-Button" (click)="closeDialog()">X</button>
+    <div class="glass-card card" style="color: white;">
+        <div class="column-grid">
+            <div class="left" style="justify-content: space-between; display: flex; flex-direction: column; ">
+                <div>
+                    <!-- <div class="header">ส.ส. บัญชีรายชื่อ</div> -->
+                    <div class="partyName">{{partySeatCounts.partyName}}</div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: center; position: relative;">
+                        <img [src]="getUrlHead(partySeatCounts.partyName)" alt="Head Logo" class="head-logo">
+                        <img [src]="getUrlParty(partySeatCounts.partyName)"
+                            *ngIf="getUrlParty(partySeatCounts.partyName) !== ''" alt="Party Logo" class="party-logo">
+                    </div>
+                    <div [style.background-color]="getColor(partySeatCounts.partyName)" class="score">
+                        <div class="row-score">
+                            <p class="header">จำนวนส.ส. บัญชีรายชื่อ</p>
+                            <p style="font-size: 3rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="row-score">
+                            <p class="header">คะแนน</p>
+                            <p style="font-size: 2rem;">{{formatTotalVotes(partySeatCounts.total_party_votes)}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    style="justify-content: end;display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; ">
+                    <mat-icon style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>
+                    อัพเดตล่าสุด ณ วันที่ &nbsp;<span class="ti_bf updateDate"></span>
+                </div>
+            </div>
+
+            <div>
+                <div class="tabs">
+                    <button class="tab-button" [class.active]="activeTab === 'district'"
+                        (click)="activeTab = 'district'">
+                        ส.ส. เขต
+                    </button>
+                    <button class="tab-button" [class.active]="activeTab === 'partyList'"
+                        (click)="activeTab = 'partyList'">
+                        คะแนนบัญชีรายชื่อ
+                    </button>
+                </div>
+
+                <div class="tab-content" style="margin-top: 20px;">
+                    <div *ngIf=" activeTab==='district'">
+                        <div style="position: relative;">
+                            <div #zoneScroll class="scroll-container" style="height: 74vh;">
+                                <div *ngFor="let candidate of detailPartyListPerPartyName; let i = index"
+                                    class="candidate-item" style="justify-content: space-between;">
+                                    <div style=" display: flex;  align-items: center; gap: 1rem;">
+                                        <p class="number">{{ i + 1 }}</p>
+                                        <img [src]="candidate.avatarURL" alt="Party Logo" loading="lazy">
+                                        <p style="font-size: 1.3rem; color: #000;">{{candidate.fullName }}</p>
+                                    </div>
+                                    <div>
+                                        <ng-container *ngIf="i < partySeatCounts?.partylist_seats; else showDash">
+                                            <mat-icon class="icon-pass">check_circle</mat-icon>
+                                        </ng-container>
+                                        <ng-template #showDash>
+                                            <mat-icon class="icon-unPass">remove_circle_outline</mat-icon>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                                <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                                    (click)="scrollToTopContainer('zone')" matTooltip="เลื่อนไปด้านบน">
+                                    <mat-icon
+                                        style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="activeTab === 'partyList'">
+                        <div style="position: relative;">
+                            <div #partylistScroll class="scroll-container" style="height: 74vh;">
+                                <div *ngFor="let candidate of detailWinnerZonePerParty; let i = index"
+                                    class="candidate-item">
+                                    <p class="number">{{ i + 1 }}
+                                    </p>
+                                    <img [src]="candidate.avatarURL" alt="Party Logo">
+                                    <div>
+                                        <p style="font-size: 1.3rem; color: #000;">{{ candidate.fullname }}</p>
+                                        <p style="font-weight: 300; color: rgb(63, 63, 63); cursor: pointer;"
+                                            (click)="onClickDistrict(candidate.districtId)">{{ candidate.name }}
+                                            {{candidate.areaNo}}</p>
+                                        <p style="font-size: 1.3rem; color: #000;">คะแนน: {{ candidate.totalVotes |
+                                            number }}</p>
+                                    </div>
+                                </div>
+                                <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
+                                    (click)="scrollToTopContainer('partylist')" matTooltip="เลื่อนไปด้านบน">
+                                    <mat-icon
+                                        style="display: flex; align-items: center; justify-content: center;">vertical_align_top</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
 </div>

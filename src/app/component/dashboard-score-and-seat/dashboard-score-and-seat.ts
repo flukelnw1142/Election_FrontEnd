@@ -31,8 +31,9 @@ export class DashboardScoreAndSeat implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
   @Output() partySelected = new EventEmitter<string>();
-  @Output() partySelectedCandidate = new EventEmitter<string>();
-  @Output() partySelectedCandidateZone = new EventEmitter<string>();
+  // @Output() partySelectedCandidate = new EventEmitter<string>();
+  // @Output() partySelectedCandidateZone = new EventEmitter<string>();
+  @Output() partyListAndPartyZone = new EventEmitter<string>();
   partySeatCountsList: PartySeatCountList[] = [];
   totalSeats: number = 0;
   partyColorMap: { [partyKeyword: string]: Color } = {};
@@ -99,11 +100,14 @@ export class DashboardScoreAndSeat implements OnInit {
   onSelectParty(partyName: string) {
     this.partySelected.emit(partyName);
   }
-  onSelectZoneSeats(partyName: string): void {
-    this.partySelectedCandidateZone.emit(partyName);
-  }
-  onSelectPartylistSeats(partyName: string): void {
-    this.partySelectedCandidate.emit(partyName);
+  // onSelectZoneSeats(partyName: string): void {
+  //   this.partySelectedCandidateZone.emit(partyName);
+  // }
+  // onSelectPartylistSeats(partyName: string): void {
+  //   this.partySelectedCandidate.emit(partyName);
+  // }
+  onSelectPartyListAndPartyZone(partyName: string): void {
+    this.partyListAndPartyZone.emit(partyName);
   }
   scrollToTopContainer() {
     this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });

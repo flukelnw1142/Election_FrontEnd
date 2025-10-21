@@ -949,7 +949,6 @@ export class Dashboard implements OnInit {
     this.selectedProvince = '';
     this.activeTab = 'district';
     this.partyName = '';
-    this.detailPartyListPerPartyName = [];
     this.detailWinnerZonePerProvince = [];
     this.detailWinnerPartyPerProvince = [];
     this.detailWinnerPartyPerRegion = [];

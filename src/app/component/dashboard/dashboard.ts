@@ -1469,7 +1469,36 @@ export class Dashboard implements OnInit {
   // Data แสดงข้อมูลคะแนะตามลำดับพรรค ของแต่ละจังหวัด BY Province
   private onWinnerPartyByProvince(province: string) {
     this._dashboard.getPartylistProvince(province).subscribe((data) => {
-      this.detailWinnerPartyPerProvince = data;
+      console.log('onWinnerPartyByProvince', data);
+
+      const groupedMap = new Map<
+        number,
+        { areaNo: number; Province: string; parties: any[] }
+      >();
+
+      data.forEach((item: { areaNo: any; provName: string }) => {
+        const areaNo = item.areaNo;
+        const province = item.provName || '';
+
+        if (!groupedMap.has(areaNo)) {
+          groupedMap.set(areaNo, {
+            areaNo,
+            Province: province,
+            parties: [],
+          });
+        }
+
+        groupedMap.get(areaNo)!.parties.push(item);
+      });
+
+      // Sort parties in each area by totalVote descending
+      for (const group of groupedMap.values()) {
+        group.parties.sort((a, b) => b.totalVote - a.totalVote);
+      }
+
+      this.detailWinnerPartyPerProvince = Array.from(groupedMap.values());
+
+      console.log(this.detailWinnerPartyPerProvince);
       this.cd.markForCheck();
     });
   }

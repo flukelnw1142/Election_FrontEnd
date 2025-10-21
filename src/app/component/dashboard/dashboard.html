@@ -462,12 +462,12 @@
                         </div>
 
                         <div *ngIf="activeTab === 'partyList'">
-                            <div *ngIf="detailWinnerPartyPerRegion?.length === 0"
-                                style="font-size: 1rem; text-align: end; color: #ffffffcb; padding-bottom: .5rem;">
-                                <p>จำนวนหน่วยที่นับไปแล้ว : {{detailWinnerPartyPerProvince[0]?.progress || ""}} %</p>
+                            <div style="font-size: 1rem; text-align: end; color: #ffffffcb; padding-bottom: .5rem;">
+                                <p>จำนวนหน่วยที่นับไปแล้ว : {{detailWinnerPartyPerProvince[0].parties[0]?.progress ||
+                                    ""}} %</p>
                                 <p>นับคะแนนแล้ว :
-                                    {{formatTotalVotes(detailWinnerPartyPerProvince[0]?.total_votes_in_area
-                                    )|| ""}}
+                                    {{formatTotalVotes(detailWinnerPartyPerProvince[0].parties[0]?.total_votes_in_area)
+                                    || ""}}
                                 </p>
                             </div>
                             <!-- CLICK REGION -->
@@ -516,27 +516,39 @@
                             <!-- CLICK PROVINCE -->
                             <ng-template #showPartyListData>
                                 <div #scrollContainer class="scroll-container" style="height: 64vh;">
-                                    <div *ngFor="let party of  detailWinnerPartyPerProvince; let i = index"
-                                        class="candidate-item">
-                                        <p class="number" [style.background]="getColor(party.partyName)">{{ i + 1 }}</p>
-                                        <div class="logo-container">
-                                            <img [src]="getUrlParty(party.partyName)"
-                                                *ngIf="getUrlParty(party.partyName)" alt="Party Logo" class="logo-img">
-                                            <img [src]="'background/default-logo.png'"
-                                                *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo"
-                                                class="logo-img">
-                                        </div>
+                                    <div *ngFor="let district of detailWinnerPartyPerProvince" class="candidate-item">
                                         <div>
-                                            <p style="font-size: 1.3rem;">{{ party.partyName }} </p>
-                                            <div style="display: flex;gap: 0.5rem; justify-content: space-between;">
-                                                <p>คะแนน: {{ party.totalVote | number }} <span
-                                                        style="font-size: 1rem; font-weight: 300; color: #ffffffce;">(
-                                                        {{
-                                                        party.vote_percentage}}% )</span></p>
+                                            <p style="font-size: 1rem;">
+                                                {{district.Province}} เขต {{ district.areaNo }}
+                                            </p>
 
+                                            <div *ngFor="let party of district.parties; let i = index"
+                                                style="display: flex; align-items: center; gap: 1rem; margin: .5rem;">
+                                                <p class="number" [style.background]="getColor(party.partyName)">
+                                                    {{ i + 1 }}
+                                                </p>
+
+                                                <img [src]="getUrlParty(party.partyName)"
+                                                    *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"
+                                                    class="party-logo">
+
+                                                <div>
+                                                    <p style="font-size: 1.1rem;">
+                                                        {{ party.partyName || '-' }}
+                                                    </p>
+                                                    <p [style.color]="i === 0 ? getColor(party.partyName) : null"
+                                                        [ngStyle]="i === 0 ? { 'font-weight': '700', 'font-size': '1.5rem' } : {}">
+                                                        คะแนน: {{ party.totalVote | number }}
+                                                        <span style="font-weight: 300; color: rgb(199, 199, 199);"
+                                                            [style.fontSize]="i !== 0 ? '.8rem' : '1.1rem'">({{party.vote_percentage}}
+                                                            %)</span>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- ปุ่มเลื่อนขึ้นบน -->
                                     <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
                                         (click)="scrollToTopContainer('')" matTooltip="เลื่อนไปด้านบน">
                                         <mat-icon
@@ -594,7 +606,7 @@
                                             [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem'} : {}">
                                             คะแนน: {{ candidate.totalVotes | number }}
                                             <span
-                                                style="font-weight: 300; color: rgb(199, 199, 199); font-size:medium;">
+                                                style="font-weight: 300; color: rgb(199, 199, 199); font-size:1.2rem;">
                                                 (
                                                 {{
                                                 candidate.vote_percentage}}% )</span>

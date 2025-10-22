@@ -233,11 +233,11 @@
                 <div *ngIf="selectedProvince !== ''">
                     <div class="tabs">
                         <button class="tab-button" [class.active]="activeTab === 'district'"
-                            (click)="activeTab = 'district'">
+                            (click)="changeTab('district')">
                             ส.ส. เขต
                         </button>
                         <button class="tab-button" [class.active]="activeTab === 'partyList'"
-                            (click)="activeTab = 'partyList'">
+                            (click)="changeTab('partyList')">
                             คะแนนบัญชีรายชื่อ
                         </button>
                     </div>
@@ -425,11 +425,11 @@
                 <div *ngIf="selectedDistric !== '' && selectedProvince === '' && !loading">
                     <div class="tabs">
                         <button class="tab-button" [class.active]="activeTab === 'district'"
-                            (click)="activeTab = 'district'">
+                            (click)="changeTab('district')">
                             ส.ส. เขต
                         </button>
                         <button class="tab-button" [class.active]="activeTab === 'partyList'"
-                            (click)="activeTab = 'partyList'">
+                            (click)="changeTab('partyList')">
                             คะแนนบัญชีรายชื่อ
                         </button>
                     </div>

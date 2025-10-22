@@ -162,6 +162,7 @@ export class Dashboard implements OnInit {
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
+  allWinnersParty: { [id: string]: string } = {};
   partyColorMap: { [partyKeyword: string]: Color } = {};
 
   async ngOnInit(): Promise<void> {
@@ -271,9 +272,6 @@ export class Dashboard implements OnInit {
                 if (
                   this.selectedDistric === '' &&
                   this.detailPartyListPerPartyName.length === 0
-                  // &&
-                  // this.selectedZoneSeat === '' &&
-                  // this.selectedProvince === ''
                 ) {
                   this.settingSvg(svgText, false);
                 }
@@ -990,9 +988,9 @@ export class Dashboard implements OnInit {
     // this.detailWinnerZonePerProvince = [];
     // this.detailWinnerPartyPerProvince = [];
     // this.detailWinnerPartyPerRegion = [];
-    // this.tooltipVisible = false;
-    // this.hideMagnifier();
-    // this.hideTooltip();
+    this.tooltipVisible = false;
+    this.hideMagnifier();
+    this.hideTooltip();
     // const status = document.getElementsByClassName(
     //   'status-container'
     // )[0] as HTMLElement;
@@ -1179,6 +1177,39 @@ export class Dashboard implements OnInit {
       } catch (error) {
         console.error('Error loading SVG on view change:', error);
       }
+    }
+  }
+
+  async changeTab(command: string) {
+    this.activeTab = command;
+    console.log(command);
+    if (command === 'partyList') {
+      // ?
+      const svgText = await this.loadSvgByRegion(this.selectedRegion);
+
+      // Process SVG และได้ SVG element ที่ process แล้ว
+      const processedSvg = await this.processSvgForRegion(svgText);
+
+      // Update UI
+      this.zone.run(() => {
+        this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+          processedSvg.outerHTML
+        );
+        this.cd.markForCheck();
+      });
+    } else {
+      const svgText = await this.loadSvgByRegion(this.selectedRegion);
+
+      // Process SVG และได้ SVG element ที่ process แล้ว
+      const processedSvg = await this.processSvgForRegion(svgText);
+
+      // Update UI
+      this.zone.run(() => {
+        this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+          processedSvg.outerHTML
+        );
+        this.cd.markForCheck();
+      });
     }
   }
 
@@ -1565,23 +1596,25 @@ export class Dashboard implements OnInit {
         { areaNo: number; Province: string; districtId: string; parties: any[] }
       >();
 
-      data.forEach((item: { areaNo: any; provName: string; DistricID: string; }) => {
-        // console.log(item)
-        const areaNo = item.areaNo;
-        const province = item.provName || '';
-        const districtId = item.DistricID
+      data.forEach(
+        (item: { areaNo: any; provName: string; DistricID: string }) => {
+          // console.log(item)
+          const areaNo = item.areaNo;
+          const province = item.provName || '';
+          const districtId = item.DistricID;
 
-        if (!groupedMap.has(areaNo)) {
-          groupedMap.set(areaNo, {
-            areaNo,
-            Province: province,
-            districtId, 
-            parties: [],
-          });
+          if (!groupedMap.has(areaNo)) {
+            groupedMap.set(areaNo, {
+              areaNo,
+              Province: province,
+              districtId,
+              parties: [],
+            });
+          }
+
+          groupedMap.get(areaNo)!.parties.push(item);
         }
-
-        groupedMap.get(areaNo)!.parties.push(item);
-      });
+      );
 
       // Sort parties in each area by totalVote descending
       for (const group of groupedMap.values()) {
@@ -1666,9 +1699,21 @@ export class Dashboard implements OnInit {
 
       this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
 
+      const resultSVG: { [id: string]: string } = {};
+
+      this.detailWinnerPartyPerRegion.forEach((area: { parties: any[] }) => {
+        const topParty = area.parties.find((p) => p.rank === 1);
+        if (topParty) {
+          resultSVG[topParty.DistricID] = topParty.partyName;
+        }
+      });
+
+      this.allWinnersParty = resultSVG;
+
       // console.log(
       //   'detailWinnerPartyPerRegion',
-      //   this.detailWinnerPartyPerRegion
+      //   this.detailWinnerPartyPerRegion,
+      //   resultSVG
       // );
       this.cd.markForCheck();
     });
@@ -1749,6 +1794,7 @@ export class Dashboard implements OnInit {
       if (region) {
         this.selectedRegion = region;
         const svgText = await this.loadSvgByRegion(region);
+        this.onWinnerPartyByRegion(region);
 
         // Process SVG และได้ SVG element ที่ process แล้ว
         const processedSvg = await this.processSvgForRegion(svgText);
@@ -1801,19 +1847,34 @@ export class Dashboard implements OnInit {
     });
 
     // console.log('allWinners:', this.allWinners);
+    // console.log('activeTab:', this.activeTab);
 
-    let districtIds = Object.keys(this.allWinners);
+    let districtIds;
+
+    if (this.activeTab === 'partyList') {
+      // console.log('allWinnersParty', this.allWinnersParty);
+      districtIds = Object.keys(this.allWinnersParty);
+    } else {
+      districtIds = Object.keys(this.allWinners);
+    }
+
+    console.log(districtIds);
+
     // console.log('districtIds:', districtIds);
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
-      // console.log('Processing district ID:', id, g);
+      // console.log('Processing district ID:', id);
 
       if (g) {
         const path = g.querySelector('circle');
         if (path) {
           let fillStyle = '';
-          const originalColor = this.getColor(this.allWinners[id]);
+          const originalColor = this.getColor(
+            this.activeTab === 'partyList'
+              ? this.allWinnersParty[id]
+              : this.allWinners[id]
+          );
           const district = this.allWinners[id];
           const isSelectedProvinceDistrict = this.selectedProvince
             ? district.provinceName === this.selectedProvince

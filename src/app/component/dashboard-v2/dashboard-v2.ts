@@ -155,7 +155,7 @@ export class DashboardV2 implements OnInit {
           break;
         }
       }
-      console.log("foundParty : ", foundParty);
+      // console.log("foundParty : ", foundParty);
 
       if (foundParty) {
         const seats = foundParty.zone_seats + foundParty.partylist_seats;

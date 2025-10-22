@@ -95,7 +95,9 @@ export class Dashboard implements OnInit {
   totalVoteZoneSeat: number = 0;
   totalSeats: number = 0;
   zoneSeats: number = 0;
+  zoneSeatsAll: number = 0;
   partylistSeats: number = 0;
+  partylistSeatsAll: number = 0;
   ranking: number = 0;
   totalVote: any;
   selectDashboard: string = 'dashboard'; //dashboard_2
@@ -357,7 +359,9 @@ export class Dashboard implements OnInit {
           if (partyData) {
             this.totalSeats = partyData.zone_seats + partyData.partylist_seats;
             this.zoneSeats = partyData.zone_seats;
+            this.zoneSeatsAll = partyData.zone_seat_all;
             this.partylistSeats = partyData.partylist_seats;
+            this.partylistSeatsAll = partyData.partylist_seats_all;
             this.ranking = partyData.ranking;
             this.totalVote = partyData.total_party_votes;
           }
@@ -1131,7 +1135,9 @@ export class Dashboard implements OnInit {
       if (partyData) {
         this.totalSeats = partyData.zone_seats + partyData.partylist_seats;
         this.zoneSeats = partyData.zone_seats;
+        this.zoneSeatsAll = partyData.zone_seat_all;
         this.partylistSeats = partyData.partylist_seats;
+        this.partylistSeatsAll = partyData.partylist_seats_all;
         this.ranking = partyData.ranking;
         this.totalVote = partyData.total_party_votes;
       }
@@ -1149,7 +1155,9 @@ export class Dashboard implements OnInit {
       this.img_head = '';
       this.totalSeats = 0;
       this.zoneSeats = 0;
+      this.zoneSeatsAll = 0;
       this.partylistSeats = 0;
+      this.partylistSeatsAll = 0;
       this.ranking = 0;
       this.totalVote = null;
     }

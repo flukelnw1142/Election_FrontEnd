@@ -36,8 +36,10 @@ export interface PartySeatCountList {
   partyID: number;
   partyName: string;
   zone_seats: number;
+  zone_seat_all: number;
   total_party_votes: number;
   partylist_seats: number;
+  partylist_seats_all: number;
   ranking: number;
 }
 

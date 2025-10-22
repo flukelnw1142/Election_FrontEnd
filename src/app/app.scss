@@ -1,61 +1,103 @@
 .header-row {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  min-height: 70px;
+  background: #000;
 }
 
 .logo-image {
-    margin-top: 10px;
-    padding: 10px;
-    max-width: 100%;
-    max-height: 60px;
-    object-fit: contain;
+  max-height: 60px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .voting-status-desktop {
-    padding: 5px 15px;
-    display: flex;
-    align-items: center;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  font-family: 'Sarabun', sans-serif;
 }
 
-.status-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+.status-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.875rem;
+  color: white;
 }
 
-.updated-at,
-.tg {
+.row {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.left-cell {
+  width: 110px;
+  padding-right: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  .label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+  }
+
+  .time {
     color: white;
-    font-size: 14px;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
 }
 
-.updated-at .field {
-    display: flex;
-    gap: 5px;
+.divider {
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
-.tg {
-    display: flex;
-    gap: 5px;
+.right-cell {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  white-space: nowrap;
+  min-width: 0;
 }
 
-.tg_pfx {
-    font-weight: bold;
+.prefix {
+  color: white;
+  font-weight: 800;
+  font-size: 0.875rem;
 }
 
-.total .field {
-    display: inline-flex;
-    gap: 5px;
-    margin-right: 10px;
+.type {
+  font-weight: bold;
+  font-size: 0.875rem;
 }
+.type.zone { color: #FFD700; }  
+.type.party { color: #63e6ab; }
 
-.label,
 .value {
-    color: white;
+  color: white;
+  font-weight: bold;
+  font-size: 0.875rem;
 }
 
-.tv,
-.ti_bf {
-    display: inline;
+.unit {
+  color: white;
+  font-size: 0.8rem;
+}
+
+.percent {
+  color: white;
+  font-size: 0.8rem;
 }

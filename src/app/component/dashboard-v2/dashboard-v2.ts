@@ -16,7 +16,7 @@ import { firstValueFrom } from 'rxjs';
 import { Color, PartySeatCountList } from '../dashboard/dashboardInterface';
 import { DashboardService } from '../dashboard/service/dashboardservice';
 import { CommonModule } from '@angular/common';
-
+import * as _ from 'lodash'; // เพิ่มบรรทัดนี้
 @Component({
   selector: 'app-dashboard-v2',
   standalone: true,
@@ -40,7 +40,13 @@ export class DashboardV2 implements OnInit {
   partySeatCountsList: PartySeatCountList[] = [];
   totalSeats: number = 0;
   partyColorMap: { [partyKeyword: string]: Color } = {};
-
+  private currentHoveredParty: string | null = null;
+  private debounceHover = _.debounce((partyName: string) => {
+    if (this.currentHoveredParty !== partyName) {
+      this.currentHoveredParty = partyName;
+      this.highlightParty(partyName);
+    }
+  }, 50);
   async ngOnInit(): Promise<void> {
     this.partyColorMap = await firstValueFrom(this._dashboard.getPartyColors());
     this.partySeatCountsList = await firstValueFrom(
@@ -139,41 +145,22 @@ export class DashboardV2 implements OnInit {
     const target = event.target as SVGElement;
 
     if (target && target.id && target.id.startsWith('circle-')) {
-      const circleId = target.id;
-      const index = parseInt(circleId.replace('circle-', ''), 10);
+      const hoveredParty = target.getAttribute('data-party');
 
-      let seatCounter = 0;
-      let foundParty = null;
-
-      for (const p of this.partySeatCountsList) {
-        const seats = p.zone_seats + p.partylist_seats;
-        seatCounter += seats;
-
-        if (index <= seatCounter) {
-          foundParty = p;
-          this.tooltipText = p.partyName;
-          break;
+      if (hoveredParty) {
+        const party = this.partySeatCountsList.find(p => p.partyName === hoveredParty);
+        if (party) {
+          this.tooltipText = party.partyName;
+          this.tooltipSeat = (party.zone_seats + party.partylist_seats).toString();
+          this.tooltipX = event.clientX + 10;
+          this.tooltipY = event.clientY + 10;
+          this.tooltipVisible = true;
+          this.debounceHover(hoveredParty);
+          return;
         }
       }
-      // console.log("foundParty : ", foundParty);
-
-      if (foundParty) {
-        const seats = foundParty.zone_seats + foundParty.partylist_seats;
-        this.tooltipSeat = seats.toString();
-
-        // เน้นพรรคนี้ + จางพรรคอื่น
-        this.highlightParty(foundParty.partyName);
-      }
-
-      this.tooltipX = event.clientX + 10;
-      this.tooltipY = event.clientY + 10;
-      this.tooltipVisible = true;
-    } else {
-      this.resetHighlight();
-      this.tooltipVisible = false;
-      this.tooltipText = '';
-      this.tooltipSeat = '';
     }
+
   }
 
   highlightParty(partyName: string): void {
@@ -210,7 +197,19 @@ export class DashboardV2 implements OnInit {
 
   hideTooltip() {
     this.tooltipVisible = false;
-    this.resetHighlight();
+  }
+
+  onSvgLeave(): void {
+    setTimeout(() => {
+      this.tooltipVisible = false;
+      this.tooltipText = '';
+      this.tooltipSeat = '';
+
+      if (this.currentHoveredParty !== null) {
+        this.currentHoveredParty = null;
+        this.resetHighlight();
+      }
+    }, 50);
   }
 
   onSvgClick(event: MouseEvent): void {

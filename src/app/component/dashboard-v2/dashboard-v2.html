@@ -1,7 +1,8 @@
 <!-- <div class="svg-container"> -->
 <div>
-  <div #svgContainer [innerHTML]="svgContent" (mousemove)="onSvgHover($event)" (mouseleave)="hideTooltip()"
-    (click)="onSvgClick($event)"></div>
+  <div #svgContainer [innerHTML]="svgContent" (mousemove)="onSvgHover($event)" (mouseleave)="onSvgLeave()"
+    (click)="onSvgClick($event)">
+  </div>
 </div>
 
 <div *ngIf="tooltipVisible && tooltipText !== '' " class="custom-tooltip"

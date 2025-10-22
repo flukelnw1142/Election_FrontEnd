@@ -49,6 +49,7 @@
     "@types/d3": "^7.4.3",
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
+    "@types/lodash": "^4.17.20",
     "@types/node": "^20.17.19",
     "jasmine-core": "~5.8.0",
     "karma": "~6.4.0",

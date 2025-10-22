@@ -377,12 +377,15 @@
                     <div class="tab-content" style="margin-top: 20px;">
                         <div *ngIf=" activeTab==='district'">
                             <div *ngIf="detailWinnerZonePerRegion?.length === 0"
-                                style="font-size: 1rem; text-align: end; color: #ffffffcb; padding-bottom: .5rem;">
-                                <p>จำนวนหน่วยที่นับไปแล้ว : {{detailWinnerZonePerProvince[0]?.candidates[0].progress ||
-                                    ""}} %</p>
-                                <p>นับคะแนนแล้ว :
+                                style="text-align: end; color: #929292; padding-bottom: .5rem;">
+                                <p style="font-size: 1rem;">จำนวนหน่วยที่นับไปแล้ว :
                                     {{formatTotalVotes(detailWinnerZonePerProvince[0]?.candidates[0].total_votes_in_area
                                     )|| ""}}
+                                </p>
+                                <p>นับคะแนนแล้ว :
+                                    <span style="font-size: 1.1rem; font-weight: 500; color: #ffffff;">
+                                        {{detailWinnerZonePerProvince[0]?.candidates[0].progress ||""}} %
+                                    </span>
                                 </p>
                             </div>
                             <!-- CLICK REGION -->
@@ -570,9 +573,15 @@
                             </div>
                             <div class="header-table">
                                 <p style="align-self: end;"> อันดับ</p>
-                                <div style="font-size: 1rem; text-align: end;">
-                                    <p>จำนวนหน่วยที่นับไปแล้ว : {{progress}} %</p>
-                                    <p>นับคะแนนแล้ว : {{formatTotalVotes(totalvoteZone)}}</p>
+                                <div style=" text-align: end;">
+                                    <p style="font-size: 1rem;">
+                                        จำนวนหน่วยที่นับไปแล้ว : {{formatTotalVotes(totalvoteZone)}}
+                                    </p>
+                                    <p>นับคะแนนแล้ว :
+                                        <span style="font-size: 1.1rem; font-weight: 500; color: #ffffff;">
+                                            {{progress}} %
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                             <hr>
@@ -617,9 +626,15 @@
                             </div>
                             <div class="header-table">
                                 <p style="align-self: end;"> อันดับ</p>
-                                <div style="font-size: 1rem; text-align: end;">
-                                    <p>จำนวนหน่วยที่นับไปแล้ว : {{progress_party}} %</p>
-                                    <p>นับคะแนนแล้ว : {{formatTotalVotes(totalvoteZone_party)}}</p>
+                                <div style="text-align: end;">
+                                    <p style="font-size: 1rem;">จำนวนหน่วยที่นับไปแล้ว :
+                                        {{formatTotalVotes(totalvoteZone_party)}}
+                                    </p>
+                                    <p>นับคะแนนแล้ว :
+                                        <span style="font-size: 1.1rem; font-weight: 500; color: #ffffff;">
+                                            {{progress_party}} %
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                             <hr>
@@ -748,8 +763,8 @@
                                         </p>
                                         <p style="font-size: 1.3rem; color: #000;">คะแนน: {{ candidate.totalVotes
                                             |number }}
-                                            <span
-                                                style="font-weight: 300; color: #3f3f3f; font-size:medium;">({{candidate.vote_percentage}}%)</span>
+                                            <span style="font-weight: 300; color: #3f3f3f; font-size:medium;">(คิดเป็น
+                                                {{candidate.vote_percentage}}%)</span>
                                         </p>
                                     </div>
                                 </div>

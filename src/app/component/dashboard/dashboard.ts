@@ -950,7 +950,7 @@ export class Dashboard implements OnInit {
   closeDialog() {
     this.STACK_MODAL.pop();
     const previous = this.STACK_MODAL[this.STACK_MODAL.length - 1];
-    console.log(previous);
+    // console.log(previous);
     if (previous) {
       if (previous.page === 'show-dashboard-party') {
         this.onPartySelected(previous.partyName);
@@ -971,7 +971,6 @@ export class Dashboard implements OnInit {
           .catch((error) => {
             console.error('Error loading SVG:', error);
           });
-        console.log(this.allWinners);
       }
     }
     // this.clickOnPopup !== ''
@@ -1026,6 +1025,7 @@ export class Dashboard implements OnInit {
     //       console.error('Error loading SVG:', error);
     //     });
     // }
+    console.log('STACK_MODAL', this.STACK_MODAL);
   }
 
   getPartylistSeatsArray(): number[] {
@@ -1223,7 +1223,7 @@ export class Dashboard implements OnInit {
       })
       .then(() => this.cd.markForCheck())
       .catch((error) => console.error('Error loading SVG:', error));
-    console.log(this.STACK_MODAL);
+    console.log('STACK_MODAL', this.STACK_MODAL);
   }
   // Click PartyListAndPartyZone
   onClickPartyListAndPartyZone(partyName: string, command: string) {
@@ -1249,13 +1249,21 @@ export class Dashboard implements OnInit {
     this.clickOnPopup = this.selectedParty;
     this.selectedParty = '';
 
-    console.log('partyName', partyName);
+    // console.log('partyName', partyName);
     this.onZoneSeatPerParty(partyName);
     this.onPartyListSeatPerParty(partyName);
-    console.log(this.STACK_MODAL);
+    console.log('STACK_MODAL', this.STACK_MODAL);
   }
   // Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
+    if (
+      this.STACK_MODAL.length === 0 ||
+      this.STACK_MODAL[this.STACK_MODAL.length - 1].page !== 'show-province-all'
+    ) {
+      this.STACK_MODAL.push({
+        page: 'show-province-all',
+      });
+    }
     this.detailDistrict = [];
 
     const target = event.target as SVGElement;
@@ -1354,8 +1362,8 @@ export class Dashboard implements OnInit {
   }
   // Click เขต
   onClickDistrict(districtId: string) {
-    console.log('onClickDistrict---------------------');
-    console.log('districtId', districtId);
+    // console.log('onClickDistrict---------------------');
+    // console.log('districtId', districtId);
     if (this.selectedPartyListAndZoneSeat !== '') {
       this.keepPartyListAndZoneSeat = this.selectedPartyListAndZoneSeat;
       this.selectedPartyListAndZoneSeat = '';
@@ -1364,6 +1372,7 @@ export class Dashboard implements OnInit {
   }
   // Click จังหวัด
   onClickProvince(provinceName: string) {
+    // console.log('onClickProvince---------------------');
     this.activeTab = 'partyList';
     this.handleProvinceClick(provinceName);
   }
@@ -1454,7 +1463,7 @@ export class Dashboard implements OnInit {
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY Party
   private onZoneSeatPerParty(partyName: string) {
     this._dashboard.getWinnerZoneByPartyName(partyName).subscribe((data) => {
-      console.log('onZoneSeatPerParty', data);
+      // console.log('onZoneSeatPerParty', data);
       this.detailWinnerZonePerParty = data;
       this.totalVoteZoneSeat = data[0].total_votes_all;
       this.cd.markForCheck();
@@ -1463,7 +1472,7 @@ export class Dashboard implements OnInit {
   // Data แสดงข้อมูล ส.ส.บัญชีรายชื่อ BY Party
   private onPartyListSeatPerParty(partyName: string) {
     this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
-      console.log('onPartyListSeatPerParty', data);
+      // console.log('onPartyListSeatPerParty', data);
       this.detailPartyListPerPartyName = data;
       this.cd.markForCheck();
     });
@@ -1475,7 +1484,7 @@ export class Dashboard implements OnInit {
       (p) => p.PARTY_NAME === this.partyName
     );
     this.partyBackgroundColor = party?.COLOR || '#fefdfd';
-    console.log(selectedParty);
+    // console.log(selectedParty);
   }
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY District
@@ -1496,7 +1505,7 @@ export class Dashboard implements OnInit {
     this.detailWinnerZonePerDistrict = [];
 
     this._dashboard.getPartyListForDistrict(areaId).subscribe((data) => {
-      console.log('onWinnerPartyByDistrict', data);
+      // console.log('onWinnerPartyByDistrict', data);
       this.detailWinnerPartyPerDistrict = data;
       // this.detailWinnerZonePerDistrict = data;
       this.progress_party = data[0].progress;
@@ -1541,6 +1550,8 @@ export class Dashboard implements OnInit {
           }
         );
 
+        // console.log("detailWinnerZonePerProvince",this.detailWinnerZonePerProvince)
+
         this.cd.markForCheck();
       });
   }
@@ -1551,17 +1562,20 @@ export class Dashboard implements OnInit {
 
       const groupedMap = new Map<
         number,
-        { areaNo: number; Province: string; parties: any[] }
+        { areaNo: number; Province: string; districtId: string; parties: any[] }
       >();
 
-      data.forEach((item: { areaNo: any; provName: string }) => {
+      data.forEach((item: { areaNo: any; provName: string; DistricID: string; }) => {
+        // console.log(item)
         const areaNo = item.areaNo;
         const province = item.provName || '';
+        const districtId = item.DistricID
 
         if (!groupedMap.has(areaNo)) {
           groupedMap.set(areaNo, {
             areaNo,
             Province: province,
+            districtId, 
             parties: [],
           });
         }
@@ -1576,7 +1590,7 @@ export class Dashboard implements OnInit {
 
       this.detailWinnerPartyPerProvince = Array.from(groupedMap.values());
 
-      console.log(this.detailWinnerPartyPerProvince);
+      // console.log(this.detailWinnerPartyPerProvince);
       this.cd.markForCheck();
     });
   }
@@ -1652,10 +1666,10 @@ export class Dashboard implements OnInit {
 
       this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
 
-      console.log(
-        'detailWinnerPartyPerRegion',
-        this.detailWinnerPartyPerRegion
-      );
+      // console.log(
+      //   'detailWinnerPartyPerRegion',
+      //   this.detailWinnerPartyPerRegion
+      // );
       this.cd.markForCheck();
     });
   }
@@ -1694,6 +1708,7 @@ export class Dashboard implements OnInit {
 
     this.tooltipVisible = false;
     this.hideMagnifier();
+    console.log('STACK_MODAL', this.STACK_MODAL);
   }
   // Data จังหวัด
   private handleProvinceClick(provinceName: string) {
@@ -1717,6 +1732,7 @@ export class Dashboard implements OnInit {
     this.onWinnerZoneByProvince(provinceName);
     this.loadAndSetRegionSvg(provinceName);
     this.onWinnerPartyByProvince(provinceName);
+    console.log('STACK_MODAL', this.STACK_MODAL);
   }
 
   /**

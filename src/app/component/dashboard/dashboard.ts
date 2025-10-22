@@ -991,6 +991,7 @@ export class Dashboard implements OnInit {
     this.tooltipVisible = false;
     this.hideMagnifier();
     this.hideTooltip();
+    this.activeTab = 'district';
     // const status = document.getElementsByClassName(
     //   'status-container'
     // )[0] as HTMLElement;
@@ -1333,7 +1334,7 @@ export class Dashboard implements OnInit {
         const provinceName = (target.textContent || '').trim();
         // const provinceId = target.id;
 
-        this.activeTab = 'district';
+        // this.activeTab = 'district';
         this.handleProvinceClick(provinceName);
         this.clickOnPopup = this.selectedParty;
         this.selectedParty = '';
@@ -1404,7 +1405,7 @@ export class Dashboard implements OnInit {
   // Click จังหวัด
   onClickProvince(provinceName: string) {
     // console.log('onClickProvince---------------------');
-    this.activeTab = 'partyList';
+    // this.activeTab = 'partyList';
     this.handleProvinceClick(provinceName);
   }
   // Click เขต / จังหวัด บน SVG (ในแต่ละภาค)
@@ -1436,7 +1437,7 @@ export class Dashboard implements OnInit {
             .querySelector('text')
             ?.textContent?.trim();
           if (provinceName) {
-            this.activeTab = 'district';
+            // this.activeTab = 'district';
             this.handleProvinceClick(provinceName);
           }
 
@@ -1456,14 +1457,26 @@ export class Dashboard implements OnInit {
   }
   // Click ภูมิภาค
   async onRegionSelect(region: string) {
+    console.log('region', region);
     if (region === 'กรุงเทพมหานคร') {
       this.handleProvinceClick('กรุงเทพมหานคร');
+      const svgText = await this.loadSvgByRegion(region);
+      this.onWinnerPartyByRegion(region).then(() => {
+        this.processSvgForRegion(svgText).then((processedSvg) => {
+          this.zone.run(() => {
+            this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+              processedSvg.outerHTML
+            );
+            this.cd.markForCheck();
+          });
+        });
+      });
       return;
     }
 
-    this.activeTab = 'district';
+    // this.activeTab = 'district';
     this.onWinnerZoneByRegion(region);
-    this.onWinnerPartyByRegion(region);
+    // this.onWinnerPartyByRegion(region); // เรียกค่า partyList
 
     this.detailWinnerZonePerProvince = [];
     this.detailWinnerPartyPerProvince = [];
@@ -1474,16 +1487,27 @@ export class Dashboard implements OnInit {
     this.selectedRegion = region;
     const svgText = await this.loadSvgByRegion(region);
 
-    // Process SVG และได้ SVG element ที่ process แล้ว
-    const processedSvg = await this.processSvgForRegion(svgText);
-
-    // Update UI
-    this.zone.run(() => {
-      this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
-        processedSvg.outerHTML
-      );
-      this.cd.markForCheck();
+    this.onWinnerPartyByRegion(region).then(() => {
+      this.processSvgForRegion(svgText).then((processedSvg) => {
+        this.zone.run(() => {
+          this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+            processedSvg.outerHTML
+          );
+          this.cd.markForCheck();
+        });
+      });
     });
+
+    // // Process SVG และได้ SVG element ที่ process แล้ว
+    // const processedSvg = await this.processSvgForRegion(svgText);
+
+    // // Update UI
+    // this.zone.run(() => {
+    //   this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+    //     processedSvg.outerHTML
+    //   );
+    //   this.cd.markForCheck();
+    // });
   }
 
   /**
@@ -1677,47 +1701,99 @@ export class Dashboard implements OnInit {
     });
   }
   // Data แสดงข้อมูล พรรค 2 อันดับแรก ของแต่ละจังหวัด BY Region
-  private onWinnerPartyByRegion(region: string) {
-    this._dashboard.getWinnerPartyByRegionName(region).subscribe((data) => {
-      // console.log('onWinnerPartyByRegion', data);
-      const groupedMap = new Map<
-        string,
-        { Province: string; areaNo: number; parties: any[] }
-      >();
+  // private onWinnerPartyByRegion(region: string) {
+  //   this._dashboard.getWinnerPartyByRegionName(region).subscribe((data) => {
+  //     // console.log('onWinnerPartyByRegion', data);
+  //     const groupedMap = new Map<
+  //       string,
+  //       { Province: string; areaNo: number; parties: any[] }
+  //     >();
 
-      data.forEach((item: { provName: any; areaNo: any }) => {
-        const key = `${item.provName}-${item.areaNo}`;
-        if (!groupedMap.has(key)) {
-          groupedMap.set(key, {
-            Province: item.provName,
-            areaNo: item.areaNo,
-            parties: [],
+  //     data.forEach((item: { provName: any; areaNo: any }) => {
+  //       const key = `${item.provName}-${item.areaNo}`;
+  //       if (!groupedMap.has(key)) {
+  //         groupedMap.set(key, {
+  //           Province: item.provName,
+  //           areaNo: item.areaNo,
+  //           parties: [],
+  //         });
+  //       }
+  //       groupedMap.get(key)!.parties.push(item);
+  //     });
+
+  //     this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
+
+  //     const resultSVG: { [id: string]: string } = {};
+
+  //     this.detailWinnerPartyPerRegion.forEach((area: { parties: any[] }) => {
+  //       const topParty = area.parties.find((p) => p.rank === 1);
+  //       if (topParty) {
+  //         resultSVG[topParty.DistricID] = topParty.partyName;
+  //       }
+  //     });
+
+  //     this.allWinnersParty = resultSVG;
+
+  //     console.log(
+  //       'detailWinnerPartyPerRegion',
+  //       this.detailWinnerPartyPerRegion,
+  //       resultSVG
+  //     );
+  //     this.cd.markForCheck();
+  //   });
+  // }
+  private onWinnerPartyByRegion(region: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this._dashboard.getWinnerPartyByRegionName(region).subscribe({
+        next: (data) => {
+          const groupedMap = new Map<
+            string,
+            { Province: string; areaNo: number; parties: any[] }
+          >();
+
+          data.forEach((item: { provName: any; areaNo: any }) => {
+            const key = `${item.provName}-${item.areaNo}`;
+            if (!groupedMap.has(key)) {
+              groupedMap.set(key, {
+                Province: item.provName,
+                areaNo: item.areaNo,
+                parties: [],
+              });
+            }
+            groupedMap.get(key)!.parties.push(item);
           });
-        }
-        groupedMap.get(key)!.parties.push(item);
+
+          this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
+
+          const resultSVG: { [id: string]: string } = {};
+
+          this.detailWinnerPartyPerRegion.forEach(
+            (area: { parties: any[] }) => {
+              const topParty = area.parties.find((p) => p.rank === 1);
+              if (topParty) {
+                resultSVG[topParty.DistricID] = topParty.partyName;
+              }
+            }
+          );
+
+          this.allWinnersParty = resultSVG;
+
+          console.log(
+            'detailWinnerPartyPerRegion',
+            this.detailWinnerPartyPerRegion,
+            resultSVG
+          );
+
+          this.cd.markForCheck();
+          resolve(); // ✅ บอกว่าโหลดเสร็จแล้ว
+        },
+        error: (err) => {
+          reject(err); // ถ้า error
+        },
       });
-
-      this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
-
-      const resultSVG: { [id: string]: string } = {};
-
-      this.detailWinnerPartyPerRegion.forEach((area: { parties: any[] }) => {
-        const topParty = area.parties.find((p) => p.rank === 1);
-        if (topParty) {
-          resultSVG[topParty.DistricID] = topParty.partyName;
-        }
-      });
-
-      this.allWinnersParty = resultSVG;
-
-      // console.log(
-      //   'detailWinnerPartyPerRegion',
-      //   this.detailWinnerPartyPerRegion,
-      //   resultSVG
-      // );
-      this.cd.markForCheck();
     });
   }
+
   // Data เขต
   private handleDistrictClick(districtId: string) {
     if (
@@ -1790,11 +1866,11 @@ export class Dashboard implements OnInit {
     try {
       // หา region จาก province ก่อน
       const region = await this.findRegionByProvince(province);
+      this.onWinnerPartyByRegion(region); // เรียกค่า partyList
 
       if (region) {
         this.selectedRegion = region;
         const svgText = await this.loadSvgByRegion(region);
-        this.onWinnerPartyByRegion(region);
 
         // Process SVG และได้ SVG element ที่ process แล้ว
         const processedSvg = await this.processSvgForRegion(svgText);
@@ -1847,20 +1923,21 @@ export class Dashboard implements OnInit {
     });
 
     // console.log('allWinners:', this.allWinners);
-    // console.log('activeTab:', this.activeTab);
+    console.log('activeTab:', this.activeTab);
 
     let districtIds;
 
     if (this.activeTab === 'partyList') {
-      // console.log('allWinnersParty', this.allWinnersParty);
+      console.log('allWinnersParty', this.allWinnersParty);
       districtIds = Object.keys(this.allWinnersParty);
     } else {
+      console.log('allWinners:', this.allWinners);
       districtIds = Object.keys(this.allWinners);
     }
 
-    console.log(districtIds);
+    // console.log(districtIds);
 
-    // console.log('districtIds:', districtIds);
+    console.log('districtIds:', districtIds);
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;

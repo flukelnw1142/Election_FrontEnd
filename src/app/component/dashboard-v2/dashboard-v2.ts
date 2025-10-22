@@ -6,6 +6,8 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -24,7 +26,7 @@ import { CommonModule } from '@angular/common';
 })
 export class DashboardV2 implements OnInit {
   svgContent: SafeHtml | null = null;
-
+  @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef<HTMLDivElement>;
   constructor(
     private http: HttpClient,
     private sanitizer: DomSanitizer,
@@ -49,49 +51,11 @@ export class DashboardV2 implements OnInit {
       return sum + p.zone_seats + p.partylist_seats;
     }, 0);
 
-    // console.log('partySeatCountsList', this.partySeatCountsList);
-    // console.log('totalSeats', this.totalSeats);
     if (isPlatformBrowser(this.platformId)) {
       await this.loadSvg();
     }
   }
 
-  // async loadSvg() {
-  //   console.log('>> SVG Loaded _V2');
-  //   try {
-  //     const rawSvg = await firstValueFrom(
-  //       this.http.get('assets/halfCircle500.svg', { responseType: 'text' })
-  //     );
-
-  //     const parser = new DOMParser();
-  //     const svgDoc = parser.parseFromString(rawSvg, 'image/svg+xml');
-  //     const svg = svgDoc.documentElement;
-
-  //     svg.setAttribute('width', '1000');
-  //     svg.setAttribute('height', '800');
-
-  //     for (let i = 1; i <= this.totalSeats; i++) {
-  //       const circle = svg.querySelector(`#circle-${i}`);
-  //       if (circle) {
-  //         let fill = 'gray';
-  //         if (i <= 120) fill = 'orange';
-  //         else if (i <= 260) fill = 'red';
-  //         else if (i <= 280) fill = 'blue';
-  //         circle.setAttribute('fill', fill);
-  //       }
-  //     }
-
-  //     const serializer = new XMLSerializer();
-  //     const modifiedSvg = serializer.serializeToString(svg);
-  //     this.svgContent = this.sanitizer.bypassSecurityTrustHtml(modifiedSvg);
-
-  //     setTimeout(() => {
-  //       this.cdr.markForCheck();
-  //     }, 0);
-  //   } catch (e) {
-  //     console.error('❌ SVG Load Error:', e);
-  //   }
-  // }
 
   async loadSvg() {
     try {
@@ -102,9 +66,6 @@ export class DashboardV2 implements OnInit {
       const parser = new DOMParser();
       const svgDoc = parser.parseFromString(rawSvg, 'image/svg+xml');
       const svg = svgDoc.documentElement;
-
-      // svg.setAttribute('width', '1000');
-      // svg.setAttribute('height', '800');
 
       // ลบ width/height เดิมออก
       svg.removeAttribute('width');
@@ -138,6 +99,8 @@ export class DashboardV2 implements OnInit {
           const circle = svg.querySelector(`#circle-${circleIndex}`);
           if (circle) {
             circle.setAttribute('fill', fillColor);
+            circle.setAttribute('data-party', partyName);
+            circle.setAttribute('class', 'seat-circle');
           }
           circleIndex++;
         }
@@ -149,7 +112,8 @@ export class DashboardV2 implements OnInit {
 
       setTimeout(() => {
         this.cdr.markForCheck();
-      }, 0);
+        this.resetHighlight();
+      }, 100);
     } catch (e) {
       console.error('❌ SVG Load Error:', e);
     }
@@ -186,32 +150,67 @@ export class DashboardV2 implements OnInit {
         seatCounter += seats;
 
         if (index <= seatCounter) {
-          foundParty = p; 
+          foundParty = p;
           this.tooltipText = p.partyName;
           break;
         }
       }
+      console.log("foundParty : ", foundParty);
 
-  
       if (foundParty) {
         const seats = foundParty.zone_seats + foundParty.partylist_seats;
         this.tooltipSeat = seats.toString();
-      } else {
-        this.tooltipSeat = '0'; 
+
+        // เน้นพรรคนี้ + จางพรรคอื่น
+        this.highlightParty(foundParty.partyName);
       }
 
       this.tooltipX = event.clientX + 10;
       this.tooltipY = event.clientY + 10;
       this.tooltipVisible = true;
     } else {
+      this.resetHighlight();
       this.tooltipVisible = false;
       this.tooltipText = '';
-      this.tooltipSeat = ''; 
+      this.tooltipSeat = '';
     }
+  }
+
+  highlightParty(partyName: string): void {
+    if (!this.svgContainer) return;
+
+    const svgEl = this.svgContainer.nativeElement.querySelector('svg');
+    if (!svgEl) return;
+
+    const circles = svgEl.querySelectorAll('.seat-circle');
+
+    circles.forEach((circle: any) => {
+      const circleParty = circle.getAttribute('data-party');
+      if (circleParty === partyName) {
+        circle.style.opacity = '1';
+        circle.style.filter = 'brightness(1.2)';
+      } else {
+        circle.style.opacity = '0.2';
+      }
+    });
+  }
+
+  resetHighlight(): void {
+    if (!this.svgContainer) return;
+
+    const svgEl = this.svgContainer.nativeElement.querySelector('svg');
+    if (!svgEl) return;
+
+    const circles = svgEl.querySelectorAll('.seat-circle');
+    circles.forEach((circle: any) => {
+      circle.style.opacity = '1';
+      circle.style.filter = 'brightness(1)';
+    });
   }
 
   hideTooltip() {
     this.tooltipVisible = false;
+    this.resetHighlight();
   }
 
   onSvgClick(event: MouseEvent): void {

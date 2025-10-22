@@ -26,6 +26,11 @@
   z-index: 1000;
 }
 
-svg{
+svg {
   width: 109% !important;
+}
+
+.seat-circle {
+  transition: opacity 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
 }

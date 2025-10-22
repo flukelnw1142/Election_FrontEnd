@@ -298,7 +298,7 @@
                                     <div *ngFor="let district of detailWinnerZonePerProvince; let i = index"
                                         class="candidate-item">
                                         <div>
-                                            <p style="font-size: 1.rem; cursor: pointer;"
+                                            <p style="font-size: 1rem; cursor: pointer;"
                                                 (click)="onClickDistrict(district.districtId)"> {{ district.province
                                                 }} เขต {{ district.zone}}
                                             </p>
@@ -376,7 +376,9 @@
                                 <div #scrollContainer class="scroll-container" style="height: 70vh;">
                                     <div *ngFor="let district of detailWinnerPartyPerProvince" class="candidate-item">
                                         <div>
-                                            <p style="font-size: 1rem;">
+                                            <p style="font-size: 1rem; cursor: pointer;"
+                                                (click)="onClickDistrict(district.districtId)">
+                                                <!-- <p style="font-size: 1rem; cursor: pointer;"> -->
                                                 {{district.Province}} เขต {{ district.areaNo }}
                                             </p>
 

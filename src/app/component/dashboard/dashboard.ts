@@ -1305,85 +1305,45 @@ export class Dashboard implements OnInit {
     }
 
     if (
-      target.tagName.toLowerCase() === 'text' ||
-      target.tagName.toLowerCase() === 'tspan'
+      target.tagName === 'path' ||
+      target.tagName === 'text' ||
+      (target instanceof SVGTSpanElement &&
+        /^\d+$/.test((target.textContent || '').trim()))
     ) {
-      const textElement =
-        target.tagName.toLowerCase() === 'text'
-          ? target
-          : (target.parentElement as unknown as SVGElement);
+      let parent = target.parentNode as SVGElement;
+      if (target.tagName === 'tspan') {
+        const textEl = parent;
+        parent = textEl?.parentNode as SVGElement;
+      }
 
-      const textContent = textElement?.textContent?.trim() || '';
-
-      console.log(textContent);
-
-      // ✅ ถ้าเป็นตัวเลข (เลขล้วน) → ส่งต่อไปเข้าเงื่อนไข group/path ด้านล่าง
-      if (/^\d+$/.test(textContent)) {
-        // ไม่ return
-      } else {
-        /**
-         * CLICK PROVINCE
-         * ✅ เงื่อนไขแรก: คลิกบน <text> หรือ <tspan> ที่ไม่ใช่ตัวเลข
-         */
-        this.selectedProvince = textContent;
+      if (
+        parent &&
+        parent.tagName === 'g' &&
+        parent.id &&
+        parent.id.includes('_')
+      ) {
+        this.zoneId = parent.getAttribute('id');
         this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
-        this.activeTab = 'district';
-        this.handleProvinceClick(this.selectedProvince);
-        return;
+
+        //CLICK-SVG
+        this.handleDistrictClick(this.zoneId || '');
+
+        this.clickOnPopup = this.selectedParty;
+        this.selectedParty = '';
+      }
+    } else {
+      // กรณีอื่น เช่น คลิกบนชื่อจังหวัด ที่ไม่ใช่ตัวเลขหรือ path
+      const group = target.closest('g') as SVGElement | null;
+      if (group?.id === 'label_province') {
+        const provinceName = (target.textContent || '').trim();
+        // const provinceId = target.id;
+
+        // this.activeTab = 'district';
+        this.handleProvinceClick(provinceName);
+        this.clickOnPopup = this.selectedParty;
+        this.selectedParty = '';
       }
     }
-
-    /**
-     * CLICK DISTRICT
-     * ✅ เงื่อนไขที่สอง: คลิกบน path หรือ g (กรณีคลิกบน path โดยตรง หรือตัวเลข)
-     */
-    const group = this.findParentGroup(target);
-
-    if (group && group.id && group.getAttribute('data-party')) {
-      this.zoneId = group.id;
-      this.handleDistrictClick(this.zoneId);
-    }
-
-    // if (
-    //   target.tagName === 'path' ||
-    //   target.tagName === 'text' ||
-    //   (target instanceof SVGTSpanElement &&
-    //     /^\d+$/.test((target.textContent || '').trim()))
-    // ) {
-    //   let parent = target.parentNode as SVGElement;
-    //   if (target.tagName === 'tspan') {
-    //     const textEl = parent;
-    //     parent = textEl?.parentNode as SVGElement;
-    //   }
-
-    //   if (
-    //     parent &&
-    //     parent.tagName === 'g' &&
-    //     parent.id &&
-    //     parent.id.includes('_')
-    //   ) {
-    //     this.zoneId = parent.getAttribute('id');
-    //     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
-
-    //     //CLICK-SVG
-    //     this.handleDistrictClick(this.zoneId || '');
-
-    //     this.clickOnPopup = this.selectedParty;
-    //     this.selectedParty = '';
-    //   }
-    // } else {
-    //   // กรณีอื่น เช่น คลิกบนชื่อจังหวัด ที่ไม่ใช่ตัวเลขหรือ path
-    //   const group = target.closest('g') as SVGElement | null;
-    //   if (group?.id === 'label_province') {
-    //     const provinceName = (target.textContent || '').trim();
-    //     // const provinceId = target.id;
-
-    //     // this.activeTab = 'district';
-    //     this.handleProvinceClick(provinceName);
-    //     this.clickOnPopup = this.selectedParty;
-    //     this.selectedParty = '';
-    //   }
-    // }
   }
   // Click Zone-Seat Page 2 (ส.ส.เขต) ----
   onClickZoneSeatPerParty(party: string) {

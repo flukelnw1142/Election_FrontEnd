@@ -112,7 +112,7 @@ export class DashboardV2 implements OnInit {
 
       svg.setAttribute('viewBox', '0 0 1000 500');
       // svg.style.width = '109% !important';
-      svg.style.margin = '25px 35px';
+      svg.style.margin = '100px 35px';
       // svg.style.margin = '100px 0';
       // svg.style.marginRight = '40px';
       // svg.style.marginTop = '220px';

@@ -2,7 +2,7 @@
 <!-- <div *ngIf="selectedParty === '' && selectedDistric === '' && selectedProvince === '' && selectedPartyListAndZoneSeat === '' "> -->
 <div *ngIf="getCurrentPage('main') ">
     <div class="row">
-        <div class="col-7">
+        <div class="col-12 col-md-7">
             <div class="glass-card">
                 <!-- <div class="rainbow"> -->
                 <!-- <div class="electionBoxContainer" [hidden]="selectDashboard !== 'dashboard'">
@@ -91,7 +91,7 @@
                 <!-- </div> -->
             </div>
         </div>
-        <div class="col-5">
+        <div class="col-12 col-md-5">
             <div class="glass-card card-left">
                 <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"
                     (partyListAndPartyZone)="onClickPartyListAndPartyZone($event, '')"></app-dashboard-score-and-seat>
@@ -189,12 +189,6 @@
                     <!-- <div class="svg-container" #svgContainer> -->
                     <div [innerHTML]="svgContent"></div>
                 </div>
-                <!-- <div
-                    style="justify-content: end;display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; ">
-                    <mat-icon
-                        style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>อัปเดตล่าสุด ณ
-                    วันที่ 27 พ.ค. 66 14:10 น.
-                </div> -->
                 <div
                     style="justify-content: end;display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; ">
                     <mat-icon style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>
@@ -584,7 +578,8 @@
                                 <p style="font-size: 1.5rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}
                                     <span style="font-size: 1rem; font-weight: 300;"> ที่นั่ง</span>
                                 </p>
-                                <p style="font-size: .8rem; font-weight: 300;">{{formatTotalVotes(partySeatCounts.total_party_votes)}}
+                                <p style="font-size: .8rem; font-weight: 300;">
+                                    {{formatTotalVotes(partySeatCounts.total_party_votes)}}
                                     คะแนน
                                 </p>
                             </div>

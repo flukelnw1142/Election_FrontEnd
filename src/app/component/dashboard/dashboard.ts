@@ -330,6 +330,14 @@ export class Dashboard implements OnInit {
     svg.removeAttribute('width');
     svg.removeAttribute('height');
 
+    // if (
+    //   this.STACK_MODAL[this.STACK_MODAL.length - 1].page ===
+    //   'show-dashboard-party'
+    // ) {
+    //   svg.style.height = '80vh';
+    // } else {
+    //   svg.style.height = '82vh';
+    // }
     svg.style.height = '82vh';
     svg.style.width = 'auto';
     svg.style.margin = '20px 0';
@@ -1969,7 +1977,6 @@ export class Dashboard implements OnInit {
       console.log('allWinners:', this.allWinners);
       districtIds = Object.keys(this.allWinners);
     }
-
 
     // console.log('districtIds:', districtIds);
     for (let i = 0; i < districtIds.length; i++) {

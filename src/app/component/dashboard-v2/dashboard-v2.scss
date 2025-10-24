@@ -19,15 +19,13 @@
   object-fit: contain;
 }
 
-.svg-container {
-  // width: 100%;
-  overflow: visible !important;
-  position: relative;
-  z-index: 1000;
-}
-
-svg {
-  width: 109% !important;
+.svg-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+  width: 90%;
+  border: 1px solid transparent;
 }
 
 .seat-circle {

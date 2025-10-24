@@ -26,14 +26,15 @@ import * as _ from 'lodash'; // เพิ่มบรรทัดนี้
 })
 export class DashboardV2 implements OnInit {
   svgContent: SafeHtml | null = null;
-  @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef<HTMLDivElement>;
+  @ViewChild('svgContainer', { static: false })
+  svgContainer!: ElementRef<HTMLDivElement>;
   constructor(
     private http: HttpClient,
     private sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private _dashboard: DashboardService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
 
   @Output() partySelected = new EventEmitter<string>();
 
@@ -62,7 +63,6 @@ export class DashboardV2 implements OnInit {
     }
   }
 
-
   async loadSvg() {
     try {
       const rawSvg = await firstValueFrom(
@@ -74,16 +74,21 @@ export class DashboardV2 implements OnInit {
       const svg = svgDoc.documentElement;
 
       // ลบ width/height เดิมออก
+      // svg.removeAttribute('width');
+      // svg.removeAttribute('height');
+
       svg.removeAttribute('width');
       svg.removeAttribute('height');
+      svg.setAttribute('viewBox', '0 0 920 500'); // กำหนดตามขนาดจริงของ SVG
+      svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
 
-      svg.setAttribute('viewBox', '0 0 1000 500');
+      // svg.setAttribute('viewBox', '0 0 1000 500');
       // svg.style.width = '109% !important';
-      svg.style.margin = '100px 35px';
-      // svg.style.margin = '100px 0';
+      // svg.style.margin = '100px 35px';
+      // svg.style.margin = '0px 10px';
       // svg.style.marginRight = '40px';
       // svg.style.marginTop = '220px';
-      svg.style.height = '60vh';
+      svg.style.height = '56vh';
 
       // 🧠 STEP 1: สร้าง flat list ของชื่อพรรค
       const partySeatMap: { [partyName: string]: number } = {};
@@ -148,10 +153,14 @@ export class DashboardV2 implements OnInit {
       const hoveredParty = target.getAttribute('data-party');
 
       if (hoveredParty) {
-        const party = this.partySeatCountsList.find(p => p.partyName === hoveredParty);
+        const party = this.partySeatCountsList.find(
+          (p) => p.partyName === hoveredParty
+        );
         if (party) {
           this.tooltipText = party.partyName;
-          this.tooltipSeat = (party.zone_seats + party.partylist_seats).toString();
+          this.tooltipSeat = (
+            party.zone_seats + party.partylist_seats
+          ).toString();
           this.tooltipX = event.clientX + 10;
           this.tooltipY = event.clientY + 10;
           this.tooltipVisible = true;
@@ -160,7 +169,6 @@ export class DashboardV2 implements OnInit {
         }
       }
     }
-
   }
 
   highlightParty(partyName: string): void {

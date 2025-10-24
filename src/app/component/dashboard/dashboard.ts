@@ -95,9 +95,9 @@ export class Dashboard implements OnInit {
   totalVoteZoneSeat: number = 0;
   totalSeats: number = 0;
   zoneSeats: number = 0;
-  zoneSeatsAll: number = 0;
+  zoneSeatsAll: number = 0; // จากผู้สมัครจำนวน x คน
   partylistSeats: number = 0;
-  partylistSeatsAll: number = 0;
+  partylistSeatsAll: number = 0; // จากผู้สมัครจำนวน x คน
   ranking: number = 0;
   totalVote: any;
   selectDashboard: string = 'dashboard'; //dashboard_2
@@ -178,6 +178,8 @@ export class Dashboard implements OnInit {
           this._dashboard.getDistrictWinners()
         );
 
+        // console.log(winners);
+
         if (winners.candidates && Object.keys(winners.candidates).length > 0) {
           this.allWinners = winners.candidates;
 
@@ -220,6 +222,13 @@ export class Dashboard implements OnInit {
             this.http.get('/assets/thailand.svg', { responseType: 'text' })
           );
           await this.settingSvg(svgText, true);
+        }
+
+        if (
+          winners.candidates_party &&
+          Object.keys(winners.candidates_party).length > 0
+        ) {
+          this.allWinnersParty = winners.candidates_party;
         }
 
         this._dashboard.winners$.subscribe((winners) => {
@@ -280,6 +289,13 @@ export class Dashboard implements OnInit {
                 this.cd.detectChanges();
               });
             });
+          }
+
+          if (
+            winners.candidates_party &&
+            Object.keys(winners.candidates_party).length > 0
+          ) {
+            this.allWinnersParty = winners.candidates_party;
           }
         });
       } catch (error) {
@@ -1354,56 +1370,56 @@ export class Dashboard implements OnInit {
     }
   }
   // Click Zone-Seat Page 2 (ส.ส.เขต) ----
-  onClickZoneSeatPerParty(party: string) {
-    if (!this.isMappingComplete) {
-      return;
-    }
-    this.selectedZoneSeat = party;
-    this.clickOnPopup = this.selectedParty;
-    this.selectedParty = '';
+  // onClickZoneSeatPerParty(party: string) {
+  //   if (!this.isMappingComplete) {
+  //     return;
+  //   }
+  //   this.selectedZoneSeat = party;
+  //   this.clickOnPopup = this.selectedParty;
+  //   this.selectedParty = '';
 
-    this._dashboard.getWinnerZoneByPartyName(party).subscribe((data) => {
-      this.detailWinnerZonePerParty = data;
-      this.cd.markForCheck();
-    });
-  }
+  //   this._dashboard.getWinnerZoneByPartyName(party).subscribe((data) => {
+  //     this.detailWinnerZonePerParty = data;
+  //     this.cd.markForCheck();
+  //   });
+  // }
   // Click PartyList-Seat Page 2 (ส.ส.บัญชีรายชื่อ)  ----
-  onpartySelectedCandidate(partyName: string) {
-    if (!this.isMappingComplete) {
-      return;
-    }
-    const status = document.getElementsByClassName(
-      'status-container'
-    )[0] as HTMLElement;
-    const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
-    if (img) {
-      img.style.marginLeft = '0px';
-    }
-    if (status) {
-      status.style.display = 'none';
-    }
+  // onpartySelectedCandidate(partyName: string) {
+  //   if (!this.isMappingComplete) {
+  //     return;
+  //   }
+  //   const status = document.getElementsByClassName(
+  //     'status-container'
+  //   )[0] as HTMLElement;
+  //   const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
+  //   if (img) {
+  //     img.style.marginLeft = '0px';
+  //   }
+  //   if (status) {
+  //     status.style.display = 'none';
+  //   }
 
-    if (partyName === 'ClickCount') {
-      partyName = this.selectedParty;
-      this.clickOnPopup = this.selectedParty;
-    }
+  //   if (partyName === 'ClickCount') {
+  //     partyName = this.selectedParty;
+  //     this.clickOnPopup = this.selectedParty;
+  //   }
 
-    this.partyName = partyName;
-    this.selectedParty = '';
-    this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
-      this.detailPartyListPerPartyName = data;
-      this.cd.markForCheck();
-    });
-    const selectedParty = this.partySeatCountsList.find(
-      (p) => p.partyName === partyName
-    );
-    this.partySeatCounts = selectedParty;
-    const party = Object.values(this.partyColorMap).find(
-      (p) => p.PARTY_NAME === this.partyName
-    );
+  //   this.partyName = partyName;
+  //   this.selectedParty = '';
+  //   this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
+  //     this.detailPartyListPerPartyName = data;
+  //     this.cd.markForCheck();
+  //   });
+  //   const selectedParty = this.partySeatCountsList.find(
+  //     (p) => p.partyName === partyName
+  //   );
+  //   this.partySeatCounts = selectedParty;
+  //   const party = Object.values(this.partyColorMap).find(
+  //     (p) => p.PARTY_NAME === this.partyName
+  //   );
 
-    this.partyBackgroundColor = party?.COLOR || '#fefdfd';
-  }
+  //   this.partyBackgroundColor = party?.COLOR || '#fefdfd';
+  // }
   // Click เขต
   onClickDistrict(districtId: string) {
     // console.log('onClickDistrict---------------------');
@@ -1531,7 +1547,12 @@ export class Dashboard implements OnInit {
   private onZoneSeatPerParty(partyName: string) {
     this._dashboard.getWinnerZoneByPartyName(partyName).subscribe((data) => {
       // console.log('onZoneSeatPerParty', data);
-      this.detailWinnerZonePerParty = data;
+      // console.log('onZoneSeatPerParty', data[0].partyName);
+      if (data[0].areaID === undefined || data[0].areaID === null) {
+        this.detailWinnerZonePerParty = [];
+      } else {
+        this.detailWinnerZonePerParty = data;
+      }
       this.totalVoteZoneSeat = data[0].total_votes_all;
       this.cd.markForCheck();
     });
@@ -1659,7 +1680,10 @@ export class Dashboard implements OnInit {
 
       this.detailWinnerPartyPerProvince = Array.from(groupedMap.values());
 
-      // console.log(this.detailWinnerPartyPerProvince);
+      // console.log(
+      //   'detailWinnerPartyPerProvince',
+      //   this.detailWinnerPartyPerProvince
+      // );
       this.cd.markForCheck();
     });
   }
@@ -1777,24 +1801,23 @@ export class Dashboard implements OnInit {
 
           this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
 
-          const resultSVG: { [id: string]: string } = {};
+          // const resultSVG: { [id: string]: string } = {};
 
-          this.detailWinnerPartyPerRegion.forEach(
-            (area: { parties: any[] }) => {
-              const topParty = area.parties.find((p) => p.rank === 1);
-              if (topParty) {
-                resultSVG[topParty.DistricID] = topParty.partyName;
-              }
-            }
-          );
+          // this.detailWinnerPartyPerRegion.forEach(
+          //   (area: { parties: any[] }) => {
+          //     const topParty = area.parties.find((p) => p.rank === 1);
+          //     if (topParty) {
+          //       resultSVG[topParty.DistricID] = topParty.partyName;
+          //     }
+          //   }
+          // );
 
-          this.allWinnersParty = resultSVG;
+          // this.allWinnersParty = resultSVG;
 
-          console.log(
-            'detailWinnerPartyPerRegion',
-            this.detailWinnerPartyPerRegion,
-            resultSVG
-          );
+          // console.log(
+          //   'detailWinnerPartyPerRegion',
+          //   this.detailWinnerPartyPerRegion
+          // );
 
           this.cd.markForCheck();
           resolve(); // ✅ บอกว่าโหลดเสร็จแล้ว
@@ -1878,7 +1901,7 @@ export class Dashboard implements OnInit {
     try {
       // หา region จาก province ก่อน
       const region = await this.findRegionByProvince(province);
-      this.onWinnerPartyByRegion(region); // เรียกค่า partyList
+      // this.onWinnerPartyByRegion(region); // เรียกค่า partyList
 
       if (region) {
         this.selectedRegion = region;
@@ -1947,9 +1970,8 @@ export class Dashboard implements OnInit {
       districtIds = Object.keys(this.allWinners);
     }
 
-    // console.log(districtIds);
 
-    console.log('districtIds:', districtIds);
+    // console.log('districtIds:', districtIds);
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;

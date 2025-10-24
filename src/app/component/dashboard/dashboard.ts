@@ -329,7 +329,7 @@ export class Dashboard implements OnInit {
 
     svg.removeAttribute('width');
     svg.removeAttribute('height');
-
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     // if (
     //   this.STACK_MODAL[this.STACK_MODAL.length - 1].page ===
     //   'show-dashboard-party'
@@ -338,9 +338,11 @@ export class Dashboard implements OnInit {
     // } else {
     //   svg.style.height = '82vh';
     // }
-    svg.style.height = '82vh';
-    svg.style.width = 'auto';
-    svg.style.margin = '20px 0';
+    svg.style.height = '83dvh';
+    svg.style.margin = '1vh 0'; // เพิ่มช่องว่างบน–ล่าง
+
+    // svg.style.width = 'auto';
+    // svg.style.margin = '20px 0';
 
     const container = this.svgContainer.nativeElement;
     container.innerHTML = '';
@@ -1792,20 +1794,28 @@ export class Dashboard implements OnInit {
         next: (data) => {
           const groupedMap = new Map<
             string,
-            { Province: string; areaNo: number; parties: any[] }
+            {
+              Province: string;
+              areaNo: number;
+              districtId: string;
+              parties: any[];
+            }
           >();
 
-          data.forEach((item: { provName: any; areaNo: any }) => {
-            const key = `${item.provName}-${item.areaNo}`;
-            if (!groupedMap.has(key)) {
-              groupedMap.set(key, {
-                Province: item.provName,
-                areaNo: item.areaNo,
-                parties: [],
-              });
+          data.forEach(
+            (item: { provName: any; areaNo: any; DistricID: any }) => {
+              const key = `${item.provName}-${item.areaNo}`;
+              if (!groupedMap.has(key)) {
+                groupedMap.set(key, {
+                  Province: item.provName,
+                  areaNo: item.areaNo,
+                  districtId: item.DistricID,
+                  parties: [],
+                });
+              }
+              groupedMap.get(key)!.parties.push(item);
             }
-            groupedMap.get(key)!.parties.push(item);
-          });
+          );
 
           this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
 
@@ -1822,10 +1832,10 @@ export class Dashboard implements OnInit {
 
           // this.allWinnersParty = resultSVG;
 
-          // console.log(
-          //   'detailWinnerPartyPerRegion',
-          //   this.detailWinnerPartyPerRegion
-          // );
+          console.log(
+            'detailWinnerPartyPerRegion',
+            this.detailWinnerPartyPerRegion
+          );
 
           this.cd.markForCheck();
           resolve(); // ✅ บอกว่าโหลดเสร็จแล้ว

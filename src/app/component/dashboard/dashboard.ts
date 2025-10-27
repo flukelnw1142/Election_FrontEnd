@@ -1556,7 +1556,7 @@ export class Dashboard implements OnInit {
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY Party
   private onZoneSeatPerParty(partyName: string) {
     this._dashboard.getWinnerZoneByPartyName(partyName).subscribe((data) => {
-      // console.log('onZoneSeatPerParty', data);
+      console.log('onZoneSeatPerParty', data);
       // console.log('onZoneSeatPerParty', data[0].partyName);
       if (data[0].areaID === undefined || data[0].areaID === null) {
         this.detailWinnerZonePerParty = [];

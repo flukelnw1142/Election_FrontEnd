@@ -227,7 +227,7 @@
                             </div>
                             <!-- CLICK REGION -->
                             <div *ngIf="detailWinnerZonePerRegion?.length > 0; else showZoneData" #scrollContainer
-                                class="scroll-container" style="height: 70vh;">
+                                class="scroll-container-dt70vh" >
                                 <div *ngFor="let district of detailWinnerZonePerRegion; let i = index"
                                     class="candidate-item">
                                     <div>
@@ -264,7 +264,7 @@
                             </div>
                             <!-- CLICK PROVINCE -->
                             <ng-template #showZoneData>
-                                <div #scrollContainer class="scroll-container" style="height: 64vh; ">
+                                <div #scrollContainer class="scroll-container-dtprovince">
                                     <div *ngFor="let district of detailWinnerZonePerProvince; let i = index"
                                         class="candidate-item">
                                         <div>
@@ -304,7 +304,7 @@
                         <div *ngIf="activeTab === 'partyList'">
                             <!-- CLICK REGION -->
                             <div *ngIf="detailWinnerPartyPerRegion?.length > 0; else showPartyListData" #scrollContainer
-                                class="scroll-container" style="height: 70vh;">
+                                class="scroll-container-dt70vh" >
                                 <div *ngFor="let district of detailWinnerPartyPerRegion" class="candidate-item">
                                     <div>
                                         <p style="font-size: 1rem;" (click)="onClickDistrict(district.districtId)">
@@ -343,7 +343,7 @@
                             </div>
                             <!-- CLICK PROVINCE -->
                             <ng-template #showPartyListData>
-                                <div #scrollContainer class="scroll-container" style="height: 70vh;">
+                                <div #scrollContainer class="scroll-container-dt70vh" >
                                     <div *ngFor="let district of detailWinnerPartyPerProvince" class="candidate-item">
                                         <div>
                                             <p style="font-size: 1rem; cursor: pointer;"
@@ -424,7 +424,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <div #scrollContainer class="scroll-container" >
+                            <div #scrollContainer class="scroll-container-detail">
                                 <div *ngFor="let candidate of detailWinnerZonePerDistrict; let i = index"
                                     class="candidate-item">
 
@@ -477,7 +477,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <div #scrollContainer class="scroll-container" style="height: 58vh;">
+                            <div #scrollContainer class="scroll-container-detail">
                                 <div *ngFor="let party of  detailWinnerPartyPerDistrict; let i = index"
                                     class="candidate-item">
                                     <p class="number" [style.background]="getColor(party.partyName)">{{ i + 1 }}</p>

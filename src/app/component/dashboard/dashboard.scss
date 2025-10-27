@@ -1011,22 +1011,59 @@ PAGE 7
 .scroll-container {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 58vh !important;
-  height: 100%; // หรือใช้ max-height ตามความเหมาะสม
+  height: 100%;
   max-height: calc(100vh - 200px);
-  // width:100%;
-
-  /* ซ่อน scrollbar ทุกเบราว์เซอร์ */
   scrollbar-width: none;
-  /* Firefox */
   -ms-overflow-style: none;
-  /* IE & Edge */
 }
 
 .scroll-container::-webkit-scrollbar {
   display: none;
-  /* Chrome, Safari, Opera */
 }
+
+
+.scroll-container-detail {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 58vh !important;
+  height: 100%;
+  max-height: calc(100vh - 200px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-container-detail::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-container-dtprovince {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 64vh !important;
+  height: 100%;
+  max-height: calc(100vh - 200px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-container-dtprovince::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-container-dt70vh {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 64vh !important;
+  height: 100%;
+  max-height: calc(100vh - 200px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-container-dt70vh::-webkit-scrollbar {
+  display: none;
+}
+
 
 
 
@@ -1241,8 +1278,16 @@ PAGE 7
   }
 }
 
-@media screen and (min-width: 1200px ) and (min-height: 800px) {
-  .scroll-container {
+@media screen and (min-width: 1200px) and (min-height: 800px) {
+  .scroll-container-detail {
     height: 64vh !important;
+  }
+
+  .scroll-container-dtprovince {
+    height: 70vh !important;
+  }
+
+  .scroll-container-dt70vh {
+    height: 76vh !important;
   }
 }

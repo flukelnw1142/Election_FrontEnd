@@ -1011,7 +1011,7 @@ PAGE 7
 .scroll-container {
   overflow-y: auto;
   overflow-x: hidden;
-  // height: 80vh;
+  height: 58vh !important;
   height: 100%; // หรือใช้ max-height ตามความเหมาะสม
   max-height: calc(100vh - 200px);
   // width:100%;
@@ -1238,5 +1238,11 @@ PAGE 7
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (min-width: 1200px ) and (min-height: 800px) {
+  .scroll-container {
+    height: 64vh !important;
   }
 }

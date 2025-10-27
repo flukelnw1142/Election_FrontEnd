@@ -8,6 +8,7 @@ import {
   ChangeDetectorRef,
   Renderer2,
   ChangeDetectionStrategy,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -139,6 +140,7 @@ export class Dashboard implements OnInit {
   totalvoteZone: number = 0;
   totalvoteZone_party: number = 0;
   loading: boolean = false;
+  isDesktop: boolean = true;
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
   private zoomGroup: any;
@@ -150,7 +152,14 @@ export class Dashboard implements OnInit {
   private isOverMagnifier = false;
   private mouseMoveSubject = new Subject<MouseEvent>();
   private destroy$ = new Subject<void>();
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
 
+  private checkScreenSize() {
+    this.isDesktop = window.innerWidth > 768;
+  }
   constructor(
     private _dashboard: DashboardService,
     private http: HttpClient,
@@ -160,7 +169,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -309,7 +318,10 @@ export class Dashboard implements OnInit {
       this.mouseMoveSubject.subscribe((event: MouseEvent) => {
         this.handleTooltipLogic(event);
       });
+
+      this.checkScreenSize();
     }
+
   }
 
   // private delay(ms: number): Promise<void> {
@@ -421,7 +433,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -620,10 +632,20 @@ export class Dashboard implements OnInit {
         target.closest('svg') &&
         target.closest('g[id]');
 
+      console.log("isDesktop : ", this.isDesktop);
+      console.log("isNearMap : ", isNearMap);
+      console.log("isDistrict : ", isDistrict);
+
       if (isNearMap || isDistrict) {
-        this.showMagnifier(event);
-        this.simmulateSvgClick(event);
-        this.mouseMoveSubject.next(event);
+        if (this.isDesktop) {
+          this.showMagnifier(event);
+          this.simmulateSvgClick(event);
+          this.mouseMoveSubject.next(event);
+        }
+        else {
+          this.onSvgClick(event);
+        }
+
       } else {
         this.hideMagnifier();
         this.hideTooltip();
@@ -665,6 +687,7 @@ export class Dashboard implements OnInit {
   }
 
   showMagnifier(event: MouseEvent) {
+
     if (!this.svgContainer || !this.svgContainer.nativeElement) {
       return;
     }
@@ -791,15 +814,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -962,7 +985,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -1146,8 +1169,8 @@ export class Dashboard implements OnInit {
       type === 'zone'
         ? this.zoneScroll
         : type === 'partylist'
-        ? this.partylistScroll
-        : this.scrollContainer;
+          ? this.partylistScroll
+          : this.scrollContainer;
     // console.log(target);
     target.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -1254,7 +1277,7 @@ export class Dashboard implements OnInit {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
-        'show-dashboard-party'
+      'show-dashboard-party'
     ) {
       this.STACK_MODAL.push({
         page: 'show-dashboard-party',
@@ -1297,7 +1320,7 @@ export class Dashboard implements OnInit {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
-        'show-party-list_&_show-district-per-party'
+      'show-party-list_&_show-district-per-party'
     ) {
       this.STACK_MODAL.push({
         page: 'show-party-list_&_show-district-per-party',
@@ -2060,7 +2083,7 @@ export class Dashboard implements OnInit {
           // // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;

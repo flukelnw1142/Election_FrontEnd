@@ -169,12 +169,14 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
   allWinnersParty: { [id: string]: string } = {};
   partyColorMap: { [partyKeyword: string]: Color } = {};
+  intervalId: any;
+  winners: any;
 
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
@@ -183,67 +185,18 @@ export class Dashboard implements OnInit {
           this._dashboard.getPartyColors()
         );
 
-        const winners = await firstValueFrom(
+        this.winners = await firstValueFrom(
           this._dashboard.getDistrictWinners()
         );
 
-        // console.log(winners);
-
-        if (winners.candidates && Object.keys(winners.candidates).length > 0) {
-          this.allWinners = winners.candidates;
-
-          const totalVoteZone = document.getElementById(
-            'totalVoteZone'
-          ) as HTMLElement | null;
-          const totalVotePartylist = document.getElementById(
-            'totalVotePartylist'
-          ) as HTMLElement | null;
-          const updateDateEls = document.getElementsByClassName('updateDate');
-          for (let i = 0; i < updateDateEls.length; i++) {
-            const el = updateDateEls[i] as HTMLElement;
-            el.innerText = this.formatTime(winners.updateDate);
-          }
-
-          const percentZone = document.getElementById(
-            'percentZone'
-          ) as HTMLElement | null;
-          const percentPartylist = document.getElementById(
-            'percentPartylist'
-          ) as HTMLElement | null;
-          if (totalVoteZone) {
-            totalVoteZone.innerText = `${this.formatTotalVotes(
-              winners.totalVoteZone
-            )} | `;
-          }
-          if (totalVotePartylist) {
-            totalVotePartylist.innerText = `${this.formatTotalVotes(
-              winners.totalVotePartylist
-            )} | `;
-          }
-          if (percentZone) {
-            percentZone.innerText = winners.percentZone;
-          }
-
-          if (percentPartylist) {
-            percentPartylist.innerText = winners.percentPartylist;
-          }
-          const svgText = await firstValueFrom(
-            this.http.get('/assets/thailand.svg', { responseType: 'text' })
+        const intervalId = setInterval(async () => {
+          console.log('intervalId');
+          this.winners = await firstValueFrom(
+            this._dashboard.getDistrictWinners()
           );
-          await this.settingSvg(svgText, true);
-        }
-
-        if (
-          winners.candidates_party &&
-          Object.keys(winners.candidates_party).length > 0
-        ) {
-          this.allWinnersParty = winners.candidates_party;
-        }
-
-        this._dashboard.winners$.subscribe((winners) => {
           if (
-            winners.candidates &&
-            Object.keys(winners.candidates).length > 0
+            this.winners.candidates &&
+            Object.keys(this.winners.candidates).length > 0
           ) {
             this.zone.run(() => {
               const totalVoteZone = document.getElementById(
@@ -262,28 +215,28 @@ export class Dashboard implements OnInit {
                 document.getElementsByClassName('updateDate');
               for (let i = 0; i < updateDateEls.length; i++) {
                 const el = updateDateEls[i] as HTMLElement;
-                el.innerText = this.formatTime(winners.updateDate);
+                el.innerText = this.formatTime(this.winners.updateDate);
               }
               if (totalVoteZone) {
                 totalVoteZone.innerText = `${this.formatTotalVotes(
-                  winners.totalVoteZone
+                  this.winners.totalVoteZone
                 )} | `;
               }
               if (totalVotePartylist) {
                 totalVotePartylist.innerText = `${this.formatTotalVotes(
-                  winners.totalVotePartylist
+                  this.winners.totalVotePartylist
                 )} | `;
               }
 
               if (percentZone) {
-                percentZone.innerText = winners.percentZone;
+                percentZone.innerText = this.winners.percentZone;
               }
 
               if (percentPartylist) {
-                percentPartylist.innerText = winners.percentPartylist;
+                percentPartylist.innerText = this.winners.percentPartylist;
               }
 
-              this.allWinners = winners.candidates;
+              this.allWinners = this.winners.candidates;
               firstValueFrom(
                 this.http.get('/assets/thailand.svg', {
                   responseType: 'text',
@@ -301,14 +254,214 @@ export class Dashboard implements OnInit {
           }
 
           if (
-            winners.candidates_party &&
-            Object.keys(winners.candidates_party).length > 0
+            this.winners.candidates_party &&
+            Object.keys(this.winners.candidates_party).length > 0
           ) {
-            this.allWinnersParty = winners.candidates_party;
+            this.allWinnersParty = this.winners.candidates_party;
           }
-        });
+        }, 2000);
+
+        // console.log(winners);
+
+        if (
+          this.winners.candidates &&
+          Object.keys(this.winners.candidates).length > 0
+        ) {
+          this.allWinners = this.winners.candidates;
+
+          const totalVoteZone = document.getElementById(
+            'totalVoteZone'
+          ) as HTMLElement | null;
+          const totalVotePartylist = document.getElementById(
+            'totalVotePartylist'
+          ) as HTMLElement | null;
+          const updateDateEls = document.getElementsByClassName('updateDate');
+          for (let i = 0; i < updateDateEls.length; i++) {
+            const el = updateDateEls[i] as HTMLElement;
+            el.innerText = this.formatTime(this.winners.updateDate);
+          }
+
+          const percentZone = document.getElementById(
+            'percentZone'
+          ) as HTMLElement | null;
+          const percentPartylist = document.getElementById(
+            'percentPartylist'
+          ) as HTMLElement | null;
+          if (totalVoteZone) {
+            totalVoteZone.innerText = `${this.formatTotalVotes(
+              this.winners.totalVoteZone
+            )} | `;
+          }
+          if (totalVotePartylist) {
+            totalVotePartylist.innerText = `${this.formatTotalVotes(
+              this.winners.totalVotePartylist
+            )} | `;
+          }
+          if (percentZone) {
+            percentZone.innerText = this.winners.percentZone;
+          }
+
+          if (percentPartylist) {
+            percentPartylist.innerText = this.winners.percentPartylist;
+          }
+          const svgText = await firstValueFrom(
+            this.http.get('/assets/thailand.svg', { responseType: 'text' })
+          );
+          await this.settingSvg(svgText, true);
+        }
+
+        if (
+          this.winners.candidates_party &&
+          Object.keys(this.winners.candidates_party).length > 0
+        ) {
+          this.allWinnersParty = this.winners.candidates_party;
+        }
+
+        this.intervalId = intervalId;
+
+        // this._dashboard.winners$.subscribe((winners) => {
+        //   if (
+        //     winners.candidates &&
+        //     Object.keys(winners.candidates).length > 0
+        //   ) {
+        //     this.zone.run(() => {
+        //       const totalVoteZone = document.getElementById(
+        //         'totalVoteZone'
+        //       ) as HTMLElement | null;
+        //       const totalVotePartylist = document.getElementById(
+        //         'totalVotePartylist'
+        //       ) as HTMLElement | null;
+        //       const percentZone = document.getElementById(
+        //         'percentZone'
+        //       ) as HTMLElement | null;
+        //       const percentPartylist = document.getElementById(
+        //         'percentPartylist'
+        //       ) as HTMLElement | null;
+        //       const updateDateEls =
+        //         document.getElementsByClassName('updateDate');
+        //       for (let i = 0; i < updateDateEls.length; i++) {
+        //         const el = updateDateEls[i] as HTMLElement;
+        //         el.innerText = this.formatTime(winners.updateDate);
+        //       }
+        //       if (totalVoteZone) {
+        //         totalVoteZone.innerText = `${this.formatTotalVotes(
+        //           winners.totalVoteZone
+        //         )} | `;
+        //       }
+        //       if (totalVotePartylist) {
+        //         totalVotePartylist.innerText = `${this.formatTotalVotes(
+        //           winners.totalVotePartylist
+        //         )} | `;
+        //       }
+
+        //       if (percentZone) {
+        //         percentZone.innerText = winners.percentZone;
+        //       }
+
+        //       if (percentPartylist) {
+        //         percentPartylist.innerText = winners.percentPartylist;
+        //       }
+
+        //       this.allWinners = winners.candidates;
+        //       firstValueFrom(
+        //         this.http.get('/assets/thailand.svg', {
+        //           responseType: 'text',
+        //         })
+        //       ).then((svgText) => {
+        //         if (
+        //           this.selectedDistric === '' &&
+        //           this.detailPartyListPerPartyName.length === 0
+        //         ) {
+        //           this.settingSvg(svgText, false);
+        //         }
+        //         this.cd.detectChanges();
+        //       });
+        //     });
+        //   }
+
+        //   if (
+        //     winners.candidates_party &&
+        //     Object.keys(winners.candidates_party).length > 0
+        //   ) {
+        //     this.allWinnersParty = winners.candidates_party;
+        //   }
+        // });
       } catch (error) {
         console.error('Error loading data:', error);
+
+        const intervalId = setInterval(async () => {
+          console.log('intervalId');
+          this.winners = await firstValueFrom(
+            this._dashboard.getDistrictWinners()
+          );
+          if (
+            this.winners.candidates &&
+            Object.keys(this.winners.candidates).length > 0
+          ) {
+            this.zone.run(() => {
+              const totalVoteZone = document.getElementById(
+                'totalVoteZone'
+              ) as HTMLElement | null;
+              const totalVotePartylist = document.getElementById(
+                'totalVotePartylist'
+              ) as HTMLElement | null;
+              const percentZone = document.getElementById(
+                'percentZone'
+              ) as HTMLElement | null;
+              const percentPartylist = document.getElementById(
+                'percentPartylist'
+              ) as HTMLElement | null;
+              const updateDateEls =
+                document.getElementsByClassName('updateDate');
+              for (let i = 0; i < updateDateEls.length; i++) {
+                const el = updateDateEls[i] as HTMLElement;
+                el.innerText = this.formatTime(this.winners.updateDate);
+              }
+              if (totalVoteZone) {
+                totalVoteZone.innerText = `${this.formatTotalVotes(
+                  this.winners.totalVoteZone
+                )} | `;
+              }
+              if (totalVotePartylist) {
+                totalVotePartylist.innerText = `${this.formatTotalVotes(
+                  this.winners.totalVotePartylist
+                )} | `;
+              }
+
+              if (percentZone) {
+                percentZone.innerText = this.winners.percentZone;
+              }
+
+              if (percentPartylist) {
+                percentPartylist.innerText = this.winners.percentPartylist;
+              }
+
+              this.allWinners = this.winners.candidates;
+              firstValueFrom(
+                this.http.get('/assets/thailand.svg', {
+                  responseType: 'text',
+                })
+              ).then((svgText) => {
+                if (
+                  this.selectedDistric === '' &&
+                  this.detailPartyListPerPartyName.length === 0
+                ) {
+                  this.settingSvg(svgText, false);
+                }
+                this.cd.detectChanges();
+              });
+            });
+          }
+
+          if (
+            this.winners.candidates_party &&
+            Object.keys(this.winners.candidates_party).length > 0
+          ) {
+            this.allWinnersParty = this.winners.candidates_party;
+          }
+        }, 2000);
+
+        this.intervalId = intervalId;
       }
 
       this.partySeatCountsList = await firstValueFrom(
@@ -321,7 +474,6 @@ export class Dashboard implements OnInit {
 
       this.checkScreenSize();
     }
-
   }
 
   // private delay(ms: number): Promise<void> {
@@ -433,7 +585,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-              this.allWinners[id].party === this.selectedParty
+            this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -632,20 +784,18 @@ export class Dashboard implements OnInit {
         target.closest('svg') &&
         target.closest('g[id]');
 
-      console.log("isDesktop : ", this.isDesktop);
-      console.log("isNearMap : ", isNearMap);
-      console.log("isDistrict : ", isDistrict);
+      console.log('isDesktop : ', this.isDesktop);
+      console.log('isNearMap : ', isNearMap);
+      console.log('isDistrict : ', isDistrict);
 
       if (isNearMap || isDistrict) {
         if (this.isDesktop) {
           this.showMagnifier(event);
           this.simmulateSvgClick(event);
           this.mouseMoveSubject.next(event);
-        }
-        else {
+        } else {
           this.onSvgClick(event);
         }
-
       } else {
         this.hideMagnifier();
         this.hideTooltip();
@@ -687,7 +837,6 @@ export class Dashboard implements OnInit {
   }
 
   showMagnifier(event: MouseEvent) {
-
     if (!this.svgContainer || !this.svgContainer.nativeElement) {
       return;
     }
@@ -814,15 +963,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => { },
-              stopPropagation: () => { },
+              preventDefault: () => {},
+              stopPropagation: () => {},
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -956,6 +1105,9 @@ export class Dashboard implements OnInit {
   }
 
   ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
     if (this.magnifierMousemoveUnsub) {
       this.magnifierMousemoveUnsub();
     }
@@ -985,7 +1137,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => { });
+      dialogRef.afterClosed().subscribe(() => {});
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -1169,8 +1321,8 @@ export class Dashboard implements OnInit {
       type === 'zone'
         ? this.zoneScroll
         : type === 'partylist'
-          ? this.partylistScroll
-          : this.scrollContainer;
+        ? this.partylistScroll
+        : this.scrollContainer;
     // console.log(target);
     target.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -1277,7 +1429,7 @@ export class Dashboard implements OnInit {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
-      'show-dashboard-party'
+        'show-dashboard-party'
     ) {
       this.STACK_MODAL.push({
         page: 'show-dashboard-party',
@@ -1320,7 +1472,7 @@ export class Dashboard implements OnInit {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
-      'show-party-list_&_show-district-per-party'
+        'show-party-list_&_show-district-per-party'
     ) {
       this.STACK_MODAL.push({
         page: 'show-party-list_&_show-district-per-party',
@@ -2083,7 +2235,7 @@ export class Dashboard implements OnInit {
           // // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-              this.allWinners[id].party === this.selectedParty
+            this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;

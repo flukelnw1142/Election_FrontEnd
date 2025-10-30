@@ -16,8 +16,8 @@
 }
 
 .party-card-container {
-    animation: fadeInUp 0.6s ease forwards;
-    opacity: 0;
+    // animation: fadeInUp 0.6s ease forwards;
+    // opacity: 0;
 }
 
 
@@ -102,7 +102,7 @@
         width: 100px;
         border-radius: 100%;
         overflow: hidden;
-        animation: bounce 1s ease-in;
+        // animation: bounce 1s ease-in;
         // object-fit: cover;
     }
 
@@ -121,7 +121,7 @@
         bottom: -5px;
         right: 10px;
         border-radius: 100%;
-        animation: bounce 1s ease-in;
+        // animation: bounce 1s ease-in;
     }
 
 }
@@ -168,7 +168,7 @@
     transition: width 0.3s;
     border: #ffffff 2px solid;
     border-radius: 1rem;
-    animation: progressAnimation 1s ease-in-out forwards;
+    animation: progressAnimation 2s ease-in-out forwards;
 }
 
 @keyframes progressAnimation {
@@ -179,6 +179,12 @@
     to {
         width: var(--progress-width);
     }
+}
+
+/* Optional: Add initial animation for cards on component load */
+.party-card-container.initial-load {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
 }
 
 .vote-total {

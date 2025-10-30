@@ -20,39 +20,39 @@ export class DashboardService {
     private _http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    if (isPlatformBrowser(this.platformId)) {
-      this.startConnection();
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.startConnection();
+    // }
   }
-  private startConnection() {
-    const hubUrl = `${this.baseUrl.replace('/api', '')}/electionHub`;
-    // this.hubConnection = new signalR.HubConnectionBuilder()
-    //   .withUrl(hubUrl, {
-    //     transport: signalR.HttpTransportType.WebSockets,
-    //     withCredentials: true,
-    //   })
-    //   .withAutomaticReconnect()
-    //   .build();
-    this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(hubUrl, {
-        transport:
-          signalR.HttpTransportType.WebSockets |
-          signalR.HttpTransportType.ServerSentEvents |
-          signalR.HttpTransportType.LongPolling,
-      })
-      .withAutomaticReconnect()
-      .configureLogging(signalR.LogLevel.Information)
-      .build();
+  // private startConnection() {
+  //   const hubUrl = `${this.baseUrl.replace('/api', '')}/electionHub`;
+  //   // this.hubConnection = new signalR.HubConnectionBuilder()
+  //   //   .withUrl(hubUrl, {
+  //   //     transport: signalR.HttpTransportType.WebSockets,
+  //   //     withCredentials: true,
+  //   //   })
+  //   //   .withAutomaticReconnect()
+  //   //   .build();
+  //   this.hubConnection = new signalR.HubConnectionBuilder()
+  //     .withUrl(hubUrl, {
+  //       transport:
+  //         signalR.HttpTransportType.WebSockets |
+  //         signalR.HttpTransportType.ServerSentEvents |
+  //         signalR.HttpTransportType.LongPolling,
+  //     })
+  //     .withAutomaticReconnect()
+  //     .configureLogging(signalR.LogLevel.Information)
+  //     .build();
 
-    this.hubConnection
-      .start()
-      .then(() => {
-        this.registerOnServerEvents();
-      })
-      .catch((err) =>
-        console.error('Error while starting SignalR connection: ' + err)
-      );
-  }
+  //   this.hubConnection
+  //     .start()
+  //     .then(() => {
+  //       this.registerOnServerEvents();
+  //     })
+  //     .catch((err) =>
+  //       console.error('Error while starting SignalR connection: ' + err)
+  //     );
+  // }
 
   private registerOnServerEvents(): void {
     this.hubConnection.on('ReceiveElectionUpdate', (data) => {
@@ -65,7 +65,7 @@ export class DashboardService {
     return this._http.get<any>(`${this.baseUrl}/Election/results`);
   }
 
-  getRankByDistrict(id: string | number): Observable<any> {
+  getRankByDistrict(id: number): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/detailAll?id=${id}`);
   }
 
@@ -75,7 +75,7 @@ export class DashboardService {
 
   getCadidateByPartyName(partyName: string): Observable<any> {
     return this._http.get<any>(
-      `${this.baseUrl}/Election/cadidateByPartyName?name=${partyName}`
+      `${this.baseUrl}/Election/candidateByPartyName?name=${partyName}`
     );
   }
 
@@ -83,7 +83,7 @@ export class DashboardService {
     return this._http.get<any>(`${this.baseUrl}/Election/color`);
   }
 
-  // ส.ส. แบ่งเขต
+  // ส.ส. แบ่งเขต --
   getPartySeatCountsZone(): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/Election/SummaryCountPartyZone`
@@ -132,8 +132,10 @@ export class DashboardService {
       `${this.baseUrl}/Election/getAllWinnerPartylistByRegion?regionname=${regionName}`
     );
   }
-  
+
   getPartyListForDistrict(id: string | number): Observable<any> {
-    return this._http.get<any>(`${this.baseUrl}/Election/partyListForDistrict?id=${id}`);
+    return this._http.get<any>(
+      `${this.baseUrl}/Election/partyListForDistrict?id=${id}`
+    );
   }
 }

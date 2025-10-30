@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -23,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   imports: [CommonModule, MatIconModule, MatTooltipModule],
   templateUrl: './dashboard-score-and-seat.html',
   styleUrl: './dashboard-score-and-seat.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardScoreAndSeat implements OnInit {
   constructor(
@@ -38,30 +40,89 @@ export class DashboardScoreAndSeat implements OnInit {
   totalSeats: number = 0;
   partyColorMap: { [partyKeyword: string]: Color } = {};
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
+  intervalId: any;
+  isInitialLoad: boolean = true;
 
   async ngOnInit(): Promise<void> {
     // ✅ 0. ดึงข้อมูลสี
     if (isPlatformBrowser(this.platformId)) {
-      this.partyColorMap = await firstValueFrom(
-        this._dashboard.getPartyColors()
-      );
+      try {
+        this.partyColorMap = await firstValueFrom(
+          this._dashboard.getPartyColors()
+        );
 
-      this.partySeatCountsList = await firstValueFrom(
-        this._dashboard.getPartySeatCountsList()
-      );
+        this.partySeatCountsList = await firstValueFrom(
+          this._dashboard.getPartySeatCountsList()
+        );
 
-      // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
-      this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-        return sum + p.zone_seats + p.partylist_seats;
-      }, 0);
+        // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
+        this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+          return sum + p.zone_seats + p.partylist_seats;
+        }, 0);
+        this.cdRef.detectChanges();
 
-      // console.log('partySeatCountsList', this.partySeatCountsList);
+        setTimeout(() => {
+          this.isInitialLoad = false;
+          this.cdRef.markForCheck();
+        }, 600);
 
-      // ✅ บังคับให้ Angular render ใหม่
-      this.cdRef.detectChanges();
+        const intervalId = setInterval(async () => {
+          console.log('intervalId : DashboardScoreAndSeat');
+          this.partySeatCountsList = await firstValueFrom(
+            this._dashboard.getPartySeatCountsList()
+          );
+
+          // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
+          this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+            return sum + p.zone_seats + p.partylist_seats;
+          }, 0);
+
+          this.cdRef.detectChanges();
+        }, 2000);
+        this.intervalId = intervalId;
+      } catch (error) {
+        this.partyColorMap = await firstValueFrom(
+          this._dashboard.getPartyColors()
+        );
+
+        this.partySeatCountsList = await firstValueFrom(
+          this._dashboard.getPartySeatCountsList()
+        );
+
+        // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
+        this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+          return sum + p.zone_seats + p.partylist_seats;
+        }, 0);
+        this.cdRef.detectChanges();
+
+        setTimeout(() => {
+          this.isInitialLoad = false;
+          this.cdRef.markForCheck();
+        }, 600);
+
+        const intervalId = setInterval(async () => {
+          console.log('intervalId : DashboardScoreAndSeat');
+          this.partySeatCountsList = await firstValueFrom(
+            this._dashboard.getPartySeatCountsList()
+          );
+
+          // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
+          this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+            return sum + p.zone_seats + p.partylist_seats;
+          }, 0);
+
+          this.cdRef.detectChanges();
+        }, 2000);
+        this.intervalId = intervalId;
+      }
     }
   }
 
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
   getColor(winner: any): string {
     const partyName = typeof winner === 'string' ? winner : winner?.party || '';
     for (const keyword in this.partyColorMap) {

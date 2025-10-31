@@ -112,7 +112,7 @@ export class DashboardService {
 
   getAllwinnerZoneByProvinceName(provinceName: string): Observable<any> {
     return this._http.get<any>(
-      `${this.baseUrl}/Election/getAllwinnerZoneByProvinceName?provinceName=${provinceName}`
+      `${this.baseUrl}/Election/getAllWinnerZoneByProvinceName?provincename=${provinceName}`
     );
   }
 

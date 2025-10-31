@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { WebsocketService } from '../../../service/websocket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,8 @@ export class DashboardService {
 
   constructor(
     private _http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private wsService: WebsocketService
   ) {
     // if (isPlatformBrowser(this.platformId)) {
     //   this.startConnection();
@@ -53,6 +55,11 @@ export class DashboardService {
   //       console.error('Error while starting SignalR connection: ' + err)
   //     );
   // }
+
+  connectDistrictWinners(): Observable<any> {
+    // URL ของ WebSocket server เช่น ws://localhost:3000/district-winners
+    return this.wsService.connect('wss://127.0.0.1:8000/api/Election/ws/election');
+  }
 
   private registerOnServerEvents(): void {
     this.hubConnection.on('ReceiveElectionUpdate', (data) => {
@@ -99,7 +106,7 @@ export class DashboardService {
 
   getWinnerZoneByPartyName(name: string): Observable<any> {
     return this._http.get<any>(
-      `${this.baseUrl}/Election/cadidateZoneByPartyName?name=${name}`
+      `${this.baseUrl}/Election/candidateZoneByPartyName?name=${name}`
     );
   }
 

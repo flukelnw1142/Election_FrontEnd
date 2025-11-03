@@ -13,6 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
+  BehaviorSubject,
   debounceTime,
   firstValueFrom,
   Subject,
@@ -174,22 +175,29 @@ export class Dashboard implements OnInit {
   allWinners: { [id: string]: Winner } = {};
   allWinnersParty: { [id: string]: string } = {};
   partyColorMap: { [partyKeyword: string]: Color } = {};
-  intervalId: any;
   winners: any;
+  private loadingSubject = new BehaviorSubject<boolean>(true);
+  loading$ = this.loadingSubject.asObservable();
 
   async ngOnInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
+    this.loadingSubject.next(true);
 
     try {
-      this.partyColorMap = await firstValueFrom(
-        this._dashboard.getPartyColors()
-      );
-      this.winners = await firstValueFrom(this._dashboard.getDistrictWinners());
+      // โหลดข้อมูลสำคัญทั้งหมด
+      await Promise.all([
+        firstValueFrom(this._dashboard.getPartyColors()),
+        firstValueFrom(this._dashboard.getDistrictWinners()),
+      ]).then(([colors, winners]) => {
+        this.partyColorMap = colors;
+        this.winners = winners;
+      });
 
       // อัพเดท UI ครั้งแรก
       this.updateWinnerUI(this.winners);
       await this.loadSvgIfNeeded();
 
+      // ปิด loading
       // WebSocket - Color
       this._dashboard
         .connectColor()
@@ -623,20 +631,8 @@ export class Dashboard implements OnInit {
     svg.removeAttribute('width');
     svg.removeAttribute('height');
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    // if (
-    //   this.STACK_MODAL[this.STACK_MODAL.length - 1].page ===
-    //   'show-dashboard-party'
-    // ) {
-    //   svg.style.height = '80vh';
-    // } else {
-    //   svg.style.height = '82vh';
-    // }
     svg.style.height = '83dvh';
     svg.style.margin = '1vh 0'; // เพิ่มช่องว่างบน–ล่าง
-
-    // svg.style.width = 'auto';
-    // svg.style.margin = '20px 0';
-
     const container = this.svgContainer.nativeElement;
     container.innerHTML = '';
     container.appendChild(svg);
@@ -1231,11 +1227,19 @@ export class Dashboard implements OnInit {
     if (this.magnifier && this.magnifier.nativeElement) {
       this.renderer.setStyle(this.magnifier.nativeElement, 'display', 'none');
     }
+    if (this.magnifierMousemoveUnsub) {
+      this.magnifierMousemoveUnsub();
+      this.magnifierMousemoveUnsub = null;
+    }
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+
+    this.svgCache.clear();
+    this.mouseMoveSubject.complete();
+
     if (this.magnifierMousemoveUnsub) {
       this.magnifierMousemoveUnsub();
     }
@@ -1252,8 +1256,6 @@ export class Dashboard implements OnInit {
       this.magnifier.nativeElement.innerHTML = '';
     }
     this.isMagnifierInitialized = false;
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   openDialog() {

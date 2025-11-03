@@ -39,7 +39,7 @@ export class DashboardScoreAndSeat implements OnInit {
   @Output() partySelected = new EventEmitter<string>();
   @Output() partyListAndPartyZone = new EventEmitter<string>();
   partySeatCountsList: PartySeatCountList[] = [];
-  totalSeats: number = 0;
+  totalSeats: number = 1;
   partyColorMap: { [partyKeyword: string]: Color } = {};
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
   private destroy$ = new Subject<void>();
@@ -234,13 +234,11 @@ export class DashboardScoreAndSeat implements OnInit {
     this.partyListAndPartyZone.emit(partyName);
   }
   scrollToTopContainer() {
-    this.scrollContainer.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  formatTotalVotes(votes: number): string {
-    if (votes !== null && votes !== undefined) {
-      return votes.toLocaleString('en-US');
+    if (this.scrollContainer?.nativeElement) {
+      this.scrollContainer.nativeElement.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     }
-    return '';
   }
 }

@@ -39,7 +39,8 @@
           </div>
 
           <p class="vote-total">
-            คะแนนรวม: {{ formatTotalVotes(party.total_party_votes) }}
+            คะแนนรวม: {{ party.total_party_votes | number:'1.0-0'}}
+            <!-- คะแนนรวม: {{ formatTotalVotes(party.total_party_votes) }} -->
           </p>
         </div>
 

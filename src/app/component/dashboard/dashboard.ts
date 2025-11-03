@@ -131,7 +131,6 @@ export class Dashboard implements OnInit {
   zoomLevel = 8;
   lensSize = 250;
   isMappingComplete: any;
-  // clickCountParty: any = '';
   clickOnPopup: any = '';
   provinceName: string = '';
   zoneName: string = '';
@@ -179,42 +178,39 @@ export class Dashboard implements OnInit {
   winners: any;
 
   async ngOnInit(): Promise<void> {
-    if (isPlatformBrowser(this.platformId)) {
-      try {
-        this.partyColorMap = await firstValueFrom(
-          this._dashboard.getPartyColors()
-        );
+    if (!isPlatformBrowser(this.platformId)) return;
 
-        // ✅ แทนการ polling ด้วยการ subscribe WebSocket
-        this._dashboard.connectDistrictWinners().subscribe({
-          next: (res) => {
-            this.zone.run(() => {
+    try {
+      this.partyColorMap = await firstValueFrom(
+        this._dashboard.getPartyColors()
+      );
+
+      // WebSocket - District Winners
+      this._dashboard.connectDistrictWinners().subscribe({
+        next: (res) => {
+          // console.log('connectDistrictWinners >>>', res);
+          if (res.channel === 'results') {
+            this.zone.run(async () => {
               this.winners = res.data;
-              console.log("winner >>> " ,res)
-              console.log("winner >>> " ,this.winners)
+
               if (
                 this.winners.candidates &&
                 Object.keys(this.winners.candidates).length > 0
               ) {
-                const totalVoteZone = document.getElementById(
-                  'totalVoteZone'
-                ) as HTMLElement | null;
-                const totalVotePartylist = document.getElementById(
-                  'totalVotePartylist'
-                ) as HTMLElement | null;
-                const percentZone = document.getElementById(
-                  'percentZone'
-                ) as HTMLElement | null;
-                const percentPartylist = document.getElementById(
-                  'percentPartylist'
-                ) as HTMLElement | null;
+                const totalVoteZone = document.getElementById('totalVoteZone');
+                const totalVotePartylist =
+                  document.getElementById('totalVotePartylist');
+                const percentZone = document.getElementById('percentZone');
+                const percentPartylist =
+                  document.getElementById('percentPartylist');
                 const updateDateEls =
                   document.getElementsByClassName('updateDate');
 
-                for (let i = 0; i < updateDateEls.length; i++) {
-                  const el = updateDateEls[i] as HTMLElement;
-                  el.innerText = this.formatTime(this.winners.updateDate);
-                }
+                Array.from(updateDateEls).forEach((el) => {
+                  (el as HTMLElement).innerText = this.formatTime(
+                    this.winners.updateDate
+                  );
+                });
 
                 if (totalVoteZone)
                   totalVoteZone.innerText = `${this.formatTotalVotes(
@@ -231,19 +227,19 @@ export class Dashboard implements OnInit {
 
                 this.allWinners = this.winners.candidates;
 
-                firstValueFrom(
+                const svgText = await firstValueFrom(
                   this.http.get('/assets/thailand.svg', {
                     responseType: 'text',
                   })
-                ).then((svgText) => {
-                  if (
-                    this.selectedDistric === '' &&
-                    this.detailPartyListPerPartyName.length === 0
-                  ) {
-                    this.settingSvg(svgText, false);
-                  }
-                  this.cd.detectChanges();
-                });
+                );
+                if (
+                  !this.selectedDistric &&
+                  this.detailPartyListPerPartyName.length === 0
+                ) {
+                  this.settingSvg(svgText, false);
+                }
+
+                this.cd.detectChanges();
               }
 
               if (
@@ -253,21 +249,33 @@ export class Dashboard implements OnInit {
                 this.allWinnersParty = this.winners.candidates_party;
               }
             });
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
+          }
+        },
+        error: (err) => console.error('WebSocket error', err),
+        complete: () => console.log('WebSocket closed'),
+      });
 
-        this.partySeatCountsList = await firstValueFrom(
-          this._dashboard.getPartySeatCountsList()
-        );
-        this.mouseMoveSubject.subscribe((event: MouseEvent) =>
-          this.handleTooltipLogic(event)
-        );
-        this.checkScreenSize();
-      } catch (error) {
-        console.error('Error loading data:', error);
-      }
+      // WebSocket - Party Seat Counts
+      this._dashboard.connectPartySeatCounts().subscribe({
+        next: (res) => {
+          // console.log('connectPartySeatCounts >>>', res);
+          if (res.channel === 'GetSummaryCountPartyZoneAndPartyList') {
+            this.zone.run(() => {
+              this.partySeatCountsList = res.data;
+              this.cd.detectChanges();
+            });
+          }
+        },
+        error: (err) => console.error('WebSocket error', err),
+        complete: () => console.log('WebSocket closed'),
+      });
+
+      this.mouseMoveSubject.subscribe((event: MouseEvent) =>
+        this.handleTooltipLogic(event)
+      );
+      this.checkScreenSize();
+    } catch (error) {
+      console.error('Error loading data:', error);
     }
   }
 

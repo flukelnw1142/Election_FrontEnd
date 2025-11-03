@@ -56,18 +56,23 @@ export class DashboardService {
   //     );
   // }
 
+  /*
+   WebSocKet
+  */
+
   connectDistrictWinners(): Observable<any> {
-    // URL ของ WebSocket server เช่น ws://localhost:3000/district-winners
-    return this.wsService.connect('wss://127.0.0.1:8000/api/Election/ws/election');
+    return this.wsService.connect(
+      'wss://127.0.0.1:8000/api/Election/ws/results'
+    );
   }
 
-  private registerOnServerEvents(): void {
-    this.hubConnection.on('ReceiveElectionUpdate', (data) => {
-      // console.log('SignalR winners received:', JSON.parse(data));
-      this.winnersSubject.next(JSON.parse(data));
-    });
+  connectPartySeatCounts(): Observable<any> {
+    return this.wsService.connect(
+      'wss://127.0.0.1:8000/api/Election/ws/summary'
+    );
   }
 
+  // เรียกข้อมูลผู้ที่ชนะในแต่ละเขตเลือกตั้ง ทั้งแบบส.ส.เขต และ ส.ส.บัญชีรายชื่อ >> ใช้ websocket แทน
   getDistrictWinners(): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/results`);
   }
@@ -97,7 +102,7 @@ export class DashboardService {
     );
   }
 
-  // ส.ส. บัญชีรายชื่อ
+  // ส.ส. บัญชีรายชื่อ >> ใช้ websocket แทน
   getPartySeatCountsList(): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/Election/GetSummaryCountPartyZoneAndPartyList`

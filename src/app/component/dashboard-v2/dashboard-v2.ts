@@ -8,11 +8,12 @@ import {
   EventEmitter,
   ViewChild,
   ElementRef,
+  NgZone,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { Color, PartySeatCountList } from '../dashboard/dashboardInterface';
 import { DashboardService } from '../dashboard/service/dashboardservice';
 import { CommonModule } from '@angular/common';
@@ -31,7 +32,8 @@ export class DashboardV2 implements OnInit {
   constructor(
     private http: HttpClient,
     private sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
+    private zone: NgZone,
     private _dashboard: DashboardService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -41,6 +43,7 @@ export class DashboardV2 implements OnInit {
   partySeatCountsList: PartySeatCountList[] = [];
   totalSeats: number = 0;
   partyColorMap: { [partyKeyword: string]: Color } = {};
+  private destroy$ = new Subject<void>();
   private currentHoveredParty: string | null = null;
   private debounceHover = _.debounce((partyName: string) => {
     if (this.currentHoveredParty !== partyName) {
@@ -48,81 +51,150 @@ export class DashboardV2 implements OnInit {
       this.highlightParty(partyName);
     }
   }, 50);
-  intervalId: any;
 
   async ngOnInit(): Promise<void> {
-    try {
-      this.partyColorMap = await firstValueFrom(
-        this._dashboard.getPartyColors()
-      );
-      this.partySeatCountsList = await firstValueFrom(
-        this._dashboard.getPartySeatCountsList()
-      );
-      // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
-      this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-        return sum + p.zone_seats + p.partylist_seats;
-      }, 0);
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        this.partyColorMap = await firstValueFrom(
+          this._dashboard.getPartyColors()
+        );
 
-      const intervalId = setInterval(async () => {
-        console.log('intervalId : DashboardV2');
         this.partySeatCountsList = await firstValueFrom(
           this._dashboard.getPartySeatCountsList()
         );
+
         // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
         this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
           return sum + p.zone_seats + p.partylist_seats;
         }, 0);
 
-        if (isPlatformBrowser(this.platformId)) {
-          await this.loadSvg();
-        }
-      }, 2000);
-
-      if (isPlatformBrowser(this.platformId)) {
         await this.loadSvg();
+        this.cd.markForCheck();
+
+        // WebSocket - Color
+        this._dashboard
+          .connectColor()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res) => {
+              console.log('connectColor >>>', res);
+              if (res.type === 'color') {
+                this.zone.run(() => {
+                  this.partyColorMap = res.data;
+                  this.cd.markForCheck();
+                });
+              }
+            },
+            error: (err) => console.error('WebSocket error', err),
+            complete: () => console.log('WebSocket closed'),
+          });
+
+        // WebSocket - Party Seat Counts
+        this._dashboard
+          .connectPartySeatCounts()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res) => {
+              console.log('connectPartySeatCounts >>>', res);
+              if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+                this.zone.run(() => {
+                  this.partySeatCountsList = res.data;
+
+                  // รวมจำนวนที่นั่งทั้งหมด
+                  this.totalSeats = this.partySeatCountsList.reduce(
+                    (sum, p) => {
+                      return sum + p.zone_seats + p.partylist_seats;
+                    },
+                    0
+                  );
+
+                  console.log('totalSeats', this.totalSeats);
+                  this.cd.markForCheck();
+                  this.loadSvg();
+                });
+              }
+            },
+            error: (err) => console.error('WebSocket error', err),
+            complete: () => console.log('WebSocket closed'),
+          });
+      } catch (error) {
+        console.error('Error initializing dashboard:', error);
       }
-
-      this.intervalId = intervalId;
-    } catch (error) {
-      this.partyColorMap = await firstValueFrom(
-        this._dashboard.getPartyColors()
-      );
-      this.partySeatCountsList = await firstValueFrom(
-        this._dashboard.getPartySeatCountsList()
-      );
-      // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
-      this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-        return sum + p.zone_seats + p.partylist_seats;
-      }, 0);
-
-      const intervalId = setInterval(async () => {
-        console.log('intervalId : DashboardV2');
-        this.partySeatCountsList = await firstValueFrom(
-          this._dashboard.getPartySeatCountsList()
-        );
-        // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
-        this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-          return sum + p.zone_seats + p.partylist_seats;
-        }, 0);
-
-        if (isPlatformBrowser(this.platformId)) {
-          await this.loadSvg();
-        }
-      }, 2000);
-
-      if (isPlatformBrowser(this.platformId)) {
-        await this.loadSvg();
-      }
-
-      this.intervalId = intervalId;
     }
   }
 
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
+
+  // async ngOnInit(): Promise<void> {
+  //   try {
+  //     this.partyColorMap = await firstValueFrom(
+  //       this._dashboard.getPartyColors()
+  //     );
+  //     this.partySeatCountsList = await firstValueFrom(
+  //       this._dashboard.getPartySeatCountsList()
+  //     );
+  //     // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
+  //     this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+  //       return sum + p.zone_seats + p.partylist_seats;
+  //     }, 0);
+
+  //     const intervalId = setInterval(async () => {
+  //       console.log('intervalId : DashboardV2');
+  //       this.partySeatCountsList = await firstValueFrom(
+  //         this._dashboard.getPartySeatCountsList()
+  //       );
+  //       // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
+  //       this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+  //         return sum + p.zone_seats + p.partylist_seats;
+  //       }, 0);
+
+  //       if (isPlatformBrowser(this.platformId)) {
+  //         await this.loadSvg();
+  //       }
+  //     }, 2000);
+
+  //     if (isPlatformBrowser(this.platformId)) {
+  //       await this.loadSvg();
+  //     }
+
+  //     this.intervalId = intervalId;
+  //   } catch (error) {
+  //     this.partyColorMap = await firstValueFrom(
+  //       this._dashboard.getPartyColors()
+  //     );
+  //     this.partySeatCountsList = await firstValueFrom(
+  //       this._dashboard.getPartySeatCountsList()
+  //     );
+  //     // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
+  //     this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+  //       return sum + p.zone_seats + p.partylist_seats;
+  //     }, 0);
+
+  //     const intervalId = setInterval(async () => {
+  //       console.log('intervalId : DashboardV2');
+  //       this.partySeatCountsList = await firstValueFrom(
+  //         this._dashboard.getPartySeatCountsList()
+  //       );
+  //       // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
+  //       this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+  //         return sum + p.zone_seats + p.partylist_seats;
+  //       }, 0);
+
+  //       if (isPlatformBrowser(this.platformId)) {
+  //         await this.loadSvg();
+  //       }
+  //     }, 2000);
+
+  //     if (isPlatformBrowser(this.platformId)) {
+  //       await this.loadSvg();
+  //     }
+
+  //     this.intervalId = intervalId;
+  //   }
+  // }
 
   async loadSvg() {
     try {
@@ -183,7 +255,7 @@ export class DashboardV2 implements OnInit {
       this.svgContent = this.sanitizer.bypassSecurityTrustHtml(modifiedSvg);
 
       setTimeout(() => {
-        this.cdr.markForCheck();
+        this.cd.markForCheck();
         this.resetHighlight();
       }, 100);
     } catch (e) {

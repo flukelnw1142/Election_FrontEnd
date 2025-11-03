@@ -13,7 +13,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { DashboardService } from '../dashboard/service/dashboardservice';
 import { Color, PartySeatCountList } from '../dashboard/dashboardInterface';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -42,61 +42,75 @@ export class DashboardScoreAndSeat implements OnInit {
   totalSeats: number = 0;
   partyColorMap: { [partyKeyword: string]: Color } = {};
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
-  intervalId: any;
+  private destroy$ = new Subject<void>();
 
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
       try {
-        // this.partyColorMap = await firstValueFrom(
-        //   this._dashboard.getPartyColors()
-        // );
+        this.partyColorMap = await firstValueFrom(
+          this._dashboard.getPartyColors()
+        );
+
+        this.partySeatCountsList = await firstValueFrom(
+          this._dashboard.getPartySeatCountsList()
+        );
+
+        this.updateTotalSeats();
+        this.cd.markForCheck();
+
         // WebSocket - Color
-        this._dashboard.connectColor().subscribe({
-          next: (res) => {
-            console.log('connectColor >>>', res);
-            if (res.type === 'color') {
-              this.zone.run(() => {
-                this.partyColorMap = res.data;
-                this.cd.detectChanges();
-                this.cd.markForCheck();
-              });
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
+        this._dashboard
+          .connectColor()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res) => {
+              // console.log('connectColor >>>', res);
+              if (res.type === 'color') {
+                this.zone.run(() => {
+                  this.partyColorMap = res.data;
+                  this.cd.markForCheck();
+                });
+              }
+            },
+            error: (err) => console.error('WebSocket error', err),
+            complete: () => console.log('WebSocket closed'),
+          });
 
         // WebSocket - Party Seat Counts
-        this._dashboard.connectPartySeatCounts().subscribe({
-          next: (res) => {
-            console.log('connectPartySeatCounts >>>', res);
-            if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
-              this.zone.run(() => {
-                this.partySeatCountsList = res.data;
-
-                // รวมจำนวนที่นั่งทั้งหมด
-                this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-                  return sum + p.zone_seats + p.partylist_seats;
-                }, 0);
-
-                console.log('totalSeats', this.totalSeats);
-                this.cd.detectChanges();
+        this._dashboard
+          .connectPartySeatCounts()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res) => {
+              console.log('connectPartySeatCounts >>>', res);
+              if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+                this.partySeatCountsList = res.data || [];
+                this.updateTotalSeats();
                 this.cd.markForCheck();
-              });
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
+              }
+            },
+            error: (err) => console.error('WebSocket error', err),
+            complete: () => console.log('WebSocket closed'),
+          });
       } catch (error) {
         console.error('Error initializing dashboard:', error);
       }
     }
-
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
+  private updateTotalSeats(): void {
+    this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+      return sum + (p.zone_seats || 0) + (p.partylist_seats || 0);
+    }, 0);
+
+    // ป้องกันหาร 0
+    if (this.totalSeats === 0) this.totalSeats = 1;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   // async ngOnInit(): Promise<void> {
   //   // ✅ 0. ดึงข้อมูลสี
   //   if (isPlatformBrowser(this.platformId)) {

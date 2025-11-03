@@ -184,108 +184,70 @@ export class Dashboard implements OnInit {
       this.partyColorMap = await firstValueFrom(
         this._dashboard.getPartyColors()
       );
+      this.winners = await firstValueFrom(this._dashboard.getDistrictWinners());
+
+      // อัพเดท UI ครั้งแรก
+      this.updateWinnerUI(this.winners);
+      await this.loadSvgIfNeeded();
 
       // WebSocket - Color
-      this._dashboard.connectColor().subscribe({
-        next: (res) => {
-          console.log('connectColor >>>', res);
-          if (res.type === 'color') {
-            this.zone.run(() => {
-              this.partyColorMap = res.data;
-              this.cd.detectChanges();
-              this.cd.markForCheck();
-            });
-          }
-        },
-        error: (err) => console.error('WebSocket error', err),
-        complete: () => console.log('WebSocket closed'),
-      });
+      this._dashboard
+        .connectColor()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res) => {
+            // console.log('connectColor >>>', res);
+            if (res.type === 'color') {
+              this.zone.run(() => {
+                this.partyColorMap = res.data;
+                this.cd.markForCheck();
+              });
+            }
+          },
+          error: (err) => console.error('WebSocket error', err),
+          complete: () => console.log('WebSocket closed'),
+        });
 
       // WebSocket - District Winners
-      this._dashboard.connectDistrictWinners().subscribe({
-        next: (res) => {
-          // console.log('connectDistrictWinners >>>', res);
-          if (res.channel === 'results') {
-            this.zone.run(async () => {
-              this.winners = res.data;
-
-              if (
-                this.winners.candidates &&
-                Object.keys(this.winners.candidates).length > 0
-              ) {
-                const totalVoteZone = document.getElementById('totalVoteZone');
-                const totalVotePartylist =
-                  document.getElementById('totalVotePartylist');
-                const percentZone = document.getElementById('percentZone');
-                const percentPartylist =
-                  document.getElementById('percentPartylist');
-                const updateDateEls =
-                  document.getElementsByClassName('updateDate');
-
-                Array.from(updateDateEls).forEach((el) => {
-                  (el as HTMLElement).innerText = this.formatTime(
-                    this.winners.updateDate
-                  );
-                });
-
-                if (totalVoteZone)
-                  totalVoteZone.innerText = `${this.formatTotalVotes(
-                    this.winners.totalVoteZone
-                  )} | `;
-                if (totalVotePartylist)
-                  totalVotePartylist.innerText = `${this.formatTotalVotes(
-                    this.winners.totalVotePartylist
-                  )} | `;
-                if (percentZone)
-                  percentZone.innerText = this.winners.percentZone;
-                if (percentPartylist)
-                  percentPartylist.innerText = this.winners.percentPartylist;
-
-                this.allWinners = this.winners.candidates;
-
-                const svgText = await firstValueFrom(
-                  this.http.get('/assets/thailand.svg', {
-                    responseType: 'text',
-                  })
-                );
-                if (
-                  !this.selectedDistric &&
-                  this.detailPartyListPerPartyName.length === 0
-                ) {
-                  this.settingSvg(svgText, false);
-                }
-                this.cd.detectChanges();
-                this.cd.markForCheck();
-              }
-
-              if (
-                this.winners.candidates_party &&
-                Object.keys(this.winners.candidates_party).length > 0
-              ) {
-                this.allWinnersParty = this.winners.candidates_party;
-              }
-            });
-          }
-        },
-        error: (err) => console.error('WebSocket error', err),
-        complete: () => console.log('WebSocket closed'),
-      });
+      this._dashboard
+        .connectDistrictWinners()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res) => {
+            // console.log('connectDistrictWinners >>>', res);
+            if (res.channel === 'results') {
+              this.zone.run(async () => {
+                this.winners = res.data;
+                this.updateWinnerUI(this.winners);
+                this.loadSvgIfNeeded();
+              });
+            }
+          },
+          error: (err) => console.error('WebSocket error', err),
+          complete: () => console.log('WebSocket closed'),
+        });
 
       // WebSocket - Party Seat Counts
-      this._dashboard.connectPartySeatCounts().subscribe({
-        next: (res) => {
-          // console.log('connectPartySeatCounts >>>', res);
-          if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
-            this.zone.run(() => {
-              this.partySeatCountsList = res.data;
-              this.cd.detectChanges();
+      this._dashboard
+        .connectPartySeatCounts()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res) => {
+            // console.log('connectPartySeatCounts >>>', res);
+            if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+              this.partySeatCountsList = res.data || [];
+              this.totalSeats =
+                this.partySeatCountsList.reduce(
+                  (sum, p) =>
+                    sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
+                  0
+                ) || 1;
               this.cd.markForCheck();
-            });
-          }
-        },
-        error: (err) => console.error('WebSocket error', err),
-        complete: () => console.log('WebSocket closed'),
-      });
+            }
+          },
+          error: (err) => console.error('WebSocket error', err),
+          complete: () => console.log('WebSocket closed'),
+        });
 
       this.mouseMoveSubject.subscribe((event: MouseEvent) =>
         this.handleTooltipLogic(event)
@@ -293,6 +255,55 @@ export class Dashboard implements OnInit {
       this.checkScreenSize();
     } catch (error) {
       console.error('Error loading data:', error);
+    }
+  }
+
+  private updateWinnerUI(winners: any): void {
+    if (!winners) return;
+
+    this.zone.run(() => {
+      // อัพเดท text
+      const updateEls = document.getElementsByClassName('updateDate');
+      Array.from(updateEls).forEach((el) => {
+        (el as HTMLElement).innerText = this.formatTime(winners.updateDate);
+      });
+
+      this.setText(
+        'totalVoteZone',
+        `${this.formatTotalVotes(winners.totalVoteZone)} | `
+      );
+      this.setText(
+        'totalVotePartylist',
+        `${this.formatTotalVotes(winners.totalVotePartylist)} | `
+      );
+      this.setText('percentZone', winners.percentZone);
+      this.setText('percentPartylist', winners.percentPartylist);
+
+      // อัพเดทข้อมูล
+      if (winners.candidates) this.allWinners = winners.candidates;
+      if (winners.candidates_party)
+        this.allWinnersParty = winners.candidates_party;
+
+      this.cd.markForCheck();
+    });
+  }
+
+  private setText(id: string, text: string): void {
+    const el = document.getElementById(id);
+    if (el) el.innerText = text;
+  }
+
+  private async loadSvgIfNeeded(): Promise<void> {
+    if (this.selectedDistric || this.detailPartyListPerPartyName.length > 0)
+      return;
+
+    try {
+      const svgText = await firstValueFrom(
+        this.http.get('/assets/thailand.svg', { responseType: 'text' })
+      );
+      this.settingSvg(svgText, false);
+    } catch (err) {
+      console.error('Load SVG error:', err);
     }
   }
 
@@ -1223,9 +1234,8 @@ export class Dashboard implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.magnifierMousemoveUnsub) {
       this.magnifierMousemoveUnsub();
     }

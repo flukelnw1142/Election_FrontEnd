@@ -60,6 +60,9 @@ export class DashboardService {
    WebSocKet
   */
 
+  connectColor(): Observable<any> {
+    return this.wsService.connect('wss://127.0.0.1:8000/api/Election/ws/color');
+  }
   connectDistrictWinners(): Observable<any> {
     return this.wsService.connect(
       'wss://127.0.0.1:8000/api/Election/ws/results'

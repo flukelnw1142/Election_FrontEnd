@@ -31,7 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class DashboardScoreAndSeat implements OnInit {
   constructor(
     private _dashboard: DashboardService,
-    private cdRef: ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
     private zone: NgZone,
     private appRef: ApplicationRef,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -47,9 +47,23 @@ export class DashboardScoreAndSeat implements OnInit {
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
       try {
-        this.partyColorMap = await firstValueFrom(
-          this._dashboard.getPartyColors()
-        );
+        // this.partyColorMap = await firstValueFrom(
+        //   this._dashboard.getPartyColors()
+        // );
+        // WebSocket - Color
+        this._dashboard.connectColor().subscribe({
+          next: (res) => {
+            console.log('connectColor >>>', res);
+            if (res.type === 'color') {
+              this.zone.run(() => {
+                this.partyColorMap = res.data;
+                this.cd.detectChanges();
+              });
+            }
+          },
+          error: (err) => console.error('WebSocket error', err),
+          complete: () => console.log('WebSocket closed'),
+        });
 
         // WebSocket - Party Seat Counts
         this._dashboard.connectPartySeatCounts().subscribe({
@@ -67,8 +81,8 @@ export class DashboardScoreAndSeat implements OnInit {
                 console.log('totalSeats', this.totalSeats);
 
                 setTimeout(() => {
-                  this.cdRef.detectChanges();
-                  this.cdRef.markForCheck();
+                  this.cd.detectChanges();
+                  this.cd.markForCheck();
                 }, 600);
               });
             }
@@ -81,7 +95,7 @@ export class DashboardScoreAndSeat implements OnInit {
       }
     }
 
-    this.cdRef.detectChanges();
+    this.cd.detectChanges();
   }
 
   // async ngOnInit(): Promise<void> {
@@ -100,11 +114,11 @@ export class DashboardScoreAndSeat implements OnInit {
   //       this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
   //         return sum + p.zone_seats + p.partylist_seats;
   //       }, 0);
-  //       this.cdRef.detectChanges();
+  //       this.cd.detectChanges();
 
   //       setTimeout(() => {
   //         this.isInitialLoad = false;
-  //         this.cdRef.markForCheck();
+  //         this.cd.markForCheck();
   //       }, 600);
 
   //       const intervalId = setInterval(async () => {
@@ -118,7 +132,7 @@ export class DashboardScoreAndSeat implements OnInit {
   //           return sum + p.zone_seats + p.partylist_seats;
   //         }, 0);
 
-  //         this.cdRef.detectChanges();
+  //         this.cd.detectChanges();
   //       }, 2000);
   //       this.intervalId = intervalId;
   //     } catch (error) {
@@ -134,11 +148,11 @@ export class DashboardScoreAndSeat implements OnInit {
   //       this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
   //         return sum + p.zone_seats + p.partylist_seats;
   //       }, 0);
-  //       this.cdRef.detectChanges();
+  //       this.cd.detectChanges();
 
   //       setTimeout(() => {
   //         this.isInitialLoad = false;
-  //         this.cdRef.markForCheck();
+  //         this.cd.markForCheck();
   //       }, 600);
 
   //       const intervalId = setInterval(async () => {
@@ -152,7 +166,7 @@ export class DashboardScoreAndSeat implements OnInit {
   //           return sum + p.zone_seats + p.partylist_seats;
   //         }, 0);
 
-  //         this.cdRef.detectChanges();
+  //         this.cd.detectChanges();
   //       }, 2000);
   //       this.intervalId = intervalId;
   //     }

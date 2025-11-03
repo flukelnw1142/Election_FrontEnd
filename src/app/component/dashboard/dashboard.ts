@@ -181,9 +181,24 @@ export class Dashboard implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
 
     try {
-      this.partyColorMap = await firstValueFrom(
-        this._dashboard.getPartyColors()
-      );
+      // this.partyColorMap = await firstValueFrom(
+      //   this._dashboard.getPartyColors()
+      // );
+
+      // WebSocket - Color
+      this._dashboard.connectColor().subscribe({
+        next: (res) => {
+          console.log('connectColor >>>', res);
+          if (res.type === 'color') {
+            this.zone.run(() => {
+              this.partyColorMap = res.data;
+              this.cd.detectChanges();
+            });
+          }
+        },
+        error: (err) => console.error('WebSocket error', err),
+        complete: () => console.log('WebSocket closed'),
+      });
 
       // WebSocket - District Winners
       this._dashboard.connectDistrictWinners().subscribe({

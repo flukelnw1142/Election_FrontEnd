@@ -188,9 +188,11 @@ export class Dashboard implements OnInit {
       await Promise.all([
         firstValueFrom(this._dashboard.getPartyColors()),
         firstValueFrom(this._dashboard.getDistrictWinners()),
-      ]).then(([colors, winners]) => {
+        firstValueFrom(this._dashboard.getPartySeatCountsList()),
+      ]).then(([colors, winners, seatCount]) => {
         this.partyColorMap = colors;
         this.winners = winners;
+        this.partySeatCountsList = seatCount;
       });
 
       // อัพเดท UI ครั้งแรก
@@ -1462,6 +1464,10 @@ export class Dashboard implements OnInit {
       const partyData = this.partySeatCountsList.find(
         (p) => p.partyName === this.selectedParty
       );
+
+      console.log('selectedParty', this.selectedParty);
+      console.log('partySeatCountsList', this.partySeatCountsList);
+      console.log('partyData', partyData);
 
       if (partyData) {
         this.totalSeats = partyData.zone_seats + partyData.partylist_seats;

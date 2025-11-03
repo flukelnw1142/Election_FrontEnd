@@ -9,7 +9,8 @@
   </div>
 
   <div #scrollContainer class="scroll-container">
-    <div *ngFor="let party of partySeatCountsList; let i = index;" class="party-card-container" [ngClass]="{'initial-load': isInitialLoad}">
+    <div *ngFor="let party of partySeatCountsList; let i = index;" class="party-card-container"
+      [ngClass]="{'initial-load': isInitialLoad}">
       <!-- กล่องพรรค -->
       <div class="party-card" [style.background]="getColor(party.partyName)" (click)="onSelectParty(party.partyName)">
         <div class="number">{{i+1}}</div>
@@ -30,7 +31,9 @@
           <div class="progress-bar-bg">
             <div class="progress-bar"
               [style.--progress-width]="((party.zone_seats + party.partylist_seats) / totalSeats) * 100 + '%'"
-              [style.background]="getColor(party.partyName)"></div>
+              [style.background]="getColor(party.partyName)">
+              <div class="wave-middle"></div>
+            </div>
           </div>
 
           <p class="vote-total">

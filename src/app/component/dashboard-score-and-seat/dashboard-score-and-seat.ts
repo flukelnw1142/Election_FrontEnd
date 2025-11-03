@@ -55,7 +55,7 @@ export class DashboardScoreAndSeat implements OnInit {
         this._dashboard.connectPartySeatCounts().subscribe({
           next: (res) => {
             console.log('connectPartySeatCounts >>>', res);
-            if (res.channel === 'GetSummaryCountPartyZoneAndPartyList') {
+            if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
               this.zone.run(() => {
                 this.partySeatCountsList = res.data;
 

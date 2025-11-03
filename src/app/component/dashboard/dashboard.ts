@@ -244,12 +244,12 @@ export class Dashboard implements OnInit {
             // console.log('connectPartySeatCounts >>>', res);
             if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
               this.partySeatCountsList = res.data || [];
-              this.totalSeats =
-                this.partySeatCountsList.reduce(
-                  (sum, p) =>
-                    sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
-                  0
-                ) || 1;
+              // this.totalSeats =
+              //   this.partySeatCountsList.reduce(
+              //     (sum, p) =>
+              //       sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
+              //     0
+              //   ) || 1;
               this.cd.markForCheck();
             }
           },

@@ -39,7 +39,7 @@ export class DashboardScoreAndSeat implements OnInit {
   @Output() partySelected = new EventEmitter<string>();
   @Output() partyListAndPartyZone = new EventEmitter<string>();
   partySeatCountsList: PartySeatCountList[] = [];
-  totalSeats: number = 1;
+  totalSeats: number = 500;
   partyColorMap: { [partyKeyword: string]: Color } = {};
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
   private destroy$ = new Subject<void>();
@@ -55,7 +55,7 @@ export class DashboardScoreAndSeat implements OnInit {
           this._dashboard.getPartySeatCountsList()
         );
 
-        this.updateTotalSeats();
+        // this.updateTotalSeats();
         this.cd.markForCheck();
 
         // WebSocket - Color
@@ -82,11 +82,28 @@ export class DashboardScoreAndSeat implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (res) => {
-              console.log('connectPartySeatCounts >>>', res);
+              // console.log('connectPartySeatCounts >>>', res);
               if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
-                this.partySeatCountsList = res.data || [];
-                this.updateTotalSeats();
+                // this.partySeatCountsList = res.data || [];
+                // this.updateTotalSeats();
+                // this.cd.markForCheck();
+                // ตรวจสอบว่ามีการเปลี่ยนแปลงจริง
+                const newData = res.data || [];
+                const hasChanged =
+                  JSON.stringify(this.partySeatCountsList) !==
+                  JSON.stringify(newData);
+
+                this.partySeatCountsList = [...newData]; // สร้าง array ใหม่
+                // this.updateTotalSeats();
+
+                // บังคับ re-render
                 this.cd.markForCheck();
+                this.appRef.tick(); // สำคัญมาก!
+
+                // เรียก animation เฉพาะเมื่อเปลี่ยน
+                if (hasChanged) {
+                  setTimeout(() => this.applyFlipAnimation(), 0);
+                }
               }
             },
             error: (err) => console.error('WebSocket error', err),
@@ -98,18 +115,74 @@ export class DashboardScoreAndSeat implements OnInit {
     }
   }
 
-  private updateTotalSeats(): void {
-    this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-      return sum + (p.zone_seats || 0) + (p.partylist_seats || 0);
-    }, 0);
+  // private updateTotalSeats(): void {
+  //   this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
+  //     return sum + (p.zone_seats || 0) + (p.partylist_seats || 0);
+  //   }, 0);
 
-    // ป้องกันหาร 0
-    if (this.totalSeats === 0) this.totalSeats = 1;
-  }
+  //   // ป้องกันหาร 0
+  //   if (this.totalSeats === 0) this.totalSeats = 1;
+  // }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private previousOrder: string[] = [];
+
+  // เรียกหลังจาก view อัปเดต
+  ngAfterViewChecked(): void {
+    this.applyFlipAnimation();
+  }
+
+  private applyFlipAnimation(): void {
+    if (!this.scrollContainer?.nativeElement) return;
+
+    const container = this.scrollContainer.nativeElement;
+    const cards = container.querySelectorAll(
+      '.party-card-container'
+    ) as NodeListOf<HTMLElement>;
+    const currentOrder = this.partySeatCountsList.map((p) => p.partyName);
+
+    // ครั้งแรก: เก็บตำแหน่งเดิม
+    if (this.previousOrder.length === 0) {
+      this.previousOrder = [...currentOrder];
+      return;
+    }
+
+    // สร้าง map ของ card
+    const cardMap = new Map<string, HTMLElement>();
+    cards.forEach((card) => {
+      const partyName = card.getAttribute('data-party');
+      if (partyName) cardMap.set(partyName, card);
+    });
+
+    // คำนวณการเลื่อน
+    this.partySeatCountsList.forEach((party, newIndex) => {
+      const card = cardMap.get(party.partyName);
+      if (!card) return;
+
+      const oldIndex = this.previousOrder.indexOf(party.partyName);
+      if (oldIndex === -1 || oldIndex === newIndex) return;
+
+      const delta = (oldIndex - newIndex) * card.offsetHeight;
+
+      if (delta !== 0) {
+        // First: ตำแหน่งเดิม
+        card.style.transform = `translateY(${delta}px)`;
+        card.style.transition = 'none';
+
+        // Force reflow + Play
+        requestAnimationFrame(() => {
+          card.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+          card.style.transform = 'translateY(0)';
+        });
+      }
+    });
+
+    // อัปเดต previous order
+    this.previousOrder = [...currentOrder];
   }
   // async ngOnInit(): Promise<void> {
   //   // ✅ 0. ดึงข้อมูลสี
@@ -224,15 +297,15 @@ export class DashboardScoreAndSeat implements OnInit {
   onSelectParty(partyName: string) {
     this.partySelected.emit(partyName);
   }
-  // onSelectZoneSeats(partyName: string): void {
-  //   this.partySelectedCandidateZone.emit(partyName);
-  // }
-  // onSelectPartylistSeats(partyName: string): void {
-  //   this.partySelectedCandidate.emit(partyName);
-  // }
+
+  trackByPartyName(index: number, party: PartySeatCountList): string {
+    return party.partyName; // ใช้ชื่อพรรคเป็น key ที่ไม่เปลี่ยนแปลง
+  }
+
   onSelectPartyListAndPartyZone(partyName: string): void {
     this.partyListAndPartyZone.emit(partyName);
   }
+
   scrollToTopContainer() {
     if (this.scrollContainer?.nativeElement) {
       this.scrollContainer.nativeElement.scrollTo({

@@ -77,7 +77,7 @@ export class DashboardV2 implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (res) => {
-              console.log('connectColor >>>', res);
+              // console.log('connectColor >>>', res);
               if (res.type === 'color') {
                 this.zone.run(() => {
                   this.partyColorMap = res.data;
@@ -95,7 +95,7 @@ export class DashboardV2 implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (res) => {
-              console.log('connectPartySeatCounts >>>', res);
+              // console.log('connectPartySeatCounts >>>', res);
               if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
                 this.zone.run(() => {
                   this.partySeatCountsList = res.data;

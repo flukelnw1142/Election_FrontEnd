@@ -61,18 +61,14 @@ export class DashboardService {
   */
 
   connectColor(): Observable<any> {
-    return this.wsService.connect('wss://127.0.0.1:8000/api/Election/ws/color');
+    return this.wsService.connect(environment.ws_color_url);
   }
   connectDistrictWinners(): Observable<any> {
-    return this.wsService.connect(
-      'wss://127.0.0.1:8000/api/Election/ws/results'
-    );
+    return this.wsService.connect(environment.ws_results_url);
   }
 
   connectPartySeatCounts(): Observable<any> {
-    return this.wsService.connect(
-      'wss://127.0.0.1:8000/api/Election/ws/summary'
-    );
+    return this.wsService.connect(environment.ws_summary_url);
   }
 
   // เรียกข้อมูลผู้ที่ชนะในแต่ละเขตเลือกตั้ง ทั้งแบบส.ส.เขต และ ส.ส.บัญชีรายชื่อ >> ใช้ websocket แทน

@@ -58,6 +58,7 @@ export class DashboardScoreAndSeat implements OnInit {
               this.zone.run(() => {
                 this.partyColorMap = res.data;
                 this.cd.detectChanges();
+                this.cd.markForCheck();
               });
             }
           },
@@ -79,11 +80,8 @@ export class DashboardScoreAndSeat implements OnInit {
                 }, 0);
 
                 console.log('totalSeats', this.totalSeats);
-
-                setTimeout(() => {
-                  this.cd.detectChanges();
-                  this.cd.markForCheck();
-                }, 600);
+                this.cd.detectChanges();
+                this.cd.markForCheck();
               });
             }
           },
@@ -96,6 +94,7 @@ export class DashboardScoreAndSeat implements OnInit {
     }
 
     this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 
   // async ngOnInit(): Promise<void> {

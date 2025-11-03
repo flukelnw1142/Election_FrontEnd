@@ -181,9 +181,9 @@ export class Dashboard implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
 
     try {
-      // this.partyColorMap = await firstValueFrom(
-      //   this._dashboard.getPartyColors()
-      // );
+      this.partyColorMap = await firstValueFrom(
+        this._dashboard.getPartyColors()
+      );
 
       // WebSocket - Color
       this._dashboard.connectColor().subscribe({
@@ -193,6 +193,7 @@ export class Dashboard implements OnInit {
             this.zone.run(() => {
               this.partyColorMap = res.data;
               this.cd.detectChanges();
+              this.cd.markForCheck();
             });
           }
         },
@@ -253,8 +254,8 @@ export class Dashboard implements OnInit {
                 ) {
                   this.settingSvg(svgText, false);
                 }
-
                 this.cd.detectChanges();
+                this.cd.markForCheck();
               }
 
               if (
@@ -278,6 +279,7 @@ export class Dashboard implements OnInit {
             this.zone.run(() => {
               this.partySeatCountsList = res.data;
               this.cd.detectChanges();
+              this.cd.markForCheck();
             });
           }
         },

@@ -1,10 +1,16 @@
-import { Component, Inject, PLATFORM_ID, Renderer2, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Inject,
+  PLATFORM_ID,
+  Renderer2,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { A11yModule } from '@angular/cdk/a11y';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-election',
@@ -13,18 +19,17 @@ import { A11yModule } from '@angular/cdk/a11y';
     MatIconModule,
     CommonModule,
     MatSlideToggleModule,
-    A11yModule,
+    FormsModule,
   ],
   templateUrl: './manage-election.html',
   styleUrl: './manage-election.scss',
-
 })
 export class ManageElection {
   constructor(
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private renderer: Renderer2,
-  ) { }
+    private renderer: Renderer2
+  ) {}
   menus: any;
 
   ngOnInit(): void {
@@ -49,5 +54,16 @@ export class ManageElection {
     this.selectedIndex = event.index;
   }
 
-  checked = false;
+  checked: boolean = false;
+  timeAuto: number = 2;
+  onToggleChange() {
+    if (this.checked) {
+      this.callApi();
+    }
+  }
+
+  // ฟังก์ชันเรียก API
+  callApi() {
+    console.log('Calling API with time:', this.timeAuto);
+  }
 }

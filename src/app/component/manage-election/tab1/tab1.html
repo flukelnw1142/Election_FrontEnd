@@ -3,7 +3,8 @@
         <div class="left">
             <div class="manage-content">
                 <div class="set-auto-time">
-                    Set Auto Time <input type="number" min="1" step="1" [(ngModel)]="timeAuto" value="2"> sec
+                    Set Auto Time <input type="number" min="1" step="1" [(ngModel)]="timeAuto" value="2"
+                        (change)="onTimeChange()"> sec
                     <mat-slide-toggle [(ngModel)]="checked" (change)="onToggleChange()">
                     </mat-slide-toggle>
                 </div>

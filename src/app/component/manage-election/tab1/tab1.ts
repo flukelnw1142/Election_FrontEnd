@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Tab1Service } from './tab1service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -13,10 +13,12 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class Tab1 {
   constructor(private _Tab1: Tab1Service, private cd: ChangeDetectorRef) {}
+  private destroy$ = new Subject<void>();
+  private eventSource: EventSource | null = null;
+
   checked: boolean = false;
   timeAuto: number = 2;
   inputPercent: number = 0;
-  responseJsonText: any;
 
   private responseJson$ = new BehaviorSubject<string>('');
 
@@ -32,15 +34,71 @@ export class Tab1 {
     { input1: '', input2: '', input3: '' },
   ];
 
+  ngOnDestroy(): void {
+    this.disconnectStream();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   onToggleChange() {
     if (this.checked) {
-      this.callApi();
+      this.startStreaming();
+    } else {
+      this.disconnectStream();
     }
   }
 
-  // ฟังก์ชันเรียก API
-  callApi() {
-    console.log('Calling API with time:', this.timeAuto);
+  private startStreaming() {
+    this.disconnectStream(); // ป้องกันการเปิดหลายครั้ง
+
+    const baseUrl =
+      `https://127.0.0.1:8000/api/ElectionResults/stream-and-control-election-results`;
+    const params = new URLSearchParams({
+      auto_time: this.timeAuto.toString(),
+      is_enabled: 'true',
+    });
+
+    const url = `${baseUrl}?${params.toString()}`;
+    console.log('Connecting to SSE:', url);
+
+    this.eventSource = new EventSource(url);
+
+    this.eventSource.onopen = () => {
+      console.log('SSE Connected');
+    };
+
+    this.eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        const pretty = JSON.stringify(data, null, 2);
+        this.responseJson$.next(pretty);
+        // ไม่ต้อง cd.detectChanges() เพราะ BehaviorSubject + async pipe จัดการให้
+      } catch (err) {
+        console.error('Parse error:', err);
+      }
+    };
+
+    this.eventSource.onerror = (err) => {
+      console.error('SSE Error:', err);
+      if (this.eventSource?.readyState === EventSource.CLOSED) {
+        console.log('SSE Closed');
+      }
+    };
+  }
+
+  private disconnectStream() {
+    if (this.eventSource) {
+      this.eventSource.close();
+      this.eventSource = null;
+      console.log('SSE Disconnected');
+    }
+  }
+
+  onTimeChange() {
+    if (this.checked) {
+      // รีสตาร์ทด้วยค่าใหม่
+      setTimeout(() => this.startStreaming(), 100);
+    }
   }
 
   onSubmit(form: any) {
@@ -53,14 +111,12 @@ export class Tab1 {
         counted: this.inputPercent.toString(),
       })),
     };
-    console.log(JSON.stringify(jsonData, null, 2));
+    // console.log(JSON.stringify(jsonData, null, 2));
     console.log(jsonData);
     this._Tab1.genElection(jsonData).subscribe({
       next: (res) => {
         console.log(JSON.stringify(res.data));
         this.responseJson$.next(JSON.stringify(res.data, null, 2));
-        // this.responseJsonText = JSON.stringify(res.data, null, 2);
-        // this.cd.detectChanges();
       },
       error: (err) => {
         console.error('API error:', err);

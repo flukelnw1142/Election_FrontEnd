@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Tab1Service } from './tab1service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -16,6 +17,12 @@ export class Tab1 {
   timeAuto: number = 2;
   inputPercent: number = 0;
   responseJsonText: any;
+
+  private responseJson$ = new BehaviorSubject<string>('');
+
+  get responseJsonObs() {
+    return this.responseJson$.asObservable();
+  }
 
   ranks = [
     { input1: '', input2: '', input3: '' },
@@ -51,8 +58,9 @@ export class Tab1 {
     this._Tab1.genElection(jsonData).subscribe({
       next: (res) => {
         console.log(JSON.stringify(res.data));
-        this.responseJsonText = JSON.stringify(res.data, null, 2);
-        this.cd.detectChanges();
+        this.responseJson$.next(JSON.stringify(res.data, null, 2));
+        // this.responseJsonText = JSON.stringify(res.data, null, 2);
+        // this.cd.detectChanges();
       },
       error: (err) => {
         console.error('API error:', err);

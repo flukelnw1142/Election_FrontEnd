@@ -58,7 +58,8 @@
         </div>
         <div class="right">
             <textarea class="form-control" readonly
-                style="height: 100%; resize: none; font-size: small;">{{responseJsonText}}</textarea>
+                style="height: 100%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJsonObs | async }}</textarea>
+            <!-- style="height: 100%; resize: none; font-size: small;">{{responseJsonText}}</textarea> -->
         </div>
     </div>
 </div>

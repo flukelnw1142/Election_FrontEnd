@@ -31,8 +31,14 @@
             </div>
         </div>
     </div>
-    <div style="color: white; cursor: pointer;">
-        <mat-icon fontIcon="logout"></mat-icon>
+    <!-- <div class="logout-btn" matTooltip="ออกจากระบบ" matTooltipPosition="left">
+        <mat-icon fontIcon="logout" class="logout-icon"></mat-icon>
+    </div> -->
+    <div class="user-menu">
+        <span class="user-name">{{username}}</span>
+        <div class="logout-btn" matTooltip="ออกจากระบบ" (click)="logout()">
+            <mat-icon fontIcon="logout" class="logout-icon"></mat-icon>
+        </div>
     </div>
 </div>
 

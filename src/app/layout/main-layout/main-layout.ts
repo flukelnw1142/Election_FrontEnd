@@ -11,8 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class MainLayout {
   showVotingStatus = true;
+  username: any = '';
   constructor(private router: Router) {
-    // subscribe route change
     this.router.events.subscribe((event) => {
       // console.log(event);
       if (event instanceof NavigationEnd) {
@@ -21,5 +21,15 @@ export class MainLayout {
         this.showVotingStatus = true;
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.username = localStorage.getItem('UserName');
+  }
+
+  logout(): void {
+    console.log('Logging out...');
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

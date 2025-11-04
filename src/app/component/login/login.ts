@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { set } from 'lodash';
 import { LoginService } from './service/loginservice';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ import { LoginService } from './service/loginservice';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
@@ -51,15 +53,18 @@ export class Login {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password,
     };
+    console.log('✅ Login INPUT:', req);
     this._login.loginSSO(req).subscribe({
       next: (data) => {
         console.log('✅ Login success:', data);
         localStorage.setItem('currentUser', JSON.stringify(data));
+        localStorage.setItem('UserName', this.loginForm.value.username);
         this.isLoading = false;
         this.router.navigate(['/manage']);
       },
       error: (err) => {
         console.error('❌ Login failed:', err);
+        this.isLoading = false;
       },
     });
   }

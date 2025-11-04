@@ -1,7 +1,7 @@
 .manage-container {
     margin: .3rem .2rem;
     height: calc(100vh - 200px);
-    
+
 
     .flex-column-container {
         display: flex;
@@ -49,8 +49,41 @@
     .percent-count {
         display: flex;
         flex-direction: column;
-        width: 20%;
+        width: fit-content;
+        // width: 50%;
         margin-left: auto;
+    }
+
+    /* ---- Flex layout ---- */
+    .header-row,
+    .data-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .rank-col {
+        flex: 0 0 60px;
+        text-align: center;
+    }
+
+    .name-col {
+        flex: 2.5;
+    }
+
+    .pic-col {
+        flex: 1.5;
+    }
+
+    .score-col {
+        flex: 1.5;
+    }
+
+    .name-col .form-control,
+    .pic-col .form-control,
+    .score-col .form-control {
+        width: 100%;
     }
 
     .ex-text {

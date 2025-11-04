@@ -34,7 +34,7 @@
     <!-- <div class="logout-btn" matTooltip="ออกจากระบบ" matTooltipPosition="left">
         <mat-icon fontIcon="logout" class="logout-icon"></mat-icon>
     </div> -->
-    <div class="user-menu">
+    <div *ngIf="!showVotingStatus" class="user-menu">
         <span class="user-name">{{username}}</span>
         <div class="logout-btn" matTooltip="ออกจากระบบ" (click)="logout()">
             <mat-icon fontIcon="logout" class="logout-icon"></mat-icon>

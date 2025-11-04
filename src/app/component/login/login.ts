@@ -53,12 +53,12 @@ export class Login {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password,
     };
-    console.log('✅ Login INPUT:', req);
+    console.log("req",req);
     this._login.loginSSO(req).subscribe({
       next: (data) => {
         console.log('✅ Login success:', data);
         localStorage.setItem('currentUser', JSON.stringify(data));
-        localStorage.setItem('UserName', this.loginForm.value.username);
+        localStorage.setItem('UserName', data.NAMFIRSTE + ' ' + data.NAMLASTE);
         this.isLoading = false;
         this.router.navigate(['/manage']);
       },
@@ -67,5 +67,9 @@ export class Login {
         this.isLoading = false;
       },
     });
+  }
+
+  intoDashboard() {
+    this.router.navigate(['/dashboard']);
   }
 }

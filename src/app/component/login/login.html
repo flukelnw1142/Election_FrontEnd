@@ -10,26 +10,26 @@
 <div class="login-wrapper">
     <div class="login-container">
         <div class="left-section">
-            <div class="image-frame">
-                <div class="logo-image"></div>
-                <div class="logo"></div>
-            </div>
-            <p class="app-title">Login</p>
+            <!-- <div class="image-frame"> -->
+            <div class="logo-image"></div>
+            <!-- <div class="logo"></div> -->
+            <!-- </div> -->
+            <!-- <p class="app-title">DASHBOARD</p> -->
         </div>
 
         <div class="right-section">
             <div class="logo-container">
-                <div class="logo-image"></div>
-                <p class="company-name">ONEE</p>
+                <!-- <div class="logo-image"></div>
+                <p class="company-name">ONEE</p> -->
             </div>
-            <h1 class="app-login-title">555</h1>
+            <h1 class="app-login-title">ELECTION</h1>
             <div *ngIf="errorMessage" class="error-message">
                 {{ errorMessage }}
             </div>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
                 <mat-form-field appearance="outline" class="form-field">
                     <mat-label>Username</mat-label>
-                    <input matInput formControlName="username"  required />
+                    <input matInput formControlName="username" required />
                     <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
                         กรุณากรอก Username
                     </mat-error>
@@ -37,7 +37,7 @@
 
                 <mat-form-field appearance="outline" class="form-field">
                     <mat-label>Password</mat-label>
-                    <input matInput formControlName="password" [type]="hidePassword ? 'password' : ''"  required />
+                    <input matInput formControlName="password" [type]="hidePassword ? 'password' : ''" required />
                     <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
                         <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                     </button>
@@ -46,15 +46,21 @@
                     </mat-error>
                 </mat-form-field>
 
-                <button mat-raised-button color="primary" type="submit" class="login-button">
+                <button mat-raised-button color="primary" type="submit" class="login-button"
+                    [disabled]="loginForm.invalid">
                     เข้าสู่ระบบ
                 </button>
             </form>
+
+            <button class="icon-button" matTooltip="Dashboard" matTooltipPosition="right" matTooltipShowDelay="100"
+                matTooltipHideDelay="100" (click)="intoDashboard()">
+                <mat-icon fontIcon="view_quilt"></mat-icon>
+            </button>
+
         </div>
 
         <div class="cat-image-container" aria-hidden="true">
             <p class="copyright-text">Copyright © The One Enterprise PCL. | All Rights Reserved.</p>
-            <!-- <div class="cat-image-mobile" [style.backgroundImage]="'url(' + backgroundImage + ')'" aria-hidden="true"></div> -->
         </div>
     </div>
 </div>

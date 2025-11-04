@@ -1,12 +1,13 @@
 .manage-container {
     margin: .3rem .2rem;
+    
 
     .flex-column-container {
         display: flex;
         height: 100%;
 
         .left {
-            flex: 2;
+            flex: 1.2;
             padding: 10px;
 
             .manage-content {

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { Tab1Service } from './tab1service';
 
 @Component({
   selector: 'app-tab1',
@@ -10,8 +11,20 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   styleUrl: './tab1.scss',
 })
 export class Tab1 {
+  constructor(private _Tab1: Tab1Service, private cd: ChangeDetectorRef) {}
   checked: boolean = false;
   timeAuto: number = 2;
+  inputPercent: number = 0;
+  responseJsonText: any;
+
+  ranks = [
+    { input1: '', input2: '', input3: '' },
+    { input1: '', input2: '', input3: '' },
+    { input1: '', input2: '', input3: '' },
+    { input1: '', input2: '', input3: '' },
+    { input1: '', input2: '', input3: '' },
+  ];
+
   onToggleChange() {
     if (this.checked) {
       this.callApi();
@@ -23,7 +36,27 @@ export class Tab1 {
     console.log('Calling API with time:', this.timeAuto);
   }
 
-  genJson() {
-    console.log('Generating JSON...');
+  onSubmit(form: any) {
+    const jsonData = {
+      parties: this.ranks.map((rank, index) => ({
+        row: index + 1,
+        party_name: rank.input1,
+        party_pic: rank.input2,
+        score: rank.input3,
+        counted: this.inputPercent.toString(),
+      })),
+    };
+    console.log(JSON.stringify(jsonData, null, 2));
+    console.log(jsonData);
+    this._Tab1.genElection(jsonData).subscribe({
+      next: (res) => {
+        console.log(JSON.stringify(res.data));
+        this.responseJsonText = JSON.stringify(res.data, null, 2);
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        console.error('API error:', err);
+      },
+    });
   }
 }

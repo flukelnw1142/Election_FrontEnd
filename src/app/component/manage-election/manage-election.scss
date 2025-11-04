@@ -1,8 +1,11 @@
  .bg {
-     height: 88vh;
+     //  height: 88vh;
      background: rgb(255, 255, 255);
      border-radius: 10px;
      padding: 1rem;
+     max-width: 90vw;
+     height: fit-content;
+     margin: auto;
  }
 
 
@@ -46,4 +49,3 @@
          border-radius: 2px 2px 0 0 !important;
      }
  }
-

@@ -2,7 +2,7 @@
 <div class="header-row">
     <img src="https://onee.oneeclick.co/assets/images/logo-onee.png" class="logo-image" alt="Logo" />
 
-    <div class="voting-status-desktop">
+    <div *ngIf="showVotingStatus" class="voting-status-desktop">
         <div class="status-layout">
             <div class="row">
                 <div class="left-cell">

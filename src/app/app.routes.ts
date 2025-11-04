@@ -7,6 +7,7 @@ import { DashboardV2 } from './component/dashboard-v2/dashboard-v2';
 import { DashboardScoreAndSeat } from './component/dashboard-score-and-seat/dashboard-score-and-seat';
 import { DetailDialog } from './component/detail-dialog/detail-dialog';
 import { MainLayout } from './layout/main-layout/main-layout';
+import { ManageElection } from './component/manage-election/manage-election';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
@@ -36,6 +37,10 @@ export const routes: Routes = [
       {
         path: 'detail',
         component: DetailDialog,
+      },
+      {
+        path: 'manage',
+        component: ManageElection,
       },
     ],
   },

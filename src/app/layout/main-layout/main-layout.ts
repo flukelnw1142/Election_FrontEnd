@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -12,7 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 export class MainLayout {
   showVotingStatus = true;
   username: any = '';
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.router.events.subscribe((event) => {
       // console.log(event);
       if (event instanceof NavigationEnd) {
@@ -24,7 +26,9 @@ export class MainLayout {
   }
 
   ngOnInit(): void {
-    this.username = localStorage.getItem('UserName');
+    if (isPlatformBrowser(this.platformId)) {
+      this.username = localStorage.getItem('UserName');
+    }
   }
 
   logout(): void {

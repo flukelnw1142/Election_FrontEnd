@@ -1,8 +1,8 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, Renderer2, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { A11yModule } from '@angular/cdk/a11y';
 
@@ -17,18 +17,30 @@ import { A11yModule } from '@angular/cdk/a11y';
   ],
   templateUrl: './manage-election.html',
   styleUrl: './manage-election.scss',
+
 })
 export class ManageElection {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private renderer: Renderer2,
+  ) { }
   menus: any;
 
   ngOnInit(): void {
-    const storage = localStorage.getItem('currentUser');
-    if (!storage) {
-      this.router.navigate(['/login']);
-    } else {
-      console.log('storage', JSON.parse(storage).MENULIST);
-      this.menus = JSON.parse(storage).MENULIST;
+    if (isPlatformBrowser(this.platformId)) {
+      const checkAuth = () => {
+        const storage = localStorage.getItem('currentUser');
+        if (!storage) {
+          this.router.navigate(['/login']);
+        } else {
+          this.menus = JSON.parse(storage).MENULIST;
+        }
+      };
+
+      // รันหลังจาก DOM พร้อม
+      this.renderer.listen('window', 'load', checkAuth);
+      checkAuth(); // รันทันทีถ้า DOM พร้อมแล้ว
     }
   }
 

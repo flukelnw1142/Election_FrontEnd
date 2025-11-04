@@ -11,11 +11,6 @@ export class LoginService {
 
   constructor(private _http: HttpClient) {}
 
-  isLoggedIn(): boolean {
-    const currentUser = localStorage.getItem('currentUser');
-    return !!currentUser;
-  }
-
   loginSSO(req: any): Observable<any> {
     return this._http.post<any>(`${this.baseUrl}/auth/loginSSO`, req);
   }

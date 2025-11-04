@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { set } from 'lodash';
 import { LoginService } from './service/loginservice';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SweetAlertService } from '../../service/sweet-alert.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,9 @@ export class Login {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private _login: LoginService
+    private _login: LoginService,
+    private sweetAlertService: SweetAlertService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -47,24 +50,32 @@ export class Login {
 
   ngOnInit(): void {}
 
-  onSubmit() {
+  onSubmit(): void {
     this.isLoading = true;
     const req = {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password,
     };
-    console.log("req",req);
+    console.log('req', req);
     this._login.loginSSO(req).subscribe({
       next: (data) => {
         console.log('✅ Login success:', data);
         localStorage.setItem('currentUser', JSON.stringify(data));
         localStorage.setItem('UserName', data.NAMFIRSTE + ' ' + data.NAMLASTE);
         this.isLoading = false;
-        this.router.navigate(['/manage']);
+
+        this.cdRef.detectChanges();
+        this.sweetAlertService
+          .showAlert('Login Successful', '', 'success')
+          .then(() => {
+            this.router.navigate(['/manage']);
+          });
       },
       error: (err) => {
-        console.error('❌ Login failed:', err);
         this.isLoading = false;
+        this.cdRef.detectChanges();
+        this.sweetAlertService.showAlert('Login fail', '', 'warning');
+        console.error('❌ Login failed:', err);
       },
     });
   }

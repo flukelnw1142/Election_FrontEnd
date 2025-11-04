@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
+import { Tab1 } from "./tab1/tab1";
 
 @Component({
   selector: 'app-manage-election',
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     MatSlideToggleModule,
     FormsModule,
-  ],
+    Tab1
+],
   templateUrl: './manage-election.html',
   styleUrl: './manage-election.scss',
 })
@@ -52,18 +54,5 @@ export class ManageElection {
   selectedIndex = 0;
   onTabChange(event: any) {
     this.selectedIndex = event.index;
-  }
-
-  checked: boolean = false;
-  timeAuto: number = 2;
-  onToggleChange() {
-    if (this.checked) {
-      this.callApi();
-    }
-  }
-
-  // ฟังก์ชันเรียก API
-  callApi() {
-    console.log('Calling API with time:', this.timeAuto);
   }
 }

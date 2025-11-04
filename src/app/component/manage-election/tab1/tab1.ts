@@ -51,8 +51,7 @@ export class Tab1 {
   private startStreaming() {
     this.disconnectStream(); // ป้องกันการเปิดหลายครั้ง
 
-    const baseUrl =
-      `https://127.0.0.1:8000/api/ElectionResults/stream-and-control-election-results`;
+    const baseUrl = `https://127.0.0.1:8000/api/ElectionResults/stream-and-control-election-results`;
     const params = new URLSearchParams({
       auto_time: this.timeAuto.toString(),
       is_enabled: 'true',
@@ -90,6 +89,7 @@ export class Tab1 {
     if (this.eventSource) {
       this.eventSource.close();
       this.eventSource = null;
+      this.responseJson$.next('');
       console.log('SSE Disconnected');
     }
   }

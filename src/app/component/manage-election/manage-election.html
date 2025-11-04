@@ -2,18 +2,15 @@
     <mat-tab-group class="custom-tabs" mat-stretch-tabs>
         <mat-tab *ngFor="let menu of menus" [label]="menu.MenuName">
             <ng-container *ngIf="menu.MenuID === 1">
-               <app-tab1></app-tab1>
+                <app-tab1></app-tab1>
             </ng-container>
 
             <ng-container *ngIf="menu.MenuID === 2">
-                <form>
-                    <label>Province:</label>
-                    <input type="text">
-                </form>
+               <app-tab2></app-tab2>
             </ng-container>
 
             <ng-container *ngIf="menu.MenuID === 3">
-                <p>แสดง chart หรือข้อมูลอื่นๆ</p>
+                <app-tab3></app-tab3>
             </ng-container>
         </mat-tab>
     </mat-tab-group>

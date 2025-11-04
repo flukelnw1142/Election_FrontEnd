@@ -11,7 +11,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
-import { Tab1 } from "./tab1/tab1";
+import { Tab1 } from './tab1/tab1';
+import { Tab2 } from './tab2/tab2';
+import { Tab3 } from './tab3/tab3';
 
 @Component({
   selector: 'app-manage-election',
@@ -21,8 +23,10 @@ import { Tab1 } from "./tab1/tab1";
     CommonModule,
     MatSlideToggleModule,
     FormsModule,
-    Tab1
-],
+    Tab1,
+    Tab2,
+    Tab3,
+  ],
   templateUrl: './manage-election.html',
   styleUrl: './manage-election.scss',
 })

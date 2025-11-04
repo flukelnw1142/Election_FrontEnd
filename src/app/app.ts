@@ -9,5 +9,4 @@ import { Navbar } from './component/navbar/navbar';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('ONEE-News');
 }

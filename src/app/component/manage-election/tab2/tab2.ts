@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { Tab2Service } from './tab2service';
 import { SweetAlertService } from '../../../service/sweet-alert.service';
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-tab2',
   imports: [CommonModule, MatSlideToggleModule, FormsModule,
@@ -30,6 +31,7 @@ export class Tab2 {
   inputPercent: number = 0;
   province = '';
   zone = '';
+  private baseUrl = environment.api_url;
 
   provinceCtrl = new FormControl('');
   filteredProvinces!: Observable<any[]>;
@@ -130,7 +132,7 @@ export class Tab2 {
   private startStreaming() {
     this.disconnectStream(); // ป้องกันการเปิดหลายครั้ง
 
-    const baseUrl = `https://127.0.0.1:8000/api/DistrictElectionResults/stream-district-election-results-random`;
+    const baseUrl = `${this.baseUrl}/DistrictElectionResults/stream-district-election-results-random`;
     const params = new URLSearchParams({
       auto_time: this.timeAuto.toString(),
       is_enabled: 'true',

@@ -17,13 +17,13 @@
                         <input type="number" class="form-control w-auto" placeholder="" [(ngModel)]="inputPercent"
                             name="inputPercent">
                     </div>
-
+<!-- 
                     <div class="header-row fw-bold d-flex">
                         <div class="rank-col">Rank</div>
                         <div class="name-col">party_name <span class="ex-text">ชาติพัฒนากล้า</span></div>
                         <div class="pic-col">party_pic <span class="ex-text">01</span></div>
                         <div class="score-col">score <span class="ex-text">7,000,000</span></div>
-                    </div>
+                    </div> -->
 
                     <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
                         <div *ngFor="let rank of ranks; let i = index" class="data-row d-flex mt-2 align-items-center">

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Tab1Service } from './tab1service';
 import { BehaviorSubject, Subject } from 'rxjs';
-
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-tab1',
   imports: [CommonModule, MatSlideToggleModule, FormsModule],
@@ -15,7 +15,7 @@ export class Tab1 {
   constructor(private _Tab1: Tab1Service, private cd: ChangeDetectorRef) {}
   private destroy$ = new Subject<void>();
   private eventSource: EventSource | null = null;
-
+  private baseUrl = environment.api_url;
   checked: boolean = false;
   timeAuto: number = 2;
   inputPercent: number = 0;
@@ -51,7 +51,7 @@ export class Tab1 {
   private startStreaming() {
     this.disconnectStream(); // ป้องกันการเปิดหลายครั้ง
 
-    const baseUrl = `https://127.0.0.1:8000/api/ElectionResults/stream-and-control-election-results`;
+    const baseUrl = `${this.baseUrl}/ElectionResults/stream-and-control-election-results`;
     const params = new URLSearchParams({
       auto_time: this.timeAuto.toString(),
       is_enabled: 'true',

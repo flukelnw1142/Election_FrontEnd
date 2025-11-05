@@ -9,7 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BehaviorSubject, map, Observable, startWith, Subject } from 'rxjs';
 import { Tab3Service } from './tab3service';
 import { SweetAlertService } from '../../../service/sweet-alert.service';
-
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-tab3',
   imports: [CommonModule, MatSlideToggleModule, FormsModule,
@@ -30,6 +30,7 @@ export class Tab3 {
   inputPercent: number = 0;
   province = '';
   zone = '';
+  private baseUrl = environment.api_url;
 
   provinceCtrl = new FormControl('');
   filteredProvinces!: Observable<any[]>;
@@ -109,7 +110,7 @@ export class Tab3 {
   private startStreaming() {
     this.disconnectStream(); // ป้องกันการเปิดหลายครั้ง
 
-    const baseUrl = `https://127.0.0.1:8000/api/PartyListProvinceResults/stream-and-control-party-list-province-results`;
+    const baseUrl = `${this.baseUrl}/PartyListProvinceResults/stream-and-control-party-list-province-results`;
     const params = new URLSearchParams({
       auto_time: this.timeAuto.toString(),
       is_enabled: 'true',

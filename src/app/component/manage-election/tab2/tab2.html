@@ -48,35 +48,32 @@
                 <div class="update-data">
                     <span>อัพเดทข้อมูล</span>
 
-                    <div class="top-filter-row d-flex align-items-center gap-3 mt-3">
+                    <div class="top-filter-row d-flex align-items-center gap-3 mt-3 mb-3">
                         <div class="province-col">
                             <label class="form-label mb-0">province</label>
-                            <input type="text" class="form-control" placeholder="กรุงเทพมหานคร" [(ngModel)]="province"
+                            <input type="text" class="form-control" [(ngModel)]="province"
                                 name="province">
-                            <small class="ex-text">ex.</small>
                         </div>
 
                         <div class="zone-col">
                             <label class="form-label mb-0">zone</label>
-                            <input type="text" class="form-control"  [(ngModel)]="zone" placeholder="1">
-                            <small class="ex-text">1</small>
+                            <input type="text" class="form-control"  [(ngModel)]="zone" >
                         </div>
 
                         <div class="percent-count">
                             <label class="form-label mb-0">นับไปแล้ว (%)</label>
-                            <input type="number" class="form-control" placeholder="50.0" [(ngModel)]="inputPercent"
+                            <input type="number" class="form-control"  [(ngModel)]="inputPercent"
                                 name="inputPercent">
-                            <small class="ex-text">50.0</small>
                         </div>
                     </div>
 
-                    <div class="header-row fw-bold d-flex">
+                    <!-- <div class="header-row fw-bold d-flex">
                         <div class="rank-col">Rank</div>
                         <div class="name-col">name <span class="ex-text">เจิมมาศ จึงเลิศศิริ</span></div>
                         <div class="pic-col">party_pic <span class="ex-text">01</span></div>
                         <div class="party_col">party_name <span class="ex-text">ชาติพัฒนากล้า</span></div>
                         <div class="score-col">score <span class="ex-text">300,000</span></div>
-                    </div>
+                    </div> -->
 
                     <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
                         <div *ngFor="let rank of ranks; let i = index" class="data-row d-flex mt-2 align-items-center">

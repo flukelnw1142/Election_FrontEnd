@@ -104,6 +104,8 @@ export class Tab2 {
       areaNo: zoneId,
     };
     console.log(jsonData);
+    this.checked = false;
+    this.onToggleChange();
     this._Tab2.genElectionByProviceAndZone(jsonData).subscribe({
       next: (res) => {
         console.log(JSON.stringify(res.data));
@@ -168,6 +170,8 @@ export class Tab2 {
   }
 
   onSubmit(form: any) {
+    this.checked = false;
+    this.onToggleChange();
     const result = this.ranks.map((rank, index) => ({
       row: index + 1,
       name: rank.input1.trim(),

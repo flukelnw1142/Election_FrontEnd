@@ -93,6 +93,10 @@ export class Tab2 {
   }
 
   onSubmitFilter() {
+    if (!this.selectedProvince) {
+      this.sweetAlertService.showAlert('Load Fail', 'กรุณาเลือกจังหวัด', 'warning');
+      return;
+    }
     if (!this.selectedZone) {
       this.sweetAlertService.showAlert('Load Fail', 'กรุณาเลือกเขต', 'warning');
       return;

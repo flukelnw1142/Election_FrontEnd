@@ -1,1 +1,116 @@
-<p>tab2 works!</p>
+<div class="manage-container">
+    <div class="flex-column-container">
+        <div class="left">
+            <div class="manage-content">
+                <div class="set-auto-time">
+                    Set Auto Time <input type="number" min="1" step="1" [(ngModel)]="timeAuto" value="2"
+                        (change)="onTimeChange()"> sec
+                    <mat-slide-toggle [(ngModel)]="checked" (change)="onToggleChange()">
+                    </mat-slide-toggle>
+                </div>
+                <div class="filter-row d-flex align-items-end gap-3 mt-3">
+                    <!-- จังหวัด -->
+                    <div class="flex-fill">
+                        <label class="form-label">จังหวัด :</label>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>ค้นหาจังหวัด</mat-label>
+                            <input type="text" matInput [formControl]="provinceCtrl" [matAutocomplete]="autoProvince">
+                            <mat-autocomplete #autoProvince="matAutocomplete"
+                                (optionSelected)="onProvinceSelected($event)">
+                                <mat-option *ngFor="let p of filteredProvinces | async" [value]="p.provinceName">
+                                    {{ p.provinceName }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- เขต -->
+                    <div class="flex-fill">
+                        <label class="form-label">เขต :</label>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>เลือกเขต</mat-label>
+                            <mat-select [(ngModel)]="selectedZone" [disabled]="!selectedProvince">
+                                <mat-option *ngFor="let zone of zonesInProvince" [value]="zone.areaName">
+                                    {{ zone.areaName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- ปุ่ม Submit -->
+                    <div style="align-self:center">
+                        <button mat-raised-button color="primary" class="px-4" (click)="onSubmitFilter()">
+                            SUBMIT
+                        </button>
+                    </div>
+                </div>
+                <hr style="margin: 5px;">
+                <div class="update-data">
+                    <span>อัพเดทข้อมูล</span>
+
+                    <div class="top-filter-row d-flex align-items-center gap-3 mt-3">
+                        <div class="province-col">
+                            <label class="form-label mb-0">province</label>
+                            <input type="text" class="form-control" placeholder="กรุงเทพมหานคร" [(ngModel)]="province"
+                                name="province">
+                            <small class="ex-text">ex.</small>
+                        </div>
+
+                        <div class="zone-col">
+                            <label class="form-label mb-0">zone</label>
+                            <input type="text" class="form-control"  [(ngModel)]="zone" placeholder="1">
+                            <small class="ex-text">1</small>
+                        </div>
+
+                        <div class="percent-count">
+                            <label class="form-label mb-0">นับไปแล้ว (%)</label>
+                            <input type="number" class="form-control" placeholder="50.0" [(ngModel)]="inputPercent"
+                                name="inputPercent">
+                            <small class="ex-text">50.0</small>
+                        </div>
+                    </div>
+
+                    <div class="header-row fw-bold d-flex">
+                        <div class="rank-col">Rank</div>
+                        <div class="name-col">name <span class="ex-text">เจิมมาศ จึงเลิศศิริ</span></div>
+                        <div class="pic-col">party_pic <span class="ex-text">01</span></div>
+                        <div class="party_col">party_name <span class="ex-text">ชาติพัฒนากล้า</span></div>
+                        <div class="score-col">score <span class="ex-text">300,000</span></div>
+                    </div>
+
+                    <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
+                        <div *ngFor="let rank of ranks; let i = index" class="data-row d-flex mt-2 align-items-center">
+                            <div class="rank-col text-center">rank{{i+1}} :</div>
+                            <div class="name-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input1"
+                                    name="input1-{{i}}" required>
+                            </div>
+                            <div class="pic-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input2"
+                                    name="input2-{{i}}" required>
+                            </div>
+                            <div class="party_col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input3"
+                                    name="input3-{{i}}" required>
+                            </div>
+                            <div class="score-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input4"
+                                    name="input4-{{i}}" required>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <button class="btn btn-primary" type="submit">GEN JSON</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <textarea class="form-control" readonly
+                style="height: 100%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJsonObs | async }}</textarea>
+            <!-- style="height: 100%; resize: none; font-size: small;">{{responseJsonText}}</textarea> -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,162 @@
+.manage-container {
+    margin: .3rem .2rem;
+    height: calc(100vh - 200px);
+
+
+    .flex-column-container {
+        display: flex;
+        height: 100%;
+
+        .left {
+            flex: 2;
+            padding: 10px;
+
+            .manage-content {
+                height: 100%;
+                overflow: auto;
+                background: #f0f0f0;
+                border-radius: 10px;
+                padding: .5rem;
+
+                .set-auto-time {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 1rem;
+                    padding: .5rem;
+
+                    input {
+                        width: 3rem;
+                        border: none;
+                        border-radius: 10px;
+                        padding: .2rem .5rem;
+                    }
+                }
+
+                .filter {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 1rem;
+                    padding: .5rem;
+
+                    input {
+                        width: 3rem;
+                        border: none;
+                        border-radius: 10px;
+                        padding: .2rem .5rem;
+                    }
+                }
+
+
+            }
+        }
+
+        .right {
+            flex: 1;
+            padding: 10px;
+        }
+    }
+}
+
+.update-data {
+    padding: .5rem;
+
+    .top-filter-row {
+
+        .province-col,
+        .zone-col,
+        .percent-count {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    }
+
+    .percent-count {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        // width: 50%;
+        // margin-left: auto;
+    }
+
+    /* ---- Flex layout ---- */
+    .header-row,
+    .data-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .rank-col {
+        flex: 0 0 60px;
+        text-align: center;
+    }
+
+    .name-col {
+        flex: 2.5;
+    }
+
+    .pic-col {
+        flex: 1.5;
+    }
+
+    .score-col {
+        flex: 1.5;
+    }
+
+    .party-col {
+        flex: 2.5;
+    }
+
+    .name-col .form-control,
+    .pic-col .form-control,
+    .score-col .form-control .party-col .form-control {
+        width: 100%;
+    }
+
+    .ex-text {
+        color: rgb(134, 134, 134);
+        font-size: small;
+        margin-left: 5px;
+        font-weight: 400;
+    }
+}
+
+.filter-row {
+
+    .mat-form-field {
+        width: 100% !important;
+        font-family: 'Sarabun', sans-serif;
+    }
+
+    .mat-mdc-text-field-wrapper {
+        height: 46px !important;
+    }
+
+    .mat-mdc-form-field-input-control {
+        height: 100% !important;
+        padding: 0 12px !important;
+        display: flex;
+        align-items: center;
+    }
+
+    .mat-mdc-form-field-infix {
+        padding: 8px 0 !important;
+        min-height: auto !important;
+    }
+
+    .mat-focused .mat-mdc-form-field-label {
+        color: #0066ff !important;
+    }
+
+    .mdc-text-field--focused .mdc-line-ripple::before {
+        border-bottom-color: #0066ff !important;
+    }
+}

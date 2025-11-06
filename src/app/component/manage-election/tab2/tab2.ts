@@ -10,7 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { Tab2Service } from './tab2service';
 import { SweetAlertService } from '../../../service/sweet-alert.service';
 import { environment } from '../../../../environments/environment';
-import { NgSelectModule } from '@ng-select/ng-select';
 @Component({
   selector: 'app-tab2',
   imports: [
@@ -22,7 +21,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    NgSelectModule,
   ],
   templateUrl: './tab2.html',
   styleUrl: './tab2.scss',

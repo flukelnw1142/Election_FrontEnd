@@ -10,17 +10,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { Tab2Service } from './tab2service';
 import { SweetAlertService } from '../../../service/sweet-alert.service';
 import { environment } from '../../../../environments/environment';
+import { NgSelectModule } from '@ng-select/ng-select';
 @Component({
   selector: 'app-tab2',
-  imports: [CommonModule, MatSlideToggleModule, FormsModule,
+  imports: [
+    CommonModule,
+    MatSlideToggleModule,
+    FormsModule,
     MatAutocompleteModule,
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule,
   ],
   templateUrl: './tab2.html',
-  styleUrl: './tab2.scss'
+  styleUrl: './tab2.scss',
 })
 export class Tab2 {
   private destroy$ = new Subject<void>();
@@ -36,7 +41,9 @@ export class Tab2 {
   provinceCtrl = new FormControl('');
   filteredProvinces!: Observable<any[]>;
   selectedProvince: any = '';
+  selectedProvince2: any = '';
   selectedZone: any = '';
+  selectedZone2: any = '';
   private responseJson$ = new BehaviorSubject<string>('');
 
   get responseJsonObs() {
@@ -54,56 +61,86 @@ export class Tab2 {
   provinces: any[] = [];
 
   zonesInProvince: any[] = [];
+  zonesInProvince2: any[] = [];
 
-  constructor(private _Tab2: Tab2Service, private cdr: ChangeDetectorRef,
-    private sweetAlertService: SweetAlertService,
-
-  ) { }
+  constructor(
+    private _Tab2: Tab2Service,
+    private cdr: ChangeDetectorRef,
+    private sweetAlertService: SweetAlertService
+  ) {}
 
   ngOnInit() {
     this.filteredProvinces = this.provinceCtrl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filterProvince(value || ''))
+      map((value) => this._filterProvince(value || ''))
     );
 
-    this.getProvince()
+    this.getProvince();
   }
 
   private _filterProvince(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.provinces.filter(p => p.toLowerCase().includes(filterValue));
+    return this.provinces.filter((p) => p.toLowerCase().includes(filterValue));
   }
 
   onProvinceSelected(event: any) {
-    const selectedName = event.option.value
-    const selectedProv = this.provinces.find(p => p.provinceName === selectedName);
+    const selectedName = event.option.value;
+    const selectedProv = this.provinces.find(
+      (p) => p.provinceName === selectedName
+    );
     const ProvinceID = selectedProv?.provID || null;
     this.selectedProvince = ProvinceID;
     if (ProvinceID) {
       this._Tab2.getDistrict(ProvinceID).subscribe({
         next: (res) => {
-          this.zonesInProvince = res.data
+          this.zonesInProvince = res.data;
           this.cdr.detectChanges();
-
         },
         error: (err) => {
           console.error('API error:', err);
-        }
-      })
+        },
+      });
     }
     this.selectedZone = '';
   }
 
+  onProvinceSelected2(event: any) {
+    const selectedName = event.target.value;
+    const selectedProv = this.provinces.find(
+      (p) => p.provinceName === selectedName
+    );
+    const ProvinceID = selectedProv?.provID || null;
+    this.selectedProvince2 = ProvinceID;
+    if (ProvinceID) {
+      this._Tab2.getDistrict(ProvinceID).subscribe({
+        next: (res) => {
+          this.zonesInProvince2 = res.data;
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('API error:', err);
+        },
+      });
+    }
+    this.zone = '';
+  }
+
   onSubmitFilter() {
     if (!this.selectedProvince) {
-      this.sweetAlertService.showAlert('Load Fail', 'กรุณาเลือกจังหวัด', 'warning');
+      this.sweetAlertService.showAlert(
+        'Load Fail',
+        'กรุณาเลือกจังหวัด',
+        'warning'
+      );
       return;
     }
     if (!this.selectedZone) {
       this.sweetAlertService.showAlert('Load Fail', 'กรุณาเลือกเขต', 'warning');
       return;
     }
-    const selectedZone = this.zonesInProvince.find(p => p.areaName === this.selectedZone);
+    const selectedZone = this.zonesInProvince.find(
+      (p) => p.areaName === this.selectedZone
+    );
     const zoneId = selectedZone?.zone || null;
     const jsonData = {
       provID: this.selectedProvince,
@@ -182,13 +219,13 @@ export class Tab2 {
       row: index + 1,
       name: rank.input1.trim(),
       party_name: rank.input3.trim(),
-      party_pic: `V:\\\\party_pic\\\\${rank.input2.trim()}.png`,  // แปลง 01 → P_01.png
-      score: rank.input4.replace(/,/g, ''),  // เอา , ออก → 41143
+      party_pic: `V:\\\\party_pic\\\\${rank.input2.trim()}.png`, // แปลง 01 → P_01.png
+      score: rank.input4.replace(/,/g, ''), // เอา , ออก → 41143
       province: this.province.trim(),
       zone: this.zone.trim(),
       counted: this.inputPercent.toString(),
-      map: "...",
-      bkg: "..."
+      map: '...',
+      bkg: '...',
     }));
 
     // console.log(JSON.stringify(jsonData, null, 2));
@@ -226,19 +263,19 @@ export class Tab2 {
 
         this.filteredProvinces = this.provinceCtrl.valueChanges.pipe(
           startWith(''),
-          map(value => this._filterProvinces(value || ''))
+          map((value) => this._filterProvinces(value || ''))
         );
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('API error:', err);
-      }
-    })
+      },
+    });
   }
 
   private _filterProvinces(value: string): any[] {
     const filterValue = value.toLowerCase();
-    return this.provinces.filter(p =>
+    return this.provinces.filter((p) =>
       p.provinceName.toLowerCase().includes(filterValue)
     );
   }

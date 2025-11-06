@@ -1,4 +1,4 @@
-<p>tab3 works!</p>
+<!-- <p>tab3 works!</p> -->
 <div class="manage-container">
     <div class="flex-column-container">
         <div class="left">
@@ -50,10 +50,19 @@
                     <span>อัพเดทข้อมูล</span>
 
                     <div class="top-filter-row d-flex align-items-center gap-3 mt-3 mb-3">
-                        <div class="province-col">
+                        <!-- <div class="province-col">
                             <label class="form-label mb-0">province</label>
                             <input type="text" class="form-control"  [(ngModel)]="province"
                                 name="province">
+                        </div> -->
+                        <div class="province-col">
+                            <label class="form-label mb-0">Province</label>
+                            <select class="form-select" [(ngModel)]="province" name="province">
+                                <option value="" disabled selected>-- เลือกจังหวัด --</option>
+                                <option *ngFor="let item of provinces" [value]="item.provinceName">
+                                    {{ item.provinceName }}
+                                </option>
+                            </select>
                         </div>
 
                         <div class="zone-col">
@@ -61,15 +70,14 @@
 
                         <div class="percent-count">
                             <label class="form-label mb-0">นับไปแล้ว (%)</label>
-                            <input type="number" class="form-control"  [(ngModel)]="inputPercent"
-                                name="inputPercent">
+                            <input type="number" class="form-control" [(ngModel)]="inputPercent" name="inputPercent">
                         </div>
                     </div>
 
                     <!-- <div class="header-row fw-bold d-flex">
                         <div class="rank-col">Rank</div>
                         <div class="pic-col">party_pic <span class="ex-text">01</span></div>
-                        <div class="party_col">party_name <span class="ex-text">ชาติพัฒนากล้า</span></div>
+                        <div class="party-col">party_name <span class="ex-text">ชาติพัฒนากล้า</span></div>
                         <div class="score-col">score <span class="ex-text">300,000</span></div>
                     </div> -->
 
@@ -80,7 +88,7 @@
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input1"
                                     name="input1-{{i}}" required>
                             </div>
-                            <div class="party_col">
+                            <div class="party-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input2"
                                     name="input2-{{i}}" required>
                             </div>

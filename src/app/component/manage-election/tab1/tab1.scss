@@ -124,6 +124,11 @@
         font-weight: 400;
     }
 
+    .form-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
     /* Media Query สำหรับหน้าจอเล็ก */
     @media (max-width: 768px) {
         .text-header {
@@ -163,6 +168,11 @@
 
         input {
             font-size: smaller;
+        }
+
+        .form-label {
+            font-size: small;
+            font-weight: 400;
         }
     }
 

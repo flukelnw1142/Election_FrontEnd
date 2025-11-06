@@ -57,12 +57,48 @@
             padding: 10px;
         }
     }
+
+
+    /* Media Query สำหรับหน้าจอเล็ก */
+    @media (max-width: 768px) {
+
+        margin: 0;
+        height: 100%;
+
+        .flex-column-container {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .left,
+        .right {
+            flex: 1;
+            padding: 5px;
+            width: 100%;
+        }
+
+        textarea {
+            height: fit-content;
+            min-height: 300px;
+        }
+    }
+
+    // /* Media Query สำหรับมือถือเล็ก */
+    @media (max-width: 480px) {
+        font-size: small;
+    }
 }
 
 .update-data {
     padding: .5rem;
 
     .top-filter-row {
+        display: flex;
+        flex-direction: row;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        gap: 1rem;
+        align-items: center;
 
         .province-col,
         .zone-col,
@@ -127,9 +163,71 @@
         margin-left: 5px;
         font-weight: 400;
     }
+
+    /* Media Query สำหรับหน้าจอเล็ก */
+    @media (max-width: 768px) {
+        .text-header {
+            font-weight: 700;
+        }
+
+        .percent-count {
+            width: 100%;
+
+            input {
+                font-size: smaller;
+            }
+        }
+
+        .header-row {
+            display: none !important;
+        }
+
+        .data-row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .rank-col,
+        .name-col,
+        .pic-col,
+        .score-col,
+        .party-col {
+            flex: none;
+            width: 100%;
+        }
+
+        .rank-col {
+            text-align: left !important;
+            font-weight: 500;
+        }
+
+        input {
+            font-size: smaller;
+        }
+
+        .top-filter-row {
+            flex-direction: column;
+            margin-top: 6px;
+            margin-bottom: 6px;
+            gap: .5rem;
+            align-items: stretch;
+
+            .form-select {
+                font-size: small;
+            }
+        }
+
+
+
+    }
 }
 
 .filter-row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+    gap: 1rem;
+    align-items: end;
 
     .mat-form-field {
         width: 100% !important;
@@ -158,5 +256,22 @@
 
     .mdc-text-field--focused .mdc-line-ripple::before {
         border-bottom-color: #0066ff !important;
+    }
+
+    /* Media query สำหรับหน้าจอเล็ก */
+    @media (max-width: 768px) {
+        font-size: small;
+        margin-top: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+
+        mat-label {
+            font-size: smaller;
+        }
+
+        .flex-fill {
+            padding: 0px 8px;
+        }
     }
 }

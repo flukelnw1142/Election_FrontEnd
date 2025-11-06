@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BehaviorSubject, map, Observable, startWith, Subject } from 'rxjs';
@@ -28,6 +28,16 @@ import { environment } from '../../../../environments/environment';
 export class Tab2 {
   private destroy$ = new Subject<void>();
   private eventSource: EventSource | null = null;
+  isMobile: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 768;
+  }
 
   checked: boolean = false;
   timeAuto: number = 2;
@@ -68,6 +78,7 @@ export class Tab2 {
   ) {}
 
   ngOnInit() {
+    this.checkScreenSize();
     this.filteredProvinces = this.provinceCtrl.valueChanges.pipe(
       startWith(''),
       map((value) => this._filterProvince(value || ''))
@@ -248,10 +259,10 @@ export class Tab2 {
   }
 
   onTimeChange() {
-    // if (this.checked) {
-    //   // รีสตาร์ทด้วยค่าใหม่
-    //   setTimeout(() => this.startStreaming(), 100);
-    // }
+    if (this.checked) {
+      // รีสตาร์ทด้วยค่าใหม่
+      setTimeout(() => this.startStreaming(), 100);
+    }
   }
 
   getProvince() {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,18 +12,32 @@ import { SweetAlertService } from '../../../service/sweet-alert.service';
 import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-tab3',
-  imports: [CommonModule, MatSlideToggleModule, FormsModule,
+  imports: [
+    CommonModule,
+    MatSlideToggleModule,
+    FormsModule,
     MatAutocompleteModule,
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+  ],
   templateUrl: './tab3.html',
-  styleUrl: './tab3.scss'
+  styleUrl: './tab3.scss',
 })
 export class Tab3 {
   private destroy$ = new Subject<void>();
   private eventSource: EventSource | null = null;
+  isMobile: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 768;
+  }
 
   checked: boolean = false;
   timeAuto: number = 2;
@@ -54,34 +68,43 @@ export class Tab3 {
 
   zonesInProvince: any[] = [];
 
-  constructor(private _Tab3: Tab3Service, private cdr: ChangeDetectorRef,
-    private sweetAlertService: SweetAlertService,
-  ) { }
+  constructor(
+    private _Tab3: Tab3Service,
+    private cdr: ChangeDetectorRef,
+    private sweetAlertService: SweetAlertService
+  ) {}
 
   ngOnInit() {
+    this.checkScreenSize();
     this.filteredProvinces = this.provinceCtrl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filterProvince(value || ''))
+      map((value) => this._filterProvince(value || ''))
     );
 
-    this.getProvince()
+    this.getProvince();
   }
 
   private _filterProvince(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.provinces.filter(p => p.toLowerCase().includes(filterValue));
+    return this.provinces.filter((p) => p.toLowerCase().includes(filterValue));
   }
 
   onProvinceSelected(event: any) {
-    const selectedName = event.option.value
-    const selectedProv = this.provinces.find(p => p.provinceName === selectedName);
+    const selectedName = event.option.value;
+    const selectedProv = this.provinces.find(
+      (p) => p.provinceName === selectedName
+    );
     const ProvinceID = selectedProv?.provID || null;
     this.selectedProvince = ProvinceID;
   }
 
   onSubmitFilter() {
     if (!this.selectedProvince) {
-      this.sweetAlertService.showAlert('Load Fail', 'กรุณาเลือกจังหวัด', 'warning');
+      this.sweetAlertService.showAlert(
+        'Load Fail',
+        'กรุณาเลือกจังหวัด',
+        'warning'
+      );
       return;
     }
     const jsonData = {
@@ -188,10 +211,10 @@ export class Tab3 {
   }
 
   onTimeChange() {
-    // if (this.checked) {
-    //   // รีสตาร์ทด้วยค่าใหม่
-    //   setTimeout(() => this.startStreaming(), 100);
-    // }
+    if (this.checked) {
+      // รีสตาร์ทด้วยค่าใหม่
+      setTimeout(() => this.startStreaming(), 100);
+    }
   }
 
   getProvince() {
@@ -201,21 +224,20 @@ export class Tab3 {
 
         this.filteredProvinces = this.provinceCtrl.valueChanges.pipe(
           startWith(''),
-          map(value => this._filterProvinces(value || ''))
+          map((value) => this._filterProvinces(value || ''))
         );
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('API error:', err);
-      }
-    })
+      },
+    });
   }
 
   private _filterProvinces(value: string): any[] {
     const filterValue = value.toLowerCase();
-    return this.provinces.filter(p =>
+    return this.provinces.filter((p) =>
       p.provinceName.toLowerCase().includes(filterValue)
     );
   }
-
 }

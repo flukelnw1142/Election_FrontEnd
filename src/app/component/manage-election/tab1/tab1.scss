@@ -41,7 +41,38 @@
             padding: 10px;
         }
     }
+
+    /* Media Query สำหรับหน้าจอเล็ก */
+    @media (max-width: 768px) {
+
+        margin: 0;
+        height: 100%;
+
+        .flex-column-container {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .left,
+        .right {
+            flex: 1;
+            padding: 5px;
+            width: 100%;
+        }
+
+        textarea {
+            height: fit-content;
+            min-height: 300px;
+        }
+    }
+
+    // /* Media Query สำหรับมือถือเล็ก */
+    @media (max-width: 480px) {
+        font-size: small;
+    }
+
 }
+
 
 .update-data {
     padding: .5rem;
@@ -92,4 +123,47 @@
         margin-left: 5px;
         font-weight: 400;
     }
+
+    /* Media Query สำหรับหน้าจอเล็ก */
+    @media (max-width: 768px) {
+        .text-header {
+            font-weight: 700;
+        }
+
+        .percent-count {
+            width: 100%;
+
+            input {
+                font-size: smaller;
+            }
+        }
+
+
+        .header-row {
+            display: none !important;
+        }
+
+        .data-row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .rank-col,
+        .name-col,
+        .pic-col,
+        .score-col {
+            flex: none;
+            width: 100%;
+        }
+
+        .rank-col {
+            text-align: left !important;
+            font-weight: 500;
+        }
+
+        input {
+            font-size: smaller;
+        }
+    }
+
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Tab1Service } from './tab1service';
@@ -19,6 +19,20 @@ export class Tab1 {
   checked: boolean = false;
   timeAuto: number = 2;
   inputPercent: number = 0;
+  isMobile: boolean = false;
+
+  ngOnInit() {
+    this.checkScreenSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 768;
+  }
 
   private responseJson$ = new BehaviorSubject<string>('');
 
@@ -102,6 +116,8 @@ export class Tab1 {
   }
 
   onSubmit(form: any) {
+    this.checked = false;
+    this.onToggleChange();
     const jsonData = {
       parties: this.ranks.map((rank, index) => ({
         row: index + 1,

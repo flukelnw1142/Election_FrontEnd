@@ -9,7 +9,7 @@
                     <mat-slide-toggle [(ngModel)]="checked" (change)="onToggleChange()">
                     </mat-slide-toggle>
                 </div>
-                <div class="filter-row d-flex align-items-end gap-3 mt-3">
+                <div class="filter-row">
                     <!-- จังหวัด -->
                     <div class="flex-fill">
                         <label class="form-label">จังหวัด :</label>
@@ -49,7 +49,7 @@
                 <div class="update-data">
                     <span>อัพเดทข้อมูล</span>
 
-                    <div class="top-filter-row d-flex align-items-center gap-3 mt-3 mb-3">
+                    <div class="top-filter-row">
                         <!-- <div class="province-col">
                             <label class="form-label mb-0">province</label>
                             <input type="text" class="form-control"  [(ngModel)]="province"
@@ -70,7 +70,8 @@
 
                         <div class="percent-count">
                             <label class="form-label mb-0">นับไปแล้ว (%)</label>
-                            <input type="number" class="form-control" [(ngModel)]="inputPercent" name="inputPercent">
+                            <input type="number" class="form-control" [(ngModel)]="inputPercent" name="inputPercent"
+                                min="0" step="0.1" max="100">
                         </div>
                     </div>
 
@@ -93,15 +94,15 @@
                             <div class="rank-col text-center">rank{{i+1}} :</div>
                             <div class="pic-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input1"
-                                    name="input1-{{i}}" required>
+                                    name="input1-{{i}}" [placeholder]="isMobile ? 'party_pic' : ''" required>
                             </div>
                             <div class="party-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input2"
-                                    name="input2-{{i}}" required>
+                                    name="input2-{{i}}" [placeholder]="isMobile ? 'party_name' : ''" required>
                             </div>
                             <div class="score-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input3"
-                                    name="input3-{{i}}" required>
+                                    name="input3-{{i}}" [placeholder]="isMobile ? 'score' : ''" required>
                             </div>
                         </div>
 

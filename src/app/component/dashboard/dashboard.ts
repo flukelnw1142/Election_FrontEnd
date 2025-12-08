@@ -179,9 +179,13 @@ export class Dashboard implements OnInit {
   private loadingSubject = new BehaviorSubject<boolean>(true);
   loading$ = this.loadingSubject.asObservable();
 
+  isAdOpen: boolean = false;
+
   async ngOnInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
+
+    this.isAdOpen = true;
 
     try {
       // โหลดข้อมูลสำคัญทั้งหมด
@@ -196,7 +200,6 @@ export class Dashboard implements OnInit {
       });
 
       // อัพเดท UI ครั้งแรก
-      this.updateWinnerUI(this.winners);
       await this.loadSvgIfNeeded();
 
       // ปิด loading
@@ -263,6 +266,11 @@ export class Dashboard implements OnInit {
         this.handleTooltipLogic(event)
       );
       this.checkScreenSize();
+
+      this.updateWinnerUI(this.winners);
+      setTimeout(() => {
+        this.isAdOpen = false;
+      }, 2000);
     } catch (error) {
       console.error('Error loading data:', error);
     }
@@ -2415,5 +2423,12 @@ export class Dashboard implements OnInit {
       ภาคใต้: '/assets/South.svg',
     };
     return paths[region] || '/assets/thailand.svg';
+  }
+
+  toggleAd() {
+    this.isAdOpen = !this.isAdOpen;
+  }
+  closeAd() {
+    this.isAdOpen = false;
   }
 }

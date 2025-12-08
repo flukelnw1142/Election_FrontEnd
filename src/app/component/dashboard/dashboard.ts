@@ -2426,7 +2426,15 @@ export class Dashboard implements OnInit {
   }
 
   toggleAd() {
-    this.isAdOpen = !this.isAdOpen;
+    if (this.isAdOpen) {
+      this.isAdOpen = false;
+    } else {
+      this.isAdOpen = true;
+    }
+
+    setTimeout(() => {
+      this.isAdOpen = false;
+    }, 3000);
   }
   closeAd() {
     this.isAdOpen = false;

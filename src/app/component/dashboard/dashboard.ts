@@ -16,9 +16,12 @@ import {
   BehaviorSubject,
   debounceTime,
   firstValueFrom,
+  Observable,
+  retry,
   Subject,
   takeUntil,
   timeout,
+  timer,
 } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
@@ -39,6 +42,7 @@ import { DashboardV2 } from '../dashboard-v2/dashboard-v2';
 import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-score-and-seat';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DashboardServiceTest } from './service/dashboardserviceTest';
 
 @Component({
   selector: 'app-dashboard',
@@ -162,6 +166,7 @@ export class Dashboard implements OnInit {
   }
   constructor(
     private _dashboard: DashboardService,
+    private _dashboardTest: DashboardServiceTest,
     private http: HttpClient,
     private cd: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
@@ -169,7 +174,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -184,6 +189,8 @@ export class Dashboard implements OnInit {
   async ngOnInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
+
+    // this.getPartiesbyElectionId_volunteer();
 
     this.isAdOpen = true;
 
@@ -202,65 +209,100 @@ export class Dashboard implements OnInit {
       // อัพเดท UI ครั้งแรก
       await this.loadSvgIfNeeded();
 
-      // ปิด loading
-      // WebSocket - Color
-      this._dashboard
-        .connectColor()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (res) => {
-            // console.log('connectColor >>>', res);
-            if (res.type === 'color') {
-              this.zone.run(() => {
-                this.partyColorMap = res.data;
-                this.cd.markForCheck();
-              });
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
 
-      // WebSocket - District Winners
-      this._dashboard
-        .connectDistrictWinners()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (res) => {
-            // console.log('connectDistrictWinners >>>', res);
-            if (res.channel === 'results') {
-              this.zone.run(async () => {
-                this.winners = res.data;
-                this.updateWinnerUI(this.winners);
-                this.loadSvgIfNeeded();
-              });
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
-
-      // WebSocket - Party Seat Counts
-      this._dashboard
-        .connectPartySeatCounts()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (res) => {
-            // console.log('connectPartySeatCounts >>>', res);
-            if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
-              this.partySeatCountsList = res.data || [];
-              // this.totalSeats =
-              //   this.partySeatCountsList.reduce(
-              //     (sum, p) =>
-              //       sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
-              //     0
-              //   ) || 1;
+      this.subscribeToWebSocket(
+        () => this._dashboard.connectColor(),
+        (res) => {
+          if (res.type === 'color') {
+            this.zone.run(() => {
+              this.partyColorMap = res.data;
               this.cd.markForCheck();
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
+            });
+          }
+        }
+      );
+
+      this.subscribeToWebSocket(
+        () => this._dashboard.connectDistrictWinners(),
+        (res) => {
+          if (res.channel === 'results') {
+            this.zone.run(async () => {
+              this.winners = res.data;
+              this.updateWinnerUI(this.winners);
+              this.loadSvgIfNeeded();
+            });
+          }
+        }
+      );
+
+      this.subscribeToWebSocket(
+        () => this._dashboard.connectPartySeatCounts(),
+        (res) => {
+          if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+            this.partySeatCountsList = res.data || [];
+            this.cd.markForCheck();
+          }
+        }
+      );
+      // // ปิด loading
+      // // WebSocket - Color
+      // this._dashboard
+      //   .connectColor()
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe({
+      //     next: (res) => {
+      //       // console.log('connectColor >>>', res);
+      //       if (res.type === 'color') {
+      //         this.zone.run(() => {
+      //           this.partyColorMap = res.data;
+      //           this.cd.markForCheck();
+      //         });
+      //       }
+      //     },
+      //     error: (err) => console.error('WebSocket error', err),
+      //     complete: () => console.log('WebSocket closed'),
+      //   });
+
+      // // WebSocket - District Winners
+      // this._dashboard
+      //   .connectDistrictWinners()
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe({
+      //     next: (res) => {
+      //       // console.log('connectDistrictWinners >>>', res);
+      //       if (res.channel === 'results') {
+      //         this.zone.run(async () => {
+      //           this.winners = res.data;
+      //           this.updateWinnerUI(this.winners);
+      //           this.loadSvgIfNeeded();
+      //         });
+      //       }
+      //     },
+      //     error: (err) => console.error('WebSocket error', err),
+      //     complete: () => console.log('WebSocket closed'),
+      //   });
+
+      // // WebSocket - Party Seat Counts
+      // this._dashboard
+      //   .connectPartySeatCounts()
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe({
+      //     next: (res) => {
+      //       // console.log('connectPartySeatCounts >>>', res);
+      //       if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+      //         this.partySeatCountsList = res.data || [];
+      //         // this.totalSeats =
+      //         //   this.partySeatCountsList.reduce(
+      //         //     (sum, p) =>
+      //         //       sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
+      //         //     0
+      //         //   ) || 1;
+      //         this.cd.markForCheck();
+      //       }
+      //     },
+      //     error: (err) => console.error('WebSocket error', err),
+      //     complete: () => console.log('WebSocket closed'),
+      //   });
 
       this.mouseMoveSubject.subscribe((event: MouseEvent) =>
         this.handleTooltipLogic(event)
@@ -720,7 +762,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -1098,15 +1140,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -1277,7 +1319,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -1461,8 +1503,8 @@ export class Dashboard implements OnInit {
       type === 'zone'
         ? this.zoneScroll
         : type === 'partylist'
-        ? this.partylistScroll
-        : this.scrollContainer;
+          ? this.partylistScroll
+          : this.scrollContainer;
     // console.log(target);
     target.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -1573,7 +1615,7 @@ export class Dashboard implements OnInit {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
-        'show-dashboard-party'
+      'show-dashboard-party'
     ) {
       this.STACK_MODAL.push({
         page: 'show-dashboard-party',
@@ -1616,7 +1658,7 @@ export class Dashboard implements OnInit {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
-        'show-party-list_&_show-district-per-party'
+      'show-party-list_&_show-district-per-party'
     ) {
       this.STACK_MODAL.push({
         page: 'show-party-list_&_show-district-per-party',
@@ -2379,7 +2421,7 @@ export class Dashboard implements OnInit {
           // // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -2425,18 +2467,48 @@ export class Dashboard implements OnInit {
     return paths[region] || '/assets/thailand.svg';
   }
 
-  toggleAd() {
-    if (this.isAdOpen) {
-      this.isAdOpen = false;
-    } else {
-      this.isAdOpen = true;
-    }
+  // // Advertisement
+  // toggleAd() {
+  //   if (this.isAdOpen) {
+  //     this.isAdOpen = false;
+  //   } else {
+  //     this.isAdOpen = true;
+  //   }
 
-    setTimeout(() => {
-      this.isAdOpen = false;
-    }, 3000);
+  //   setTimeout(() => {
+  //     this.isAdOpen = false;
+  //   }, 3000);
+  // }
+  // closeAd() {
+  //   this.isAdOpen = false;
+  // }
+
+  private subscribeToWebSocket<T>(
+    connector: () => Observable<T>,
+    onNext: (res: T) => void
+  ) {
+    connector()
+      .pipe(
+        takeUntil(this.destroy$),
+        // เพิ่ม retry เมื่อ error หรือ complete
+        retry({
+          count: Infinity,
+          delay: (error, retryCount) => {
+            console.warn(`WebSocket disconnected, reconnecting in ${Math.min(retryCount * 1000, 10000)}ms...`);
+            return timer(Math.min(retryCount * 1000, 10000)); // exponential backoff สูงสุด 10 วินาที
+          }
+        })
+      )
+      .subscribe({
+        next: onNext,
+        error: (err) => console.error('WebSocket error', err),
+        // ไม่ต้องใส่ complete เพราะ retry จะจัดการ reconnect ให้
+      });
   }
-  closeAd() {
-    this.isAdOpen = false;
-  }
+  // async getPartiesbyElectionId_volunteer() {
+  //   this._dashboardTest.getPartiesbyElectionId_volunteer()
+  //     .subscribe((data) => {
+  //       console.log(data)
+  //     })
+  // }
 }

@@ -13,12 +13,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { firstValueFrom, Subject, takeUntil } from 'rxjs';
+import { firstValueFrom, of, Subject, takeUntil } from 'rxjs';
 import { DashboardService } from '../dashboard/service/dashboardservice';
 import { Color, PartySeatCountList } from '../dashboard/dashboardInterface';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DashboardServiceTest } from '../dashboard/service/dashboardserviceTest';
 
 @Component({
   selector: 'app-dashboard-score-and-seat',
@@ -31,14 +32,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class DashboardScoreAndSeat implements OnInit {
   constructor(
     private _dashboard: DashboardService,
+    private _dashboardTest: DashboardServiceTest,
     private cd: ChangeDetectorRef,
     private zone: NgZone,
     private appRef: ApplicationRef,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
   @Output() partySelected = new EventEmitter<string>();
   @Output() partyListAndPartyZone = new EventEmitter<string>();
-  partySeatCountsList: PartySeatCountList[] = [];
+  // partySeatCountsList: PartySeatCountList[] = [];
+  partySeatCountsList: any[] = [];
   totalSeats: number = 500;
   partyColorMap: { [partyKeyword: string]: Color } = {};
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
@@ -46,14 +49,22 @@ export class DashboardScoreAndSeat implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
+
+      // this.getPartiesbyElectionId_volunteer();
       try {
         this.partyColorMap = await firstValueFrom(
           this._dashboard.getPartyColors()
         );
 
-        this.partySeatCountsList = await firstValueFrom(
-          this._dashboard.getPartySeatCountsList()
-        );
+        // this.partySeatCountsList = await firstValueFrom(
+        //   this._dashboard.getPartySeatCountsList()
+        // );
+
+        // this.partySeatCountsList = await firstValueFrom(
+        //   this._dashboard.getPartySeatCountsList()
+        // );
+
+        this.getPartiesbyElectionId_volunteer_summary()
 
         // this.updateTotalSeats();
         this.cd.markForCheck();
@@ -77,52 +88,43 @@ export class DashboardScoreAndSeat implements OnInit {
           });
 
         // WebSocket - Party Seat Counts
-        this._dashboard
-          .connectPartySeatCounts()
-          .pipe(takeUntil(this.destroy$))
-          .subscribe({
-            next: (res) => {
-              // console.log('connectPartySeatCounts >>>', res);
-              if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
-                // this.partySeatCountsList = res.data || [];
-                // this.updateTotalSeats();
-                // this.cd.markForCheck();
-                // ตรวจสอบว่ามีการเปลี่ยนแปลงจริง
-                const newData = res.data || [];
-                const hasChanged =
-                  JSON.stringify(this.partySeatCountsList) !==
-                  JSON.stringify(newData);
+        // this._dashboard
+        //   .connectPartySeatCounts()
+        //   .pipe(takeUntil(this.destroy$))
+        //   .subscribe({
+        //     next: (res) => {
+        //       console.log('connectPartySeatCounts >>>', res);
+        //       if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+        //         // this.partySeatCountsList = res.data || [];
+        //         // this.updateTotalSeats();
+        //         // this.cd.markForCheck();
+        //         // ตรวจสอบว่ามีการเปลี่ยนแปลงจริง
+        //         const newData = res.data || [];
+        //         const hasChanged =
+        //           JSON.stringify(this.partySeatCountsList) !==
+        //           JSON.stringify(newData);
 
-                this.partySeatCountsList = [...newData]; // สร้าง array ใหม่
-                // this.updateTotalSeats();
+        //         this.partySeatCountsList = [...newData]; // สร้าง array ใหม่
+        //         // this.updateTotalSeats();
 
-                // บังคับ re-render
-                this.cd.markForCheck();
-                this.appRef.tick(); // สำคัญมาก!
+        //         // บังคับ re-render
+        //         this.cd.markForCheck();
+        //         this.appRef.tick(); // สำคัญมาก!
 
-                // เรียก animation เฉพาะเมื่อเปลี่ยน
-                if (hasChanged) {
-                  setTimeout(() => this.applyFlipAnimation(), 0);
-                }
-              }
-            },
-            error: (err) => console.error('WebSocket error', err),
-            complete: () => console.log('WebSocket closed'),
-          });
+        //         // เรียก animation เฉพาะเมื่อเปลี่ยน
+        //         if (hasChanged) {
+        //           setTimeout(() => this.applyFlipAnimation(), 0);
+        //         }
+        //       }
+        //     },
+        //     error: (err) => console.error('WebSocket error', err),
+        //     complete: () => console.log('WebSocket closed'),
+        //   });
       } catch (error) {
         console.error('Error initializing dashboard:', error);
       }
     }
   }
-
-  // private updateTotalSeats(): void {
-  //   this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-  //     return sum + (p.zone_seats || 0) + (p.partylist_seats || 0);
-  //   }, 0);
-
-  //   // ป้องกันหาร 0
-  //   if (this.totalSeats === 0) this.totalSeats = 1;
-  // }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -313,5 +315,17 @@ export class DashboardScoreAndSeat implements OnInit {
         behavior: 'smooth',
       });
     }
+  }
+
+  getPartiesbyElectionId_volunteer_summary() {
+    this._dashboardTest.getPartiesbyElectionId_summary_volunteer()
+      .subscribe((data) => {
+        console.log(data)
+        const sortedParties = data.parties
+          .slice()
+          .sort((a: any, b: any) => b.percentage - a.percentage);
+        this.partySeatCountsList = sortedParties
+        this.cd.markForCheck();
+      })
   }
 }

@@ -12,7 +12,8 @@
     <div *ngFor="let party of partySeatCountsList; let i = index; trackBy: trackByPartyName"
       class="party-card-container" [attr.data-party]="party.partyName">
       <!-- กล่องพรรค -->
-      <div class="party-card" [style.background]="getColor(party.partyName)" (click)="onSelectParty(party.partyName)">
+      <div class="party-card" [style.background]="party.partyColor" (click)="onSelectParty(party.partyName)">
+        <!-- <div class="party-card" [style.background]="getColor(party.partyName)" (click)="onSelectParty(party.partyName)"> -->
         <div class="number">{{i+1}}</div>
         <div class="left-section">
           <div class="img-head">
@@ -29,9 +30,12 @@
           </div>
 
           <div class="progress-bar-bg">
+            <!-- <div class="progress-bar"
+              [style.--progress-width]="((party.zone_seats + party.partylist_seats) / totalSeats) * 100 + '%'"
+              [style.background]="getColor(party.partyName)"> -->
             <div class="progress-bar"
               [style.--progress-width]="((party.zone_seats + party.partylist_seats) / totalSeats) * 100 + '%'"
-              [style.background]="getColor(party.partyName)">
+              [style.background]="party.partyColor">
               <div class="wave-2"></div>
               <div class="wave-3"></div>
               <div class="wave-4"></div>

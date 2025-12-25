@@ -149,7 +149,7 @@
     .img-head {
         height: 100px;
         width: 100px;
-        border-radius: 100%;
+        // border-radius: 100%;
         overflow: hidden;
         // animation: bounce 1s ease-in;
         // object-fit: cover;
@@ -164,14 +164,25 @@
     }
 
     .img-party {
-        height: 4rem;
-        width: 4rem;
+        height: 50%;
+        width: auto;
         position: absolute;
         bottom: -5px;
-        right: 10px;
-        border-radius: 100%;
-        // animation: bounce 1s ease-in;
+        right: 0;
+        transform: translateX(10%);
+        z-index: 2;
+        border-radius: 50%;
     }
+
+    // .img-party {
+    //     height: 50%;
+    //     // width: 40%;
+    //     position: absolute;
+    //     bottom: -5px;
+    //     right: 0px;
+    //     border-radius: 100%;
+    //     // animation: bounce 1s ease-in;
+    // }
 
 }
 
@@ -352,7 +363,7 @@
 .right-section {
     // flex: 1;
     // background: #ffffff;
-    border-radius: 1rem;
+    border-radius: .6rem;
     width: 50px;
     user-select: none;
     // border: #ffffff 1.5px solid;
@@ -371,15 +382,13 @@
 }
 
 .zone-seats {
-    // background: rgba(255, 255, 255, 0.1);
-    // background: rgba(48, 47, 52, 0.2);
-    // backdrop-filter: blur(10px);
-    // -webkit-backdrop-filter: blur(10px);
-    // box-shadow: inset 2px -2px 6px rgba(214, 214, 214, 0.2),
-    //     inset -3px 3px 3px rgba(255, 255, 255, 0.3);
     color: #fff;
     padding: 0.5rem;
     text-align: center;
+}
+
+.zone-seats:hover {
+    background-color: #ffffff2f;
 }
 
 .partylist-seats {
@@ -392,4 +401,8 @@
     color: #fff;
     padding: 0.5rem;
     text-align: center;
+}
+
+.partylist-seats:hover {
+    background-color: #ffffff3f;
 }

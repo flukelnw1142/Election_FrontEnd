@@ -12,7 +12,7 @@
     <div *ngFor="let party of partySeatCountsList; let i = index; trackBy: trackByPartyName"
       class="party-card-container" [attr.data-party]="party.partyName">
       <!-- กล่องพรรค -->
-      <div class="party-card" [style.background]="party.partyColor" (click)="onSelectParty(party.partyName)">
+      <div class="party-card" [style.background]="party.partyColor" (click)="onSelectParty(party)">
         <!-- <div class="party-card" [style.background]="getColor(party.partyName)" (click)="onSelectParty(party.partyName)"> -->
         <div class="number">{{i+1}}</div>
         <div class="left-section">
@@ -57,7 +57,7 @@
           {{ party.partylist_seats }}
         </div>
       </div> -->
-        <div class="right-section" (click)="onSelectPartyListAndPartyZone(party.partyName); $event.stopPropagation()">
+        <div class="right-section" (click)="onSelectPartyListAndPartyZone(party); $event.stopPropagation()">
           <div class="zone-seats">{{
             party.zone_seats }}</div>
           <div class="partylist-seats">

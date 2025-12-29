@@ -1653,8 +1653,10 @@ export class Dashboard implements OnInit {
       .catch((error) => console.error('Error loading SVG:', error));
     console.log('STACK_MODAL', this.STACK_MODAL);
   }
-  // Click PartyListAndPartyZone
-  onClickPartyListAndPartyZone(partyName: string, command: string) {
+  // Click PartyListAndPartyZone (กดเพื่อแสดง เขตและบัญชีรายชื่อ 500 คน)
+  onClickPartyListAndPartyZone(party: any, command: string) {
+    const partyName = party.partyName
+    console.log(party, partyName)
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
@@ -1678,6 +1680,11 @@ export class Dashboard implements OnInit {
     this.selectedParty = '';
 
     // console.log('partyName', partyName);
+
+    //ดึงข้อมูล ส.ส.เขต และ ส.ส.บัญชีรายชื่อ
+    // this.getConstituencybyPartyId_volunteer(party.partyID)
+
+    //ดึงข้อมูล ส.ส.เขต และ ส.ส.บัญชีรายชื่อ
     this.onZoneSeatPerParty(partyName);
     this.onPartyListSeatPerParty(partyName);
     console.log('STACK_MODAL', this.STACK_MODAL);
@@ -1927,6 +1934,21 @@ export class Dashboard implements OnInit {
       this.totalVoteZoneSeat = data[0].total_votes_all;
       this.cd.markForCheck();
     });
+  }
+  // New Data Zone-Seat (ส.ส.เขต)
+  getConstituencybyPartyId_volunteer(partyId: string) {
+    //ดึงข้อมูล 400 คน แบบไม่รู้ว่าใครชนะเขตไหน
+    this._dashboardTest.getConstituencybyPartyId_volunteer(partyId)
+      .subscribe((data) => {
+        console.log("data: ", data, data.candidates.length)
+        if (data.candidates.length == 0) {
+          this.detailWinnerZonePerParty = [];
+        } else {
+          this.detailWinnerZonePerParty = data.candidates;
+        }
+        this.totalVoteZoneSeat = data.totalVotes;
+        this.cd.markForCheck();
+      })
   }
   // Data แสดงข้อมูล ส.ส.บัญชีรายชื่อ BY Party
   private onPartyListSeatPerParty(partyName: string) {
@@ -2511,4 +2533,6 @@ export class Dashboard implements OnInit {
   //       console.log(data)
   //     })
   // }
+
+
 }

@@ -381,15 +381,16 @@
         inset -3px 3px 3px rgba(255, 255, 255, 0.3);
 }
 
+.right-section:hover {
+    border-radius: .8rem;
+}
+
 .zone-seats {
     color: #fff;
     padding: 0.5rem;
     text-align: center;
 }
 
-.zone-seats:hover {
-    background-color: #ffffff2f;
-}
 
 .partylist-seats {
     background: rgba(255, 255, 255, 0.2);
@@ -401,8 +402,4 @@
     color: #fff;
     padding: 0.5rem;
     text-align: center;
-}
-
-.partylist-seats:hover {
-    background-color: #ffffff3f;
 }

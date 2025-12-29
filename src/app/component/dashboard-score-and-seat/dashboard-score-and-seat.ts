@@ -296,16 +296,32 @@ export class DashboardScoreAndSeat implements OnInit {
     return '';
   }
 
-  onSelectParty(partyName: string) {
-    this.partySelected.emit(partyName);
+
+
+  onSelectParty(party: any) {
+    /** {
+    "partyID": "812f5c29-c597-4495-982e-f44f7462186e",
+    "partyName": "ก้าวไกล",
+    "zone_seats": 38,
+    "zone_seat_all": 400,
+    "partylist_seats": 28,
+    "partylist_seats_all": 100,
+    "ranking": 1,
+    "total_party_votes": 2222335,
+    "percentage": 13.200000000000001,
+    "partyColor": "#FF6600"
+    }*/
+    console.log(party)
+    this.partySelected.emit(party.partyName);
   }
 
   trackByPartyName(index: number, party: PartySeatCountList): string {
     return party.partyName; // ใช้ชื่อพรรคเป็น key ที่ไม่เปลี่ยนแปลง
   }
 
-  onSelectPartyListAndPartyZone(partyName: string): void {
-    this.partyListAndPartyZone.emit(partyName);
+  onSelectPartyListAndPartyZone(party: any): void {
+    // console.log(party)
+    this.partyListAndPartyZone.emit(party);
   }
 
   scrollToTopContainer() {

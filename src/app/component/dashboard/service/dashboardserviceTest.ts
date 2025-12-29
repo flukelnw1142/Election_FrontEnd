@@ -8,7 +8,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { WebsocketService } from '../../../service/websocket.service';
 import { map } from 'rxjs/operators';
 import { PartySeatCountList } from '../dashboardInterface';
-import { color } from 'd3';
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +68,7 @@ export class DashboardServiceTest {
     );
   }
 
+  //ดึงข้อมูลพรรคการเมือง ตามลำดับคะแนน
   getPartiesbyElectionId_summary_volunteer(): Observable<any> {
     const electionId = 'mp-party-list-2026'; //mp-party-list-2026
     const url = `${this.baseUrl}/media/elections/${electionId}/realtime/national-summary`;
@@ -110,6 +110,65 @@ export class DashboardServiceTest {
       })
     );
   }
+
+  //ดึงข้อมูล ส.ส.เขต ของ พรรคการเมือง
+  getConstituencybyPartyId_volunteer(partyId: string): Observable<any> {
+    const electionId = 'mp-constituency-2026'; //mp-constituency-2026
+    const url = `${this.baseUrl}/media/elections/${electionId}/realtime/parties/${partyId}`;
+
+    console.log('Request URL:', url);
+
+    return this._http.get<any>(url, {
+      headers: this.getAuthHeaders()
+    }).pipe(
+      map(response => {
+        console.log(response.data)
+
+        const candidateRaw = response?.data.party || [];
+        const candidatesArray = Array.isArray(candidateRaw.candidatesDetail) ? candidateRaw.candidatesDetail : [];
+
+        const mappedParties: any[] = candidatesArray.map((item: any, index: number) => ({
+          area: item.area,   //กรุงเทพมหานคร เขต 1
+          partyName: candidateRaw.name, //ก้าวไกล
+          id: item.id, //e29404f3-ce63-42da-975a-954f42ac63a7
+          fullname: item.name,
+          no: item.number,
+          totalVotes: item.totalVotes,
+          vote_percentage: (item.totalVotes / candidateRaw.totalVotes) * 100,
+          avatarURL: null,
+          districtId: null,
+          // "name": "กรุงเทพมหานคร",
+          // "areaNo": 1,
+          // "partyName": "ก้าวไกล",
+          // "areaID": 368,
+          // "fullname": "นายปารเมศ วิทยารักษ์สรรค์",
+          // "no": 5,
+          // "totalVotes": 37438,
+          // "vote_percentage": 41.56,
+          // "avatarURL": "https://storage.googleapis.com/ers-data/candidates/33.jpg",
+          // "districtId": "BKK_1",
+          // "rank": 1,
+          // "total_votes_all": 9535709
+        }));
+        return {
+          id: candidateRaw.id,
+          code: candidateRaw.code,
+          name: candidateRaw.name,
+          color: candidateRaw.color,
+          totalVotes: candidateRaw.totalVotes,
+          abbreviation: candidateRaw.abbreviation,
+          candidateCount: candidateRaw.candidateCount,
+          candidates: mappedParties,
+        }
+      }),
+      catchError(err => {
+        console.error('API Error:', err);
+        return of([]);
+      })
+    );
+  }
+  // https://media.election.in.th/api/media/elections/mp-constituency-2026/realtime/parties/812F5C29-C597-4495-982E-F44F7462186E
+
 
 
   /*

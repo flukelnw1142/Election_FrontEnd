@@ -1,0 +1,49 @@
+<!-- Background (Realtime animation) -->
+<div class="bg">
+    <div class="gradient"></div>
+    <div class="glow"></div>
+
+    <div class="particles">
+        <span *ngFor="let p of particles" [style.top.%]="p.topPct" [style.left.%]="p.leftPct" [style.width.px]="p.size"
+            [style.height.px]="p.size" [style.opacity]="p.opacity" [style.animationDelay.s]="p.delay"
+            [style.animationDuration.s]="p.duration"></span>
+    </div>
+</div>
+
+<!-- Content -->
+<div class="page">
+    <div class="card">
+        <img src="https://onee.oneeclick.co/assets/images/logo-onee.png" class="logo-image" alt="Logo" />
+        <div class="badge">COUNTDOWN</div>
+
+        <h1 class="title">{{ title }}</h1>
+        <div class="subtitle">{{ subtitle }}</div>
+
+        <div class="grid">
+            <div class="box">
+                <div class="num">{{ countdown.days }}</div>
+                <div class="label">วัน</div>
+            </div>
+            <div class="box">
+                <div class="num">{{ countdown.hours }}</div>
+                <div class="label">ชั่วโมง</div>
+            </div>
+            <div class="box">
+                <div class="num">{{ countdown.minutes }}</div>
+                <div class="label">นาที</div>
+            </div>
+            <div class="box">
+                <div class="num">{{ countdown.seconds }}</div>
+                <div class="label">วินาที</div>
+            </div>
+        </div>
+
+        <div class="ended" *ngIf="countdown.isEnded">
+            ถึงเวลาแล้ว ✅
+        </div>
+
+        <div class="actions">
+            <button class="primary" (click)="goToWebsite()">เข้าเว็บไซต์</button>
+        </div>
+    </div>
+</div>

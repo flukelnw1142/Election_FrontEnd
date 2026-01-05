@@ -8,12 +8,15 @@ import { DashboardScoreAndSeat } from './component/dashboard-score-and-seat/dash
 import { DetailDialog } from './component/detail-dialog/detail-dialog';
 import { MainLayout } from './layout/main-layout/main-layout';
 import { ManageElection } from './component/manage-election/manage-election';
+import { CountdownPage } from './component/countdown-page/countdown-page';
+
+
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
-  { path: '*', pathMatch: 'full', redirectTo: '/dashboard' },
+  { path: '', pathMatch: 'full', redirectTo: '/index' },
+  { path: '*', pathMatch: 'full', redirectTo: '/index' },
   { path: 'login', component: Login },
-
+  { path: 'index', component: CountdownPage },
   {
     path: '',
     component: MainLayout,
@@ -42,8 +45,9 @@ export const routes: Routes = [
         path: 'manage',
         component: ManageElection,
       },
+
     ],
   },
 
-  { path: '**', pathMatch: 'full', redirectTo: '/dashboard' },
+  { path: '**', pathMatch: 'full', redirectTo: '/index' },
 ];

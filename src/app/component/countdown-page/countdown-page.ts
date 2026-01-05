@@ -1,5 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
 type Countdown = {
@@ -23,7 +24,7 @@ type Particle = {
 @Component({
   selector: 'app-countdown-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatIcon],
   templateUrl: './countdown-page.html',
   styleUrls: ['./countdown-page.scss'],
 })

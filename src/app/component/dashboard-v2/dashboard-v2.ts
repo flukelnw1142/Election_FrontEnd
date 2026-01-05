@@ -36,7 +36,7 @@ export class DashboardV2 implements OnInit {
     private zone: NgZone,
     private _dashboard: DashboardService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   @Output() partySelected = new EventEmitter<string>();
 
@@ -45,13 +45,15 @@ export class DashboardV2 implements OnInit {
   partyColorMap: { [partyKeyword: string]: Color } = {};
   private destroy$ = new Subject<void>();
   private currentHoveredParty: string | null = null;
-  private debounceHover = _.debounce((partyName: string) => {
-    if (this.currentHoveredParty !== partyName) {
-      this.currentHoveredParty = partyName;
-      this.highlightParty(partyName);
-    }
-  }, 50);
-
+  // private debounceHover = _.debounce((partyName: string) => {
+  //   if (this.currentHoveredParty !== partyName) {
+  //     this.currentHoveredParty = partyName;
+  //     this.highlightParty(partyName);
+  //   }
+  // }, 50);
+  private rafPending = false;
+  private pendingParty: string | null = null;
+  private leaveTimer: any = null;
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
       try {
@@ -280,29 +282,36 @@ export class DashboardV2 implements OnInit {
   tooltipY = 0;
 
   onSvgHover(event: MouseEvent): void {
+    // ✅ ยกเลิกการซ่อนค้างไว้ทันทีเมื่อกลับมา hover
+    if (this.leaveTimer) {
+      clearTimeout(this.leaveTimer);
+      this.leaveTimer = null;
+    }
+
     const target = event.target as SVGElement;
 
     if (target && target.id && target.id.startsWith('circle-')) {
       const hoveredParty = target.getAttribute('data-party');
 
       if (hoveredParty) {
-        const party = this.partySeatCountsList.find(
-          (p) => p.partyName === hoveredParty
-        );
+        const party = this.partySeatCountsList.find(p => p.partyName === hoveredParty);
         if (party) {
           this.tooltipText = party.partyName;
-          this.tooltipSeat = (
-            party.zone_seats + party.partylist_seats
-          ).toString();
+          this.tooltipSeat = (party.zone_seats + party.partylist_seats).toString();
           this.tooltipX = event.clientX + 10;
           this.tooltipY = event.clientY + 10;
           this.tooltipVisible = true;
-          this.debounceHover(hoveredParty);
+
+          this.scheduleHighlight(hoveredParty);
           return;
         }
       }
     }
+
+    // ✅ ถ้าไม่ใช่วงกลม ให้ซ่อนเลย (กันค้าง)
+    this.hideTooltip();
   }
+
 
   highlightParty(partyName: string): void {
     if (!this.svgContainer) return;
@@ -341,7 +350,9 @@ export class DashboardV2 implements OnInit {
   }
 
   onSvgLeave(): void {
-    setTimeout(() => {
+    if (this.leaveTimer) clearTimeout(this.leaveTimer);
+
+    this.leaveTimer = setTimeout(() => {
       this.tooltipVisible = false;
       this.tooltipText = '';
       this.tooltipSeat = '';
@@ -350,8 +361,11 @@ export class DashboardV2 implements OnInit {
         this.currentHoveredParty = null;
         this.resetHighlight();
       }
+      this.leaveTimer = null;
     }, 50);
   }
+
+
 
   onSvgClick(event: MouseEvent): void {
     const target = event.target as SVGElement;
@@ -384,4 +398,25 @@ export class DashboardV2 implements OnInit {
     }
     return '';
   }
+
+  private scheduleHighlight(partyName: string) {
+    this.pendingParty = partyName;
+
+    if (this.rafPending) return;
+    this.rafPending = true;
+
+    requestAnimationFrame(() => {
+      this.rafPending = false;
+
+      const p = this.pendingParty;
+      this.pendingParty = null;
+      if (!p) return;
+
+      if (this.currentHoveredParty !== p) {
+        this.currentHoveredParty = p;
+        this.highlightParty(p);
+      }
+    });
+  }
+
 }

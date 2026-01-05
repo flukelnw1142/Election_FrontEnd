@@ -169,7 +169,7 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -269,7 +269,7 @@ export class Dashboard implements OnInit {
   }
 
   private updateWinnerUI(winners: any): void {
-    if (!winners) return; 
+    if (!winners) return;
 
     this.zone.run(() => {
       // อัพเดท text
@@ -712,7 +712,7 @@ export class Dashboard implements OnInit {
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;
@@ -911,9 +911,6 @@ export class Dashboard implements OnInit {
         target.closest('svg') &&
         target.closest('g[id]');
 
-      // console.log('isDesktop : ', this.isDesktop);
-      // console.log('isNearMap : ', isNearMap);
-      // console.log('isDistrict : ', isDistrict);
 
       if (isNearMap || isDistrict) {
         if (this.isDesktop) {
@@ -1041,6 +1038,7 @@ export class Dashboard implements OnInit {
         magnifierEl,
         'mouseleave',
         () => {
+
           this.isOverMagnifier = false;
           setTimeout(() => {
             if (!this.isOverSvg && !this.isOverMagnifier) {
@@ -1055,6 +1053,7 @@ export class Dashboard implements OnInit {
         this.clonedSvg,
         'mousemove',
         (lensEvent: MouseEvent) => {
+          if (!this.magnifierVisible) return;
           const lensPoint = svg.createSVGPoint();
           lensPoint.x = lensEvent.offsetX;
           lensPoint.y = lensEvent.offsetY;
@@ -1083,15 +1082,15 @@ export class Dashboard implements OnInit {
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
             this.simmulateSvgClick({
               target,
               clientX: lensEvent.clientX,
               clientY: lensEvent.clientY,
-              preventDefault: () => {},
-              stopPropagation: () => {},
+              preventDefault: () => { },
+              stopPropagation: () => { },
             } as unknown as MouseEvent);
           } else {
             this.hideTooltip();
@@ -1177,7 +1176,6 @@ export class Dashboard implements OnInit {
     if (this.magnifier && this.magnifier.nativeElement) {
       this.renderer.setStyle(this.magnifier.nativeElement, 'display', 'none');
     }
-    this.ngOnDestroy()
   }
 
   ngOnDestroy() {
@@ -1214,7 +1212,7 @@ export class Dashboard implements OnInit {
         panelClass: 'full-screen-dialog',
       });
 
-      dialogRef.afterClosed().subscribe(() => {});
+      dialogRef.afterClosed().subscribe(() => { });
     } catch (error) {
       console.error('Error opening dialog:', error);
     }
@@ -1398,8 +1396,8 @@ export class Dashboard implements OnInit {
       type === 'zone'
         ? this.zoneScroll
         : type === 'partylist'
-        ? this.partylistScroll
-        : this.scrollContainer;
+          ? this.partylistScroll
+          : this.scrollContainer;
     // console.log(target);
     target.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -1510,7 +1508,7 @@ export class Dashboard implements OnInit {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
-        'show-dashboard-party'
+      'show-dashboard-party'
     ) {
       this.STACK_MODAL.push({
         page: 'show-dashboard-party',
@@ -1553,7 +1551,7 @@ export class Dashboard implements OnInit {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
-        'show-party-list_&_show-district-per-party'
+      'show-party-list_&_show-district-per-party'
     ) {
       this.STACK_MODAL.push({
         page: 'show-party-list_&_show-district-per-party',
@@ -2316,7 +2314,7 @@ export class Dashboard implements OnInit {
           // // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
-            this.allWinners[id].party === this.selectedParty
+              this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
           g.style.pointerEvents = pointerEvents;

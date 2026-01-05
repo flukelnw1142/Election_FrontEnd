@@ -1655,7 +1655,9 @@ export class Dashboard implements OnInit {
   }
   // Click PartyListAndPartyZone (กดเพื่อแสดง เขตและบัญชีรายชื่อ 500 คน)
   onClickPartyListAndPartyZone(party: any, command: string) {
-    const partyName = party.partyName
+    // const partyName = party.partyName
+    const partyName =
+      typeof party === 'string' ? party : party.partyName;
     console.log(party, partyName)
     if (
       this.STACK_MODAL.length === 0 ||

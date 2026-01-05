@@ -36,6 +36,7 @@ export class CountdownPage implements OnInit, OnDestroy {
   targetUrl = '/dashboard';
 
   // เป้าหมายเวลาไทย (GMT+7)
+  // targetIso = '2026-01-05T08:00:00+07:00';
   targetIso = '2026-02-08T08:00:00+07:00';
 
   countdown: Countdown = {

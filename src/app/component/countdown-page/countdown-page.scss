@@ -4,12 +4,16 @@
     inset: 0;
     z-index: -1;
     overflow: hidden;
-    background: #050914;
+    // background: #050914;
+    background-image: url('/background/bgPage1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .logo-image {
     padding: 10px;
-    max-height: 60px;
+    max-height: 100px;
     object-fit: contain;
     flex-shrink: 0;
 }
@@ -99,8 +103,8 @@
     border-radius: 999px;
     font-size: 12px;
     letter-spacing: 0.12em;
-    background: rgba(59, 130, 246, 0.18);
-    border: 1px solid rgba(59, 130, 246, 0.35);
+    background: rgba(109, 109, 109, 0.18);
+    // border: 1px solid rgba(59, 130, 246, 0.35);
     margin-bottom: 14px;
 }
 

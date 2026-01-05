@@ -269,7 +269,7 @@ export class Dashboard implements OnInit {
   }
 
   private updateWinnerUI(winners: any): void {
-    if (!winners) return;
+    if (!winners) return; 
 
     this.zone.run(() => {
       // อัพเดท text
@@ -1073,16 +1073,9 @@ export class Dashboard implements OnInit {
           const screenPoint = originalPoint.matrixTransform(
             svg.getScreenCTM() || new DOMMatrix()
           );
-          const effectiveClientX = screenPoint.x;
-          const effectiveClientY = screenPoint.y;
 
-          // this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
           this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto'); //tspan ชื่อจังหวัด
 
-          // const target = document.elementFromPoint(
-          //   effectiveClientX,
-          //   effectiveClientY
-          // ) as SVGElement | null;
           const target = lensEvent.target as SVGElement | null;
 
           if (target) {
@@ -1106,51 +1099,6 @@ export class Dashboard implements OnInit {
         }
       );
 
-      // this.magnifierClickUnsub = this.renderer.listen(
-      //   this.clonedSvg,
-      //   'click',
-      //   (lensEvent: MouseEvent) => {
-      //     const lensPoint = svg.createSVGPoint();
-      //     lensPoint.x = lensEvent.offsetX;
-      //     lensPoint.y = lensEvent.offsetY;
-
-      //     const transform = this.zoomGroup.attr('transform');
-      //     const transMatch = transform.match(/translate\(([^ ]+) ([^)]+)\)/);
-      //     const currentTransX = transMatch ? parseFloat(transMatch[1]) : 0;
-      //     const currentTransY = transMatch ? parseFloat(transMatch[2]) : 0;
-
-      //     const effectiveX = (lensPoint.x - currentTransX) / this.zoomLevel;
-      //     const effectiveY = (lensPoint.y - currentTransY) / this.zoomLevel;
-
-      //     const originalPoint = svg.createSVGPoint();
-      //     originalPoint.x = effectiveX;
-      //     originalPoint.y = effectiveY;
-      //     const screenPoint = originalPoint.matrixTransform(
-      //       svg.getScreenCTM() || new DOMMatrix()
-      //     );
-      //     const effectiveClientX = screenPoint.x;
-      //     const effectiveClientY = screenPoint.y;
-
-      //     this.renderer.setStyle(magnifierEl, 'pointer-events', 'none');
-
-      //     const target = document.elementFromPoint(
-      //       effectiveClientX,
-      //       effectiveClientY
-      //     ) as SVGElement | null;
-
-      //     this.renderer.setStyle(magnifierEl, 'pointer-events', 'auto');
-
-      //     if (target) {
-      //       this.onSvgClick({
-      //         target,
-      //         clientX: lensEvent.clientX,
-      //         clientY: lensEvent.clientY,
-      //         preventDefault: () => {},
-      //         stopPropagation: () => {},
-      //       } as unknown as MouseEvent);
-      //     }
-      //   }
-      // );
       this.magnifierClickUnsub = this.renderer.listen(
         this.clonedSvg,
         'click',
@@ -1229,10 +1177,7 @@ export class Dashboard implements OnInit {
     if (this.magnifier && this.magnifier.nativeElement) {
       this.renderer.setStyle(this.magnifier.nativeElement, 'display', 'none');
     }
-    if (this.magnifierMousemoveUnsub) {
-      this.magnifierMousemoveUnsub();
-      this.magnifierMousemoveUnsub = null;
-    }
+    this.ngOnDestroy()
   }
 
   ngOnDestroy() {

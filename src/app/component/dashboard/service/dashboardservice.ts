@@ -89,6 +89,10 @@ export class DashboardService {
     return this._http.get<any>(`${this.baseUrl}/Election/detailTop3?id=${id}`);
   }
 
+  getRankByDistrictTop3_NEW(id: string | number): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/realtime/Election/detailTop3?id=${id}`);
+  }
+
   getCadidateByPartyName(partyName: string): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/Election/candidateByPartyName?name=${partyName}`

@@ -192,8 +192,8 @@ export class Dashboard implements OnInit {
         firstValueFrom(this._dashboard.getDistrictWinners_NEW()),
       ]).then(([colors, winners, seatCount, winners_NEW]) => {
         this.partyColorMap = colors;
-        this.winners = winners;
-        // this.winners = winners_NEW;
+        // this.winners = winners;
+        this.winners = winners_NEW;
         this.partySeatCountsList = seatCount;
         console.log('winners_NEW >>>', winners_NEW)
         console.log('winners >>>', winners)
@@ -205,63 +205,63 @@ export class Dashboard implements OnInit {
 
       // ปิด loading
       // WebSocket - Color
-      this._dashboard
-        .connectColor()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (res) => {
-            // console.log('connectColor >>>', res);
-            if (res.type === 'color') {
-              this.zone.run(() => {
-                this.partyColorMap = res.data;
-                this.cd.markForCheck();
-              });
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
+      // this._dashboard
+      //   .connectColor()
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe({
+      //     next: (res) => {
+      //       // console.log('connectColor >>>', res);
+      //       if (res.type === 'color') {
+      //         this.zone.run(() => {
+      //           this.partyColorMap = res.data;
+      //           this.cd.markForCheck();
+      //         });
+      //       }
+      //     },
+      //     error: (err) => console.error('WebSocket error', err),
+      //     complete: () => console.log('WebSocket closed'),
+      //   });
 
-      // WebSocket - District Winners
-      this._dashboard
-        .connectDistrictWinners()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (res) => {
-            // console.log('connectDistrictWinners >>>', res);
-            if (res.channel === 'results') {
-              this.zone.run(async () => {
-                this.winners = res.data;
-                this.updateWinnerUI(this.winners);
-                this.loadSvgIfNeeded();
-              });
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
+      // // WebSocket - District Winners
+      // this._dashboard
+      //   .connectDistrictWinners()
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe({
+      //     next: (res) => {
+      //       // console.log('connectDistrictWinners >>>', res);
+      //       if (res.channel === 'results') {
+      //         this.zone.run(async () => {
+      //           this.winners = res.data;
+      //           this.updateWinnerUI(this.winners);
+      //           this.loadSvgIfNeeded();
+      //         });
+      //       }
+      //     },
+      //     error: (err) => console.error('WebSocket error', err),
+      //     complete: () => console.log('WebSocket closed'),
+      //   });
 
-      // WebSocket - Party Seat Counts
-      this._dashboard
-        .connectPartySeatCounts()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (res) => {
-            // console.log('connectPartySeatCounts >>>', res);
-            if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
-              this.partySeatCountsList = res.data || [];
-              // this.totalSeats =
-              //   this.partySeatCountsList.reduce(
-              //     (sum, p) =>
-              //       sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
-              //     0
-              //   ) || 1;
-              this.cd.markForCheck();
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
+      // // WebSocket - Party Seat Counts
+      // this._dashboard
+      //   .connectPartySeatCounts()
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe({
+      //     next: (res) => {
+      //       // console.log('connectPartySeatCounts >>>', res);
+      //       if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+      //         this.partySeatCountsList = res.data || [];
+      //         // this.totalSeats =
+      //         //   this.partySeatCountsList.reduce(
+      //         //     (sum, p) =>
+      //         //       sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
+      //         //     0
+      //         //   ) || 1;
+      //         this.cd.markForCheck();
+      //       }
+      //     },
+      //     error: (err) => console.error('WebSocket error', err),
+      //     complete: () => console.log('WebSocket closed'),
+      //   });
 
       this.mouseMoveSubject.subscribe((event: MouseEvent) =>
         this.handleTooltipLogic(event)
@@ -853,11 +853,12 @@ export class Dashboard implements OnInit {
     }
 
     console.log('areaID >>>', areaID);
-    this._dashboard.getRankByDistrictTop3(areaID).subscribe((data) => {
+    this._dashboard.getRankByDistrictTop3_NEW(areaID).subscribe((data) => {
       this.detailDistrictTop3 = data;
       console.log('data >>>', data);
 
-      this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
+      this.tooltipText = `${data[0].province}`;
+      // this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
       // 👇 คำนวณตำแหน่งเริ่มต้นของ tooltip
       let tooltipX = clientX + 10;
       let tooltipY = clientY + 10;
@@ -886,7 +887,7 @@ export class Dashboard implements OnInit {
     const closeButton = document.querySelector('.btn-change') as HTMLElement;
     if (closeButton) {
       const rect = closeButton.getBoundingClientRect();
-      const buffer = 50;
+      const buffer = 40;
       if (
         event.clientX >= rect.left - buffer &&
         event.clientX <= rect.right + buffer &&

@@ -59,56 +59,56 @@ export class DashboardScoreAndSeat implements OnInit {
         this.cd.markForCheck();
 
         // WebSocket - Color
-        this._dashboard
-          .connectColor()
-          .pipe(takeUntil(this.destroy$))
-          .subscribe({
-            next: (res) => {
-              // console.log('connectColor >>>', res);
-              if (res.type === 'color') {
-                this.zone.run(() => {
-                  this.partyColorMap = res.data;
-                  this.cd.markForCheck();
-                });
-              }
-            },
-            error: (err) => console.error('WebSocket error', err),
-            complete: () => console.log('WebSocket closed'),
-          });
+        // this._dashboard
+        //   .connectColor()
+        //   .pipe(takeUntil(this.destroy$))
+        //   .subscribe({
+        //     next: (res) => {
+        //       // console.log('connectColor >>>', res);
+        //       if (res.type === 'color') {
+        //         this.zone.run(() => {
+        //           this.partyColorMap = res.data;
+        //           this.cd.markForCheck();
+        //         });
+        //       }
+        //     },
+        //     error: (err) => console.error('WebSocket error', err),
+        //     complete: () => console.log('WebSocket closed'),
+        //   });
 
         // WebSocket - Party Seat Counts
-        this._dashboard
-          .connectPartySeatCounts()
-          .pipe(takeUntil(this.destroy$))
-          .subscribe({
-            next: (res) => {
-              // console.log('connectPartySeatCounts >>>', res);
-              if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
-                // this.partySeatCountsList = res.data || [];
-                // this.updateTotalSeats();
-                // this.cd.markForCheck();
-                // ตรวจสอบว่ามีการเปลี่ยนแปลงจริง
-                const newData = res.data || [];
-                const hasChanged =
-                  JSON.stringify(this.partySeatCountsList) !==
-                  JSON.stringify(newData);
+        // this._dashboard
+        //   .connectPartySeatCounts()
+        //   .pipe(takeUntil(this.destroy$))
+        //   .subscribe({
+        //     next: (res) => {
+        //       // console.log('connectPartySeatCounts >>>', res);
+        //       if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+        //         // this.partySeatCountsList = res.data || [];
+        //         // this.updateTotalSeats();
+        //         // this.cd.markForCheck();
+        //         // ตรวจสอบว่ามีการเปลี่ยนแปลงจริง
+        //         const newData = res.data || [];
+        //         const hasChanged =
+        //           JSON.stringify(this.partySeatCountsList) !==
+        //           JSON.stringify(newData);
 
-                this.partySeatCountsList = [...newData]; // สร้าง array ใหม่
-                // this.updateTotalSeats();
+        //         this.partySeatCountsList = [...newData]; // สร้าง array ใหม่
+        //         // this.updateTotalSeats();
 
-                // บังคับ re-render
-                this.cd.markForCheck();
-                this.appRef.tick(); // สำคัญมาก!
+        //         // บังคับ re-render
+        //         this.cd.markForCheck();
+        //         this.appRef.tick(); // สำคัญมาก!
 
-                // เรียก animation เฉพาะเมื่อเปลี่ยน
-                if (hasChanged) {
-                  setTimeout(() => this.applyFlipAnimation(), 0);
-                }
-              }
-            },
-            error: (err) => console.error('WebSocket error', err),
-            complete: () => console.log('WebSocket closed'),
-          });
+        //         // เรียก animation เฉพาะเมื่อเปลี่ยน
+        //         if (hasChanged) {
+        //           setTimeout(() => this.applyFlipAnimation(), 0);
+        //         }
+        //       }
+        //     },
+        //     error: (err) => console.error('WebSocket error', err),
+        //     complete: () => console.log('WebSocket closed'),
+        //   });
       } catch (error) {
         console.error('Error initializing dashboard:', error);
       }

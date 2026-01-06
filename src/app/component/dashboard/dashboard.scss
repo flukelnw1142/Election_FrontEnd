@@ -36,6 +36,7 @@ p {
   flex-direction: column;
   flex: 1 1 auto;
   min-height: 0;
+  height: -webkit-fill-available;
 }
 
 .glass-card:before,

@@ -1,0 +1,85 @@
+div {
+    color: white;
+}
+
+// .question-block {
+//     margin-bottom: 30px;
+
+//     .chart-container {
+//         display: flex;
+//         gap: 10px;
+//         height: 100px;
+//     }
+
+//     .bar {
+//         height: 100%;
+//         color: white;
+//         text-align: center;
+//         line-height: 30px;
+//         font-weight: bold;
+//         border-radius: 5px;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         gap: 10px;
+//     }
+
+//     .agree {
+//         background-color: #4CAF50;
+//     }
+
+//     .disagree {
+//         background-color: #F44336;
+//     }
+
+//     span {
+//         font-weight: 400;
+//         font-size: 14px;
+//     }
+// }
+.chart-container-vertical {
+    display: flex;
+    gap: 20px;
+    height: 300px;
+    align-items: flex-end;
+}
+
+.bar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 250px;
+    height: 100%;
+}
+
+.bar {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: height 0.3s ease;
+}
+
+.agree {
+    background-color: #4CAF50;
+}
+
+.disagree {
+    background-color: #F44336;
+}
+
+.bar span {
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+
+p {
+    margin-top: 5px;
+    font-weight: bold;
+    text-align: center;
+}

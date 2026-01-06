@@ -36,4 +36,13 @@ export class MainLayout {
     localStorage.clear();
     this.router.navigate(['/login']);
   }
+
+  referendum(): void {
+    console.log('Navigating to referendum page...');
+    this.router.navigate(['/referendum']);
+  }
+
+  onCliclkLogo(): void {
+    this.router.navigate(['/dashboard']);
+  }
 }

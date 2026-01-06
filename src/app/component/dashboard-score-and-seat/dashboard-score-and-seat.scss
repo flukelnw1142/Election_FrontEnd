@@ -362,7 +362,7 @@
 .right-section {
     // flex: 1;
     // background: #ffffff;
-    border-radius: 1rem;
+    border-radius: .8rem;
     width: 50px;
     user-select: none;
     // border: #ffffff 1.5px solid;
@@ -378,6 +378,10 @@
     -webkit-backdrop-filter: blur(10px);
     box-shadow: inset 2px -2px 6px rgba(214, 214, 214, 0.2),
         inset -3px 3px 3px rgba(255, 255, 255, 0.3);
+}
+
+.right-section:hover {
+    border-radius: 1rem;
 }
 
 .zone-seats {

@@ -9,6 +9,7 @@ import { DetailDialog } from './component/detail-dialog/detail-dialog';
 import { MainLayout } from './layout/main-layout/main-layout';
 import { ManageElection } from './component/manage-election/manage-election';
 import { CountdownPage } from './component/countdown-page/countdown-page';
+import { ReferendumPage } from './component/referendum-page/referendum-page';
 
 
 
@@ -44,6 +45,10 @@ export const routes: Routes = [
       {
         path: 'manage',
         component: ManageElection,
+      },
+      {
+        path: 'referendum',
+        component: ReferendumPage,
       },
 
     ],

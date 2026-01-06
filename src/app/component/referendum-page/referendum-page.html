@@ -1,0 +1,39 @@
+<!-- <div *ngFor="let question of questions" class="question-block">
+    <h3>{{ question.questionNumber }}: {{ question.questionText }}</h3>
+
+    <div class="chart-container">
+        <div class="bar agree" [style.width.%]="question.agreePercent">
+            เห็นด้วย <span>({{ question.agreePercent | number:'1.2-2' }}%)</span>
+        </div>
+        <div class="bar disagree" [style.width.%]="question.disagreePercent">
+            ไม่เห็นด้วย <span>({{ question.disagreePercent | number:'1.2-2' }}%)</span>
+        </div>
+    </div>
+
+    <p>บัตรดี: {{ question.goodVotes | number }}</p>
+    <hr>
+</div> -->
+
+
+<div *ngFor="let question of questions" class="question-block">
+    <h3>{{ question.questionNumber }}: {{ question.questionText }}</h3>
+
+    <div class="chart-container-vertical">
+        <div class="bar-container">
+            <div class="bar agree" [style.height.%]="question.agreePercent">
+                <span>{{ question.agreePercent | number:'1.2-2' }}%</span>
+            </div>
+            <p>เห็นด้วย</p>
+        </div>
+
+        <div class="bar-container">
+            <div class="bar disagree" [style.height.%]="question.disagreePercent">
+                <span>{{ question.disagreePercent | number:'1.2-2' }}%</span>
+            </div>
+            <p>ไม่เห็นด้วย</p>
+        </div>
+    </div>
+
+    <p>บัตรดี: {{ question.goodVotes | number }}</p>
+    <hr>
+</div>

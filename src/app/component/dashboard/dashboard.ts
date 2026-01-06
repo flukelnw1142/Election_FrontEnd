@@ -188,7 +188,7 @@ export class Dashboard implements OnInit {
       await Promise.all([
         firstValueFrom(this._dashboard.getPartyColors()),
         firstValueFrom(this._dashboard.getDistrictWinners()),
-        firstValueFrom(this._dashboard.getPartySeatCountsList()),
+        firstValueFrom(this._dashboard.getPartySeatCountsList_NEW()),
         firstValueFrom(this._dashboard.getDistrictWinners_NEW()),
       ]).then(([colors, winners, seatCount, winners_NEW]) => {
         this.partyColorMap = colors;
@@ -196,7 +196,7 @@ export class Dashboard implements OnInit {
         this.winners = winners_NEW;
         this.partySeatCountsList = seatCount;
         console.log('winners_NEW >>>', winners_NEW)
-        console.log('winners >>>', winners)
+        console.log('partySeatCountsList >>>', seatCount)
       });
 
       // อัพเดท UI ครั้งแรก

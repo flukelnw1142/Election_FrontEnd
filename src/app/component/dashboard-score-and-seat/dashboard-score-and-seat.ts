@@ -35,7 +35,7 @@ export class DashboardScoreAndSeat implements OnInit {
     private zone: NgZone,
     private appRef: ApplicationRef,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
   @Output() partySelected = new EventEmitter<string>();
   @Output() partyListAndPartyZone = new EventEmitter<string>();
   partySeatCountsList: PartySeatCountList[] = [];
@@ -52,7 +52,7 @@ export class DashboardScoreAndSeat implements OnInit {
         );
 
         this.partySeatCountsList = await firstValueFrom(
-          this._dashboard.getPartySeatCountsList()
+          this._dashboard.getPartySeatCountsList_NEW()
         );
 
         // this.updateTotalSeats();

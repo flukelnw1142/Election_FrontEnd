@@ -31,10 +31,10 @@ export class ReferendumPage implements OnInit {
 
         return {
           ...q,
-          agreePercent: ((agreeVotes / q.goodVotes) * 100).toFixed(2),
-          disagreePercent: ((disagreeVotes / q.goodVotes) * 100).toFixed(2)
-          // agreePercent: 75.00,
-          // disagreePercent: 25.00
+          // agreePercent: ((agreeVotes / q.goodVotes) * 100).toFixed(2),
+          // disagreePercent: ((disagreeVotes / q.goodVotes) * 100).toFixed(2)
+          agreePercent: 75.00,
+          disagreePercent: 25.00
         };
       });
 

@@ -117,6 +117,12 @@ export class DashboardService {
     );
   }
 
+  getPartySeatCountsList_NEW(): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseUrl}/ectreport/summary/count-zone`
+    );
+  }
+
   getWinnerZoneByPartyName(name: string): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/Election/candidateZoneByPartyName?name=${name}`

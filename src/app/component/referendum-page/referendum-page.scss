@@ -1,42 +1,96 @@
-div {
+* {
     color: white;
 }
 
-// .question-block {
-//     margin-bottom: 30px;
+.referendum-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
 
-//     .chart-container {
-//         display: flex;
-//         gap: 10px;
-//         height: 100px;
-//     }
+/* ฝั่งซ้าย */
+.left {
+    flex: 1;
+}
 
-//     .bar {
-//         height: 100%;
-//         color: white;
-//         text-align: center;
-//         line-height: 30px;
-//         font-weight: bold;
-//         border-radius: 5px;
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         gap: 10px;
-//     }
+/* ฝั่งขวา */
+.right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
 
-//     .agree {
-//         background-color: #4CAF50;
-//     }
+.summary-card {
+    background: #111;
+    border-radius: 12px;
+    padding: 20px 30px;
+    min-width: 320px;
+    color: white;
+}
 
-//     .disagree {
-//         background-color: #F44336;
-//     }
-
-//     span {
-//         font-weight: 400;
-//         font-size: 14px;
-//     }
+// .summary-grid {
+//     display: grid;
+//     grid-template-columns: repeat(3, 1fr);
+//     gap: 20px;
+//     text-align: center;
 // }
+
+// .item {
+//     display: flex;
+//     flex-direction: column;
+// }
+
+// .divider {
+//     border-right: 1px solid #333;
+
+// }
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+}
+
+.divider {
+    border-right: 1px solid #333;
+}
+
+.label {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.value {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+.total {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    text-align: center;
+
+    .label {
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    .value {
+        display: block;
+        font-size: 26px;
+        font-weight: bold;
+        margin-top: 8px;
+    }
+}
+
 .chart-container-vertical {
     display: flex;
     gap: 20px;

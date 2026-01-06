@@ -18,22 +18,51 @@
 <div *ngFor="let question of questions" class="question-block">
     <h3>{{ question.questionNumber }}: {{ question.questionText }}</h3>
 
-    <div class="chart-container-vertical">
-        <div class="bar-container">
-            <div class="bar agree" [style.height.%]="question.agreePercent">
-                <span>{{ question.agreePercent | number:'1.2-2' }}%</span>
+    <div class="referendum-layout">
+        <div class="left">
+            <div class="chart-container-vertical">
+                <div class="bar-container">
+                    <div class="bar agree" [style.height.%]="question.agreePercent">
+                        <span>{{ question.agreePercent | number:'1.2-2' }}%</span>
+                    </div>
+                    <p>เห็นด้วย</p>
+                </div>
+
+                <div class="bar-container">
+                    <div class="bar disagree" [style.height.%]="question.disagreePercent">
+                        <span>{{ question.disagreePercent | number:'1.2-2' }}%</span>
+                    </div>
+                    <p>ไม่เห็นด้วย</p>
+                </div>
             </div>
-            <p>เห็นด้วย</p>
         </div>
 
-        <div class="bar-container">
-            <div class="bar disagree" [style.height.%]="question.disagreePercent">
-                <span>{{ question.disagreePercent | number:'1.2-2' }}%</span>
+        <div class="right">
+            <div class="summary-card">
+                <div class="summary-grid">
+                    <div class="item divider">
+                        <span class="label">บัตรดี</span>
+                        <span class="value">{{ question.goodVotes | number }}</span>
+                    </div>
+
+                    <div class="item divider">
+                        <span class="label">บัตรเสีย</span>
+                        <span class="value">{{ question.invalidVotes | number }}</span>
+                    </div>
+
+                    <div class="item">
+                        <span class="label">งดออกเสียง</span>
+                        <span class="value">{{ question.noVotes | number }}</span>
+                    </div>
+                </div>
+
+                <div class="total">
+                    <span class="label">ผู้มาใช้สิทธิทั้งหมด</span>
+                    <span class="value">{{ question.totalVotes | number }}</span>
+                </div>
             </div>
-            <p>ไม่เห็นด้วย</p>
         </div>
+
     </div>
-
-    <p>บัตรดี: {{ question.goodVotes | number }}</p>
     <hr>
 </div>

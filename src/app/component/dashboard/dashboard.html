@@ -98,7 +98,7 @@
                         <!-- <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" /> -->
                         <!-- <img [src]="candidate.avatarURL" alt="Party Logo"> -->
                         <img [src]="candidate.avatarURL ? candidate.avatarURL : '/background/profile.png'"
-                            alt="Party Logo">
+                            alt="avatarURL">
                         <div>
                             <p>{{ candidate.party_name }}</p>
                             <p>{{ candidate.fullname }}</p>
@@ -243,7 +243,9 @@
                                             <p class="number" [style.background]="getColor(candidate.party_name)">{{ i +
                                                 1
                                                 }}</p>
-                                            <img [src]="candidate.avatarURL" alt="Party Logo">
+                                            <!-- <img [src]="candidate.avatarURL" alt="avatarURL"> -->
+                                            <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
+                                                alt="avatarURL">
                                             <div>
                                                 <p style=" font-size: 1.1rem;">{{ candidate.fullname }}</p>
                                                 <p

@@ -147,11 +147,24 @@ export class DashboardService {
     );
   }
 
+  getRegionByProvince_NEW(provinceName: string): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseUrl}/realtime/Election/GetRegionByProvinceName?ProvinceName=${provinceName}`
+    );
+  }
+
   getWinnerZoneByRegionName(regionName: string): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/Election/getAllWinnerProvinceByRegion?regionname=${regionName}`
     );
   }
+
+  getWinnerZoneByRegionName_NEW(regionName: string): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseUrl}/realtime/Election/GetAllWinnerProvinceByRegion?RegionName=${regionName}`
+    );
+  }
+
 
   getWinnerPartyByRegionName(regionName: string): Observable<any> {
     return this._http.get<any>(

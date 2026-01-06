@@ -1962,7 +1962,7 @@ export class Dashboard implements OnInit {
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต 2 อันดับแรก ของแต่ละเขต BY Region
   private onWinnerZoneByRegion(region: string) {
-    this._dashboard.getWinnerZoneByRegionName(region).subscribe((data) => {
+    this._dashboard.getWinnerZoneByRegionName_NEW(region).subscribe((data) => {
       const structuredArray: any[] = [];
 
       const grouped: {
@@ -2156,6 +2156,7 @@ export class Dashboard implements OnInit {
         page: 'show-province-all',
       });
     }
+
     this.detailDistrict = [];
     this.detailWinnerZonePerRegion = [];
     this.detailWinnerPartyPerRegion = [];
@@ -2179,6 +2180,7 @@ export class Dashboard implements OnInit {
 
   private async loadAndSetRegionSvg(province: string): Promise<void> {
     try {
+      console.log('loadAndSetRegionSvg province:', province);
       // หา region จาก province ก่อน
       const region = await this.findRegionByProvince(province);
       // this.onWinnerPartyByRegion(region); // เรียกค่า partyList
@@ -2205,7 +2207,7 @@ export class Dashboard implements OnInit {
 
   findRegionByProvince(province: string): Promise<string> {
     return new Promise((resolve) => {
-      this._dashboard.getRegionByProvince(province).subscribe((data) => {
+      this._dashboard.getRegionByProvince_NEW(province).subscribe((data) => {
         const region = data[0]?.RegionName || 'กรุงเทพฯ'; // หรือ logic การ map province to region
         resolve(region);
       });

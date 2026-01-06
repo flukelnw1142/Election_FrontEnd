@@ -189,10 +189,14 @@ export class Dashboard implements OnInit {
         firstValueFrom(this._dashboard.getPartyColors()),
         firstValueFrom(this._dashboard.getDistrictWinners()),
         firstValueFrom(this._dashboard.getPartySeatCountsList()),
-      ]).then(([colors, winners, seatCount]) => {
+        firstValueFrom(this._dashboard.getDistrictWinners_NEW()),
+      ]).then(([colors, winners, seatCount, winners_NEW]) => {
         this.partyColorMap = colors;
         this.winners = winners;
+        // this.winners = winners_NEW;
         this.partySeatCountsList = seatCount;
+        console.log('winners_NEW >>>', winners_NEW)
+        console.log('winners >>>', winners)
       });
 
       // อัพเดท UI ครั้งแรก
@@ -848,8 +852,11 @@ export class Dashboard implements OnInit {
       return;
     }
 
+    console.log('areaID >>>', areaID);
     this._dashboard.getRankByDistrictTop3(areaID).subscribe((data) => {
       this.detailDistrictTop3 = data;
+      console.log('data >>>', data);
+
       this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
       // 👇 คำนวณตำแหน่งเริ่มต้นของ tooltip
       let tooltipX = clientX + 10;

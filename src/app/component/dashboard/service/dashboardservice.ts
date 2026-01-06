@@ -76,6 +76,11 @@ export class DashboardService {
     return this._http.get<any>(`${this.baseUrl}/Election/results`);
   }
 
+  // เรียกข้อมูลผู้ที่ชนะในแต่ละเขตเลือกตั้ง ทั้งแบบส.ส.เขต และ ส.ส.บัญชีรายชื่อ >> ใช้ websocket แทน
+  getDistrictWinners_NEW(): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/realtime/volunteer/constituency/leaders`);
+  }
+
   getRankByDistrict(id: number): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/detailAll?id=${id}`);
   }

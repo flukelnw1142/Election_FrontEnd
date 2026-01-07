@@ -642,7 +642,8 @@
                                     class="candidate-item" style="justify-content: space-between;">
                                     <div style=" display: flex;  align-items: center; gap: 1rem;">
                                         <p class="number">{{ i + 1 }}</p>
-                                        <img [src]="candidate.avatarURL" alt="Party Logo" loading="lazy">
+                                        <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
+                                            alt="avatarURL">
                                         <p style="font-size: 1.3rem; color: #000;">{{candidate.fullName }}</p>
                                     </div>
                                     <div>

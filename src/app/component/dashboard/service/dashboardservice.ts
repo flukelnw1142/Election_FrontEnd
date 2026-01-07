@@ -123,17 +123,31 @@ export class DashboardService {
     );
   }
 
-  getWinnerZoneByPartyName(name: string): Observable<any> {
+  // getWinnerZoneByPartyName(name: string): Observable<any> {
+  //   return this._http.get<any>(
+  //     `${this.baseUrl}/Election/candidateZoneByPartyName?name=${name}`
+  //   );
+  // }
+
+   getWinnerZoneByPartyName(name: string): Observable<any> {
     return this._http.get<any>(
-      `${this.baseUrl}/Election/candidateZoneByPartyName?name=${name}`
+      `${this.baseUrl}/Election/winning/candidates-by-party?name=${name}`
     );
   }
 
-  getAllwinnerZoneByProvinceName(provinceName: string): Observable<any> {
+
+  // getAllwinnerZoneByProvinceName(provinceName: string): Observable<any> {
+  //   return this._http.get<any>(
+  //     `${this.baseUrl}/Election/getAllWinnerZoneByProvinceName?provincename=${provinceName}`
+  //   );
+  // }
+
+    getAllwinnerZoneByProvinceName(provinceName: string): Observable<any> {
     return this._http.get<any>(
-      `${this.baseUrl}/Election/getAllWinnerZoneByProvinceName?provincename=${provinceName}`
+      `${this.baseUrl}/realtime/Election/getAllWinnerZoneByProvinceName?ProvinceName=${provinceName}`
     );
   }
+
 
   getPartylistProvince(provinceName: string): Observable<any> {
     return this._http.get<any>(

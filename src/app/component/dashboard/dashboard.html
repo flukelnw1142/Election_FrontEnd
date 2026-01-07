@@ -281,7 +281,8 @@
                                                 style="display: flex; align-items: center; gap: 1rem; margin: .5rem;">
                                                 <p class="number" [style.background]="getColor(candidate.party_name)">
                                                     {{i + 1}}</p>
-                                                <img [src]="candidate.avatarURL" alt="Party Logo">
+                                                <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
+                                                    alt="avatarURL">
                                                 <div>
                                                     <p style=" font-size: 1.1rem;">{{ candidate.fullname }}</p>
                                                     <p
@@ -605,7 +606,8 @@
                                         class="candidate-item">
                                         <p class="number">{{ i + 1 }}
                                         </p>
-                                        <img [src]="candidate.avatarURL" alt="Party Logo">
+                                        <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
+                                            alt="avatarURL">
                                         <div>
                                             <p style="font-size: 1.3rem; color: #000;">{{ candidate.fullname }}</p>
                                             <p><span class="no">เบอร์ {{candidate.no}}</span>

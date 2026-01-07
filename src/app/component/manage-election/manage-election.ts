@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { Tab1 } from './tab1/tab1';
 import { Tab2 } from './tab2/tab2';
 import { Tab3 } from './tab3/tab3';
+import { Tab4 } from './tab4/tab4';
 
 @Component({
   selector: 'app-manage-election',
@@ -26,6 +27,7 @@ import { Tab3 } from './tab3/tab3';
     Tab1,
     Tab2,
     Tab3,
+    Tab4
   ],
   templateUrl: './manage-election.html',
   styleUrl: './manage-election.scss',
@@ -38,22 +40,34 @@ export class ManageElection {
   ) {}
   menus: any;
 
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const checkAuth = () => {
-        const storage = localStorage.getItem('currentUser');
-        if (!storage) {
-          this.router.navigate(['/login']);
-        } else {
-          this.menus = JSON.parse(storage).MENULIST;
-        }
-      };
+ngOnInit(): void {
+  if (isPlatformBrowser(this.platformId)) {
+    const checkAuth = () => {
+      const storage = localStorage.getItem('currentUser');
+      if (!storage) {
+        this.router.navigate(['/login']);
+      } else {
+        const userData = JSON.parse(storage);
+        let currentMenus = userData.MENULIST || [];
 
-      // รันหลังจาก DOM พร้อม
-      this.renderer.listen('window', 'load', checkAuth);
-      checkAuth(); // รันทันทีถ้า DOM พร้อมแล้ว
-    }
+        const hasTab4 = currentMenus.find((m: any) => m.MenuID === 4);
+        
+        if (!hasTab4) {
+          currentMenus.push({
+            MenuID: 4,
+            MenuName: 'REFERENDUM' 
+          });
+        }
+
+        this.menus = currentMenus;
+      }
+    };
+
+    // รันหลังจาก DOM พร้อม
+    this.renderer.listen('window', 'load', checkAuth);
+    checkAuth(); 
   }
+}
 
   selectedIndex = 0;
   onTabChange(event: any) {

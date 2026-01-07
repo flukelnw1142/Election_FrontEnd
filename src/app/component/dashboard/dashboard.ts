@@ -696,8 +696,8 @@ export class Dashboard implements OnInit {
             party?.IMG_HEAD || ''
           );
           this.partyBackgroundColor = party?.COLOR || '#fefdfd';
-        
-          
+
+
           path.setAttribute('style', styleStr);
           text.setAttribute('style', styleText);
 
@@ -1365,7 +1365,11 @@ export class Dashboard implements OnInit {
   }
 
   getUrlHead(winner: any): string {
-    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    const rawName = typeof winner === 'string' ? winner : winner?.party || '';
+
+    const partyName = rawName
+      .replace(/^พรรค\s*/g, '')   // ✅ ตัดคำว่า "พรรค" ข้างหน้า
+      .trim();
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         if (this.partyColorMap[keyword].IMG_HEAD === '') {
@@ -1378,7 +1382,11 @@ export class Dashboard implements OnInit {
   }
 
   getUrlParty(winner: any): string {
-    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    const rawName = typeof winner === 'string' ? winner : winner?.party || '';
+
+    const partyName = rawName
+      .replace(/^พรรค\s*/g, '')   // ✅ ตัดคำว่า "พรรค" ข้างหน้า
+      .trim();
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         return this.partyColorMap[keyword].IMG_PARTY;

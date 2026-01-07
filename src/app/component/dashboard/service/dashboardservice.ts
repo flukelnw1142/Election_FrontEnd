@@ -81,8 +81,12 @@ export class DashboardService {
     return this._http.get<any>(`${this.baseUrl}/realtime/volunteer/constituency/leaders`);
   }
 
+  // getRankByDistrict(id: number): Observable<any> {
+  //   return this._http.get<any>(`${this.baseUrl}/Election/detailAll?id=${id}`);
+  // }
+
   getRankByDistrict(id: number): Observable<any> {
-    return this._http.get<any>(`${this.baseUrl}/Election/detailAll?id=${id}`);
+    return this._http.get<any>(`${this.baseUrl}/area/detail-by-areaId?AreaId=${id}`);
   }
 
   getRankByDistrictTop3(id: string | number): Observable<any> {
@@ -135,7 +139,7 @@ export class DashboardService {
   //   );
   // }
 
-   getWinnerZoneByPartyName(name: string): Observable<any> {
+  getWinnerZoneByPartyName(name: string): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/winning/candidates-by-party?name=${name}`
     );
@@ -148,7 +152,7 @@ export class DashboardService {
   //   );
   // }
 
-    getAllwinnerZoneByProvinceName(provinceName: string): Observable<any> {
+  getAllwinnerZoneByProvinceName(provinceName: string): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/realtime/Election/getAllWinnerZoneByProvinceName?ProvinceName=${provinceName}`
     );

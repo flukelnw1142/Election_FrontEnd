@@ -260,7 +260,11 @@ export class DashboardScoreAndSeat implements OnInit {
   // }
 
   getColor(winner: any): string {
-    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    const rawName = typeof winner === 'string' ? winner : winner?.party || '';
+
+    const partyName = rawName
+      .replace(/^พรรค\s*/g, '')   // ✅ ตัดคำว่า "พรรค" ข้างหน้า
+      .trim();
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         return this.partyColorMap[keyword].COLOR;

@@ -415,10 +415,16 @@
 
 
     <g id="province-16">
+      <g id="LRI_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+        <g id="text_52">
+          <circle cx="620" cy="234" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="620" y="240" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
+        </g>
+      </g>
       <g id="LRI_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_53">
-          <circle cx="620" cy="234" r="18" fill="rgb(146, 146, 157)"/>
-          <text x="620" y="240" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
+          <circle cx="580" cy="234" r="18" fill="rgb(146, 146, 157)"/>
+          <text x="580" y="240" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
         </g>
       </g>
       <g id="LRI_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">

@@ -54,7 +54,8 @@ export class DashboardScoreAndSeat implements OnInit {
         this.partySeatCountsList = await firstValueFrom(
           this._dashboard.getPartySeatCountsList_NEW()
         );
-
+        console.log("partySeatCountsList : ",this.partySeatCountsList);
+        
         // this.updateTotalSeats();
         this.cd.markForCheck();
 
@@ -274,7 +275,12 @@ export class DashboardScoreAndSeat implements OnInit {
   }
 
   getUrlHead(winner: any): string {
-    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    const rawName = typeof winner === 'string' ? winner : winner?.party || '';
+
+    const partyName = rawName
+      .replace(/^พรรค\s*/g, '')   // ✅ ตัดคำว่า "พรรค" ข้างหน้า
+      .trim();
+
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         if (this.partyColorMap[keyword].IMG_HEAD === '') {
@@ -287,8 +293,11 @@ export class DashboardScoreAndSeat implements OnInit {
   }
 
   getUrlParty(winner: any): string {
-    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
-    // console.log('partyName', partyName);
+    const rawName = typeof winner === 'string' ? winner : winner?.party || '';
+
+    const partyName = rawName
+      .replace(/^พรรค\s*/g, '')   // ✅ ตัดคำว่า "พรรค" ข้างหน้า
+      .trim();
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         // console.log('IMG_PARTY', this.partyColorMap[keyword].IMG_PARTY);

@@ -241,10 +241,16 @@
 </g></g>
 
 <g id="province-80">
+<g id="NST_10" style="pointer-events: all; cursor: pointer; transform: scale(1);">
+<g id="text_35">
+<circle cx="182" cy="600" r="18" fill="rgb(146, 146, 157)"/>
+<text x="182" y="606" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">10</text>
+</g></g>
+
 <g id="NST_9" style="pointer-events: all; cursor: pointer; transform: scale(1);">
 <g id="text_36">
-<circle cx="182" cy="600" r="18" fill="rgb(146, 146, 157)"/>
-<text x="182" y="606" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">9</text>
+<circle cx="142" cy="600" r="18" fill="rgb(146, 146, 157)"/>
+<text x="142" y="606" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">9</text>
 </g></g>
 
 <g id="NST_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">

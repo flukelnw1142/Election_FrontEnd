@@ -696,7 +696,8 @@ export class Dashboard implements OnInit {
             party?.IMG_HEAD || ''
           );
           this.partyBackgroundColor = party?.COLOR || '#fefdfd';
-
+        
+          
           path.setAttribute('style', styleStr);
           text.setAttribute('style', styleText);
 

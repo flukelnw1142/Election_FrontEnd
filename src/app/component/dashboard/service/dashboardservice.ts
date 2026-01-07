@@ -196,9 +196,15 @@ export class DashboardService {
     );
   }
 
+  // getPartyListForDistrict(id: string | number): Observable<any> {
+  //   return this._http.get<any>(
+  //     `${this.baseUrl}/Election/partyListForDistrict?id=${id}`
+  //   );
+  // }
+
   getPartyListForDistrict(id: string | number): Observable<any> {
     return this._http.get<any>(
-      `${this.baseUrl}/Election/partyListForDistrict?id=${id}`
+      `${this.baseUrl}/area/partylist-for-areano?AreaId=${id}`
     );
   }
 }

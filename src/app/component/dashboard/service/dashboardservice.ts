@@ -159,11 +159,19 @@ export class DashboardService {
   }
 
 
+  // getPartylistProvince(provinceName: string): Observable<any> {
+  //   return this._http.get<any>(
+  //     `${this.baseUrl}/Election/partylistProvince?provincename=${provinceName}`
+  //   );
+  // }
+
+
   getPartylistProvince(provinceName: string): Observable<any> {
     return this._http.get<any>(
-      `${this.baseUrl}/Election/partylistProvince?provincename=${provinceName}`
+      `${this.baseUrl}/area/partylist-by-province?ProvinceNameTH=${provinceName}`
     );
   }
+
 
   getRegionByProvince(provinceName: string): Observable<any> {
     return this._http.get<any>(
@@ -190,9 +198,15 @@ export class DashboardService {
   }
 
 
-  getWinnerPartyByRegionName(regionName: string): Observable<any> {
+  // getWinnerPartyByRegionName(regionName: string): Observable<any> {
+  //   return this._http.get<any>(
+  //     `${this.baseUrl}/Election/getAllWinnerPartylistByRegion?regionname=${regionName}`
+  //   );
+  // }
+
+    getWinnerPartyByRegionName(regionName: string): Observable<any> {
     return this._http.get<any>(
-      `${this.baseUrl}/Election/getAllWinnerPartylistByRegion?regionname=${regionName}`
+      `${this.baseUrl}/area/partylist-by-Region?RegionNameTH=${regionName}`
     );
   }
 

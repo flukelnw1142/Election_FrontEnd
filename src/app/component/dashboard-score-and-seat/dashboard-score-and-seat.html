@@ -20,6 +20,8 @@
           </div>
           <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"
             class="img-party">
+          <img [src]="'background/default-logo.png'" *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo"
+            class="img-party">
         </div>
         <!-- ซ้าย -->
         <div class="middle-section">

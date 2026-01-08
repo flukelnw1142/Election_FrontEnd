@@ -90,7 +90,8 @@
     gap: 1rem;
     margin-bottom: 2%;
     height: 140px;
-    padding: 1rem;
+    // padding: 1rem;
+    padding: 1rem 1rem 0rem 1rem;
     border-radius: 1rem;
     position: relative;
     z-index: 0;
@@ -111,7 +112,10 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateZ(0);
     will-change: transform, box-shadow;
+
 }
+
+
 
 .party-card:hover {
     transform: translateY(-6px) scale(1.02);
@@ -146,10 +150,15 @@
     width: 25%;
     position: relative;
 
+    // .img-head {
+    //     height: 100px;
+    //     width: 100px;
+    //     // border-radius: 100%;
+    //     overflow: hidden;
+    // }
     .img-head {
-        height: 100px;
+        height: 125px;
         width: 100px;
-        // border-radius: 100%;
         overflow: hidden;
     }
 
@@ -172,6 +181,33 @@
         z-index: 2;
         border-radius: 50%;
     }
+
+    .party-frame {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #ccc;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        overflow: hidden;
+        /* สำคัญมาก */
+        background: #fff;
+
+        position: absolute;
+        bottom: 5px;
+        left: 60px;
+        z-index: 2;
+        border-radius: 50%;
+    }
+
+    .party-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
 
     // .img-party {
     //     height: 4rem;

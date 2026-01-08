@@ -18,10 +18,15 @@
           <div class="img-head">
             <img [src]="getUrlHead(party.partyName)" alt="Party Head" style="object-fit: cover;">
           </div>
-          <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"
-            class="img-party">
-          <img [src]="'background/default-logo.png'" *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo"
-            class="img-party">
+          <div class="party-frame">
+            <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo">
+            <img [src]="'background/default-logo.png'" *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo">
+            <!-- <img [src]="getUrlParty(party.partyName)" *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"
+              class="img-party"
+              >
+            <img [src]="'background/default-logo.png'" *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo"
+              class="img-party"> -->
+          </div>
         </div>
         <!-- ซ้าย -->
         <div class="middle-section">

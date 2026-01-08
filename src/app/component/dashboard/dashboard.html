@@ -94,13 +94,16 @@
             <div class="tooltip-text">
                 <p>{{ tooltipText }}</p>
                 <div class="tooltip-subtext">
-                    <div *ngFor="let candidate of detailDistrictTop3">
-                        <!-- <img [src]="'/background/cat.png'" alt="{{ candidate.party_name }}" /> -->
-                        <!-- <img [src]="candidate.avatarURL" alt="Party Logo"> -->
-                        <img [src]="candidate.avatarURL ? candidate.avatarURL : '/background/profile.png'"
-                            alt="avatarURL">
+                    <div *ngFor="let candidate of detailDistrictTop3; let index = index"
+                        [style.background]="getColor(candidate.party_name)"
+                        style="padding: 5px; border-radius: 5px; margin: 2px; color: white;">
+                        <div style="margin-left: 5px; margin-right: 10px; font-size: 20px; font-weight: 700;">
+                            {{index + 1}}
+                        </div>
+                        <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
+                            (error)="onImgError($event)" alt="avatarURL">
                         <div>
-                            <p>{{ candidate.party_name }}</p>
+                            <p style="font-weight: 600;">{{ candidate.party_name }}</p>
                             <p>{{ candidate.fullname }}</p>
                             <p>คะแนน: {{ candidate.totalVotes | number }}</p>
                         </div>
@@ -245,7 +248,7 @@
                                                 }}</p>
                                             <!-- <img [src]="candidate.avatarURL" alt="avatarURL"> -->
                                             <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
-                                                alt="avatarURL">
+                                                (error)="onImgError($event)" alt="avatarURL">
                                             <div>
                                                 <p style=" font-size: 1.1rem;">{{ candidate.fullname }}</p>
                                                 <p
@@ -282,7 +285,7 @@
                                                 <p class="number" [style.background]="getColor(candidate.party_name)">
                                                     {{i + 1}}</p>
                                                 <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
-                                                    alt="avatarURL">
+                                                    (error)="onImgError($event)" alt="avatarURL">
                                                 <div>
                                                     <p style=" font-size: 1.1rem;">{{ candidate.fullname }}</p>
                                                     <p
@@ -444,7 +447,9 @@
 
                                     <p class="number" [style.background]="getColor(candidate.party_name)">{{ i + 1 }}
                                     </p>
-                                    <img [src]="candidate.avatarURL" alt="Party Logo">
+                                    <!-- <img [src]="candidate.avatarURL" alt="Party Logo"> -->
+                                    <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
+                                        (error)="onImgError($event)" alt="avatarURL">
                                     <div>
                                         <p style="font-size: 1.3rem;">{{ candidate.fullname }}</p>
                                         <p
@@ -615,7 +620,7 @@
                                         <p class="number">{{ i + 1 }}
                                         </p>
                                         <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
-                                            alt="avatarURL">
+                                            (error)="onImgError($event)" alt="avatarURL">
                                         <div>
                                             <p style="font-size: 1.3rem; color: #000;">{{ candidate.fullname }}</p>
                                             <p><span class="no">เบอร์ {{candidate.no}}</span>
@@ -651,7 +656,7 @@
                                     <div style=" display: flex;  align-items: center; gap: 1rem;">
                                         <p class="number">{{ i + 1 }}</p>
                                         <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
-                                            alt="avatarURL">
+                                            (error)="onImgError($event)" alt="avatarURL">
                                         <p style="font-size: 1.3rem; color: #000;">{{candidate.fullName }}</p>
                                     </div>
                                     <div>

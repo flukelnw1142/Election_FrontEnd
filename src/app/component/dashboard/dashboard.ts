@@ -1465,6 +1465,12 @@ export class Dashboard implements OnInit {
     }
   }
 
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = '/background/user_avatar.png';
+  }
+
+
   /**
    * FUNCTION
    */
@@ -1881,8 +1887,8 @@ export class Dashboard implements OnInit {
     this._dashboard.getPartyListForDistrict(areaId).subscribe((data) => {
       // console.log('onWinnerPartyByDistrict', data);
       this.detailWinnerPartyPerDistrict = data;
-      console.log("detailWinnerPartyPerDistrict : ",this.detailWinnerPartyPerDistrict);
-      
+      console.log("detailWinnerPartyPerDistrict : ", this.detailWinnerPartyPerDistrict);
+
       // this.detailWinnerZonePerDistrict = data;
       this.progress_party = data[0].progress;
       this.totalvoteZone_party = data[0].total_votes_in_area;

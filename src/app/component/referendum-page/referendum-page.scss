@@ -115,22 +115,20 @@
     left: -10px;
     right: -10px;
     top: 0;
-    border-top: 2px dashed #fff;
+    border-top: 2px dashed #ffffff84;
     opacity: 0.9;
     z-index: 10;
     pointer-events: none;
 }
 
-// .bar-agree {
+.bar-agree {
+    width: 560px;
+}
 
-// }
-
-// .bar-disagree {
-//     width: 200%;
-//     right: 0;
-// }
-
-
+.bar-disagree {
+    width: 560px;
+    left: -300px;
+}
 
 .agree {
     background-color: #4CAF50;

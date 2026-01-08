@@ -323,10 +323,14 @@
                                                 {{ i + 1 }}
                                             </p>
 
-                                            <img [src]="getUrlParty(party.partyName)"
-                                                *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"
-                                                class="party-logo">
-
+                                            <div class="logo-container">
+                                                <img [src]="getUrlParty(party.partyName)"
+                                                    *ngIf="getUrlParty(party.partyName)" alt="Party Logo"
+                                                    class="logo-img">
+                                                <img [src]="'background/default-logo.png'"
+                                                    *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo"
+                                                    class="logo-img">
+                                            </div>
                                             <div>
                                                 <p style="font-size: 1.1rem;">
                                                     {{ party.partyName || '-' }}
@@ -364,10 +368,14 @@
                                                     {{ i + 1 }}
                                                 </p>
 
-                                                <img [src]="getUrlParty(party.partyName)"
-                                                    *ngIf="getUrlParty(party.partyName) !== ''" alt="Party Logo"
-                                                    class="party-logo">
-
+                                                <div class="logo-container">
+                                                    <img [src]="getUrlParty(party.partyName)"
+                                                        *ngIf="getUrlParty(party.partyName)" alt="Party Logo"
+                                                        class="logo-img">
+                                                    <img [src]="'background/default-logo.png'"
+                                                        *ngIf="getUrlParty(party.partyName) === ''" alt="Head Logo"
+                                                        class="logo-img">
+                                                </div>
                                                 <div>
                                                     <p style="font-size: 1.1rem;">
                                                         {{ party.partyName || '-' }}

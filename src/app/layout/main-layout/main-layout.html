@@ -42,7 +42,7 @@
         <label class="switch">
             <input type="checkbox" [checked]="isChecked" (click)="onToggleClick($event)" />
             <span class="slider round">
-                <span class="toggle-text">{{ dataSource === 'volunteer' ? 'อาสาสมัคร' : 'กกต.'
+                <span class="toggle-text">{{ toggleLabel
                     }}</span>
             </span>
         </label>
@@ -62,5 +62,5 @@
 </div>
 
 <div class="source-label">
-  {{dataSource === 'volunteer' ? 'ผลคะแนนจาก อาสาสมัคร' : 'ผลคะแนนจาก กกต.'}}
+    {{dataSourceLabel}}
 </div>

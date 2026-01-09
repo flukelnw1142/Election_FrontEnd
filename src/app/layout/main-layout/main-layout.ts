@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,9 @@ export class MainLayout {
   username: any = '';
   isChecked: boolean = false;
   dataSource: string = '';
+  dataSourceLabel: string = '';
+  toggleLabel: string = '';
+
 
 
   constructor(private router: Router,
@@ -23,6 +26,7 @@ export class MainLayout {
     private _dashboard: DashboardService,
     private sweetAlertService: SweetAlertService,
     private cdr: ChangeDetectorRef,
+    private zone: NgZone
   ) {
     this.router.events.subscribe((event) => {
       // console.log(event);
@@ -79,6 +83,7 @@ export class MainLayout {
     this.dataSource = nextDataSource;
     this.isChecked = nextDataSource === 'final';
 
+    this.updateDataSource(nextDataSource);
     this.setDataSource();
     this.cdr.detectChanges();
   }
@@ -87,8 +92,16 @@ export class MainLayout {
   getDataSource() {
     this._dashboard.getStatusMode().subscribe({
       next: (res) => {
-        this.dataSource = res.is_certified === 1 ? 'final' : 'volunteer';
-        this.isChecked = this.dataSource === 'final';
+        this.updateDataSource(
+          res.is_certified === 1 ? 'final' : 'volunteer'
+        );
+
+        //  this.dataSource = res.is_certified === 1 ? 'final' : 'volunteer';
+        //   this.isChecked = this.dataSource === 'final';
+        // this.zone.run(() => {
+        //   this.dataSource = res.is_certified === 1 ? 'final' : 'volunteer';
+        //   this.isChecked = this.dataSource === 'final';
+        // });
       },
       error: (err) => console.error(err),
     });
@@ -106,4 +119,22 @@ export class MainLayout {
       },
     });
   }
+
+  private updateDataSource(source: 'final' | 'volunteer') {
+    this.dataSource = source;
+    this.isChecked = source === 'final';
+
+    this.dataSourceLabel =
+      source === 'final'
+        ? 'ผลคะแนนจาก กกต.'
+        : 'ผลคะแนนจาก อาสาสมัคร';
+
+    this.toggleLabel =
+      source === 'final'
+        ? 'กกต.'
+        : 'อาสาสมัคร';
+
+    this.cdr.markForCheck();
+  }
+
 }

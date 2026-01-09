@@ -242,26 +242,26 @@ export class Dashboard implements OnInit {
         });
 
       // // WebSocket - Party Seat Counts
-      // this._dashboard
-      //   .connectPartySeatCounts()
-      //   .pipe(takeUntil(this.destroy$))
-      //   .subscribe({
-      //     next: (res) => {
-      //       // console.log('connectPartySeatCounts >>>', res);
-      //       if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
-      //         this.partySeatCountsList = res.data || [];
-      //         // this.totalSeats =
-      //         //   this.partySeatCountsList.reduce(
-      //         //     (sum, p) =>
-      //         //       sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
-      //         //     0
-      //         //   ) || 1;
-      //         this.cd.markForCheck();
-      //       }
-      //     },
-      //     error: (err) => console.error('WebSocket error', err),
-      //     complete: () => console.log('WebSocket closed'),
-      //   });
+      this._dashboard
+        .connectPartySeatCounts()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res) => {
+            // console.log('connectPartySeatCounts >>>', res);
+            if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+              this.partySeatCountsList = res.data || [];
+              // this.totalSeats =
+              //   this.partySeatCountsList.reduce(
+              //     (sum, p) =>
+              //       sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
+              //     0
+              //   ) || 1;
+              this.cd.markForCheck();
+            }
+          },
+          error: (err) => console.error('WebSocket error', err),
+          complete: () => console.log('WebSocket closed'),
+        });
 
       this.mouseMoveSubject.subscribe((event: MouseEvent) =>
         this.handleTooltipLogic(event)

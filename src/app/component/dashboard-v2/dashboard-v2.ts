@@ -74,51 +74,51 @@ export class DashboardV2 implements OnInit {
         this.cd.markForCheck();
 
         // WebSocket - Color
-        // this._dashboard
-        //   .connectColor()
-        //   .pipe(takeUntil(this.destroy$))
-        //   .subscribe({
-        //     next: (res) => {
-        //       // console.log('connectColor >>>', res);
-        //       if (res.type === 'color') {
-        //         this.zone.run(() => {
-        //           this.partyColorMap = res.data;
-        //           this.cd.markForCheck();
-        //         });
-        //       }
-        //     },
-        //     error: (err) => console.error('WebSocket error', err),
-        //     complete: () => console.log('WebSocket closed'),
-        //   });
+        this._dashboard
+          .connectColor()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res) => {
+              // console.log('connectColor >>>', res);
+              if (res.type === 'color') {
+                this.zone.run(() => {
+                  this.partyColorMap = res.data;
+                  this.cd.markForCheck();
+                });
+              }
+            },
+            error: (err) => console.error('WebSocket error', err),
+            complete: () => console.log('WebSocket closed'),
+          });
 
         // WebSocket - Party Seat Counts
-        // this._dashboard
-        //   .connectPartySeatCounts()
-        //   .pipe(takeUntil(this.destroy$))
-        //   .subscribe({
-        //     next: (res) => {
-        //       // console.log('connectPartySeatCounts >>>', res);
-        //       if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
-        //         this.zone.run(() => {
-        //           this.partySeatCountsList = res.data;
+        this._dashboard
+          .connectPartySeatCounts()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res) => {
+              // console.log('connectPartySeatCounts >>>', res);
+              if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
+                this.zone.run(() => {
+                  this.partySeatCountsList = res.data;
 
-        //           // รวมจำนวนที่นั่งทั้งหมด
-        //           this.totalSeats = this.partySeatCountsList.reduce(
-        //             (sum, p) => {
-        //               return sum + p.zone_seats + p.partylist_seats;
-        //             },
-        //             0
-        //           );
+                  // รวมจำนวนที่นั่งทั้งหมด
+                  this.totalSeats = this.partySeatCountsList.reduce(
+                    (sum, p) => {
+                      return sum + p.zone_seats + p.partylist_seats;
+                    },
+                    0
+                  );
 
-        //           console.log('totalSeats', this.totalSeats);
-        //           this.cd.markForCheck();
-        //           this.loadSvg();
-        //         });
-        //       }
-        //     },
-        //     error: (err) => console.error('WebSocket error', err),
-        //     complete: () => console.log('WebSocket closed'),
-        //   });
+                  console.log('totalSeats', this.totalSeats);
+                  this.cd.markForCheck();
+                  this.loadSvg();
+                });
+              }
+            },
+            error: (err) => console.error('WebSocket error', err),
+            complete: () => console.log('WebSocket closed'),
+          });
       } catch (error) {
         console.error('Error initializing dashboard:', error);
       }

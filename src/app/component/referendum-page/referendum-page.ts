@@ -80,7 +80,7 @@ export class ReferendumPage implements OnInit {
   ) { }
 
   private loadDataReferendum() {
-    this._referendumService.getReferendum('national').subscribe((result) => {
+    this._referendumService.getReferendum().subscribe((result) => {
       console.log(result.data.questions);
       // สมมติ backend คืน data.questions
       this.questions = result.data.questions.map((q: any) => {

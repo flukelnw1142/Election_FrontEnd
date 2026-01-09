@@ -15,7 +15,7 @@ export class MainLayout {
   showVotingStatus = true;
   username: any = '';
   isChecked: boolean = false;
-  dataSource: string = 'volunteer';
+  dataSource: string = '';
 
 
   constructor(private router: Router,

@@ -159,7 +159,7 @@
     .img-head {
         height: 125px;
         width: 100px;
-        overflow: hidden;
+        // overflow: hidden;
     }
 
     .img-head img {
@@ -167,7 +167,7 @@
         height: 100%;
         object-fit: cover;
         object-position: top;
-        transform: translate(-10%, 0%);
+        transform: translate(-10%, -.7%);
     }
 
     .img-party {

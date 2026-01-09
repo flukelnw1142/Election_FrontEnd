@@ -205,41 +205,41 @@ export class Dashboard implements OnInit {
 
       // ปิด loading
       // WebSocket - Color
-      // this._dashboard
-      //   .connectColor()
-      //   .pipe(takeUntil(this.destroy$))
-      //   .subscribe({
-      //     next: (res) => {
-      //       // console.log('connectColor >>>', res);
-      //       if (res.type === 'color') {
-      //         this.zone.run(() => {
-      //           this.partyColorMap = res.data;
-      //           this.cd.markForCheck();
-      //         });
-      //       }
-      //     },
-      //     error: (err) => console.error('WebSocket error', err),
-      //     complete: () => console.log('WebSocket closed'),
-      //   });
+      this._dashboard
+        .connectColor()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res) => {
+            // console.log('connectColor >>>', res);
+            if (res.type === 'color') {
+              this.zone.run(() => {
+                this.partyColorMap = res.data;
+                this.cd.markForCheck();
+              });
+            }
+          },
+          error: (err) => console.error('WebSocket error', err),
+          complete: () => console.log('WebSocket closed'),
+        });
 
-      // // WebSocket - District Winners
-      // this._dashboard
-      //   .connectDistrictWinners()
-      //   .pipe(takeUntil(this.destroy$))
-      //   .subscribe({
-      //     next: (res) => {
-      //       // console.log('connectDistrictWinners >>>', res);
-      //       if (res.channel === 'results') {
-      //         this.zone.run(async () => {
-      //           this.winners = res.data;
-      //           this.updateWinnerUI(this.winners);
-      //           this.loadSvgIfNeeded();
-      //         });
-      //       }
-      //     },
-      //     error: (err) => console.error('WebSocket error', err),
-      //     complete: () => console.log('WebSocket closed'),
-      //   });
+      // WebSocket - District Winners
+      this._dashboard
+        .connectDistrictWinners()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res) => {
+            // console.log('connectDistrictWinners >>>', res);
+            if (res.channel === 'results') {
+              this.zone.run(async () => {
+                this.winners = res.data;
+                this.updateWinnerUI(this.winners);
+                this.loadSvgIfNeeded();
+              });
+            }
+          },
+          error: (err) => console.error('WebSocket error', err),
+          complete: () => console.log('WebSocket closed'),
+        });
 
       // // WebSocket - Party Seat Counts
       // this._dashboard

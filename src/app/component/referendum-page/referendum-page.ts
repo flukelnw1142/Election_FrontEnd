@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { ReferendumService } from './referendum';
 import { CommonModule } from '@angular/common';
 import { DashboardService } from '../dashboard/service/dashboardservice';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-referendum-page',
@@ -14,6 +14,7 @@ export class ReferendumPage implements OnInit {
 
   questions: any[] = [];
   winners: any;
+  private destroy$ = new Subject<void>();
 
 
   async ngOnInit(): Promise<void> {
@@ -32,6 +33,24 @@ export class ReferendumPage implements OnInit {
 
       // อัพเดท UI ครั้งแรก
       this.updateWinnerUI(this.winners);
+
+      // WebSocket - District Winners
+      this._dashboard
+        .connectDistrictWinners()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res) => {
+            // console.log('connectDistrictWinners >>>', res);
+            if (res.channel === 'results') {
+              this.zone.run(async () => {
+                this.winners = res.data;
+                this.updateWinnerUI(this.winners);
+              });
+            }
+          },
+          error: (err) => console.error('WebSocket error', err),
+          complete: () => console.log('WebSocket closed'),
+        });
 
     } catch (error) {
       console.error('Error loading data:', error);

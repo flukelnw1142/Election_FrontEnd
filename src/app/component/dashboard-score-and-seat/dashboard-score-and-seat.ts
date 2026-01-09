@@ -54,28 +54,28 @@ export class DashboardScoreAndSeat implements OnInit {
         this.partySeatCountsList = await firstValueFrom(
           this._dashboard.getPartySeatCountsList_NEW()
         );
-        console.log("partySeatCountsList : ",this.partySeatCountsList);
-        
+        console.log("partySeatCountsList : ", this.partySeatCountsList);
+
         // this.updateTotalSeats();
         this.cd.markForCheck();
 
         // WebSocket - Color
-        // this._dashboard
-        //   .connectColor()
-        //   .pipe(takeUntil(this.destroy$))
-        //   .subscribe({
-        //     next: (res) => {
-        //       // console.log('connectColor >>>', res);
-        //       if (res.type === 'color') {
-        //         this.zone.run(() => {
-        //           this.partyColorMap = res.data;
-        //           this.cd.markForCheck();
-        //         });
-        //       }
-        //     },
-        //     error: (err) => console.error('WebSocket error', err),
-        //     complete: () => console.log('WebSocket closed'),
-        //   });
+        this._dashboard
+          .connectColor()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res) => {
+              // console.log('connectColor >>>', res);
+              if (res.type === 'color') {
+                this.zone.run(() => {
+                  this.partyColorMap = res.data;
+                  this.cd.markForCheck();
+                });
+              }
+            },
+            error: (err) => console.error('WebSocket error', err),
+            complete: () => console.log('WebSocket closed'),
+          });
 
         // WebSocket - Party Seat Counts
         // this._dashboard

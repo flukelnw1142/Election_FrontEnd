@@ -94,6 +94,7 @@
             <div class="tooltip-text">
                 <p>{{ tooltipText }}</p>
                 <div class="tooltip-subtext">
+                    <!-- แบบมีสี -->
                     <div *ngFor="let candidate of detailDistrictTop3; let index = index"
                         [style.background]="getColor(candidate.party_name)"
                         style="padding: 5px; border-radius: 5px; margin: 2px; color: white;">
@@ -101,13 +102,23 @@
                             {{index + 1}}
                         </div>
                         <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
-                            (error)="onImgError($event)" alt="avatarURL">
+                            alt="avatarURL">
                         <div>
                             <p style="font-weight: 600;">{{ candidate.party_name }}</p>
                             <p>{{ candidate.fullname }}</p>
                             <p>คะแนน: {{ candidate.totalVotes | number }}</p>
                         </div>
                     </div>
+                    <!-- แบบไม่มีสี -->
+                    <!-- <div *ngFor="let candidate of detailDistrictTop3;">
+                        <img [src]=" candidate.avatarURL !=='-' ? candidate.avatarURL : '/background/user_avatar.png'"
+                            (error)=" onImgError($event)" alt="avatarURL">
+                        <div>
+                            <p style="font-weight: 600;">{{ candidate.party_name }}</p>
+                            <p>{{ candidate.fullname }}</p>
+                            <p>คะแนน: {{ candidate.totalVotes | number }}</p>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>

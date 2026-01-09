@@ -5,7 +5,6 @@
     <div *ngIf="showVotingStatus" class="referendum-link" (click)="referendum()"><mat-icon>thumbs_up_down</mat-icon>
         <p>ผลคะแนนประชามติ</p>
     </div>
-
     <div *ngIf="showVotingStatus" class="voting-status-desktop">
         <div class="status-layout">
             <div class="row">
@@ -35,9 +34,20 @@
             </div>
         </div>
     </div>
-    <!-- <div class="logout-btn" matTooltip="ออกจากระบบ" matTooltipPosition="left">
-        <mat-icon fontIcon="logout" class="logout-icon"></mat-icon>
-    </div> -->
+
+    <div *ngIf="!showVotingStatus"
+        style="color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
+        <!-- กกต. / อาสาสมัคร -->
+        ผลคะแนนจาก :
+        <label class="switch">
+            <input type="checkbox" [checked]="isChecked" (change)="onDataSourceChange()" />
+            <span class="slider round">
+                <span class="toggle-text">{{ dataSource === 'volunteer' ? 'อาสาสมัคร' : 'กกต.'
+                    }}</span>
+            </span>
+        </label>
+    </div>
+
     <div *ngIf="!showVotingStatus" class="user-menu">
         <span class="user-name">{{username}}</span>
         <div class="logout-btn" matTooltip="ออกจากระบบ" (click)="logout()">

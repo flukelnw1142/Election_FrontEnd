@@ -1477,6 +1477,7 @@ export class Dashboard implements OnInit {
 
   /*เปลี่ยน ที่นั่ง กับ แผนที่ */
   async changeSvg(view: string): Promise<void> {
+    this.hideTooltip();
     this.selectDashboard = view; // ตั้งค่า view ตามพารามิเตอร์ที่ส่งมา
     this.selectDashboard =
       this.selectDashboard === 'dashboard' ? 'dashboard_2' : 'dashboard';

@@ -303,7 +303,7 @@ export class DashboardV2 implements OnInit {
         const party = this.partySeatCountsList.find(p => p.partyName === hoveredParty);
         if (party) {
           this.tooltipText = party.partyName;
-          this.tooltipSeat = (party.zone_seats + party.partylist_seats).toString();
+          this.tooltipSeat = (party.zone_seats + party.partylist_seats).toString() + ' ที่นั่ง';
           this.tooltipX = event.clientX + 10;
           this.tooltipY = event.clientY + 10;
           this.tooltipVisible = true;

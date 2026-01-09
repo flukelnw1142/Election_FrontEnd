@@ -36,11 +36,11 @@
     </div>
 
     <div *ngIf="!showVotingStatus"
-        style="color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
+        style="color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; user-select: none;">
         <!-- กกต. / อาสาสมัคร -->
         ผลคะแนนจาก :
         <label class="switch">
-            <input type="checkbox" [checked]="isChecked" (change)="onDataSourceChange()" />
+            <input type="checkbox" [checked]="isChecked" (click)="onToggleClick($event)" />
             <span class="slider round">
                 <span class="toggle-text">{{ dataSource === 'volunteer' ? 'อาสาสมัคร' : 'กกต.'
                     }}</span>
@@ -59,4 +59,8 @@
 <!-- Content -->
 <div style="border-radius: 2rem; margin: 1rem 1rem 0 1rem;">
     <router-outlet></router-outlet>
+</div>
+
+<div class="source-label">
+  {{dataSource === 'volunteer' ? 'ผลคะแนนจาก อาสาสมัคร' : 'ผลคะแนนจาก กกต.'}}
 </div>

@@ -204,7 +204,7 @@ export class DashboardService {
   //   );
   // }
 
-    getWinnerPartyByRegionName(regionName: string): Observable<any> {
+  getWinnerPartyByRegionName(regionName: string): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/area/partylist-by-Region?RegionNameTH=${regionName}`
     );
@@ -220,5 +220,13 @@ export class DashboardService {
     return this._http.get<any>(
       `${this.baseUrl}/area/partylist-for-areano?AreaId=${id}`
     );
+  }
+
+  getStatusMode(): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/mode/current`);
+  }
+  setStatusMode(to_certified: boolean, updated_by: string): Observable<any> {
+    let url = `${this.baseUrl}/mode/switch?to_certified=${to_certified}&updated_by=${updated_by.replace(" ", "_")}`;
+    return this._http.post<any>(url, {});
   }
 }

@@ -1,7 +1,9 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { DashboardService } from '../../component/dashboard/service/dashboardservice';
+import { SweetAlertService } from '../../service/sweet-alert.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -17,7 +19,10 @@ export class MainLayout {
 
 
   constructor(private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private _dashboard: DashboardService,
+    private sweetAlertService: SweetAlertService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.router.events.subscribe((event) => {
       // console.log(event);
@@ -50,57 +55,55 @@ export class MainLayout {
   onCliclkLogo(): void {
     this.router.navigate(['/dashboard']);
   }
+  async onToggleClick(event: MouseEvent) {
+    event.preventDefault(); // ❗ กัน checkbox เปลี่ยนค่าเอง
 
-  onDataSourceChange() {
-    const newDataSource = this.dataSource === 'volunteer' ? 'final' : 'volunteer';
-    this.dataSource = newDataSource;
-    this.isChecked = !this.isChecked;
-    // const newDataSource = this.dataSource === 'Oracle' ? 'SQLServer' : 'Oracle';
-    // let imageData: string | undefined;
-    // if (this.img && Array.isArray(this.img) && this.img.length > 0) {
-    //   imageData = this.img[0].imageData;
-    // }
-    // const ErrorImageData = this.img && Array.isArray(this.img) && this.img.length > 0 ? this.img[1].imageDataImg : undefined;
-    // this.manageWorkFlowService.switchDatasource().subscribe({
-    //   next: (res) => {
-    //     Swal.fire({
-    //       html: `
-    //         <div style="text-align: center;">
-    //           <img src="${imageData}" style="width: 150px; height: auto; margin-bottom: 10px;" />
-    //           <p style="font-size: 18px; font-weight: bold;">เปลี่ยนแหล่งที่มาของข้อมูลเรียบร้อยแล้ว</p>
-    //         </div>
-    //         `,
-    //       showConfirmButton: false,
-    //       timer: 2500,
-    //     });
-    //     this.getDataSource();
-    //     this.loadChart();
-    //   },
-    //   error: (err) => {
-    //     console.error('Error updating room:', err);
-    //     Swal.fire({
-    //       html: `
-    //                   <div style="text-align: center;">
-    //                     <img src="${ErrorImageData}" style="width: 150px; height: auto; margin-bottom: 10px;" />
-    //                     <p style="font-size: 18px; font-weight: bold;">ไม่สามารถเปลี่ยนแปลงแหล่งที่มาของข้อมูลได้.</p>
-    //                   </div>
-    //                     `,
-    //       confirmButtonText: 'ตกลง',
-    //     });
-    //     this.isChecked = !this.isChecked;
-    //   },
-    // });
+    await this.onDataSourceChange();
   }
 
+
+  async onDataSourceChange() {
+    const nextDataSource = this.dataSource === 'volunteer' ? 'final' : 'volunteer';
+
+    const confirmed = await this.sweetAlertService.showConfirmDialog(
+      'ยืนยันการเปลี่ยนแหล่งข้อมูล',
+      `ต้องการเปลี่ยนเป็นข้อมูลจาก ${nextDataSource === 'final' ? 'กกต.' : 'อาสาสมัคร'
+      } หรือไม่`,
+      'warning'
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.dataSource = nextDataSource;
+    this.isChecked = nextDataSource === 'final';
+
+    this.setDataSource();
+    this.cdr.detectChanges();
+  }
+
+
   getDataSource() {
-    // this.manageWorkFlowService.getDatasource().subscribe({
-    //   next: (res) => {
-    //     this.dataSource = res.dataSourceType;
-    //     this.isChecked = this.dataSource === 'SQLServer';
-    //   },
-    //   error: (err) => {
-    //     console.error('Error updating room:', err);
-    //   },
-    // });
+    this._dashboard.getStatusMode().subscribe({
+      next: (res) => {
+        this.dataSource = res.is_certified === 1 ? 'final' : 'volunteer';
+        this.isChecked = this.dataSource === 'final';
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
+
+  setDataSource() {
+    this._dashboard.setStatusMode(this.isChecked, this.username).subscribe({
+      next: (res) => {
+        // console.log('Mode updated successfully:', res);
+        this.sweetAlertService.showAlert(res.message, res.is_certified === 1 ? 'ผลคะแนนจาก กกต.' : 'ผลคะแนนจาก อาสาสมัคร', 'success');
+      },
+      error: (err) => {
+        console.error('Error updating mode:', err);
+      },
+    });
   }
 }

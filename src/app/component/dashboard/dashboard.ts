@@ -39,6 +39,7 @@ import { DashboardV2 } from '../dashboard-v2/dashboard-v2';
 import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-score-and-seat';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -152,6 +153,10 @@ export class Dashboard implements OnInit {
   private isOverMagnifier = false;
   private mouseMoveSubject = new Subject<MouseEvent>();
   private destroy$ = new Subject<void>();
+  private lastValidAreaId: number | null = null;
+  private isRollbacking = false;
+  private lastValidZoneId: string | null = null;
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkScreenSize();
@@ -639,7 +644,11 @@ export class Dashboard implements OnInit {
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svg.style.height = '83dvh';
     svg.style.margin = '1vh 0'; // เพิ่มช่องว่างบน–ล่าง
-    const container = this.svgContainer.nativeElement;
+    const container = this.svgContainer?.nativeElement;
+    if (!container) {
+      console.warn('[settingSvg] svgContainer not ready yet');
+      return;
+    }
     container.innerHTML = '';
     container.appendChild(svg);
 
@@ -1759,6 +1768,8 @@ export class Dashboard implements OnInit {
             ?.textContent?.trim();
           if (provinceName) {
             // this.activeTab = 'district';
+            console.log("provinceName : ", provinceName);
+
             this.handleProvinceClick(provinceName);
           }
 
@@ -1845,6 +1856,8 @@ export class Dashboard implements OnInit {
         this.detailWinnerZonePerParty = [];
       } else {
         this.detailWinnerZonePerParty = data;
+        console.log("detailWinnerZonePerParty : ", this.detailWinnerZonePerParty);
+
       }
       this.totalVoteZoneSeat = data[0].total_votes_all;
       this.cd.markForCheck();
@@ -1870,11 +1883,31 @@ export class Dashboard implements OnInit {
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY District
   private onWinnerZoneByDistrict(areaId: number) {
+    if (this.isRollbacking) {
+      this.isRollbacking = false;
+    }
     this.detailWinnerZonePerDistrict = [];
 
     this._dashboard.getRankByDistrict(areaId).subscribe((data) => {
-      this.detailWinnerZonePerDistrict = data;
+      if (data.result == false) {
+        Swal.fire({
+          icon: 'info',
+          title: 'ไม่มีข้อมูล',
+          text: 'ไม่พบข้อมูลผู้ชนะในเขตเลือกตั้งนี้',
+          confirmButtonText: 'ตกลง',
+        }).then(async () => {
+          if (this.lastValidAreaId !== null && !this.isRollbacking) {
+            this.isRollbacking = true;
+            this.handleDistrictClick('oldData')
 
+          }
+        });
+
+        return;
+      }
+      this.lastValidAreaId = areaId;
+      this.detailWinnerZonePerDistrict = data;
+      this.lastValidZoneId = this.zoneId;
       this.provinceName = data[0].province;
       this.zoneName = data[0].zone;
       this.progress = data[0].progress;
@@ -1883,10 +1916,17 @@ export class Dashboard implements OnInit {
   }
   // Data แสดงข้อมูล แสดงคะแนนบัญชีรายชื่อทั้งหมด BY District
   private onWinnerPartyByDistrict(areaId: number) {
+    if (this.isRollbacking) {
+      this.isRollbacking = false;
+    }
     this.detailWinnerZonePerDistrict = [];
 
     this._dashboard.getPartyListForDistrict(areaId).subscribe((data) => {
       // console.log('onWinnerPartyByDistrict', data);
+      if (data.result == false) {
+        return;
+      }
+      this.lastValidAreaId = areaId;
       this.detailWinnerPartyPerDistrict = data;
       console.log("detailWinnerPartyPerDistrict : ", this.detailWinnerPartyPerDistrict);
 
@@ -2144,9 +2184,17 @@ export class Dashboard implements OnInit {
     }
     this.selectedProvince = '';
     this.detailDistrict = [];
+    console.log("districtId : ", districtId);
 
-    this.zoneId = districtId;
-    this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
+    if (districtId === 'oldData') {
+      this.selectedDistric = this.lastValidAreaId
+      this.zoneId = this.lastValidZoneId
+    }
+    else {
+      this.zoneId = districtId;
+      this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
+    }
+
 
     this.onWinnerZoneByDistrict(this.selectedDistric);
     this.onWinnerPartyByDistrict(this.selectedDistric);
@@ -2161,8 +2209,13 @@ export class Dashboard implements OnInit {
     //     this.progress = data[0].progress;
     //     this.totalvoteZone = data[0].total_votes_in_area;
     //   });
-
-    const provinceName = this.allWinners[this.zoneId]?.provinceName;
+    let provinceName: any
+    if (districtId === "oldData") {
+      provinceName = this.provinceName
+    }
+    else {
+      provinceName = this.allWinners[this.zoneId]?.provinceName;
+    }
     this.loadAndSetRegionSvg(provinceName);
 
     this.tooltipVisible = false;

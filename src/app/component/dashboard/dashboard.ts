@@ -1740,7 +1740,7 @@ export class Dashboard implements OnInit {
   }
   // Click เขต / จังหวัด บน SVG (ในแต่ละภาค)
   onSvgClickRegion(event: MouseEvent) {
-    this.loading = true;
+
     const target = event.target as HTMLElement;
 
     let current = target;
@@ -1750,6 +1750,7 @@ export class Dashboard implements OnInit {
       const id = current.getAttribute('id');
 
       if (id) {
+        this.loading = true;
         if (/^[A-Z]+_\d+$/.test(id)) {
           // ✅ เขต เช่น BKK_2
           matchedElement = current;

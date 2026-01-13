@@ -1,3 +1,7 @@
+*{
+    user-select: none;
+}
+
 .question-block {
     color: white;
 }
@@ -178,4 +182,230 @@ p {
         }
     }
 
+}
+
+// NEW!
+
+
+.show-province-all {
+    width: 94vw;
+    height: 85dvh;
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .card {
+        // padding: 30px;
+        // height: 100%;
+        // display: flex;
+        // flex-direction: column;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header {
+        font-size: 2rem;
+    }
+
+    .three-column-grid {
+        display: grid;
+        grid-template-columns: 1fr 3fr 3fr;
+        gap: 1rem;
+        flex: 1;
+        height: 100%;
+    }
+
+    .column {
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /*column 1*/
+    .region-tabs {
+        display: flex;
+        margin-top: 1rem;
+        gap: 1rem;
+        flex-direction: column;
+
+    }
+
+    .region-tab {
+        padding: 0.5rem 1rem;
+        background: #333;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: 0.3s;
+        user-select: none;
+    }
+
+    .region-tab:hover,
+    .region-tab.active {
+        opacity: 1;
+        background: #555;
+    }
+
+    /*column 2*/
+    .svg-container {
+        flex: 1; // เต็มพื้นที่ column
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.2); // debug background
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 0; // reset margin
+        padding: 20px;
+        height: 90%;
+    }
+
+    .region-map-wrapper {
+        display: flex;
+        justify-content: center; // อยู่ตรงกลางแนวนอน
+        align-items: center; // อยู่ตรงกลางแนวตั้ง
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        // ทำให้ SVG responsive
+        max-width: 100%;
+        max-height: 100%;
+
+        // Center SVG content
+        >div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%; //ปรับขนาดให้เต็ม container
+            height: 100%;
+        }
+
+        svg {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0 auto; // ตรงกลาง SVG
+
+        }
+    }
+
+    /*column 3*/
+
+    // คลิก เขต
+    .province {
+        font-size: 1.5rem;
+        font-weight: bolder;
+    }
+
+    .header-table {
+        color: #ffffff8e;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    // คลิก จังหวัด
+    .tabs {
+        display: flex;
+
+        .tab-button {
+            flex: 1;
+            padding: 0.2rem 1rem;
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .tab-button.active,
+        .tab-button:hover {
+            opacity: 1;
+            background: #555;
+        }
+
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+    }
+
+    .candidate-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        border-radius: 15px;
+        padding: 1rem;
+        background: #ffffff37;
+        gap: 1.5rem;
+
+        .no {
+            border: #ccc 1px solid;
+            border-radius: 30px;
+            padding: 0px 6px;
+            margin-right: 4px;
+        }
+
+        .number {
+            background: #000;
+            height: 3rem;
+            width: 2rem;
+            text-align: center;
+            align-content: center;
+            border-radius: 8px;
+            font-size: 1.5rem;
+        }
+
+        img {
+            // height: 100px;
+            // width: 60px;
+            height: 5rem;
+            width: 4rem;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 10px;
+        }
+
+        .party-logo {
+            height: 5rem;
+            width: 5rem;
+        }
+
+        .logo-container {
+            width: 7rem;
+            height: 7rem;
+            display: inline-block;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+}
+
+.glass-card {
+  position: relative;
+  background: linear-gradient(0deg, #000, #272727);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: -webkit-fill-available;
 }

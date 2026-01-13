@@ -1,6 +1,10 @@
-*{
+* {
     user-select: none;
 }
+
+/**
+   TAB 3
+*/
 
 .question-block {
     color: white;
@@ -8,35 +12,35 @@
 
 .referendum-layout {
     display: flex;
-    gap: 40px;
-    align-items: flex-start;
-
+    flex-direction: column;
+    padding: 10px;
+    height: 100%
 }
 
-/* ฝั่งซ้าย */
 .left {
-    flex: 1;
+    /* ดันเนื้อหาภายในลงด้านล่าง */
     display: flex;
-    justify-content: center;
-    margin: auto;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
-/* ฝั่งขวา */
 .right {
-    flex: 1;
+    /* ดันเนื้อหาภายในขึ้นด้านบน */
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin: auto;
+    align-items: center;
+    height: 100%;
 }
 
 .summary-card {
     background: #111;
     border-radius: 12px;
     padding: 20px 30px;
-    min-width: 320px;
+    max-width: 100%;
     color: white;
+    height: fit-content;
 }
-
 
 .summary-grid {
     display: grid;
@@ -88,9 +92,8 @@
 .chart-container-vertical {
     position: relative;
     display: flex;
-    gap: 40px;
-    align-items: flex-end;
-    height: 300px;
+    justify-content: space-around;
+    height: 30vh;
 }
 
 .bar-container {
@@ -98,7 +101,7 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    width: 250px;
+    width: 40%;
     height: 100%;
 }
 
@@ -154,35 +157,10 @@ p {
     text-align: center;
 }
 
-.filteredProvincesAndAreaId {
-    color: white;
-    // border: 1px solid rgba(116, 116, 116, 0.744);
-    padding: 10px;
-    border-radius: 8px;
 
-    mat-label {
-        color: white;
-    }
-
-    .mat-mdc-form-field input {
-        color: white;
-    }
-
-    ::ng-deep .mdc-text-field {
-        background-color: #222 !important;
-    }
-
-    .mat-form-field-disabled {
-        padding: 0 !important;
-        cursor: not-allowed;
-
-        mat-label {
-            color: #999 !important;
-            cursor: not-allowed;
-        }
-    }
-
-}
+/***
+    TAB 2
+*/
 
 // NEW!
 
@@ -196,10 +174,6 @@ p {
     flex-direction: column;
 
     .card {
-        // padding: 30px;
-        // height: 100%;
-        // display: flex;
-        // flex-direction: column;
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -231,9 +205,9 @@ p {
     .region-tabs {
         display: flex;
         margin-top: 1rem;
-        gap: 1rem;
+        // gap: 1rem;
         flex-direction: column;
-
+        overflow-y: auto;
     }
 
     .region-tab {
@@ -262,7 +236,9 @@ p {
         align-items: center;
         background: rgba(0, 0, 0, 0.2); // debug background
         border-radius: 5px;
-        overflow: hidden;
+        // overflow: hidden;
+        overflow-y: auto;
+        padding: 10px;
         margin: 0; // reset margin
         padding: 20px;
         height: 90%;
@@ -400,12 +376,12 @@ p {
 }
 
 .glass-card {
-  position: relative;
-  background: linear-gradient(0deg, #000, #272727);
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
-  height: -webkit-fill-available;
+    position: relative;
+    background: linear-gradient(0deg, #000, #272727);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: -webkit-fill-available;
 }

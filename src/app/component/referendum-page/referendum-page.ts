@@ -47,7 +47,7 @@ export class ReferendumPage implements OnInit {
 
   //old
 
-  questions: any[] = [];
+  question: any = {};
   winners: any;
   private destroy$ = new Subject<void>();
 
@@ -111,6 +111,7 @@ export class ReferendumPage implements OnInit {
       console.error('Error loading data:', error);
     }
 
+    this.loadDataReferendum()
     this.onRegionSelect(this.selectedRegion);
 
   }
@@ -239,7 +240,7 @@ export class ReferendumPage implements OnInit {
     while (current && current.tagName !== 'svg') {
       const id = current.getAttribute('id');
 
-      
+
       if (id) {
         // console.log('Clicked element ID:', id);
         this.loading = true;
@@ -438,6 +439,34 @@ export class ReferendumPage implements OnInit {
     // }
 
     return svg;
+  }
+
+  private loadDataReferendum() {
+    this._referendumService.getReferendum().subscribe((result) => {
+      console.log(result.data.questions[0]);
+      const question = result.data.questions[0];
+      const agreeVotes = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
+      const disagreeVotes = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
+
+      const agreePercent =
+        question.goodVotes > 0 ? +(agreeVotes / question.goodVotes * 100).toFixed(2) : 0;
+
+      const disagreePercent =
+        question.goodVotes > 0 ? +(disagreeVotes / question.goodVotes * 100).toFixed(2) : 0;
+
+      const diffPercent = Math.abs(agreePercent - disagreePercent);
+
+      this.question = {
+        ...question,
+        agreePercent,
+        disagreePercent,
+        showGuideLine: diffPercent <= 5,
+      };
+
+
+      console.log(this.question);
+      this.cdr.markForCheck();
+    });
   }
 
 }

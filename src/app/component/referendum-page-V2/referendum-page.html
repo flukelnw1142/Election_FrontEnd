@@ -1,0 +1,88 @@
+<div class="filteredProvincesAndAreaId">
+    <div class="input-group d-flex gap-3 mb-4">
+        <div class="flex-fill">
+            <label class="form-label">จังหวัด :</label>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>ค้นหาจังหวัด</mat-label>
+                <input type="text" matInput [formControl]="provinceCtrl" [matAutocomplete]="autoProvince"
+                    (focus)="onProvinceFocus()">
+                <mat-autocomplete #autoProvince="matAutocomplete" [displayWith]="displayProvince"
+                    (optionSelected)="onProvinceSelected($event)">
+                    <mat-option *ngFor="let p of filteredProvinces | async" [value]="p">
+                        {{ p.provinceName }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="flex-fill">
+            <label class="form-label">เขต :</label>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>{{selectedProvince ? 'ค้นหาเขต' : 'กรุณาเลือกจังหวัดก่อน'}}</mat-label>
+                <input type="text" matInput [formControl]="areaCtrl" [matAutocomplete]="autoArea">
+                <mat-autocomplete #autoArea="matAutocomplete" [displayWith]="displayArea" (optionSelected)="onAreaSelected($event)">
+                    <mat-option *ngFor="let a of filteredAreas | async" [value]="a">
+                        {{ a.areaName }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+
+<div *ngFor="let question of questions" class="question-block">
+    <h3>คำถาม : {{ question.questionText }}</h3>
+
+    <div class="referendum-layout">
+        <div class="left">
+            <div class="chart-container-vertical">
+
+                <div class="bar-container">
+                    <div class="bar agree" [style.height.%]="question.agreePercent">
+                        <div *ngIf="question.showGuideLine && question.agreePercent < question.disagreePercent"
+                            class="guide-line-on-bar bar-agree"></div>
+                        <span>{{ question.agreePercent | number:'1.2-2' }}%</span>
+                    </div>
+                    <p>เห็นด้วย</p>
+                </div>
+
+                <div class="bar-container">
+                    <div class="bar disagree" [style.height.%]="question.disagreePercent">
+                        <div *ngIf="question.showGuideLine && question.disagreePercent < question.agreePercent"
+                            class="guide-line-on-bar bar-disagree"></div>
+                        <span>{{ question.disagreePercent | number:'1.2-2' }}%</span>
+                    </div>
+                    <p>ไม่เห็นด้วย</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="summary-card">
+                <div class="summary-grid">
+                    <div class="item divider">
+                        <span class="label">บัตรดี</span>
+                        <span class="value">{{ question.goodVotes | number }}</span>
+                    </div>
+
+                    <div class="item divider">
+                        <span class="label">บัตรเสีย</span>
+                        <span class="value">{{ question.invalidVotes | number }}</span>
+                    </div>
+
+                    <div class="item">
+                        <span class="label">งดออกเสียง</span>
+                        <span class="value">{{ question.noVotes | number }}</span>
+                    </div>
+                </div>
+
+                <div class="total">
+                    <span class="label">ผู้มาใช้สิทธิทั้งหมด</span>
+                    <span class="value">{{ question.totalVotes | number }}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+</div>

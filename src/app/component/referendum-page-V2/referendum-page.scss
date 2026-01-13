@@ -1,0 +1,181 @@
+.question-block {
+    color: white;
+}
+
+.referendum-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+
+}
+
+/* ฝั่งซ้าย */
+.left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+/* ฝั่งขวา */
+.right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+.summary-card {
+    background: #111;
+    border-radius: 12px;
+    padding: 20px 30px;
+    min-width: 320px;
+    color: white;
+}
+
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+}
+
+.divider {
+    border-right: 1px solid #333;
+}
+
+.label {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.value {
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+.total {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    text-align: center;
+
+    .label {
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    .value {
+        display: block;
+        font-size: 26px;
+        font-weight: bold;
+        margin-top: 8px;
+    }
+}
+
+
+.chart-container-vertical {
+    position: relative;
+    display: flex;
+    gap: 40px;
+    align-items: flex-end;
+    height: 300px;
+}
+
+.bar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 250px;
+    height: 100%;
+}
+
+.bar {
+    width: 100%;
+    position: relative; // ❗ จำเป็นมาก
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: height 0.3s ease;
+}
+
+.guide-line-on-bar {
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    top: 0;
+    border-top: 2px dashed #ffffff84;
+    opacity: 0.9;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.bar-agree {
+    width: 560px;
+}
+
+.bar-disagree {
+    width: 560px;
+    left: -300px;
+}
+
+.agree {
+    background-color: #4CAF50;
+}
+
+.disagree {
+    background-color: #F44336;
+}
+
+.bar span {
+    padding-bottom: 5px;
+    font-size: 26px;
+}
+
+p {
+    margin-top: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.filteredProvincesAndAreaId {
+    color: white;
+    // border: 1px solid rgba(116, 116, 116, 0.744);
+    padding: 10px;
+    border-radius: 8px;
+
+    mat-label {
+        color: white;
+    }
+
+    .mat-mdc-form-field input {
+        color: white;
+    }
+
+    ::ng-deep .mdc-text-field {
+        background-color: #222 !important;
+    }
+
+    .mat-form-field-disabled {
+        padding: 0 !important;
+        cursor: not-allowed;
+
+        mat-label {
+            color: #999 !important;
+            cursor: not-allowed;
+        }
+    }
+
+}

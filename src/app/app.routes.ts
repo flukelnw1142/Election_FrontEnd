@@ -10,6 +10,7 @@ import { MainLayout } from './layout/main-layout/main-layout';
 import { ManageElection } from './component/manage-election/manage-election';
 import { CountdownPage } from './component/countdown-page/countdown-page';
 import { ReferendumPage } from './component/referendum-page/referendum-page';
+import { ReferendumPageV2 } from './component/referendum-page-V2/referendum-page';
 
 
 
@@ -49,6 +50,10 @@ export const routes: Routes = [
       {
         path: 'referendum',
         component: ReferendumPage,
+      },
+      {
+        path: 'referendumV2',
+        component: ReferendumPageV2,
       },
 
     ],

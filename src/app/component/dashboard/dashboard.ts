@@ -202,6 +202,7 @@ export class Dashboard implements OnInit {
         this.partySeatCountsList = seatCount;
         console.log('winners_NEW >>>', winners_NEW)
         console.log('partySeatCountsList >>>', seatCount)
+        console.log('partyColorMap >>>', colors)
       });
 
       // อัพเดท UI ครั้งแรก
@@ -1364,12 +1365,13 @@ export class Dashboard implements OnInit {
     const partyName = rawName
       .replace(/^พรรค\s*/g, '')   // ✅ ตัดคำว่า "พรรค" ข้างหน้า
       .trim();
-
+      
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
-        return this.partyColorMap[keyword].COLOR;
+        return this.partyColorMap[keyword].COLOR || 'gray';
       }
     }
+
     return 'gray';
   }
 

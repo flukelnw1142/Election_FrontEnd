@@ -9,8 +9,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class ReferendumService {
   private baseUrl = environment.api_url;
-  private referendumUrl = environment.referendum_url;
-  private token = environment.api_token;
+  // private referendumUrl = environment.referendum_url;
+  // private token = environment.api_token;
 
   constructor(
     private _http: HttpClient,
@@ -38,9 +38,9 @@ export class ReferendumService {
     //   params.area = area;
     // }
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`
-    });
+    // const headers = new HttpHeaders({
+    //   Authorization: `Bearer ${this.token}`
+    // });
 
 
     // const queryString = new URLSearchParams(params).toString();
@@ -48,7 +48,7 @@ export class ReferendumService {
     // console.log(fullUrl);
 
 
-    return this._http.get<any>(url, { headers });
+    return this._http.get<any>(url);
   }
 
 

@@ -1,5 +1,35 @@
+<div class="filteredProvincesAndAreaId">
+    <div class="input-group d-flex gap-3 mb-4">
+        <div class="flex-fill">
+            <label class="form-label">จังหวัด :</label>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>ค้นหาจังหวัด</mat-label>
+                <input type="text" matInput [formControl]="provinceCtrl" [matAutocomplete]="autoProvince"
+                    (focus)="onProvinceFocus()">
+                <mat-autocomplete #autoProvince="matAutocomplete" [displayWith]="displayProvince"
+                    (optionSelected)="onProvinceSelected($event)">
+                    <mat-option *ngFor="let p of filteredProvinces | async" [value]="p">
+                        {{ p.provinceName }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="flex-fill">
+            <label class="form-label">เขต :</label>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>{{selectedProvince ? 'ค้นหาเขต' : 'กรุณาเลือกจังหวัดก่อน'}}</mat-label>
+                <input type="text" matInput [formControl]="areaCtrl" [matAutocomplete]="autoArea">
+                <mat-autocomplete #autoArea="matAutocomplete" [displayWith]="displayArea" (optionSelected)="onAreaSelected($event)">
+                    <mat-option *ngFor="let a of filteredAreas | async" [value]="a">
+                        {{ a.areaName }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+
 <div *ngFor="let question of questions" class="question-block">
-    <!-- <h3>{{ question.questionNumber }}: {{ question.questionText }}</h3> -->
     <h3>คำถาม : {{ question.questionText }}</h3>
 
     <div class="referendum-layout">

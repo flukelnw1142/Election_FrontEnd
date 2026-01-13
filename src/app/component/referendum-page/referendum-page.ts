@@ -2,11 +2,24 @@ import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { ReferendumService } from './referendum';
 import { CommonModule } from '@angular/common';
 import { DashboardService } from '../dashboard/service/dashboardservice';
-import { firstValueFrom, Subject, takeUntil } from 'rxjs';
-
+import { firstValueFrom, map, Observable, of, startWith, Subject, takeUntil } from 'rxjs';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { Referendumservice } from './service/referendumservice';
 @Component({
   selector: 'app-referendum-page',
-  imports: [CommonModule],
+  imports: [CommonModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,],
   templateUrl: './referendum-page.html',
   styleUrl: './referendum-page.scss'
 })
@@ -16,12 +29,31 @@ export class ReferendumPage implements OnInit {
   winners: any;
   private destroy$ = new Subject<void>();
 
+  province = '';
+  provinces: any[] = [];
+  provinceCtrl = new FormControl('');
+  filteredProvinces!: Observable<any[]>;
+  selectedProvince: any = '';
+  zonesInProvince: any[] = [];
+  selectedZone: any = '';
+
+  areas: any[] = [];
+  areasByProvince: any[] = [];
+  areaCtrl = new FormControl({ value: '', disabled: true });
+  filteredAreas!: Observable<any[]>;
+
+
+  constructor(
+    private _dashboard: DashboardService,
+    private _referendumService: ReferendumService,
+    private cdr: ChangeDetectorRef,
+    private zone: NgZone,
+    private referendumService: Referendumservice
+  ) { }
+
 
   async ngOnInit(): Promise<void> {
     this.loadDataReferendum()
-
-    // if (!isPlatformBrowser(this.platformId)) return;
-
     try {
       // โหลดข้อมูลสำคัญทั้งหมด
       await Promise.all([
@@ -55,6 +87,48 @@ export class ReferendumPage implements OnInit {
     } catch (error) {
       console.error('Error loading data:', error);
     }
+
+    this.getProvince();
+    this.getAllArea();
+
+
+    this.provinceCtrl.valueChanges
+      .pipe(startWith(''), map(value => this._filterProvinces(value || '')))
+      .subscribe((filter: any) => {
+        this.filteredProvinces = of(filter);
+        // แปลง value เป็นชื่อจังหวัด
+        const typedName = typeof filter === 'string' ? filter : filter?.provinceName;
+
+        // หา province ที่ตรงกับชื่อ
+        const selectedProvince = this.provinces.find(
+          p => p.provinceName.toLowerCase() === typedName?.toLowerCase()
+        );
+
+        // รีเซ็ตค่าเขตทุกครั้ง
+        this.areaCtrl.reset();
+
+        if (selectedProvince) {
+          // จังหวัดถูกต้อง → enable เขต + filter เขตตามจังหวัด
+          this.selectedProvince = selectedProvince.provinceName;
+          this.areaCtrl.enable();
+
+          this.areasByProvince = this.areas.filter(
+            a => a.provinceId === selectedProvince.provinceId
+          );
+
+          this.filteredAreas = this.areaCtrl.valueChanges.pipe(
+            startWith(''),
+            map(val => this._filterAreas(val || ''))
+          );
+
+        } else {
+          // จังหวัดไม่ถูกต้อง → disable เขต
+          this.selectedProvince = null;
+          this.areaCtrl.disable();
+          this.areasByProvince = [];
+          this.filteredAreas = of([]);
+        }
+      });
   }
   platformId(platformId: any) {
     throw new Error('Method not implemented.');
@@ -86,21 +160,14 @@ export class ReferendumPage implements OnInit {
       // if (winners.candidates_party)
       //   this.allWinnersParty = winners.candidates_party;
 
-      this.cd.markForCheck();
+      this.cdr.markForCheck();
     });
   }
 
 
-  constructor(
-    private _dashboard: DashboardService,
-    private _referendumService: ReferendumService,
-    private cd: ChangeDetectorRef,
-    private zone: NgZone,
-  ) { }
-
   private loadDataReferendum() {
     this._referendumService.getReferendum().subscribe((result) => {
-      console.log(result.data.questions);
+      console.log(result.data.questions.pop());
       // สมมติ backend คืน data.questions
       this.questions = result.data.questions.map((q: any) => {
         const agreeVotes = q.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
@@ -116,18 +183,14 @@ export class ReferendumPage implements OnInit {
 
         return {
           ...q,
-          // agreePercent: ((agreeVotes / q.goodVotes) * 100).toFixed(2),
-          // disagreePercent: ((disagreeVotes / q.goodVotes) * 100).toFixed(2),
           agreePercent,
           disagreePercent,
           showGuideLine: diffPercent <= 5,
-          // agreePercent: 75.00,
-          // disagreePercent: 25.00
         };
       });
 
       console.log(this.questions);
-      this.cd.markForCheck();
+      this.cdr.markForCheck();
     });
   }
 
@@ -159,5 +222,87 @@ export class ReferendumPage implements OnInit {
     if (el) el.innerText = text;
   }
 
+  // Province and Area Selection Handlers
 
+  getProvince() {
+    this.referendumService.getProvince().subscribe({
+      next: (res) => {
+        console.log('Province data:', res);
+        this.provinces = res;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('API error:', err);
+      },
+    });
+  }
+
+  displayProvince(province: any) {
+    return province ? province.provinceName : '';
+  }
+
+  private _filterProvinces(value: string): any[] {
+    const filterValue = value;
+    return this.provinces.filter((p) =>
+      p.provinceName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onProvinceFocus() {
+    this.filteredProvinces = of(this.provinces);
+  }
+
+  onProvinceSelected(event: any) {
+    console.log('Selected Province:', event.option.value);
+    const province = event.option.value;
+    this.selectedProvince = province.provinceName;
+    this.areaCtrl.reset();
+
+    if (this.selectedProvince) {
+      this.areaCtrl.enable();
+    } else {
+      this.areaCtrl.disable();
+    }
+
+    if (province.provinceId) {
+      console.log('provinceId', province.provinceId);
+      this.areasByProvince = this.areas.filter(area => area.provinceId === province.provinceId);
+      console.log('Filtered Areas by Province:', this.areasByProvince);
+      this.filteredAreas = this.areaCtrl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterAreas(value || ''))
+      );
+      this.cdr.detectChanges();
+
+    }
+  }
+
+  private _filterAreas(value: string): any[] {
+    const filterValue = value;
+    return this.areasByProvince.filter((a) =>
+      a.areaName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  getAllArea() {
+    this.referendumService.getArea().subscribe({
+      next: (res) => {
+        console.log('Area data:', res);
+        this.areas = res;
+      },
+      error: (err) => {
+        console.error('API error:', err);
+      },
+    });
+  }
+
+  displayArea(area: any) {
+    return area ? area.areaName : '';
+  }
+
+  onAreaSelected(event: any) {
+    const selectedName = event.option.value;
+    console.log('Selected Area:', selectedName);
+  }
 }
+

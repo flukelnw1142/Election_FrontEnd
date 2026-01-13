@@ -1,4 +1,4 @@
-* {
+.question-block {
     color: white;
 }
 
@@ -6,6 +6,7 @@
     display: flex;
     gap: 40px;
     align-items: flex-start;
+
 }
 
 /* ฝั่งซ้าย */
@@ -147,4 +148,34 @@ p {
     margin-top: 5px;
     font-weight: bold;
     text-align: center;
+}
+
+.filteredProvincesAndAreaId {
+    color: white;
+    // border: 1px solid rgba(116, 116, 116, 0.744);
+    padding: 10px;
+    border-radius: 8px;
+
+    mat-label {
+        color: white;
+    }
+
+    .mat-mdc-form-field input {
+        color: white;
+    }
+
+    ::ng-deep .mdc-text-field {
+        background-color: #222 !important;
+    }
+
+    .mat-form-field-disabled {
+        padding: 0 !important;
+        cursor: not-allowed;
+
+        mat-label {
+            color: #999 !important;
+            cursor: not-allowed;
+        }
+    }
+
 }

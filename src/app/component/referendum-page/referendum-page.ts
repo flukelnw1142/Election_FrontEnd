@@ -297,11 +297,18 @@ export class ReferendumPage implements OnInit {
         } else if (/^[A-Z]+_name$/.test(id)) {
           // ✅ ชื่อจังหวัด เช่น BKK_name
           matchedElement = current;
+          const provinceId = id.trim().toUpperCase(); // BKK_name
+          console.log('provinceId : provinceId ', provinceId);
+
+          const districtIds = this.getDistrictIdsByProvinceId(provinceId);
+
+          console.log('provinceId:', provinceId, 'districtIds:', districtIds);
           const provinceName = matchedElement
             .querySelector('text')
             ?.textContent?.trim();
           if (provinceName) {
             // this.activeTab = 'district';
+
             console.log("provinceName : ", provinceName);
             this.textShow = provinceName
             this.handleGetResultReferendum(provinceName, 'province').then(() => {
@@ -612,6 +619,31 @@ export class ReferendumPage implements OnInit {
       ? `${provinceName} เขต ${num}`
       : `${abbr} เขต ${num}`;
   }
+
+  private getDistrictIdsByProvinceId(provinceId: string): string[] {
+    const abbr = provinceId.replace(/_name$/i, '').trim().toUpperCase(); // BKK
+
+    const host = this.svgContainerRegion?.nativeElement;
+    if (!host) return [];
+
+    // 🔥 ห้ามใส่ generic <HTMLElement>
+    const nodeList = host.querySelectorAll(`[id^="${abbr}_"]`);
+
+    // 🔥 แปลง NodeList → Element[]
+    const elements = Array.from(nodeList) as Element[];
+
+    return elements
+      .map(el => el.getAttribute('id') || '')
+      .filter(id => new RegExp(`^${abbr}_\\d+$`).test(id))
+      .sort((a, b) => {
+        const na = parseInt(a.split('_')[1], 10);
+        const nb = parseInt(b.split('_')[1], 10);
+        return na - nb;
+      });
+  }
+
+
+
 
 
 }

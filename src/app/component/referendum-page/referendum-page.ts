@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { ReferendumService } from './referendum';
 import { CommonModule } from '@angular/common';
 import { DashboardService } from '../dashboard/service/dashboardservice';
 import { firstValueFrom, map, Observable, of, startWith, Subject, takeUntil } from 'rxjs';
@@ -9,9 +8,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Referendumservice } from './service/referendumservice';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SemiPie } from "../semi-pie/semi-pie";
+import { Referendumservice } from '../referendum-page/service/referendumservice';
 @Component({
   selector: 'app-referendum-page',
   imports: [CommonModule,
@@ -22,7 +22,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule],
+    HttpClientModule, SemiPie],
   templateUrl: './referendum-page.html',
   styleUrl: './referendum-page.scss'
 })
@@ -69,10 +69,9 @@ export class ReferendumPage implements OnInit {
     private http: HttpClient,
     private sanitizer: DomSanitizer,
     private _dashboard: DashboardService,
-    private _referendumService: ReferendumService,
+    private _referendumService: Referendumservice,
     private cdr: ChangeDetectorRef,
     private zone: NgZone,
-    private referendumService: Referendumservice
   ) { }
 
 
@@ -111,7 +110,7 @@ export class ReferendumPage implements OnInit {
       console.error('Error loading data:', error);
     }
 
-    this.loadDataReferendum()
+    // this.loadDataReferendum()
     this.onRegionSelect(this.selectedRegion);
 
   }
@@ -178,6 +177,7 @@ export class ReferendumPage implements OnInit {
     const svgText = await this.loadSvgByRegion(region);
 
     if (region === 'ทั้งประเทศ') {
+      this.handleGetResultReferendum()
       this.processSvgForRegion(svgText).then((processedSvg) => {
         this.zone.run(() => {
           this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
@@ -190,6 +190,8 @@ export class ReferendumPage implements OnInit {
       this.cdr.markForCheck();
       return;
     }
+
+    this.handleGetResultReferendum(region, 'region')
 
     this.onWinnerPartyByRegion(region).then(() => {
       this.processSvgForRegion(svgText).then((processedSvg) => {
@@ -260,7 +262,7 @@ export class ReferendumPage implements OnInit {
             .querySelector('text')
             ?.textContent?.trim();
           console.log("districtNumber : ", districtId);
-          // this.handleDistrictClick(districtId);
+          this.handleGetResultReferendum(districtId, 'district')
 
           return;
         } else if (/^[A-Z]+_name$/.test(id)) {
@@ -272,8 +274,7 @@ export class ReferendumPage implements OnInit {
           if (provinceName) {
             // this.activeTab = 'district';
             console.log("provinceName : ", provinceName);
-
-            // this.handleProvinceClick(provinceName);
+            this.handleGetResultReferendum(provinceName, 'province')
           }
 
           return;
@@ -288,27 +289,12 @@ export class ReferendumPage implements OnInit {
             console.log("regionName : ", regionName);
 
             this.onRegionSelect(regionName);
-            // this.handleProvinceClick(regionName);
+            this.handleGetResultReferendum(regionName, 'region')
           }
 
           return;
         }
       }
-      // else if (/^[A-Z]+_region$/.test(id)) {
-      //   // ✅ ชื่อจังหวัด เช่น north_region
-      //   matchedElement = current;
-      //   const regionName = matchedElement
-      //     .querySelector('text')
-      //     ?.textContent?.trim();
-      //   if (regionName) {
-      //     // this.activeTab = 'district';
-      //     console.log("regionName : ", regionName);
-
-      //     // this.handleProvinceClick(regionName);
-      //   }
-
-      //   return;
-      // }
       // this.loading = false;
       current = current.parentElement as HTMLElement;
       setTimeout(() => {
@@ -462,32 +448,80 @@ export class ReferendumPage implements OnInit {
     return svg;
   }
 
-  private loadDataReferendum() {
-    this._referendumService.getReferendum().subscribe((result) => {
-      console.log(result.data.questions[0]);
-      const question = result.data.questions[0];
-      const agreeVotes = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
-      const disagreeVotes = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
+  // private loadDataReferendum() {
+  //   this._referendumService.getReferendum().subscribe((result) => {
+  //     console.log(result.data.questions[0]);
+  //     const question = result.data.questions[0];
+  //     const agreeVotes = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
+  //     const disagreeVotes = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
 
-      const agreePercent =
-        question.goodVotes > 0 ? +(agreeVotes / question.goodVotes * 100).toFixed(2) : 0;
+  //     const agreePercent =
+  //       question.goodVotes > 0 ? +(agreeVotes / question.goodVotes * 100).toFixed(2) : 0;
 
-      const disagreePercent =
-        question.goodVotes > 0 ? +(disagreeVotes / question.goodVotes * 100).toFixed(2) : 0;
+  //     const disagreePercent =
+  //       question.goodVotes > 0 ? +(disagreeVotes / question.goodVotes * 100).toFixed(2) : 0;
 
-      const diffPercent = Math.abs(agreePercent - disagreePercent);
+  //     const diffPercent = Math.abs(agreePercent - disagreePercent);
 
-      this.question = {
-        ...question,
-        agreePercent,
-        disagreePercent,
-        showGuideLine: diffPercent <= 5,
-      };
+  //     this.question = {
+  //       ...question,
+  //       agreePercent,
+  //       disagreePercent,
+  //       showGuideLine: diffPercent <= 5,
+  //     };
 
 
-      console.log(this.question);
-      this.cdr.markForCheck();
-    });
+  //     console.log(this.question);
+  //     this.cdr.markForCheck();
+  //   });
+  // }
+
+  handleGetResultReferendum(value?: string, type?: 'region' | 'province' | 'district') {
+    let region: string | undefined;
+    let province: string | undefined;
+    let area: string | undefined;
+
+    switch (type) {
+      case 'region':
+        region = value;
+        break;
+
+      case 'province':
+        province = value;
+        break;
+
+      case 'district':
+        area = value;
+        break;
+    }
+
+    this._referendumService.getResultReferendum(region, province, area)
+      .subscribe({
+        next: (res) => {
+          console.log('result referendum:', res.data.questions[0]);
+          const question = res.data.questions[0]
+          const agreeVotes = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
+          const disagreeVotes = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
+
+          const agreePercent =
+            question.goodVotes > 0 ? +(agreeVotes / question.goodVotes * 100).toFixed(2) : 0;
+
+          const disagreePercent =
+            question.goodVotes > 0 ? +(disagreeVotes / question.goodVotes * 100).toFixed(2) : 0;
+
+          const diffPercent = Math.abs(agreePercent - disagreePercent);
+
+          this.question = {
+            ...question,
+            agreePercent,
+            disagreePercent,
+            showGuideLine: diffPercent <= 5,
+          };
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
   }
 
 }

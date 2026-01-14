@@ -19,4 +19,22 @@ export class Referendumservice {
   getArea(): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/realtime/Election/GetAllArea`);
   }
+
+  getResultReferendum(region?: string, province?: string, area?: string): Observable<any> {
+    const url = `${this.baseUrl}/referendum/final/ectreport/{electionId}`;
+    let params = new HttpParams();
+    if (region) {
+      params = params.set('RegionNameTH', region);
+    }
+    if (area) {
+      params = params.set('AreaCode', area);
+    }
+    if (province) {
+      params = params.set('ProvinceNameTH', province);
+    }
+
+    console.log(`${url}?${params.toString()}`);
+
+    return this._http.get<any>(url, { params: params });
+  }
 }

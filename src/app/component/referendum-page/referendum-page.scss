@@ -8,6 +8,7 @@
 
 .question-block {
     color: white;
+    overflow-y: auto;
 }
 
 .referendum-layout {
@@ -15,7 +16,7 @@
     flex-direction: column;
     // justify-content: space-around;
     padding: 10px;
-
+    // overflow-y: auto;
 }
 
 .left {

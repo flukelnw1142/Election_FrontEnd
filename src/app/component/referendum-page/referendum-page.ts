@@ -23,7 +23,7 @@ import { color } from 'd3';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule],
+    HttpClientModule, SemiPie],
   templateUrl: './referendum-page.html',
   styleUrl: './referendum-page.scss'
 })
@@ -251,7 +251,7 @@ export class ReferendumPage implements OnInit {
       ภาคใต้: '/assets/South.svg',
     };
 
-    return paths[region] || '/assets/thailand_region.svg';
+    return paths[region] || '/assets/thailand.svg';
   }
 
   onSvgClickRegion(event: MouseEvent) {

@@ -12,6 +12,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SemiPie } from "../semi-pie/semi-pie";
 import { Referendumservice } from '../referendum-page/service/referendumservice';
+import { color } from 'd3';
 @Component({
   selector: 'app-referendum-page',
   imports: [CommonModule,
@@ -63,6 +64,13 @@ export class ReferendumPage implements OnInit {
   areasByProvince: any[] = [];
   areaCtrl = new FormControl({ value: '', disabled: true });
   filteredAreas!: Observable<any[]>;
+
+  colorByDistrict: any;
+  selectRegion_Province_district: any = {
+    value: '',
+    type: ''
+  };
+  textShow: string = '';
 
 
   constructor(
@@ -171,29 +179,32 @@ export class ReferendumPage implements OnInit {
 
   // Click ภูมิภาค
   async onRegionSelect(region: string) {
+    this.textShow = region
     console.log('region', region);
 
     this.selectedRegion = region;
     const svgText = await this.loadSvgByRegion(region);
+    this.selectRegion_Province_district = {
+      value: region,
+      type: 'region'
+    }
 
     if (region === 'ทั้งประเทศ') {
-      this.handleGetResultReferendum()
-      this.processSvgForRegion(svgText).then((processedSvg) => {
-        this.zone.run(() => {
-          this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
-            processedSvg.outerHTML
-          );
-          this.cdr.markForCheck();
+      this.handleGetResultReferendum().then(() => {
+        this.processSvgForRegion(svgText).then((processedSvg) => {
+          this.zone.run(() => {
+            this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+              processedSvg.outerHTML
+            );
+            this.cdr.markForCheck();
+          });
         });
-      });
-      // this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(svgText);
+      })
+
       this.cdr.markForCheck();
       return;
     }
-
-    this.handleGetResultReferendum(region, 'region')
-
-    this.onWinnerPartyByRegion(region).then(() => {
+    this.handleGetResultReferendum(region, 'region').then(() => {
       this.processSvgForRegion(svgText).then((processedSvg) => {
         this.zone.run(() => {
           this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
@@ -250,9 +261,8 @@ export class ReferendumPage implements OnInit {
     while (current && current.tagName !== 'svg') {
       const id = current.getAttribute('id');
 
-
       if (id) {
-        // console.log('Clicked element ID:', id);
+        console.log('Clicked element ID:', id);
         this.loading = true;
         if (/^[A-Z]+_\d+$/.test(id)) {
           // ✅ เขต เช่น BKK_2
@@ -263,6 +273,10 @@ export class ReferendumPage implements OnInit {
             ?.textContent?.trim();
           console.log("districtNumber : ", districtId);
           this.handleGetResultReferendum(districtId, 'district')
+          this.selectRegion_Province_district = {
+            value: districtId,
+            type: 'district'
+          }
 
           return;
         } else if (/^[A-Z]+_name$/.test(id)) {
@@ -274,7 +288,12 @@ export class ReferendumPage implements OnInit {
           if (provinceName) {
             // this.activeTab = 'district';
             console.log("provinceName : ", provinceName);
+            // this.textShow = provinceName
             this.handleGetResultReferendum(provinceName, 'province')
+            this.selectRegion_Province_district = {
+              value: provinceName,
+              type: 'province'
+            }
           }
 
           return;
@@ -289,7 +308,12 @@ export class ReferendumPage implements OnInit {
             console.log("regionName : ", regionName);
 
             this.onRegionSelect(regionName);
+            this.textShow = regionName
             this.handleGetResultReferendum(regionName, 'region')
+            this.selectRegion_Province_district = {
+              value: regionName,
+              type: 'region'
+            }
           }
 
           return;
@@ -305,22 +329,6 @@ export class ReferendumPage implements OnInit {
       this.loading = false;
     }, 0);
     console.warn('ไม่พบข้อมูลเขตหรือจังหวัดที่คลิก');
-  }
-
-  private onWinnerPartyByRegion(region: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this._dashboard.getWinnerPartyByRegionName(region).subscribe({
-        next: (data) => {
-          console.log('data party by region >>>', data);
-
-          this.cdr.markForCheck();
-          resolve();
-        },
-        error: (err) => {
-          reject(err);
-        },
-      });
-    });
   }
 
   private async processSvgForRegion(
@@ -348,6 +356,11 @@ export class ReferendumPage implements OnInit {
       p.style.stroke = 'none';
     });
 
+    console.log(this.selectRegion_Province_district)
+    console.log(this.colorByDistrict)
+    let districtIds = Object.keys(this.colorByDistrict)
+    console.log(districtIds)
+
     if (this.selectedRegion === 'ทั้งประเทศ') {
       const allGroups = svg.querySelectorAll<SVGGElement>('g');
       allGroups.forEach(g => {
@@ -360,39 +373,147 @@ export class ReferendumPage implements OnInit {
           g.setAttribute('pointer-events', 'none');
         }
       });
+
+      for (let i = 0; i < districtIds.length; i++) {
+        const id = districtIds[i];
+        const g = svg.querySelector('#' + id) as SVGGElement | null;
+        if (g) {
+          const path = g.querySelector('path');
+          const text = g.querySelector('tspan');
+          if (path && text) {
+            let styleStr = path.getAttribute('style') || '';
+            let styleText = text.getAttribute('style') || '';
+            styleText += ' fill: #FFFFFF !important;';
+            styleStr = styleStr
+              .replace(/fill: *[^;]*;/g, '')
+              .replace(/stroke: *[^;]*;/g, '')
+              .replace(/stroke-width: *[^;]*;/g, '');
+
+            styleStr += ' fill: ' + this.colorByDistrict[id].questions[0].options[0].color + ' !important;';
+
+            path.setAttribute('style', styleStr);
+            text.setAttribute('style', styleText);
+
+            path.style.setProperty('stroke', 'none', 'important');
+            path.style.setProperty('stroke-width', '0', 'important');
+          }
+        }
+      }
+    }
+    else {
+      for (let i = 0; i < districtIds.length; i++) {
+        const id = districtIds[i];
+        const g = svg.querySelector('#' + id) as SVGGElement | null;
+
+        if (g) {
+          const path = g.querySelector('circle');
+          if (path) {
+            const district = this.colorByDistrict[id];
+
+            const isSelectedProvinceDistrict = this.selectRegion_Province_district.value === 'province'
+              ? district.provinceName === this.selectedProvince
+              : false;
+            const hasSelectedProvince = !!this.selectedProvince;
+            // const isSelectedZone = id === this.zoneId;
+            // const hasSelectedZone = !!this.zoneId;
+            path.removeAttribute('fill');
+            path.removeAttribute('stroke');
+
+            // FILL - แสดงสีตาม party หรือ default
+            path.style.fill = district.questions[0].options[0].color || '#d3d3d3'
+
+            // จัดการ OPACITY และ STROKE ตาม priority
+            if (hasSelectedProvince) {
+              // Priority 1: มี selectedProvince
+              if (isSelectedProvinceDistrict) {
+                // จังหวัดที่เลือก: แสดงปกติ
+                path.style.opacity = '1';
+                // path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
+                // path.style.stroke = isSelectedZone ? '#ffffff' : '#666';
+                path.style.strokeOpacity = '1';
+              } else {
+                // จังหวัดอื่น: จางลง
+                path.style.opacity = '0.25';
+                path.style.strokeWidth = '1px';
+                path.style.stroke = '#999';
+                path.style.strokeOpacity = '0.5';
+              }
+            }
+            // else if (hasSelectedZone) {
+            //   // Priority 2: มี zoneId แต่ไม่มี province
+            //   path.style.opacity = isSelectedZone ? '1' : '1';
+            //   path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
+            //   path.style.stroke = '#ffffff';
+            //   path.style.strokeOpacity = isSelectedZone ? '1' : '0';
+            // } 
+            else {
+              // Default: แสดงทุกเขตปกติ
+              path.style.opacity = '1';
+              path.style.strokeWidth = '1px';
+              path.style.stroke = '#666';
+              path.style.strokeOpacity = '0.5';
+            }
+
+            // Set data attributes
+            g.setAttribute('data-party', district.party || '');
+            g.setAttribute('data-district-id', id);
+            g.setAttribute('data-province', district.provinceName || '');
+            g.setAttribute(
+              'data-province-selected',
+              isSelectedProvinceDistrict.toString()
+            );
+
+            // // Explicit pointer-events as BOTH style AND attribute for reliability
+            // const pointerEvents =
+            //   !this.selectedParty ||
+            //     this.allWinners[id].party === this.selectedParty
+            //     ? 'auto'
+            //     : 'none';
+            // g.style.pointerEvents = pointerEvents;
+            // g.setAttribute('pointer-events', pointerEvents);
+          }
+        }
+      }
+
     }
 
-    let districtIds;
 
-    // console.log('districtIds:', districtIds);
+
+
+
+
+
+
+
     // for (let i = 0; i < districtIds.length; i++) {
     //   const id = districtIds[i];
     //   const g = svg.querySelector('#' + id) as SVGGElement | null;
-    //   // console.log('Processing district ID:', id);
+    //   console.log('Processing district ID:', g);
 
     //   if (g) {
     //     const path = g.querySelector('circle');
     //     if (path) {
     //       let fillStyle = '';
-    //       const originalColor = this.getColor(
-    //         this.activeTab === 'partyList'
-    //           ? this.allWinnersParty[id]
-    //           : this.allWinners[id]
-    //       );
-    //       const district = this.allWinners[id];
+    //       // const originalColor = this.getColor(
+    //       //   this.activeTab === 'partyList'
+    //       //     ? this.allWinnersParty[id]
+    //       //     : this.allWinners[id]
+    //       // );
+    //       const district = this.colorByDistrict[id];
+    //       console.log(district)
+    //       const originalColor = district.color || '';
     //       const isSelectedProvinceDistrict = this.selectedProvince
     //         ? district.provinceName === this.selectedProvince
     //         : false;
     //       const hasSelectedProvince = !!this.selectedProvince;
-    //       const isSelectedZone = id === this.zoneId;
-    //       const hasSelectedZone = !!this.zoneId;
+    //       // const isSelectedZone = id === this.zoneId;
+    //       // const hasSelectedZone = !!this.zoneId;
     //       path.removeAttribute('fill');
     //       path.removeAttribute('stroke');
 
     //       // FILL - แสดงสีตาม party หรือ default
-    //       path.style.fill = fillStyle.includes(this.selectedParty)
-    //         ? originalColor
-    //         : '#d3d3d3';
+    //       path.style.fill = originalColor
+
 
     //       // จัดการ OPACITY และ STROKE ตาม priority
     //       if (hasSelectedProvince) {
@@ -400,8 +521,8 @@ export class ReferendumPage implements OnInit {
     //         if (isSelectedProvinceDistrict) {
     //           // จังหวัดที่เลือก: แสดงปกติ
     //           path.style.opacity = '1';
-    //           path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
-    //           path.style.stroke = isSelectedZone ? '#ffffff' : '#666';
+    //           // path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
+    //           // path.style.stroke = isSelectedZone ? '#ffffff' : '#666';
     //           path.style.strokeOpacity = '1';
     //         } else {
     //           // จังหวัดอื่น: จางลง
@@ -410,13 +531,15 @@ export class ReferendumPage implements OnInit {
     //           path.style.stroke = '#999';
     //           path.style.strokeOpacity = '0.5';
     //         }
-    //       } else if (hasSelectedZone) {
-    //         // Priority 2: มี zoneId แต่ไม่มี province
-    //         path.style.opacity = isSelectedZone ? '1' : '1';
-    //         path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
-    //         path.style.stroke = '#ffffff';
-    //         path.style.strokeOpacity = isSelectedZone ? '1' : '0';
-    //       } else {
+    //       }
+    //       // else if (hasSelectedZone) {
+    //       //   // Priority 2: มี zoneId แต่ไม่มี province
+    //       //   path.style.opacity = isSelectedZone ? '1' : '1';
+    //       //   path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
+    //       //   path.style.stroke = '#ffffff';
+    //       //   path.style.strokeOpacity = isSelectedZone ? '1' : '0';
+    //       // } 
+    //       else {
     //         // Default: แสดงทุกเขตปกติ
     //         path.style.opacity = '1';
     //         path.style.strokeWidth = '1px';
@@ -434,13 +557,13 @@ export class ReferendumPage implements OnInit {
     //       );
 
     //       // // Explicit pointer-events as BOTH style AND attribute for reliability
-    //       const pointerEvents =
-    //         !this.selectedParty ||
-    //           this.allWinners[id].party === this.selectedParty
-    //           ? 'auto'
-    //           : 'none';
-    //       g.style.pointerEvents = pointerEvents;
-    //       g.setAttribute('pointer-events', pointerEvents);
+    //       // const pointerEvents =
+    //       //   !this.selectedParty ||
+    //       //     this.allWinners[id].party === this.selectedParty
+    //       //     ? 'auto'
+    //       //     : 'none';
+    //       // g.style.pointerEvents = pointerEvents;
+    //       // g.setAttribute('pointer-events', pointerEvents);
     //     }
     //   }
     // }
@@ -448,35 +571,7 @@ export class ReferendumPage implements OnInit {
     return svg;
   }
 
-  // private loadDataReferendum() {
-  //   this._referendumService.getReferendum().subscribe((result) => {
-  //     console.log(result.data.questions[0]);
-  //     const question = result.data.questions[0];
-  //     const agreeVotes = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
-  //     const disagreeVotes = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
-
-  //     const agreePercent =
-  //       question.goodVotes > 0 ? +(agreeVotes / question.goodVotes * 100).toFixed(2) : 0;
-
-  //     const disagreePercent =
-  //       question.goodVotes > 0 ? +(disagreeVotes / question.goodVotes * 100).toFixed(2) : 0;
-
-  //     const diffPercent = Math.abs(agreePercent - disagreePercent);
-
-  //     this.question = {
-  //       ...question,
-  //       agreePercent,
-  //       disagreePercent,
-  //       showGuideLine: diffPercent <= 5,
-  //     };
-
-
-  //     console.log(this.question);
-  //     this.cdr.markForCheck();
-  //   });
-  // }
-
-  handleGetResultReferendum(value?: string, type?: 'region' | 'province' | 'district') {
+  handleGetResultReferendum(value?: string, type?: 'region' | 'province' | 'district'): Promise<any> {
     let region: string | undefined;
     let province: string | undefined;
     let area: string | undefined;
@@ -494,34 +589,40 @@ export class ReferendumPage implements OnInit {
         area = value;
         break;
     }
+    return new Promise((resolve, reject) => {
+      this._referendumService.getResultReferendum(region, province, area)
+        .subscribe({
+          next: (res) => {
+            console.log('result referendum:', res);
+            this.colorByDistrict = res.data.byProvince
+            const question = res.data.questions[0]
+            // const agreeVotes = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
+            // const disagreeVotes = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
 
-    this._referendumService.getResultReferendum(region, province, area)
-      .subscribe({
-        next: (res) => {
-          console.log('result referendum:', res.data.questions[0]);
-          const question = res.data.questions[0]
-          const agreeVotes = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
-          const disagreeVotes = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
+            // const agreePercent =
+            //   question.goodVotes > 0 ? +(agreeVotes / question.goodVotes * 100).toFixed(2) : 0;
 
-          const agreePercent =
-            question.goodVotes > 0 ? +(agreeVotes / question.goodVotes * 100).toFixed(2) : 0;
+            // const disagreePercent =
+            //   question.goodVotes > 0 ? +(disagreeVotes / question.goodVotes * 100).toFixed(2) : 0;
 
-          const disagreePercent =
-            question.goodVotes > 0 ? +(disagreeVotes / question.goodVotes * 100).toFixed(2) : 0;
+            const agreePercent = question.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
+            const disagreePercent = question.options.find((o: any) => o.optionCode === ('disagree'))?.percentage ?? 0;
 
-          const diffPercent = Math.abs(agreePercent - disagreePercent);
+            const diffPercent = Math.abs(agreePercent - disagreePercent);
 
-          this.question = {
-            ...question,
-            agreePercent,
-            disagreePercent,
-            showGuideLine: diffPercent <= 5,
-          };
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      });
+            this.question = {
+              ...question,
+              agreePercent,
+              disagreePercent,
+              showGuideLine: diffPercent <= 5,
+            };
+            resolve(res.data.byProvince)
+          },
+          error: (err) => {
+            console.error(err);
+          }
+        });
+    });
   }
 
 }

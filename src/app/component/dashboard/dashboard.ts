@@ -2331,7 +2331,7 @@ export class Dashboard implements OnInit {
       districtIds = Object.keys(this.allWinners);
     }
 
-    // console.log('districtIds:', districtIds);
+    console.log('districtIds:', districtIds, this.allWinners);
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;

@@ -322,7 +322,7 @@ export class ReferendumPage implements OnInit {
               });
             });
             this.selectRegion_Province_district = {
-              value: provinceName,
+              value: districtIds,
               type: 'province'
             }
           }
@@ -533,6 +533,25 @@ export class ReferendumPage implements OnInit {
               path.style.strokeWidth = '4px';
               path.style.stroke = '#ffffff';
               g.setAttribute('data-district-id', id);
+            }
+          }
+        }
+        else if (this.selectRegion_Province_district.type === 'province') {
+          for (let i = 0; i < this.selectRegion_Province_district.value.length; i++) {
+            const id = this.selectRegion_Province_district.value[i];
+            const g = svg.querySelector('#' + id) as SVGGElement | null;
+            if (g) {
+              const path = g.querySelector('circle');
+              if (path) {
+                path.removeAttribute('fill');
+                path.removeAttribute('stroke');
+
+                // FILL - แสดงสีตาม party หรือ default
+                path.style.fill = '#d3d3d3'
+                path.style.strokeWidth = '4px';
+                path.style.stroke = '#ffffff';
+                g.setAttribute('data-district-id', id);
+              }
             }
           }
         }

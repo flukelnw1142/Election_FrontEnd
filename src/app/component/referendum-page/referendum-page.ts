@@ -22,7 +22,7 @@ import { Referendumservice } from '../referendum-page/service/referendumservice'
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule, SemiPie],
+    HttpClientModule],
   templateUrl: './referendum-page.html',
   styleUrl: './referendum-page.scss'
 })

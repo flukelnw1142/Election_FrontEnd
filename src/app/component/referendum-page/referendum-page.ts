@@ -72,7 +72,7 @@ export class ReferendumPage implements OnInit {
   };
   private currentSvg?: string = '';
   textShow: string = '';
-
+  private provinceAbbrMap = new Map<string, string>();
 
   constructor(
     private http: HttpClient,
@@ -268,27 +268,21 @@ export class ReferendumPage implements OnInit {
         console.log('Clicked element ID:', id);
         this.loading = true;
         if (/^[A-Z]+_\d+$/.test(id)) {
-          // ✅ เขต เช่น BKK_2
           matchedElement = current;
-          const districtId = id;
-          const districtNumber = matchedElement
-            .querySelector('text')
-            ?.textContent?.trim();
-          console.log("districtNumber : ", districtId);
-          this.handleGetResultReferendum(districtId, 'district').then(() => {
-            this.processSvgForRegion(this.currentSvg!).then((processedSvg) => {
-              this.zone.run(() => {
-                this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
-                  processedSvg.outerHTML
-                );
-                this.cdr.markForCheck();
-              });
-            });
-          });
+
+          const districtId = id.trim().toUpperCase();
+          const displayName = this.getDistrictDisplayNameFromDom(districtId);
+
+          console.log("districtId : ", districtId, "displayName :", displayName);
+
+          this.textShow = displayName;
+
+          this.handleGetResultReferendum(districtId, 'district');
           this.selectRegion_Province_district = {
             value: districtId,
-            type: 'district'
-          }
+            type: 'district',
+            displayName
+          };
 
           return;
         } else if (/^[A-Z]+_name$/.test(id)) {
@@ -300,17 +294,8 @@ export class ReferendumPage implements OnInit {
           if (provinceName) {
             // this.activeTab = 'district';
             console.log("provinceName : ", provinceName);
-            // this.textShow = provinceName
-            this.handleGetResultReferendum(provinceName, 'province').then(() => {
-              this.processSvgForRegion(this.currentSvg!).then((processedSvg) => {
-                this.zone.run(() => {
-                  this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
-                    processedSvg.outerHTML
-                  );
-                  this.cdr.markForCheck();
-                });
-              });
-            });
+            this.textShow = provinceName
+            this.handleGetResultReferendum(provinceName, 'province')
             this.selectRegion_Province_district = {
               value: provinceName,
               type: 'province'
@@ -563,5 +548,25 @@ export class ReferendumPage implements OnInit {
         });
     });
   }
+
+  private getDistrictDisplayNameFromDom(districtId: string): string {
+    // BKK_5 → [BKK, 5]
+    const match = /^([A-Z]+)_(\d+)$/.exec(districtId);
+    if (!match) return districtId;
+
+    const abbr = match[1]; // BKK
+    const num = match[2]; // 5
+
+    const provinceNameElement = document.getElementById(`${abbr}_name`);
+    const provinceName = provinceNameElement
+      ?.querySelector('text')
+      ?.textContent
+      ?.trim();
+
+    return provinceName
+      ? `${provinceName} เขต ${num}`
+      : `${abbr} เขต ${num}`;
+  }
+
 
 }

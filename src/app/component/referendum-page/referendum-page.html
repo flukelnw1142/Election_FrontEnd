@@ -18,9 +18,10 @@
                 </div>
             </div>
             <div class="column">
-                <div class="question-block" style="height: 100%;">
+                <span class="loader" *ngIf="loading"></span>
+                <div class="question-block" style="height: 100%;" *ngIf="!loading">
                     <!-- <h4>คำถาม : {{ question.questionText }}</h4> -->
-                     <h4>{{selectRegion_Province_district.value}}</h4>
+                    <h4>{{textShow}}</h4>
 
                     <div>
 

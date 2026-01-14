@@ -277,7 +277,16 @@ export class ReferendumPage implements OnInit {
 
           this.textShow = displayName;
 
-          this.handleGetResultReferendum(districtId, 'district');
+          this.handleGetResultReferendum(districtId, 'district').then(() => {
+            this.processSvgForRegion(this.currentSvg!).then((processedSvg) => {
+              this.zone.run(() => {
+                this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+                  processedSvg.outerHTML
+                );
+                this.cdr.markForCheck();
+              });
+            });
+          });
           this.selectRegion_Province_district = {
             value: districtId,
             type: 'district',
@@ -295,7 +304,16 @@ export class ReferendumPage implements OnInit {
             // this.activeTab = 'district';
             console.log("provinceName : ", provinceName);
             this.textShow = provinceName
-            this.handleGetResultReferendum(provinceName, 'province')
+            this.handleGetResultReferendum(provinceName, 'province').then(() => {
+              this.processSvgForRegion(this.currentSvg!).then((processedSvg) => {
+                this.zone.run(() => {
+                  this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+                    processedSvg.outerHTML
+                  );
+                  this.cdr.markForCheck();
+                });
+              });
+            });
             this.selectRegion_Province_district = {
               value: provinceName,
               type: 'province'
@@ -338,7 +356,7 @@ export class ReferendumPage implements OnInit {
       current = current.parentElement as HTMLElement;
       setTimeout(() => {
         this.loading = false;
-      }, 100);
+      }, 10);
     }
     setTimeout(() => {
       this.loading = false;
@@ -437,6 +455,8 @@ export class ReferendumPage implements OnInit {
             // FILL - แสดงสีตาม party หรือ default
             path.style.fill = district.questions[0].options[0].color || '#d3d3d3'
 
+            console.log("hasSelectedZone", hasSelectedZone)
+
             // จัดการ OPACITY และ STROKE ตาม priority
             if (hasSelectedProvince) {
               // Priority 1: มี selectedProvince
@@ -489,7 +509,28 @@ export class ReferendumPage implements OnInit {
           }
         }
       }
+      if (districtIds.length === 0) {
+        console.log(this.selectRegion_Province_district)
+        if (this.selectRegion_Province_district.type === 'district') {
+          const id = this.selectRegion_Province_district.value
+          const g = svg.querySelector('#' + id) as SVGGElement | null;
 
+          if (g) {
+            const path = g.querySelector('circle');
+            if (path) {
+              path.removeAttribute('fill');
+              path.removeAttribute('stroke');
+
+              // FILL - แสดงสีตาม party หรือ default
+              path.style.fill = '#d3d3d3'
+              path.style.strokeWidth = '4px';
+              path.style.stroke = '#ffffff';
+              g.setAttribute('data-district-id', id);
+            }
+          }
+        }
+
+      }
     }
 
     return svg;
@@ -540,6 +581,10 @@ export class ReferendumPage implements OnInit {
               disagreePercent,
               showGuideLine: diffPercent <= 5,
             };
+
+            // if(question.totalVotes === 0){
+            //   // alert("ยังไม่พบข้อมูล")
+            // }
             resolve(res.data.byProvince)
           },
           error: (err) => {

@@ -49,11 +49,7 @@
                     <span class="text-header">อัพเดทข้อมูล</span>
 
                     <div class="top-filter-row d-flex">
-                        <!-- <div class="province-col">
-                            <label class="form-label mb-0">province</label>
-                            <input type="text" class="form-control" [(ngModel)]="province"
-                                name="province">
-                        </div> -->
+
                         <div class="province-col">
                             <label class="form-label mb-0">Province</label>
                             <select class="form-select" [(ngModel)]="province" name="province"
@@ -65,10 +61,6 @@
                             </select>
                         </div>
 
-                        <!-- <div class="zone-col">
-                            <label class="form-label mb-0">zone</label>
-                            <input type="text" class="form-control" [(ngModel)]="zone">
-                        </div> -->
                         <div class="zone-col">
                             <label class="form-label mb-0">Zone</label>
                             <select class="form-select" [(ngModel)]="zone" name="zone"
@@ -92,14 +84,6 @@
                         <div class="party-col">party_name</div>
                         <div class="score-col">score</div>
                     </div>
-
-                    <!-- <div class="header-row fw-bold d-flex">
-                        <div class="rank-col">Rank</div>
-                        <div class="name-col">name <span class="ex-text">เจิมมาศ จึงเลิศศิริ</span></div>
-                        <div class="pic-col">party_pic <span class="ex-text">01</span></div>
-                        <div class="party-col">party_name <span class="ex-text">ชาติพัฒนากล้า</span></div>
-                        <div class="score-col">score <span class="ex-text">300,000</span></div>
-                    </div> -->
 
                     <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
                         <div *ngFor="let rank of ranks; let i = index" class="data-row d-flex mt-2 align-items-center">
@@ -132,8 +116,9 @@
         </div>
         <div class="right">
             <textarea class="form-control" readonly
-                style="height: 100%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJsonObs | async }}</textarea>
-            <!-- style="height: 100%; resize: none; font-size: small;">{{responseJsonText}}</textarea> -->
+                style="height: 50%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJsonObs_auto | async }}</textarea>
+            <textarea class="form-control" readonly
+                style="height: 50%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJsonObs | async }}</textarea>
         </div>
     </div>
 </div>

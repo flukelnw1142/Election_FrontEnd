@@ -70,6 +70,7 @@ export class ReferendumPage implements OnInit {
     value: '',
     type: ''
   };
+  private currentSvg?: string = '';
   textShow: string = '';
 
 
@@ -235,6 +236,8 @@ export class ReferendumPage implements OnInit {
       }
     }
 
+    this.currentSvg = this.svgCache.get(svgPath)!
+
     return this.svgCache.get(svgPath)!;
   }
 
@@ -272,7 +275,16 @@ export class ReferendumPage implements OnInit {
             .querySelector('text')
             ?.textContent?.trim();
           console.log("districtNumber : ", districtId);
-          this.handleGetResultReferendum(districtId, 'district')
+          this.handleGetResultReferendum(districtId, 'district').then(() => {
+            this.processSvgForRegion(this.currentSvg!).then((processedSvg) => {
+              this.zone.run(() => {
+                this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+                  processedSvg.outerHTML
+                );
+                this.cdr.markForCheck();
+              });
+            });
+          });
           this.selectRegion_Province_district = {
             value: districtId,
             type: 'district'
@@ -289,7 +301,16 @@ export class ReferendumPage implements OnInit {
             // this.activeTab = 'district';
             console.log("provinceName : ", provinceName);
             // this.textShow = provinceName
-            this.handleGetResultReferendum(provinceName, 'province')
+            this.handleGetResultReferendum(provinceName, 'province').then(() => {
+              this.processSvgForRegion(this.currentSvg!).then((processedSvg) => {
+                this.zone.run(() => {
+                  this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+                    processedSvg.outerHTML
+                  );
+                  this.cdr.markForCheck();
+                });
+              });
+            });
             this.selectRegion_Province_district = {
               value: provinceName,
               type: 'province'
@@ -309,7 +330,16 @@ export class ReferendumPage implements OnInit {
 
             this.onRegionSelect(regionName);
             this.textShow = regionName
-            this.handleGetResultReferendum(regionName, 'region')
+            this.handleGetResultReferendum(regionName, 'region').then(() => {
+              this.processSvgForRegion(this.currentSvg!).then((processedSvg) => {
+                this.zone.run(() => {
+                  this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+                    processedSvg.outerHTML
+                  );
+                  this.cdr.markForCheck();
+                });
+              });
+            });
             this.selectRegion_Province_district = {
               value: regionName,
               type: 'region'
@@ -414,8 +444,8 @@ export class ReferendumPage implements OnInit {
               ? district.provinceName === this.selectedProvince
               : false;
             const hasSelectedProvince = !!this.selectedProvince;
-            // const isSelectedZone = id === this.zoneId;
-            // const hasSelectedZone = !!this.zoneId;
+            const isSelectedZone = this.selectRegion_Province_district.type === 'district';
+            const hasSelectedZone = this.selectRegion_Province_district.type === 'district';
             path.removeAttribute('fill');
             path.removeAttribute('stroke');
 
@@ -428,8 +458,8 @@ export class ReferendumPage implements OnInit {
               if (isSelectedProvinceDistrict) {
                 // จังหวัดที่เลือก: แสดงปกติ
                 path.style.opacity = '1';
-                // path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
-                // path.style.stroke = isSelectedZone ? '#ffffff' : '#666';
+                path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
+                path.style.stroke = isSelectedZone ? '#ffffff' : '#666';
                 path.style.strokeOpacity = '1';
               } else {
                 // จังหวัดอื่น: จางลง
@@ -439,13 +469,13 @@ export class ReferendumPage implements OnInit {
                 path.style.strokeOpacity = '0.5';
               }
             }
-            // else if (hasSelectedZone) {
-            //   // Priority 2: มี zoneId แต่ไม่มี province
-            //   path.style.opacity = isSelectedZone ? '1' : '1';
-            //   path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
-            //   path.style.stroke = '#ffffff';
-            //   path.style.strokeOpacity = isSelectedZone ? '1' : '0';
-            // } 
+            else if (hasSelectedZone) {
+              // Priority 2: มี zoneId แต่ไม่มี province
+              path.style.opacity = isSelectedZone ? '1' : '1';
+              path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
+              path.style.stroke = '#ffffff';
+              path.style.strokeOpacity = isSelectedZone ? '1' : '0';
+            }
             else {
               // Default: แสดงทุกเขตปกติ
               path.style.opacity = '1';
@@ -476,97 +506,6 @@ export class ReferendumPage implements OnInit {
       }
 
     }
-
-
-
-
-
-
-
-
-
-    // for (let i = 0; i < districtIds.length; i++) {
-    //   const id = districtIds[i];
-    //   const g = svg.querySelector('#' + id) as SVGGElement | null;
-    //   console.log('Processing district ID:', g);
-
-    //   if (g) {
-    //     const path = g.querySelector('circle');
-    //     if (path) {
-    //       let fillStyle = '';
-    //       // const originalColor = this.getColor(
-    //       //   this.activeTab === 'partyList'
-    //       //     ? this.allWinnersParty[id]
-    //       //     : this.allWinners[id]
-    //       // );
-    //       const district = this.colorByDistrict[id];
-    //       console.log(district)
-    //       const originalColor = district.color || '';
-    //       const isSelectedProvinceDistrict = this.selectedProvince
-    //         ? district.provinceName === this.selectedProvince
-    //         : false;
-    //       const hasSelectedProvince = !!this.selectedProvince;
-    //       // const isSelectedZone = id === this.zoneId;
-    //       // const hasSelectedZone = !!this.zoneId;
-    //       path.removeAttribute('fill');
-    //       path.removeAttribute('stroke');
-
-    //       // FILL - แสดงสีตาม party หรือ default
-    //       path.style.fill = originalColor
-
-
-    //       // จัดการ OPACITY และ STROKE ตาม priority
-    //       if (hasSelectedProvince) {
-    //         // Priority 1: มี selectedProvince
-    //         if (isSelectedProvinceDistrict) {
-    //           // จังหวัดที่เลือก: แสดงปกติ
-    //           path.style.opacity = '1';
-    //           // path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
-    //           // path.style.stroke = isSelectedZone ? '#ffffff' : '#666';
-    //           path.style.strokeOpacity = '1';
-    //         } else {
-    //           // จังหวัดอื่น: จางลง
-    //           path.style.opacity = '0.25';
-    //           path.style.strokeWidth = '1px';
-    //           path.style.stroke = '#999';
-    //           path.style.strokeOpacity = '0.5';
-    //         }
-    //       }
-    //       // else if (hasSelectedZone) {
-    //       //   // Priority 2: มี zoneId แต่ไม่มี province
-    //       //   path.style.opacity = isSelectedZone ? '1' : '1';
-    //       //   path.style.strokeWidth = isSelectedZone ? '4px' : '1px';
-    //       //   path.style.stroke = '#ffffff';
-    //       //   path.style.strokeOpacity = isSelectedZone ? '1' : '0';
-    //       // } 
-    //       else {
-    //         // Default: แสดงทุกเขตปกติ
-    //         path.style.opacity = '1';
-    //         path.style.strokeWidth = '1px';
-    //         path.style.stroke = '#666';
-    //         path.style.strokeOpacity = '0.5';
-    //       }
-
-    //       // Set data attributes
-    //       g.setAttribute('data-party', district.party || '');
-    //       g.setAttribute('data-district-id', id);
-    //       g.setAttribute('data-province', district.provinceName || '');
-    //       g.setAttribute(
-    //         'data-province-selected',
-    //         isSelectedProvinceDistrict.toString()
-    //       );
-
-    //       // // Explicit pointer-events as BOTH style AND attribute for reliability
-    //       // const pointerEvents =
-    //       //   !this.selectedParty ||
-    //       //     this.allWinners[id].party === this.selectedParty
-    //       //     ? 'auto'
-    //       //     : 'none';
-    //       // g.style.pointerEvents = pointerEvents;
-    //       // g.setAttribute('pointer-events', pointerEvents);
-    //     }
-    //   }
-    // }
 
     return svg;
   }

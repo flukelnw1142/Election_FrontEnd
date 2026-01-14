@@ -178,7 +178,15 @@ export class ReferendumPage implements OnInit {
     const svgText = await this.loadSvgByRegion(region);
 
     if (region === 'ทั้งประเทศ') {
-      this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(svgText);
+      this.processSvgForRegion(svgText).then((processedSvg) => {
+        this.zone.run(() => {
+          this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+            processedSvg.outerHTML
+          );
+          this.cdr.markForCheck();
+        });
+      });
+      // this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(svgText);
       this.cdr.markForCheck();
       return;
     }
@@ -354,6 +362,19 @@ export class ReferendumPage implements OnInit {
       p.style.stroke = 'none';
     });
 
+    if (this.selectedRegion === 'ทั้งประเทศ') {
+      const allGroups = svg.querySelectorAll<SVGGElement>('g');
+      allGroups.forEach(g => {
+        const id = g.getAttribute('id');
+        if (id && id.endsWith('_region')) {
+          g.style.pointerEvents = 'auto';
+          g.setAttribute('pointer-events', 'auto');
+        } else {
+          g.style.pointerEvents = 'none';
+          g.setAttribute('pointer-events', 'none');
+        }
+      });
+    }
 
     let districtIds;
 

@@ -13,8 +13,9 @@
 .referendum-layout {
     display: flex;
     flex-direction: column;
+    // justify-content: space-around;
     padding: 10px;
-    height: 100%
+
 }
 
 .left {
@@ -28,9 +29,9 @@
     /* ดันเนื้อหาภายในขึ้นด้านบน */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    height: 100%;
+    // height: 40%;
 }
 
 .summary-card {

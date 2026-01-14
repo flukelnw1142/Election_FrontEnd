@@ -17,62 +17,68 @@
                 </div>
             </div>
             <div class="column">
-                <div class="question-block">
-                    <h4 >คำถาม : {{ question.questionText }}</h4>
+                <div class="question-block" style="height: 100%;">
+                    <h4>คำถาม : {{ question.questionText }}</h4>
 
-                    <div class="referendum-layout">
+                    <div style="">
 
-                        <div class="left">
-                            <div class="chart-container-vertical">
 
-                                <div class="bar-container">
-                                    <div class="bar agree" [style.height.%]="question.agreePercent">
-                                        <div *ngIf="question.showGuideLine && question.agreePercent < question.disagreePercent"
-                                            class="guide-line-on-bar bar-agree"></div>
-                                        <span>{{ question.agreePercent | number:'1.2-2' }}%</span>
-                                    </div>
-                                    <p>เห็นด้วย</p>
-                                </div>
+                        <div class="referendum-layout">
+                            <div class="right">
+                                <div class="summary-card">
+                                    <div class="summary-grid">
+                                        <div class="item divider">
+                                            <span class="label">บัตรดี</span>
+                                            <span class="value">{{ question.goodVotes | number }}</span>
+                                        </div>
 
-                                <div class="bar-container">
-                                    <div class="bar disagree" [style.height.%]="question.disagreePercent">
-                                        <div *ngIf="question.showGuideLine && question.disagreePercent < question.agreePercent"
-                                            class="guide-line-on-bar bar-disagree"></div>
-                                        <span>{{ question.disagreePercent | number:'1.2-2' }}%</span>
-                                    </div>
-                                    <p>ไม่เห็นด้วย</p>
-                                </div>
+                                        <div class="item divider">
+                                            <span class="label">บัตรเสีย</span>
+                                            <span class="value">{{ question.invalidVotes | number }}</span>
+                                        </div>
 
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="right">
-                            <div class="summary-card">
-                                <div class="summary-grid">
-                                    <div class="item divider">
-                                        <span class="label">บัตรดี</span>
-                                        <span class="value">{{ question.goodVotes | number }}</span>
+                                        <div class="item">
+                                            <span class="label">งดออกเสียง</span>
+                                            <span class="value">{{ question.noVotes | number }}</span>
+                                        </div>
                                     </div>
 
-                                    <div class="item divider">
-                                        <span class="label">บัตรเสีย</span>
-                                        <span class="value">{{ question.invalidVotes | number }}</span>
+                                    <div class="total">
+                                        <span class="label">ผู้มาใช้สิทธิทั้งหมด</span>
+                                        <span class="value">{{ question.totalVotes | number }}</span>
                                     </div>
-
-                                    <div class="item">
-                                        <span class="label">งดออกเสียง</span>
-                                        <span class="value">{{ question.noVotes | number }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="total">
-                                    <span class="label">ผู้มาใช้สิทธิทั้งหมด</span>
-                                    <span class="value">{{ question.totalVotes | number }}</span>
                                 </div>
                             </div>
+                            <hr>
+                            <div class="left">
+                                <div class="chart-container-vertical">
+
+                                    <div class="bar-container">
+                                        <div class="bar agree" [style.height.%]="question.agreePercent">
+                                            <div *ngIf="question.showGuideLine && question.agreePercent < question.disagreePercent"
+                                                class="guide-line-on-bar bar-agree"></div>
+                                            <span>{{ question.agreePercent | number:'1.2-2' }}%</span>
+                                        </div>
+                                        <p>เห็นด้วย</p>
+                                    </div>
+
+                                    <div class="bar-container">
+                                        <div class="bar disagree" [style.height.%]="question.disagreePercent">
+                                            <div *ngIf="question.showGuideLine && question.disagreePercent < question.agreePercent"
+                                                class="guide-line-on-bar bar-disagree"></div>
+                                            <span>{{ question.disagreePercent | number:'1.2-2' }}%</span>
+                                        </div>
+                                        <p>ไม่เห็นด้วย</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- <hr> -->
+
                         </div>
-                    </div>
-                    <!-- <hr> -->
+
+
+                    </div> <!-- <hr> -->
                 </div>
 
             </div>

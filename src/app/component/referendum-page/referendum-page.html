@@ -65,7 +65,8 @@
                                                 class="guide-line-on-bar bar-agree"></div>
                                             <span>{{ question.agreePercent | number:'1.2-2' }}%</span>
                                         </div>
-                                        <p>เห็นด้วย</p>
+                                        <p style="margin-top: 5px;">เห็นด้วย</p>
+                                        <p style="font-weight: 400;">( {{question.agreeScore | number:'1.0-0' }} )</p>
                                     </div>
 
                                     <div class="bar-container">
@@ -74,7 +75,9 @@
                                                 class="guide-line-on-bar bar-disagree"></div>
                                             <span>{{ question.disagreePercent | number:'1.2-2' }}%</span>
                                         </div>
-                                        <p>ไม่เห็นด้วย</p>
+                                        <p style="margin-top: 5px;">ไม่เห็นด้วย</p>
+                                        <p style="font-weight: 400;">( {{question.disagreeScore | number:'1.0-0' }} )
+                                        </p>
                                     </div>
 
                                 </div>

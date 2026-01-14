@@ -401,6 +401,7 @@ export class ReferendumPage implements OnInit {
     let districtIds = Object.keys(this.colorByDistrict)
     console.log(districtIds)
 
+    // ทั้งประเทศ
     if (this.selectedRegion === 'ทั้งประเทศ') {
       const allGroups = svg.querySelectorAll<SVGGElement>('g');
       allGroups.forEach(g => {
@@ -440,6 +441,7 @@ export class ReferendumPage implements OnInit {
         }
       }
     }
+    // ภาคอื่นๆ (ภาคใต้, ภาคเหนือ, ภาคตะวันออก, ภาคอีสาน,ภาคกลาง)
     else {
       for (let i = 0; i < districtIds.length; i++) {
         const id = districtIds[i];
@@ -516,6 +518,7 @@ export class ReferendumPage implements OnInit {
           }
         }
       }
+      // กรณีที่'เขต'นั้นไม่มีค่า
       if (districtIds.length === 0) {
         console.log(this.selectRegion_Province_district)
         if (this.selectRegion_Province_district.type === 'district') {
@@ -587,25 +590,22 @@ export class ReferendumPage implements OnInit {
             console.log('result referendum:', res);
             this.colorByDistrict = res.data.byProvince
             const question = res.data.questions[0]
-            // const agreeVotes = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
-            // const disagreeVotes = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
-
-            // const agreePercent =
-            //   question.goodVotes > 0 ? +(agreeVotes / question.goodVotes * 100).toFixed(2) : 0;
-
-            // const disagreePercent =
-            //   question.goodVotes > 0 ? +(disagreeVotes / question.goodVotes * 100).toFixed(2) : 0;
-
             const agreePercent = question.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
             const disagreePercent = question.options.find((o: any) => o.optionCode === ('disagree'))?.percentage ?? 0;
 
             const diffPercent = Math.abs(agreePercent - disagreePercent);
 
+            const agreeScore = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
+            const disagreeScore = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
+
             this.question = {
               ...question,
               agreePercent,
+              agreeScore,
               disagreePercent,
+              disagreeScore,
               showGuideLine: diffPercent <= 5,
+
             };
 
             // if(question.totalVotes === 0){

@@ -2,7 +2,6 @@
     margin: .3rem .2rem;
     height: calc(100vh - 200px);
 
-
     .flex-column-container {
         display: flex;
         height: 100%;
@@ -18,6 +17,45 @@
                 border-radius: 10px;
                 padding: .5rem;
 
+                .control {
+                    --accent: #999; // default
+
+                    border-radius: 10px;
+                    padding: .75rem;
+                    background: #fff;
+                    margin-top: .5rem;
+                    border-left: 6px solid var(--accent);
+
+                    span {
+                        font-weight: 700;
+                        display: flex;
+                        align-items: center;
+                        gap: .75rem;
+                        color: #222;
+                    }
+
+                    .dot {
+                        width: 14px;
+                        height: 14px;
+                        border-radius: 4px;
+                        background: var(--accent);
+                    }
+                }
+
+                /* Themes */
+                .control-all {
+                    --accent: #3AE481;
+                }
+
+                .control-province {
+                    --accent: #813AE4;
+                }
+
+                .control-specific {
+                    --accent: #E43A9D;
+                }
+
+
                 .set-auto-time {
                     display: flex;
                     justify-content: flex-start;
@@ -30,6 +68,7 @@
                         border: none;
                         border-radius: 10px;
                         padding: .2rem .5rem;
+                        background: #f0f0f0;
                     }
                 }
 
@@ -55,6 +94,41 @@
         .right {
             flex: 1;
             padding: 10px;
+            --accent: #999; // default
+
+            span {
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: .75rem;
+                color: #222;
+            }
+
+            .dot {
+                width: 14px;
+                height: 14px;
+                border-radius: 4px;
+                background: var(--accent);
+            }
+
+            textarea {
+                border-left: 6px solid var(--accent);
+            }
+
+
+            /* Themes */
+            .all {
+                --accent: #3AE481;
+            }
+
+            .province {
+                --accent: #813AE4;
+            }
+
+            .specific {
+                --accent: #E43A9D;
+            }
+
         }
     }
 

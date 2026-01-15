@@ -2,170 +2,91 @@
     user-select: none;
 }
 
-/**
-   TAB 3
-*/
-
-.question-block {
-    color: white;
-    overflow-y: auto;
-    scrollbar-width: none; // Firefox
-    -ms-overflow-style: none;
-}
-
-.referendum-layout {
-    display: flex;
-    flex-direction: column;
-    // justify-content: space-around;
-    padding: 10px;
-    // overflow-y: auto;
-}
-
-.left {
-    /* ดันเนื้อหาภายในลงด้านล่าง */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.right {
-    /* ดันเนื้อหาภายในขึ้นด้านบน */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    // height: 40%;
-}
-
-.summary-card {
-    background: #111;
-    border-radius: 12px;
-    padding: 20px 30px;
-    max-width: 100%;
-    color: white;
-    height: fit-content;
-}
-
-.summary-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    text-align: center;
-}
-
-.item {
-    display: flex;
-    flex-direction: column;
-    padding: 0 15px;
-}
-
-.divider {
-    border-right: 1px solid #333;
-}
-
-.label {
-    font-size: 14px;
-    opacity: 0.8;
-}
-
-.value {
-    font-size: 26px;
-    font-weight: bold;
-    margin-top: 6px;
-}
-
-.total {
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 1px solid #333;
-    text-align: center;
-
-    .label {
-        font-size: 14px;
-        opacity: 0.8;
-    }
-
-    .value {
-        display: block;
-        font-size: 26px;
-        font-weight: bold;
-        margin-top: 8px;
-    }
-}
-
-
-.chart-container-vertical {
+.glass-card {
     position: relative;
-    display: flex;
-    justify-content: space-around;
-    height: 30vh;
-}
-
-.bar-container {
+    background: linear-gradient(0deg, #000, #272727);
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    width: 40%;
-    height: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: -webkit-fill-available;
 }
 
-.bar {
-    width: 100%;
-    position: relative; // ❗ จำเป็นมาก
-    background-color: #4CAF50;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px 5px 0 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    transition: height 0.3s ease;
-}
-
-.guide-line-on-bar {
+.glass-card:before,
+.glass-card:after {
+    content: '';
     position: absolute;
-    left: -10px;
-    right: -10px;
-    top: 0;
-    border-top: 2px dashed #ffffff84;
-    opacity: 0.9;
-    z-index: 10;
-    pointer-events: none;
+    left: -2px;
+    top: -2px;
+    background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094,
+            #0000ff, #00ff00, #ffff00, #ff0000);
+    background-size: 400%;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    z-index: -1;
+    animation: steam 120s linear infinite;
+    border-radius: 15px;
 }
 
-.bar-agree {
-    width: 560px;
+@keyframes steam {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }
 
-.bar-disagree {
-    width: 560px;
-    left: -300px;
+.glass-card:after {
+    filter: blur(10px);
 }
 
-.agree {
-    background-color: #4CAF50;
+.loader {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #FFF;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    top: 45%;
+    left: 40%;
 }
 
-.disagree {
-    background-color: #F44336;
+.loader::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: #FF3D00;
+    width: 3px;
+    height: 40px;
+    transform: translateX(-50%);
 }
 
-.bar span {
-    padding-bottom: 5px;
-    font-size: 26px;
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-p {
-    // margin-top: 5px;
-    font-weight: bold;
-    text-align: center;
-    margin: 0;
+.svg-container::-webkit-scrollbar,
+.region-tabs::-webkit-scrollbar,
+.question-block::-webkit-scrollbar {
+    display: none; // Chrome / Safari / Edge
 }
-
-
-/***
-    TAB 2
-*/
 
 // NEW!
 .show-province-all {
@@ -316,104 +237,162 @@ p {
         }
     }
 
-
-
     /*column 3*/
 
-    // คลิก เขต
-    .province {
-        font-size: 1.5rem;
-        font-weight: bolder;
+    .question-block {
+        color: white;
+        overflow-y: auto;
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none;
     }
 
-    .header-table {
-        color: #ffffff8e;
+    .referendum-layout {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        // justify-content: space-around;
+        padding: 10px;
+        // overflow-y: auto;
     }
 
-    // คลิก จังหวัด
-    .tabs {
+    .left {
+        /* ดันเนื้อหาภายในลงด้านล่าง */
         display: flex;
-
-        .tab-button {
-            flex: 1;
-            padding: 0.2rem 1rem;
-            background: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-
-        .tab-button.active,
-        .tab-button:hover {
-            opacity: 1;
-            background: #555;
-        }
-
-        .tab-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
+        flex-direction: column;
+        justify-content: flex-end;
     }
 
-    .candidate-item {
+    .right {
+        /* ดันเนื้อหาภายในขึ้นด้านบน */
         display: flex;
+        flex-direction: column;
+        justify-content: space-around;
         align-items: center;
-        margin-bottom: 10px;
-        border-radius: 15px;
-        padding: 1rem;
-        background: #ffffff37;
-        gap: 1.5rem;
+        // height: 40%;
+    }
 
-        .no {
-            border: #ccc 1px solid;
-            border-radius: 30px;
-            padding: 0px 6px;
-            margin-right: 4px;
+    .summary-card {
+        background: #111;
+        border-radius: 12px;
+        padding: 20px 30px;
+        max-width: 100%;
+        color: white;
+        height: fit-content;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        text-align: center;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        padding: 0 15px;
+    }
+
+    .divider {
+        border-right: 1px solid #333;
+    }
+
+    .label {
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    .value {
+        font-size: 26px;
+        font-weight: bold;
+        margin-top: 6px;
+    }
+
+    .total {
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px solid #333;
+        text-align: center;
+
+        .label {
+            font-size: 14px;
+            opacity: 0.8;
         }
 
-        .number {
-            background: #000;
-            height: 3rem;
-            width: 2rem;
-            text-align: center;
-            align-content: center;
-            border-radius: 8px;
-            font-size: 1.5rem;
+        .value {
+            display: block;
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 8px;
         }
+    }
 
-        img {
-            // height: 100px;
-            // width: 60px;
-            height: 5rem;
-            width: 4rem;
-            object-fit: cover;
-            object-position: top;
-            border-radius: 10px;
-        }
 
-        .party-logo {
-            height: 5rem;
-            width: 5rem;
-        }
+    .chart-container-vertical {
+        position: relative;
+        display: flex;
+        justify-content: space-around;
+        height: 30vh;
+    }
 
-        .logo-container {
-            width: 7rem;
-            height: 7rem;
-            display: inline-block;
-        }
+    .bar-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        width: 40%;
+        height: 100%;
+    }
 
-        .logo-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+    .bar {
+        width: 100%;
+        position: relative; // ❗ จำเป็นมาก
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+        border-radius: 5px 5px 0 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        transition: height 0.3s ease;
+    }
+
+    .guide-line-on-bar {
+        position: absolute;
+        left: -10px;
+        right: -10px;
+        top: 0;
+        border-top: 2px dashed #ffffff84;
+        opacity: 0.9;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .bar-agree {
+        width: 560px;
+    }
+
+    .bar-disagree {
+        width: 560px;
+        left: -300px;
+    }
+
+    .agree {
+        background-color: #4CAF50;
+    }
+
+    .disagree {
+        background-color: #F44336;
+    }
+
+    .bar span {
+        padding-bottom: 5px;
+        font-size: 26px;
+    }
+
+    p {
+        // margin-top: 5px;
+        font-weight: bold;
+        text-align: center;
+        margin: 0;
     }
 }
 

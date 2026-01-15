@@ -1,0 +1,33 @@
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.label {
+  width: 45%;
+  text-align: center;
+  font-size: 16px;
+
+  .title {
+    font-weight: 700;
+  }
+
+  .percent {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .score {
+    font-size: 16px;
+    opacity: 1;
+  }
+
+  &.agree {
+    color: #4caf50;
+  }
+
+  &.disagree {
+    color: #f44336;
+  }
+}

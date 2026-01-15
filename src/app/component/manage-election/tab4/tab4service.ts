@@ -21,7 +21,10 @@ export class Tab4Service {
   }
 
   genElectionReferendum(req: any): Observable<any> {
-    return this._http.get<any>(`${this.baseUrl}/referendum/final/report/summary`, req);
+    return this._http.get<any>(
+      `${this.baseUrl}/referendum/final/report/summary`,
+      { params: req }   // ✅ ส่งเป็น query string
+    );
   }
 
 

@@ -111,7 +111,7 @@ export class Tab4 {
       return;
     }
     const jsonData = {
-      ProvinceName: this.province
+      provinceNameTH: this.province
     };
 
     this.tab4Service.genElectionReferendum(jsonData).subscribe({

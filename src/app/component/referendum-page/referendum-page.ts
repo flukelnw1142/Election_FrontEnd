@@ -302,7 +302,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
               this.selectedRegion = region
               svgTextCurrent = await this.loadSvgByRegion(region);
             }
-            displayName = this.colorByDistrict[districtId]
+            displayName = this.colorByDistrict[districtId].provinceNameTH
           }
 
           this.handleGetResultReferendum(districtId, 'district').then(() => {

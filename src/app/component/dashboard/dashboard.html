@@ -144,8 +144,12 @@
                 </div>
                 <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
                     class="head-logo">
-                <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlParty(selectedParty) !== ''" alt="Party Logo"
-                    class="party-logo">
+                <!-- <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlParty(selectedParty) !== ''" alt="Party Logo"
+                    class="party-logo"> -->
+                <div class="party-logo-wrapper">
+                    <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlParty(selectedParty) !== ''" alt="Party Logo"
+                        class="party-logo">
+                </div>
             </div>
         </div>
         <div class="col-2">
@@ -546,7 +550,7 @@
 
 </div>
 
-<!-- PAGE 7 : show-party-list & show-district-per-party -->
+<!-- PAGE 7 : แสดงส.ส.เขต และ บัญชีรายชื่อ ของ 1 พรรค | show-party-list & show-district-per-party -->
 <!-- <div *ngIf="selectedPartyListAndZoneSeat !== '' " style="position: relative;" class="show-partyList-ZoneSeat"> -->
 <div *ngIf="getCurrentPage('show-party-list_&_show-district-per-party') " class="show-partyList-ZoneSeat">
     <button class="ds-Button" (click)="closeDialog()">X</button>

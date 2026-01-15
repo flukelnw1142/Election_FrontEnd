@@ -1365,7 +1365,7 @@ export class Dashboard implements OnInit {
     const partyName = rawName
       .replace(/^พรรค\s*/g, '')   // ✅ ตัดคำว่า "พรรค" ข้างหน้า
       .trim();
-      
+
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         return this.partyColorMap[keyword].COLOR || 'gray';
@@ -1407,7 +1407,12 @@ export class Dashboard implements OnInit {
   }
 
   getNo(winner: any): string {
-    const partyName = typeof winner === 'string' ? winner : winner?.party || '';
+    const rawName = typeof winner === 'string' ? winner : winner?.party || '';
+
+    const partyName = rawName
+      .replace(/^พรรค\s*/g, '')   // ✅ ตัดคำว่า "พรรค" ข้างหน้า
+      .trim();
+
     if (!partyName || !this.partyColorMap) return '-';
 
     for (const key in this.partyColorMap) {
@@ -1892,6 +1897,7 @@ export class Dashboard implements OnInit {
     this.detailWinnerZonePerDistrict = [];
 
     this._dashboard.getRankByDistrict(areaId).subscribe((data) => {
+      console.log('onWinnerZoneByDistrict', data);
       if (data.result == false) {
         Swal.fire({
           icon: 'info',
@@ -1915,6 +1921,7 @@ export class Dashboard implements OnInit {
       this.zoneName = data[0].zone;
       this.progress = data[0].progress;
       this.totalvoteZone = data[0].total_votes_in_area;
+      console.log(data[0])
     });
   }
   // Data แสดงข้อมูล แสดงคะแนนบัญชีรายชื่อทั้งหมด BY District

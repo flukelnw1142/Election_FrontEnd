@@ -355,17 +355,36 @@ PAGE 2
     width: 100%;
     max-height: 70%;
     object-fit: contain;
-    position: relative;
-    bottom: -24px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 
-  .party-logo {
-    max-width: 20%;
-    max-height: 20%;
+  // .party-logo {
+  //   max-width: 20%;
+  //   max-height: 20%;
+  //   position: absolute;
+  //   bottom: .5rem;
+  //   right: .5rem;
+  //   border-radius: 100%;
+  // }
+  .party-logo-wrapper {
+    width: 7rem;
+    height: 7rem;
     position: absolute;
     bottom: .5rem;
     right: .5rem;
-    border-radius: 100%;
+
+    border-radius: 50%;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .party-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* หรือ cover */
   }
 
 }

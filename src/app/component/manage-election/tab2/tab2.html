@@ -7,9 +7,9 @@
                         <div class="dot"></div>Random ทั้งประเทศ
                     </span>
                     <div class="set-auto-time">
-                        Set Auto Time <input type="number" min="1" step="1" [(ngModel)]="timeAuto" value="2"
-                            (change)="onTimeChange()"> sec
-                        <mat-slide-toggle [(ngModel)]="checked" (change)="onToggleChange()">
+                        Set Auto Time <input type="number" min="1" step="1" [(ngModel)]="timeAuto_All" value="2"
+                            (change)="onTimeChange_All()"> sec
+                        <mat-slide-toggle [(ngModel)]="checked_All_Auto" (change)="onToggleChange_All()">
                         </mat-slide-toggle>
                     </div>
                 </div>
@@ -18,9 +18,9 @@
                         <div class="dot"></div>Random เขตในจังหวัด
                     </span>
                     <div class="set-auto-time">
-                        Set Auto Time <input type="number" min="1" step="1" [(ngModel)]="timeAuto" value="2"
-                            (change)="onTimeChange()"> sec
-                        <mat-slide-toggle [(ngModel)]="checked" (change)="onToggleChange()">
+                        Set Auto Time <input type="number" min="1" step="1" [(ngModel)]="timeAuto_Province" value="2"
+                            (change)="onTimeChange_Province()"> sec
+                        <mat-slide-toggle [checked]="checked_Province_Auto" (change)="onToggleChange_Province($event)">
                         </mat-slide-toggle>
                     </div>
                     <div class="filter-row d-flex">
@@ -29,36 +29,24 @@
                             <label class="form-label">จังหวัด :</label>
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>ค้นหาจังหวัด</mat-label>
-                                <input type="text" matInput [formControl]="provinceCtrl"
-                                    [matAutocomplete]="autoProvince">
-                                <mat-autocomplete #autoProvince="matAutocomplete"
-                                    (optionSelected)="onProvinceSelected($event)">
-                                    <mat-option *ngFor="let p of filteredProvinces | async" [value]="p.provinceName">
+                                <input type="text" matInput [formControl]="provinceCtrl_Province"
+                                    [matAutocomplete]="autoProvinceProvince">
+                                <mat-autocomplete #autoProvinceProvince="matAutocomplete"
+                                    (optionSelected)="onProvinceSelected_Province($event)">
+                                    <mat-option *ngFor="let p of filteredProvinces_Province | async"
+                                        [value]="p.provinceName">
                                         {{ p.provinceName }}
                                     </mat-option>
                                 </mat-autocomplete>
                             </mat-form-field>
                         </div>
 
-                        <!-- เขต -->
-                        <!-- <div class="flex-fill">
-                        <label class="form-label">เขต :</label>
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>เลือกเขต</mat-label>
-                            <mat-select [(ngModel)]="selectedZone" [disabled]="!selectedProvince">
-                                <mat-option *ngFor="let zone of zonesInProvince" [value]="zone.areaName">
-                                    {{ zone.areaName }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div> -->
-
                         <!-- ปุ่ม Submit -->
-                        <div style="align-self:center">
-                            <button mat-raised-button color="primary" class="px-4" (click)="onSubmitFilter()">
+                        <!-- <div style="align-self:center">
+                            <button mat-raised-button color="primary" class="px-4" (click)="onSubmitFilter_Province()">
                                 SUBMIT
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="control control-specific">
@@ -71,11 +59,12 @@
                             <label class="form-label">จังหวัด :</label>
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>ค้นหาจังหวัด</mat-label>
-                                <input type="text" matInput [formControl]="provinceCtrl"
-                                    [matAutocomplete]="autoProvince">
-                                <mat-autocomplete #autoProvince="matAutocomplete"
-                                    (optionSelected)="onProvinceSelected($event)">
-                                    <mat-option *ngFor="let p of filteredProvinces | async" [value]="p.provinceName">
+                                <input type="text" matInput [formControl]="provinceCtrl_Specific"
+                                    [matAutocomplete]="autoProvinceSpecific">
+                                <mat-autocomplete #autoProvinceSpecific="matAutocomplete"
+                                    (optionSelected)="onProvinceSelected_Specific($event)">
+                                    <mat-option *ngFor="let p of filteredProvinces_Specific | async"
+                                        [value]="p.provinceName">
                                         {{ p.provinceName }}
                                     </mat-option>
                                 </mat-autocomplete>
@@ -87,8 +76,8 @@
                             <label class="form-label">เขต :</label>
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>เลือกเขต</mat-label>
-                                <mat-select [(ngModel)]="selectedZone" [disabled]="!selectedProvince">
-                                    <mat-option *ngFor="let zone of zonesInProvince" [value]="zone.areaName">
+                                <mat-select [(ngModel)]="selectedZone_Specific" [disabled]="!selectedProvince_Specific">
+                                    <mat-option *ngFor="let zone of zonesInProvince_Specific" [value]="zone.areaName">
                                         {{ zone.areaName }}
                                     </mat-option>
                                 </mat-select>
@@ -97,7 +86,7 @@
 
                         <!-- ปุ่ม Submit -->
                         <div style="align-self:center">
-                            <button mat-raised-button color="primary" class="px-4" (click)="onSubmitFilter()">
+                            <button mat-raised-button color="primary" class="px-4" (click)="onSubmitFilter_Specific()">
                                 SUBMIT
                             </button>
                         </div>
@@ -178,19 +167,19 @@
                 <div class="dot"></div>Random ทั้งประเทศ
             </span>
             <textarea class="form-control all" readonly
-                style="height: 30%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJsonObs_auto | async }}</textarea>
+                style="height: 30%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJsonObs_All_auto | async }}</textarea>
 
             <span class="province">
                 <div class="dot"></div>Random เขตในจังหวัด
             </span>
             <textarea class="form-control province" readonly
-                style="height: 30%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJsonObs_auto | async }}</textarea>
+                style="height: 30%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJson_Province_auto | async }}</textarea>
 
             <span class="specific">
                 <div class="dot"></div>เขตเจาะจง
             </span>
             <textarea class="form-control specific" readonly
-                style="height: 30%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJsonObs | async }}</textarea>
+                style="height: 30%; resize: none; font-size: small;letter-spacing:1px;">{{ responseJson_Specific | async }}</textarea>
         </div>
     </div>
 </div>

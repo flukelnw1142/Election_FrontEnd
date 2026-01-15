@@ -70,7 +70,7 @@ export class Tab4 {
   ngOnInit() {
     this.checkScreenSize();
     this.getProvince();
-    this.onSubmitFilter();
+    this.getReferendum();
   }
 
   private _filterProvince(value: string): string[] {
@@ -88,7 +88,7 @@ export class Tab4 {
     this.province = selectedName;
   }
 
-  onSubmitFilter() {
+  getReferendum() {
     this.tab4Service.getReferendum().subscribe({
       next: (res) => {
         const result = res.data ? res.data : res;
@@ -99,6 +99,33 @@ export class Tab4 {
         }
       }
     });
+  }
+
+  onSubmitFilter() {
+    if (!this.province) {
+      this.sweetAlertService.showAlert(
+        'Load Fail',
+        'กรุณาเลือกจังหวัด',
+        'warning'
+      );
+      return;
+    }
+    const jsonData = {
+      ProvinceName: this.province
+    };
+
+    this.tab4Service.genElectionReferendum(jsonData).subscribe({
+      next: (res) => {
+        console.log("asdsad : ",res);
+        
+        console.log(JSON.stringify(res.REFERENDUM_REPORT));
+        this.responseJson$.next(JSON.stringify(res.REFERENDUM_REPORT, null, 2));
+      },
+      error: (err) => {
+        console.error('API error:', err);
+      },
+    });
+    console.log(this.responseJson$)
   }
 
   // --- ฟังก์ชันคำนวณ  ---
@@ -310,4 +337,6 @@ export class Tab4 {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+
 }

@@ -605,10 +605,18 @@
                     </div>
                 </div>
 
-                <div style="display: flex; justify-content: center; position: relative;">
+                <!-- <div style="display: flex; justify-content: center; position: relative;">
                     <img [src]="getUrlHead(partySeatCounts.partyName)" alt="Head Logo" class="head-logo">
                     <img [src]="getUrlParty(partySeatCounts.partyName)"
                         *ngIf="getUrlParty(partySeatCounts.partyName) !== ''" alt="Party Logo" class="party-logo">
+                </div> -->
+                <div style="display: flex; justify-content: center; position: relative;">
+                    <img [src]="getUrlHead(partySeatCounts.partyName)" *ngIf="getUrlHead(partySeatCounts.partyName)"
+                        alt="Head Logo" class="head-logo">
+                    <div class="party-logo-wrapper">
+                        <img [src]="getUrlParty(partySeatCounts.partyName)"
+                            *ngIf="getUrlParty(partySeatCounts.partyName) !== ''" alt="Party Logo" class="party-logo">
+                    </div>
                 </div>
             </div>
 

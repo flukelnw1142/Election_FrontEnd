@@ -115,6 +115,18 @@ export class ReferendumPage implements OnInit {
           complete: () => console.log('WebSocket closed'),
         });
 
+      this._dashboard
+        .connectEctreport()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res) => {
+            console.log('connectEctreport >>>', res);
+            
+          },
+          error: (err) => console.error('WebSocket error', err),
+          complete: () => console.log('WebSocket closed'),
+        });
+
     } catch (error) {
       console.error('Error loading data:', error);
     }

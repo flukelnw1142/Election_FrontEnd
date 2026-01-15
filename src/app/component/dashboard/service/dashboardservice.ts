@@ -71,6 +71,10 @@ export class DashboardService {
     return this.wsService.connect(environment.ws_summary_url);
   }
 
+  connectEctreport(): Observable<any> {
+    return this.wsService.connect(environment.ws_ectreport_url);
+  }
+
   // เรียกข้อมูลผู้ที่ชนะในแต่ละเขตเลือกตั้ง ทั้งแบบส.ส.เขต และ ส.ส.บัญชีรายชื่อ >> ใช้ websocket แทน
   getDistrictWinners(): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/results`);

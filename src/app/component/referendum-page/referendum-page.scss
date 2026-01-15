@@ -133,7 +133,7 @@
     .region-tabs {
         display: flex;
         margin-top: 1rem;
-        // gap: 1rem;
+        gap: .5rem;
         flex-direction: column;
         overflow-y: auto;
         scrollbar-width: none; // Firefox
@@ -287,6 +287,9 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         text-align: center;
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px solid #333;
     }
 
     .item {
@@ -311,9 +314,9 @@
     }
 
     .total {
-        margin-top: 25px;
-        padding-top: 15px;
-        border-top: 1px solid #333;
+        // margin-top: 25px;
+        // padding-top: 15px;
+        // border-top: 1px solid #333;
         text-align: center;
 
         .label {

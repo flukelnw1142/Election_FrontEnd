@@ -316,6 +316,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
             });
           });
 
+          this.resetZoom()
           this.textShow = displayName;
           this.selectRegion_Province_district = {
             value: districtId,
@@ -353,6 +354,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
               });
             });
 
+            this.resetZoom()
             this.textShow = provinceName;
             this.selectRegion_Province_district = {
               value: districtIds,
@@ -402,6 +404,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.loading = false;
     }, 0);
+
     console.warn('ไม่พบข้อมูลเขตหรือจังหวัดที่คลิก');
   }
 

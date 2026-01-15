@@ -72,6 +72,10 @@
     transform: translateX(-50%);
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 @keyframes rotation {
     0% {
         transform: rotate(0deg);

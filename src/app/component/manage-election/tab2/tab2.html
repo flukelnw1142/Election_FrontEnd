@@ -29,8 +29,9 @@
                             <label class="form-label">จังหวัด :</label>
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>ค้นหาจังหวัด</mat-label>
-                                <input type="text" matInput [formControl]="provinceCtrl_Province"
-                                    [matAutocomplete]="autoProvinceProvince">
+                                <input matInput [formControl]="provinceCtrl_Province"
+                                    [matAutocomplete]="autoProvinceProvince" (focus)="openProvincePanel()"
+                                    #provinceTrig="matAutocompleteTrigger" matAutocompleteTrigger />
                                 <mat-autocomplete #autoProvinceProvince="matAutocomplete"
                                     (optionSelected)="onProvinceSelected_Province($event)">
                                     <mat-option *ngFor="let p of filteredProvinces_Province | async"
@@ -60,7 +61,10 @@
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>ค้นหาจังหวัด</mat-label>
                                 <input type="text" matInput [formControl]="provinceCtrl_Specific"
-                                    [matAutocomplete]="autoProvinceSpecific">
+                                    [matAutocomplete]="autoProvinceSpecific" (focus)="openProvincePanel_Specific()"
+                                    (click)="openProvincePanel_Specific()" #specificTrig="matAutocompleteTrigger"
+                                    matAutocompleteTrigger />
+
                                 <mat-autocomplete #autoProvinceSpecific="matAutocomplete"
                                     (optionSelected)="onProvinceSelected_Specific($event)">
                                     <mat-option *ngFor="let p of filteredProvinces_Specific | async"

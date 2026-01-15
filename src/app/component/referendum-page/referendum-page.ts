@@ -160,7 +160,8 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         .subscribe({
           next: (res) => {
             console.log('connectEctreport >>>', res);
-
+            this.winners = res.data;
+            this.updateWinnerUI(this.winners);
           },
           error: (err) => console.error('WebSocket error', err),
           complete: () => console.log('WebSocket closed'),

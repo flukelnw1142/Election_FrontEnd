@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BehaviorSubject, interval, map, Observable, startWith, Subject, Subscription, switchMap } from 'rxjs';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +35,10 @@ export class Tab2 {
   private eventSourceAll: EventSource | null = null;
   private eventSourceProvince: EventSource | null = null;
   isMobile: boolean = false;
-
+  @ViewChild('provinceTrig') provinceTrig!: MatAutocompleteTrigger;
+  private showAllOnFocus = false;
+  @ViewChild('specificTrig') specificTrig!: MatAutocompleteTrigger;
+  private showAllOnFocus_Specific = false;
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkScreenSize();
@@ -74,7 +77,6 @@ export class Tab2 {
   private responseJsonProvince_auto$ = new BehaviorSubject<string>('');
   private responseJsonSpecific$ = new BehaviorSubject<string>('');
 
-
   get responseJsonObs_All_auto() {
     return this.responseJsonAll_auto$.asObservable();
   }
@@ -109,7 +111,7 @@ export class Tab2 {
     this.checkScreenSize();
     this.filteredProvinces_Province = this.provinceCtrl_Province.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filterProvince(value || ''))
+      map((value) => this._filterProvinces(value || ''))
     );
 
     this.filteredProvinces_Specific = this.provinceCtrl_Specific.valueChanges.pipe(
@@ -120,10 +122,10 @@ export class Tab2 {
     this.getProvince();
   }
 
-  private _filterProvince(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.provinces.filter((p) => p.toLowerCase().includes(filterValue));
-  }
+  // private _filterProvince(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
+  //   return this.provinces.filter((p) => p.toLowerCase().includes(filterValue));
+  // }
 
   onProvinceSelected(event: any) {
     const selectedName = event.option.value;
@@ -448,7 +450,7 @@ export class Tab2 {
 
         this.filteredProvinces_Specific = this.provinceCtrl_Specific.valueChanges.pipe(
           startWith(''),
-          map((value) => this._filterProvinces(value || ''))
+          map((value) => this._filterProvince(value || ''))
         );
         this.cdr.detectChanges();
       },
@@ -459,11 +461,19 @@ export class Tab2 {
   }
 
   private _filterProvinces(value: string): any[] {
-    const filterValue = value.toLowerCase();
+    // ✅ ตอน focus ให้โชว์ทั้งหมด 1 ครั้ง
+    if (this.showAllOnFocus) {
+      this.showAllOnFocus = false;
+      return this.provinces;
+    }
+
+    const filterValue = (value || '').toLowerCase();
     return this.provinces.filter((p) =>
       p.provinceName.toLowerCase().includes(filterValue)
     );
   }
+
+
 
   onProvinceSelected_Province(event: any) {
     const provinceName = event.option.value;
@@ -491,6 +501,37 @@ export class Tab2 {
     });
   }
 
+  openProvincePanel(): void {
+    this.showAllOnFocus = true;
 
+    const current = this.provinceCtrl_Province.value ?? '';
+    this.provinceCtrl_Province.setValue(current, { emitEvent: true });
 
+    setTimeout(() => {
+      this.provinceTrig?.openPanel();
+    }, 0);
+  }
+
+  openProvincePanel_Specific(): void {
+    this.showAllOnFocus_Specific = true;
+
+    const current = this.provinceCtrl_Specific.value ?? '';
+    this.provinceCtrl_Specific.setValue(current, { emitEvent: true });
+
+    setTimeout(() => {
+      this.specificTrig?.openPanel();
+    }, 0);
+  }
+
+  private _filterProvince(value: string): any[] {
+    if (this.showAllOnFocus_Specific) {
+      this.showAllOnFocus_Specific = false;
+      return this.provinces;
+    }
+
+    const filterValue = (value || '').toLowerCase();
+    return this.provinces.filter((p) =>
+      p.provinceName.toLowerCase().includes(filterValue)
+    );
+  }
 }

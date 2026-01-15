@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardService } from '../dashboard/service/dashboardservice';
 import { firstValueFrom, map, Observable, of, startWith, Subject, takeUntil } from 'rxjs';
@@ -12,7 +12,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SemiPie } from "../semi-pie/semi-pie";
 import { Referendumservice } from '../referendum-page/service/referendumservice';
-import { color } from 'd3';
+import panzoom from "panzoom";
+
 @Component({
   selector: 'app-referendum-page',
   imports: [CommonModule,
@@ -27,7 +28,39 @@ import { color } from 'd3';
   templateUrl: './referendum-page.html',
   styleUrl: './referendum-page.scss'
 })
-export class ReferendumPage implements OnInit {
+export class ReferendumPage implements OnInit, AfterViewInit {
+
+
+  ngAfterViewInit() {
+    this.initPanzoom();
+  }
+
+  private panzoomInstance: any;
+
+  initPanzoom() {
+    if (!this.svgContainerRegion?.nativeElement) return;
+
+    // 🔥 destroy ตัวเก่าทุกครั้ง
+    if (this.panzoomInstance) {
+      this.panzoomInstance.dispose();
+    }
+
+    this.panzoomInstance = panzoom(this.svgContainerRegion.nativeElement, {
+      minZoom: 1,
+      maxZoom: 4,
+      bounds: true,
+      boundsPadding: 0.1,
+      smoothScroll: false
+    });
+  }
+
+  zoomIn() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() + 0.3); }
+  zoomOut() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() - 0.3); }
+  resetZoom() {
+    if (!this.panzoomInstance) return;
+    this.panzoomInstance.reset();
+  }
+
 
   regionList: string[] = [
     'ทั้งประเทศ',
@@ -121,7 +154,7 @@ export class ReferendumPage implements OnInit {
         .subscribe({
           next: (res) => {
             console.log('connectEctreport >>>', res);
-            
+
           },
           error: (err) => console.error('WebSocket error', err),
           complete: () => console.log('WebSocket closed'),
@@ -215,6 +248,10 @@ export class ReferendumPage implements OnInit {
       })
 
       this.cdr.markForCheck();
+      setTimeout(() => {
+        this.initPanzoom();
+
+      }, 0);
       return;
     }
     this.handleGetResultReferendum(region, 'region').then(() => {
@@ -227,6 +264,10 @@ export class ReferendumPage implements OnInit {
         });
       });
     });
+
+    setTimeout(() => {
+      this.initPanzoom();
+    }, 0);
 
   }
 

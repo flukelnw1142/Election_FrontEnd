@@ -9,6 +9,8 @@
 .question-block {
     color: white;
     overflow-y: auto;
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none;
 }
 
 .referendum-layout {
@@ -211,6 +213,8 @@ p {
         // gap: 1rem;
         flex-direction: column;
         overflow-y: auto;
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none;
     }
 
     .region-tab {
@@ -245,6 +249,8 @@ p {
         margin: 0; // reset margin
         padding: 20px;
         height: 90%;
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none;
     }
 
     .region-map-wrapper {
@@ -422,4 +428,13 @@ p {
     100% {
         transform: rotate(360deg);
     }
+}
+
+
+
+
+.svg-container::-webkit-scrollbar,
+.region-tabs::-webkit-scrollbar,
+.question-block::-webkit-scrollbar {
+    display: none; // Chrome / Safari / Edge
 }

@@ -52,7 +52,13 @@ export class Tab2 {
   selectedProvince2: any = '';
   selectedZone: any = '';
   selectedZone2: any = '';
+  private responseJson_auto$ = new BehaviorSubject<string>('');
   private responseJson$ = new BehaviorSubject<string>('');
+
+
+  get responseJsonObs_auto() {
+    return this.responseJson_auto$.asObservable();
+  }
 
   get responseJsonObs() {
     return this.responseJson$.asObservable();
@@ -75,7 +81,7 @@ export class Tab2 {
     private _Tab2: Tab2Service,
     private cdr: ChangeDetectorRef,
     private sweetAlertService: SweetAlertService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.checkScreenSize();
@@ -143,10 +149,10 @@ export class Tab2 {
       );
       return;
     }
-    if (!this.selectedZone) {
-      this.sweetAlertService.showAlert('Load Fail', 'กรุณาเลือกเขต', 'warning');
-      return;
-    }
+    // if (!this.selectedZone) {
+    //   this.sweetAlertService.showAlert('Load Fail', 'กรุณาเลือกเขต', 'warning');
+    //   return;
+    // }
     const selectedZone = this.zonesInProvince.find(
       (p) => p.areaName === this.selectedZone
     );
@@ -156,8 +162,7 @@ export class Tab2 {
       areaNo: zoneId,
     };
     console.log(jsonData);
-    this.checked = false;
-    this.onToggleChange();
+    // this.onToggleChange();
     this._Tab2.genElectionByProviceAndZone(jsonData).subscribe({
       next: (res) => {
         console.log(JSON.stringify(res.data));
@@ -167,6 +172,12 @@ export class Tab2 {
         console.error('API error:', err);
       },
     });
+    console.log(this.selectedProvince && !selectedZone)
+    if (this.selectedProvince && !selectedZone) {
+      console.log("เลือกจังหวัดอย่างเดียว")
+    } else if (this.selectedProvince && selectedZone) {
+      console.log("เลือกจังหวัด และ เขต")
+    }
   }
 
   ngOnDestroy(): void {
@@ -197,7 +208,7 @@ export class Tab2 {
       try {
         const data = JSON.parse(event.data);
         const pretty = JSON.stringify(data, null, 2);
-        this.responseJson$.next(pretty);
+        this.responseJson_auto$.next(pretty);
         // ไม่ต้อง cd.detectChanges() เพราะ BehaviorSubject + async pipe จัดการให้
       } catch (err) {
         console.error('Parse error:', err);
@@ -216,7 +227,7 @@ export class Tab2 {
     if (this.eventSource) {
       this.eventSource.close();
       this.eventSource = null;
-      this.responseJson$.next('');
+      this.responseJson_auto$.next('');
       console.log('SSE Disconnected');
     }
   }
@@ -242,7 +253,7 @@ export class Tab2 {
     this._Tab2.genElection(result).subscribe({
       next: (res) => {
         console.log(JSON.stringify(res.data));
-        this.responseJson$.next(JSON.stringify(res.data, null, 2));
+        this.responseJson_auto$.next(JSON.stringify(res.data, null, 2));
       },
       error: (err) => {
         console.error('API error:', err);

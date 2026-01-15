@@ -27,49 +27,83 @@ export class SemiPie implements AfterViewInit, OnChanges {
   }
 
   createChart() {
-    this.chart = new Chart('barChart', {
-      type: 'bar',
+    /**
+     * 1
+     */
+    this.chart = new Chart('pieChart', {
+      type: 'pie',
       data: {
         labels: ['เห็นด้วย', 'ไม่เห็นด้วย'],
         datasets: [{
           data: [this.agree, this.disagree],
           backgroundColor: ['#4CAF50', '#F44336'],
-          borderRadius: 6,
-          barThickness: 70,
-          maxBarThickness: 80,
+          borderWidth: 0
         }]
       },
       options: {
         responsive: true,
         plugins: {
           legend: {
-            display: false
+            display: false   // ซ่อน legend
           },
           tooltip: {
             callbacks: {
-              label: (context) => `${context.parsed.y}%`
-            }
-          }
-        },
-        scales: {
-          x: {
-            ticks: {
-              display: false
-            },
-            grid: {
-              display: false
-            }
-          },
-          y: {
-            beginAtZero: true,
-            max: 100,
-            ticks: {
-              callback: (value) => value + '%'
+              label: (context) => `${context.label}: ${context.parsed}%`
             }
           }
         }
       }
     });
+    /**
+     * 2
+     */
+    // this.chart = new Chart('barChart', {
+    //   type: 'bar',
+    //   data: {
+    //     labels: ['เห็นด้วย', 'ไม่เห็นด้วย'],
+    //     datasets: [{
+    //       data: [this.agree, this.disagree],
+    //       backgroundColor: ['#4CAF50', '#F44336'],
+    //       borderRadius: 6,
+    //       barThickness: 70,
+    //       maxBarThickness: 80,
+    //     }]
+    //   },
+    //   options: {
+    //     responsive: true,
+    //     plugins: {
+    //       legend: {
+    //         display: false
+    //       },
+    //       tooltip: {
+    //         callbacks: {
+    //           label: (context) => `${context.parsed.y}%`
+    //         }
+    //       }
+    //     },
+    //     scales: {
+    //       x: {
+    //         ticks: {
+    //           display: false
+    //         },
+    //         grid: {
+    //           display: false
+    //         }
+    //       },
+    //       y: {
+    //         beginAtZero: true,
+    //         max: 100,
+    //         ticks: {
+    //           callback: (value) => value + '%'
+    //         }
+    //       }
+    //     }
+    //   }
+    // });
+
+    /**
+     * 3
+    */
 
     // this.chart = new Chart('semiPieChart', {
     //   type: 'doughnut',

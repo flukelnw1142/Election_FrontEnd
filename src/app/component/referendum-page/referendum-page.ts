@@ -23,7 +23,7 @@ import { color } from 'd3';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule],
+    HttpClientModule, SemiPie],
   templateUrl: './referendum-page.html',
   styleUrl: './referendum-page.scss'
 })
@@ -263,7 +263,7 @@ export class ReferendumPage implements OnInit {
       ภาคใต้: '/assets/South.svg',
     };
 
-    return paths[region] || '/assets/thailand_region.svg';
+    return paths[region] || '/assets/thailand.svg';
   }
 
   onSvgClickRegion(event: MouseEvent) {
@@ -334,7 +334,7 @@ export class ReferendumPage implements OnInit {
               });
             });
             this.selectRegion_Province_district = {
-              value: provinceName,
+              value: districtIds,
               type: 'province'
             }
           }
@@ -413,6 +413,7 @@ export class ReferendumPage implements OnInit {
     let districtIds = Object.keys(this.colorByDistrict)
     console.log(districtIds)
 
+    // ทั้งประเทศ
     if (this.selectedRegion === 'ทั้งประเทศ') {
       const allGroups = svg.querySelectorAll<SVGGElement>('g');
       allGroups.forEach(g => {
@@ -452,6 +453,7 @@ export class ReferendumPage implements OnInit {
         }
       }
     }
+    // ภาคอื่นๆ (ภาคใต้, ภาคเหนือ, ภาคตะวันออก, ภาคอีสาน,ภาคกลาง)
     else {
       for (let i = 0; i < districtIds.length; i++) {
         const id = districtIds[i];
@@ -528,6 +530,7 @@ export class ReferendumPage implements OnInit {
           }
         }
       }
+      // กรณีที่'เขต'นั้นไม่มีค่า
       if (districtIds.length === 0) {
         console.log(this.selectRegion_Province_district)
         if (this.selectRegion_Province_district.type === 'district') {
@@ -545,6 +548,25 @@ export class ReferendumPage implements OnInit {
               path.style.strokeWidth = '4px';
               path.style.stroke = '#ffffff';
               g.setAttribute('data-district-id', id);
+            }
+          }
+        }
+        else if (this.selectRegion_Province_district.type === 'province') {
+          for (let i = 0; i < this.selectRegion_Province_district.value.length; i++) {
+            const id = this.selectRegion_Province_district.value[i];
+            const g = svg.querySelector('#' + id) as SVGGElement | null;
+            if (g) {
+              const path = g.querySelector('circle');
+              if (path) {
+                path.removeAttribute('fill');
+                path.removeAttribute('stroke');
+
+                // FILL - แสดงสีตาม party หรือ default
+                path.style.fill = '#d3d3d3'
+                path.style.strokeWidth = '4px';
+                path.style.stroke = '#ffffff';
+                g.setAttribute('data-district-id', id);
+              }
             }
           }
         }
@@ -580,25 +602,22 @@ export class ReferendumPage implements OnInit {
             console.log('result referendum:', res);
             this.colorByDistrict = res.data.byProvince
             const question = res.data.questions[0]
-            // const agreeVotes = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
-            // const disagreeVotes = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
-
-            // const agreePercent =
-            //   question.goodVotes > 0 ? +(agreeVotes / question.goodVotes * 100).toFixed(2) : 0;
-
-            // const disagreePercent =
-            //   question.goodVotes > 0 ? +(disagreeVotes / question.goodVotes * 100).toFixed(2) : 0;
-
             const agreePercent = question.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
             const disagreePercent = question.options.find((o: any) => o.optionCode === ('disagree'))?.percentage ?? 0;
 
             const diffPercent = Math.abs(agreePercent - disagreePercent);
 
+            const agreeScore = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
+            const disagreeScore = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
+
             this.question = {
               ...question,
               agreePercent,
+              agreeScore,
               disagreePercent,
+              disagreeScore,
               showGuideLine: diffPercent <= 5,
+
             };
 
             // if(question.totalVotes === 0){

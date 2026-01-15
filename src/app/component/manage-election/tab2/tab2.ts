@@ -54,12 +54,7 @@ export class Tab2 {
   zone = '';
   private baseUrl = environment.api_url;
 
-  // provinceCtrl_Province = new FormControl('');
-  // provinceCtrl_Specific = new FormControl('');
-  // filteredProvinces!: Observable<any[]>;
-  // selectedProvince: any = '';
   selectedProvince2: any = '';
-  // selectedZone: any = '';
   selectedZone2: any = '';
 
   // ===== Province Auto =====
@@ -102,7 +97,6 @@ export class Tab2 {
 
   provinces: any[] = [];
 
-  // zonesInProvince: any[] = [];
   zonesInProvince2: any[] = [];
 
   constructor(
@@ -207,10 +201,7 @@ export class Tab2 {
       );
       return;
     }
-    // if (!this.selectedZone) {
-    //   this.sweetAlertService.showAlert('Load Fail', 'กรุณาเลือกเขต', 'warning');
-    //   return;
-    // }
+
     const selectedZone = this.zonesInProvince_Specific.find(
       (p) => p.areaName === this.selectedZone_Specific
     );
@@ -320,12 +311,6 @@ export class Tab2 {
   }
 
   private disconnectProvinceStream() {
-    // if (this.eventSourceProvince) {
-    //   this.eventSourceProvince.close();
-    //   this.eventSourceProvince = null;
-    //   this.responseJsonProvince_auto$.next('');
-    //   console.log('Province SSE Disconnected');
-    // }
     if (this.provinceAutoSub) {
       this.provinceAutoSub.unsubscribe();
       this.provinceAutoSub = undefined;
@@ -368,22 +353,50 @@ export class Tab2 {
       this.disconnectAllStream();
     }
   }
+  // onToggleChange_Province(event: any) {
+  //   // user พยายามเปิด
+  //   if (event.checked && !this.selectedProvince_Province) {
+  //     this.sweetAlertService.showAlert(
+  //       'แจ้งเตือน',
+  //       'กรุณาเลือกจังหวัดก่อน',
+  //       'warning'
+  //     );
+
+  //     // ❗ ย้อน toggle กลับทันที (แก้ที่ตัว component)
+  //     event.source.checked = false;
+  //     this.checked_Province_Auto = false;
+  //     return;
+  //   }
+
+  //   // ผ่านเงื่อนไขแล้ว
+  //   this.checked_Province_Auto = event.checked;
+
+  //   if (event.checked) {
+  //     this.startStreaming_Province_Auto();
+  //   } else {
+  //     this.disconnectProvinceStream();
+  //   }
+  // }
+
   onToggleChange_Province(event: any) {
-    // user พยายามเปิด
-    if (event.checked && !this.selectedProvince_Province) {
+    const isValid = this.provinces.some(
+      p => p.provinceName === this.provinceCtrl_Province.value
+    );
+
+    // ❌ กดเปิด แต่จังหวัดไม่ valid
+    if (event.checked && !isValid) {
       this.sweetAlertService.showAlert(
         'แจ้งเตือน',
-        'กรุณาเลือกจังหวัดก่อน',
+        'กรุณาเลือกจังหวัดจากรายการ',
         'warning'
       );
 
-      // ❗ ย้อน toggle กลับทันที (แก้ที่ตัว component)
       event.source.checked = false;
       this.checked_Province_Auto = false;
       return;
     }
 
-    // ผ่านเงื่อนไขแล้ว
+    // ✅ valid แล้ว
     this.checked_Province_Auto = event.checked;
 
     if (event.checked) {
@@ -392,6 +405,7 @@ export class Tab2 {
       this.disconnectProvinceStream();
     }
   }
+
 
   onTimeChange_All() {
     if (this.checked_All_Auto) {

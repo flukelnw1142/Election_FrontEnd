@@ -13,6 +13,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SemiPie } from "../semi-pie/semi-pie";
 import { Referendumservice } from '../referendum-page/service/referendumservice';
 import panzoom from "panzoom";
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-referendum-page',
@@ -24,7 +25,7 @@ import panzoom from "panzoom";
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule, SemiPie],
+    HttpClientModule, SemiPie, MatIcon],
   templateUrl: './referendum-page.html',
   styleUrl: './referendum-page.scss'
 })
@@ -57,9 +58,13 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   zoomIn() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() + 0.3); }
   zoomOut() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() - 0.3); }
   resetZoom() {
-    if (!this.panzoomInstance) return;
-    this.panzoomInstance.reset();
+    console.log("reset")
+   if (!this.panzoomInstance) return;
+
+  this.panzoomInstance.moveTo(0, 0); // reset pan
+  this.panzoomInstance.zoomAbs(0, 0, 1); // reset zoom
   }
+
 
 
   regionList: string[] = [

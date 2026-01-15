@@ -168,8 +168,6 @@ p {
 */
 
 // NEW!
-
-
 .show-province-all {
     width: 94vw;
     height: 85dvh;
@@ -235,6 +233,39 @@ p {
     }
 
     /*column 2*/
+    .svg-column {
+        position: relative;
+
+        .reset-btn {
+            width: 44px;
+            height: 44px;
+            background-color: #1e1e1e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            z-index: 20; // กันโดน SVG ทับ
+
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: #2a2a2a;
+                transform: scale(1.05);
+            }
+
+            mat-icon {
+                color: #fff;
+                font-size: 26px;
+            }
+        }
+    }
+
     .svg-container {
         flex: 1; // เต็มพื้นที่ column
         position: relative;
@@ -284,6 +315,8 @@ p {
 
         }
     }
+
+
 
     /*column 3*/
 

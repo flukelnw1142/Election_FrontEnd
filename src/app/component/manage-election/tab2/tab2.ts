@@ -104,7 +104,7 @@ export class Tab2 {
       (p) => p.provinceName === selectedName
     );
     const ProvinceID = selectedProv?.provID || null;
-    this.selectedProvince = ProvinceID;
+    this.selectedProvince = selectedName;
     if (ProvinceID) {
       this._Tab2.getDistrict(ProvinceID).subscribe({
         next: (res) => {
@@ -158,10 +158,10 @@ export class Tab2 {
     );
     const zoneId = selectedZone?.zone || null;
     const jsonData = {
-      provID: this.selectedProvince,
+      ProvinceName: this.selectedProvince,
       areaNo: zoneId,
     };
-    console.log(jsonData);
+
     // this.onToggleChange();
     this._Tab2.genElectionByProviceAndZone(jsonData).subscribe({
       next: (res) => {
@@ -280,7 +280,8 @@ export class Tab2 {
     this._Tab2.getProvince().subscribe({
       next: (res) => {
         this.provinces = res.data;
-
+        console.log("this.provinces :");
+        
         this.filteredProvinces = this.provinceCtrl.valueChanges.pipe(
           startWith(''),
           map((value) => this._filterProvinces(value || ''))

@@ -94,8 +94,8 @@ export class Tab3 {
     const selectedProv = this.provinces.find(
       (p) => p.provinceName === selectedName
     );
-    const ProvinceID = selectedProv?.provID || null;
-    this.selectedProvince = ProvinceID;
+    // const ProvinceID = selectedProv?.provID || null;
+    this.selectedProvince = selectedName;
   }
 
   onSubmitFilter() {
@@ -108,7 +108,7 @@ export class Tab3 {
       return;
     }
     const jsonData = {
-      provID: this.selectedProvince,
+      ProvinceName: this.selectedProvince,
     };
     console.log(jsonData);
     this.checked = false;

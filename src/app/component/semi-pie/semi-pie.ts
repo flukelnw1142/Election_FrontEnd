@@ -1,10 +1,13 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { CommonModule } from '@angular/common';
+
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-semi-pie',
+  imports: [CommonModule],
   templateUrl: './semi-pie.html',
   styleUrl: './semi-pie.scss'
 })
@@ -12,7 +15,13 @@ export class SemiPie implements AfterViewInit, OnChanges {
 
   @Input() agree = 0;
   @Input() disagree = 0;
-
+  @Input() question!: {
+    agreePercent: number;
+    agreeScore: number;
+    disagreePercent: number;
+    disagreeScore: number;
+    showGuideLine: boolean;
+  };
   chart!: Chart;
 
   ngAfterViewInit(): void {
@@ -20,6 +29,7 @@ export class SemiPie implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     if (this.chart) {
       this.chart.data.datasets[0].data = [this.agree, this.disagree];
       this.chart.update();

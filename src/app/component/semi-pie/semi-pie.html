@@ -3,8 +3,25 @@
     <!-- <canvas id="barChart"></canvas> -->
     <canvas id="pieChart"></canvas>
 
-    <div style="margin-top: 20px; font-size: 18px;">
+    <!-- <div style="margin-top: 20px; font-size: 18px;">
         <strong>เห็นด้วย {{ agree }}%</strong> |
         <strong>ไม่เห็นด้วย {{ disagree }}%</strong>
+    </div> -->
+
+    <div class="label-row">
+
+
+        <div class="label disagree">
+            <div class="title">ไม่เห็นด้วย</div>
+            <div class="percent">{{ question?.disagreePercent }}%</div>
+            <div class="score">({{ question?.disagreeScore | number }} คะแนน)</div>
+        </div>
+
+        <div class="label agree">
+            <div class="title">เห็นด้วย</div>
+            <div class="percent">{{ question?.agreePercent }}%</div>
+            <div class="score">({{ question?.agreeScore | number}} คะแนน)</div>
+        </div>
     </div>
+
 </div>

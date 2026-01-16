@@ -165,6 +165,10 @@
 .update-data {
     padding: .5rem;
 
+    .text-header {
+        font-weight: 700;
+    }
+
     .top-filter-row {
         display: flex;
         flex-direction: row;
@@ -228,6 +232,7 @@
     .pic-col .form-control,
     .score-col .form-control .party-col .form-control {
         width: 100%;
+
     }
 
     .ex-text {

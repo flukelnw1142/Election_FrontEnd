@@ -57,7 +57,7 @@
                                 name="province">
                         </div> -->
                         <div class="province-col">
-                            <label class="form-label mb-0">Province</label>
+                            <label class="form-label mb-0">จังหวัด</label>
                             <select class="form-select" [(ngModel)]="province" name="province">
                                 <option value="" disabled selected>-- เลือกจังหวัด --</option>
                                 <option *ngFor="let item of provinces" [value]="item.provinceName">
@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="header-row fw-bold d-flex">
-                        <div class="rank-col">Rank</div>
+                        <div class="rank-col">อันดับ</div>
                         <div class="pic-col">party_pic</div>
                         <div class="party-col">party_name</div>
                         <div class="score-col">score</div>
@@ -92,7 +92,7 @@
 
                     <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
                         <div *ngFor="let rank of ranks; let i = index" class="data-row d-flex mt-2 align-items-center">
-                            <div class="rank-col text-center">rank{{i+1}} :</div>
+                            <div class="rank-col text-center">อันดับ {{i+1}} :</div>
                             <div class="pic-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input1"
                                     name="input1-{{i}}" [placeholder]="isMobile ? 'party_pic' : ''" required>

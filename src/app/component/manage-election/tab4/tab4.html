@@ -15,7 +15,9 @@
                         <label class="form-label">จังหวัด :</label>
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>ค้นหาจังหวัด</mat-label>
-                            <input type="text" matInput [formControl]="provinceCtrl" [matAutocomplete]="autoProvince">
+                            <input type="text" matInput [formControl]="provinceCtrl" [matAutocomplete]="autoProvince"
+                                (focus)="openProvincePanel()" #provinceTrig="matAutocompleteTrigger"
+                                matAutocompleteTrigger>
                             <mat-autocomplete #autoProvince="matAutocomplete" [displayWith]="displayProvince">
                                 <mat-option *ngFor="let p of filteredProvinces | async" [value]="p">
                                     {{ p.provinceName }}

@@ -25,7 +25,7 @@ import { MatIcon } from "@angular/material/icon";
     MatButtonModule,
     ReactiveFormsModule,
     MatIcon
-],
+  ],
   templateUrl: './tab4.html',
   styleUrl: './tab4.scss',
 })
@@ -56,6 +56,9 @@ export class Tab4 {
   private responseJson$ = new BehaviorSubject<string>('');
   private provinceAutoSub?: Subscription;
   private provinceIndex = 0;
+
+  @ViewChild('provinceTrig') provinceTrig!: MatAutocompleteTrigger;
+  private showAllOnFocus = false;
 
   get responseJsonObs() {
     return this.responseJson$.asObservable();
@@ -111,6 +114,10 @@ export class Tab4 {
   }
 
   private _filterProvinces(value: string): any[] {
+    if (this.showAllOnFocus) {
+      this.showAllOnFocus = false;
+      return this.provinces;
+    }
     const filterValue = value;
     return this.provinces.filter(p =>
       p.provinceName.toLowerCase().includes(filterValue)
@@ -371,6 +378,15 @@ export class Tab4 {
     return province ? province.provinceName : '';
   }
 
+  openProvincePanel(): void {
+    this.showAllOnFocus = true;
 
+    const current = this.provinceCtrl.value ?? '';
+    this.provinceCtrl.setValue(current, { emitEvent: true });
+
+    setTimeout(() => {
+      this.provinceTrig?.openPanel();
+    }, 0);
+  }
 
 }

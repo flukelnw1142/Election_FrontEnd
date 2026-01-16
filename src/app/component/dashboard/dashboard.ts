@@ -183,7 +183,8 @@ export class Dashboard implements OnInit {
   winners: any;
   private loadingSubject = new BehaviorSubject<boolean>(true);
   loading$ = this.loadingSubject.asObservable();
-
+  bannerRigthtImages: any;
+  bannerLeftImages: any;
   async ngOnInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
@@ -272,6 +273,7 @@ export class Dashboard implements OnInit {
       this.mouseMoveSubject.subscribe((event: MouseEvent) =>
         this.handleTooltipLogic(event)
       );
+      this.getBannersponsor();
       this.checkScreenSize();
     } catch (error) {
       console.error('Error loading data:', error);
@@ -2454,5 +2456,25 @@ export class Dashboard implements OnInit {
       ภาคใต้: '/assets/South.svg',
     };
     return paths[region] || '/assets/thailand.svg';
+  }
+
+  getBannersponsor() {
+    this._dashboard.getBanner().subscribe({
+      next: (res) => {
+        const urls = (res ?? [])
+          .map((x: any) => x.supporterLogo)
+          .filter(Boolean);
+
+        const uniqueUrls = Array.from(new Set(urls));
+
+        // 👉 ขวา: เอาแค่ 5 อันแรก
+        // this.bannerImages = uniqueUrls.slice(0, 5);
+        this.bannerLeftImages = uniqueUrls.slice(0, 4);
+
+        // 👉 ซ้าย: ที่เหลือ
+        this.bannerRigthtImages = uniqueUrls.slice(4);
+
+      }
+    });
   }
 }

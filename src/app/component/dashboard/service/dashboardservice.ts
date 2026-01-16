@@ -233,4 +233,9 @@ export class DashboardService {
     let url = `${this.baseUrl}/mode/switch?to_certified=${to_certified}&updated_by=${updated_by.replace(" ", "_")}`;
     return this._http.post<any>(url, {});
   }
+
+
+   getBanner(): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/mode/supporters`);
+  }
 }

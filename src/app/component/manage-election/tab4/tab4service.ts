@@ -16,14 +16,13 @@ export class Tab4Service {
   }
 
   getReferendum(): Observable<any> {
-    // ตรวจสอบ URL อีกครั้งว่า /referendum/final/... ถูกต้องตามที่ Backend กำหนดหรือไม่
     return this._http.get<any>(`${this.baseUrl}/referendum/final/referendum-constitution-2026`)
   }
 
   genElectionReferendum(req: any): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/referendum/final/report/summary`,
-      { params: req }   // ✅ ส่งเป็น query string
+      { params: req } 
     );
   }
 

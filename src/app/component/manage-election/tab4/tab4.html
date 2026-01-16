@@ -3,11 +3,19 @@
     <div class="flex-column-container">
         <div class="left">
             <div class="manage-content">
-                <div class="set-auto-time">
-                    Set Auto Time <input type="number" min="1" step="1" [(ngModel)]="timeAuto" value="2"
-                        (change)="onTimeChange()"> sec
-                    <mat-slide-toggle [(ngModel)]="checked" (change)="onToggleChange()">
-                    </mat-slide-toggle>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="set-auto-time">
+                        Set Auto Time <input type="number" min="1" step="1" [(ngModel)]="timeAuto" value="2"
+                            (change)="onTimeChange()"> sec
+                        <mat-slide-toggle [(ngModel)]="checked" (change)="onToggleChange()">
+                        </mat-slide-toggle>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; user-select: none;">
+                        <span>ดึงข้อมูลทั้งประเทศ</span>
+                        <mat-icon (click)="onSubmitFilter_ALL()" style="font-weight: 700; cursor: pointer;"
+                            matTooltip="ทั้งประเทศ" matTooltipPosition="above" matTooltipShowDelay="0"
+                            matTooltipHideDelay="0">refresh</mat-icon>
+                    </div>
                 </div>
                 <div class="filter-row">
                     <!-- จังหวัด -->

@@ -11,6 +11,7 @@ import { Tab4Service } from './tab4service';
 import { SweetAlertService } from '../../../service/sweet-alert.service';
 import { environment } from '../../../../environments/environment';
 import { MatIcon } from "@angular/material/icon";
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-tab4',
@@ -24,7 +25,8 @@ import { MatIcon } from "@angular/material/icon";
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatIcon
+    MatIcon,
+    MatTooltipModule
   ],
   templateUrl: './tab4.html',
   styleUrl: './tab4.scss',
@@ -258,6 +260,21 @@ export class Tab4 {
         }
       },
       error: err => console.error(err)
+    });
+  }
+
+  onSubmitFilter_ALL() {
+    this._Tab4.genElectionReferendum({}).subscribe({
+      next: (res) => {
+        console.log("onSubmitFilter_ALL() : ", res);
+        console.log(JSON.stringify(res.REFERENDUM_REPORT));
+        this.responseJson$.next(JSON.stringify(res.REFERENDUM_REPORT, null, 2));
+        this.disconnectProvinceStream();
+        this.checked = false;
+      },
+      error: (err) => {
+        console.error('API error:', err);
+      },
     });
   }
 

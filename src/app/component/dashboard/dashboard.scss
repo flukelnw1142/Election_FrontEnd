@@ -196,6 +196,34 @@ mat-icon {
   position: relative;
 }
 
+.toggle-panel-btn {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 2000;
+
+  width: 40px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(197, 197, 197, 0.747);
+  color: #000000;
+  border: none;
+  border-radius: 8px 0 0 8px;
+
+  cursor: pointer;
+}
+
+/* hover เพิ่ม UX */
+.toggle-panel-btn:hover {
+  background: rgba(150, 150, 150, 0.8);
+}
+
+
 // >>> magnifier
 .magnifier {
   position: fixed;

@@ -120,6 +120,13 @@ export class Dashboard implements OnInit {
     },
   ];
 
+  show_dashboard_score_and_seat_Panel: boolean = true;
+
+  toggleScorePanel() {
+    this.show_dashboard_score_and_seat_Panel = !this.show_dashboard_score_and_seat_Panel;
+  }
+
+
   tooltipVisible = false;
   tooltipText = '';
   tooltipSubText = '';
@@ -1866,7 +1873,7 @@ export class Dashboard implements OnInit {
         this.detailWinnerZonePerParty = [];
       } else {
         this.detailWinnerZonePerParty = data;
-        console.log("detailWinnerZonePerParty : ", this.detailWinnerZonePerParty);
+        // console.log("detailWinnerZonePerParty : ", this.detailWinnerZonePerParty);
 
       }
       this.totalVoteZoneSeat = data[0].total_votes_all;
@@ -1876,7 +1883,7 @@ export class Dashboard implements OnInit {
   // Data แสดงข้อมูล ส.ส.บัญชีรายชื่อ BY Party
   private onPartyListSeatPerParty(partyName: string) {
     this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
-      // console.log('onPartyListSeatPerParty', data);
+      console.log('onPartyListSeatPerParty', partyName, data);
       this.detailPartyListPerPartyName = data;
       this.cd.markForCheck();
     });

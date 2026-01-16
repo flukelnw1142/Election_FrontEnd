@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -46,8 +46,6 @@ export class Tab4 {
   checked: boolean = false;
   timeAuto: number = 2;
   inputPercent: number = 0;
-  province = '';
-  zone = '';
 
   provinceCtrl = new FormControl<any>(null);
   filteredProvinces!: Observable<any[]>;
@@ -60,6 +58,8 @@ export class Tab4 {
   @ViewChild('provinceTrig') provinceTrig!: MatAutocompleteTrigger;
   private showAllOnFocus = false;
 
+  updateForm!: FormGroup;
+
   get responseJsonObs() {
     return this.responseJson$.asObservable();
   }
@@ -68,11 +68,22 @@ export class Tab4 {
   provinces: any[] = [];
   zonesInProvince: any[] = [];
 
+  province: any = null;
+  zone: any = null;
+  zonesInProvince_UPDATE: any[] = [];
+
   constructor(
     private _Tab4: Tab4Service,
     private cdr: ChangeDetectorRef,
-    private sweetAlertService: SweetAlertService
-  ) { }
+    private sweetAlertService: SweetAlertService,
+    private fb: FormBuilder,
+  ) {
+    this.updateForm = this.fb.group({
+      province: [null],
+      zone: [{ value: null, disabled: true }],
+      percent: [0],
+    });
+  }
 
   ngOnInit() {
     this.checkScreenSize();
@@ -113,6 +124,26 @@ export class Tab4 {
 
   }
 
+  ngAfterViewInit() {
+    this.updateForm.get('province')!.valueChanges.subscribe(province => {
+      const zoneCtrl = this.updateForm.get('zone')!;
+
+      if (!province) {
+        zoneCtrl.reset();
+        zoneCtrl.disable();
+        this.zonesInProvince_UPDATE = [];
+        return;
+      }
+
+      this._Tab4.getDistrict(province.provID).subscribe(res => {
+        this.zonesInProvince_UPDATE = res.data || [];
+        zoneCtrl.reset();
+        zoneCtrl.enable();
+      });
+    });
+  }
+
+
   private _filterProvinces(value: string): any[] {
     if (this.showAllOnFocus) {
       this.showAllOnFocus = false;
@@ -126,7 +157,6 @@ export class Tab4 {
 
   onProvinceChange(province: any) {
     const ProvinceID = province.provID;
-
     if (!ProvinceID) return;
 
     this._Tab4.getDistrict(ProvinceID).subscribe({
@@ -140,18 +170,97 @@ export class Tab4 {
     });
   }
 
+  // onProvinceChange_UPDATE(province: any) {
+  //   const ProvinceID = province.provID;
+  //   console.log(ProvinceID)
+
+  //   if (!ProvinceID) return;
+
+  //   this._Tab4.getDistrict(ProvinceID).subscribe({
+  //     next: (res) => {
+  //       setTimeout(() => {
+  //         this.zonesInProvince_UPDATE = res.data || [];
+  //         this.zone = '';
+  //       });
+
+  //     },
+  //     error: (err) => {
+  //       console.error('API error:', err);
+  //       this.zonesInProvince_UPDATE = [];
+  //     },
+  //   });
+  // }
+
+  onProvinceChange_UPDATE(province: any) {
+    if (!province || !province.provID) {
+      queueMicrotask(() => {
+        this.zonesInProvince_UPDATE = [];
+        this.zone = null;
+      });
+      return;
+    }
+
+    const ProvinceID = province.provID;
+
+    this._Tab4.getDistrict(ProvinceID).subscribe({
+      next: (res) => {
+        queueMicrotask(() => {
+          this.zonesInProvince_UPDATE = res.data || [];
+          this.zone = null; // reset เขต
+        });
+      },
+      error: (err) => {
+        console.error(err);
+        this.zonesInProvince_UPDATE = [];
+      }
+    });
+  }
+
+  // getReferendum() {
+  //   this._Tab4.getReferendum().subscribe({
+  //     next: (res) => {
+  //       const result = res.data ? res.data : res;
+  //       console.log(result)
+  //       if (result && result.questions) {
+  //         this.referendumQuestions = result.questions;
+  //         this.inputPercent = result.coverage?.percentage || 0;
+  //         this.cdr.detectChanges();
+  //       }
+  //     }
+  //   });
+  // }
+
   getReferendum() {
     this._Tab4.getReferendum().subscribe({
       next: (res) => {
         const result = res.data ? res.data : res;
+
         if (result && result.questions) {
-          this.referendumQuestions = result.questions;
+          this.referendumQuestions = result.questions.map((q: any) => ({
+            ...q,
+
+            // reset ระดับ question
+            goodVotes: 0,
+            totalVotes: 0,
+            invalidVotes: 0,
+            noVotes: 0,
+
+            // reset options
+            options: q.options.map((opt: any) => ({
+              ...opt,
+              totalVotes: 0,
+              percentage: 0
+            }))
+          }));
+
+          // percent ด้านบน
           this.inputPercent = result.coverage?.percentage || 0;
-          this.cdr.detectChanges();
         }
-      }
+      },
+      error: err => console.error(err)
     });
   }
+
 
   onSubmitFilter() {
     const provinceObj = this.provinceCtrl.value;
@@ -175,8 +284,8 @@ export class Tab4 {
 
     this._Tab4.genElectionReferendum(jsonData).subscribe({
       next: (res) => {
-        console.log("genElectionReferendum() : ", res);
-        console.log(JSON.stringify(res.REFERENDUM_REPORT));
+        // console.log("genElectionReferendum() : ", res);
+        // console.log(JSON.stringify(res.REFERENDUM_REPORT));
         this.responseJson$.next(JSON.stringify(res.REFERENDUM_REPORT, null, 2));
         this.disconnectProvinceStream();
         this.checked = false;
@@ -284,7 +393,7 @@ export class Tab4 {
       )
       .subscribe({
         next: (res) => {
-          console.log(JSON.stringify(res.REFERENDUM_REPORT));
+          // console.log(JSON.stringify(res.REFERENDUM_REPORT));
           this.responseJson$.next(JSON.stringify(res.REFERENDUM_REPORT, null, 2));
         },
         error: (err) => {
@@ -303,10 +412,19 @@ export class Tab4 {
 
   // GEN JSON
   onSubmit(form: any) {
+    const provinceObj = this.updateForm.get('province')?.value;
+    const zoneObj = this.updateForm.get('zone')?.value;
+    const percent = this.updateForm.get('percent')?.value;
+
+    const displayArea =
+      zoneObj?.areaName || provinceObj?.provinceName || 'ไม่ระบุจังหวัด';
+
+    console.log(displayArea)
+
     const jsonData = {
       "REFERENDUM_REPORT": {
-        "province": this.province || "ไม่ระบุจังหวัด",
-        "counted_percent": this.inputPercent || 0,
+        "province": displayArea,
+        "counted_percent": percent || 0,
         "questions": this.referendumQuestions.map(q => {
           const agreeScore = Number(this.findOption(q, 'agree').totalVotes || 0);
           const disagreeScore = Number(this.findOption(q, 'disagree').totalVotes || 0);
@@ -328,6 +446,8 @@ export class Tab4 {
     };
 
     this.responseJson$.next(JSON.stringify(jsonData, null, 2));
+    this.disconnectProvinceStream();
+    this.checked = false;
   }
 
   onInputChange(event: any, q: any, type: string) {
@@ -342,6 +462,8 @@ export class Tab4 {
     } else if (type === 'abstain') {
       q.noVotes = isNaN(numValue) ? 0 : numValue;
     }
+
+    this.recalculatePercent(q);
   }
 
   getProvince() {
@@ -374,7 +496,7 @@ export class Tab4 {
   }
 
   displayProvince(province: any): string {
-    console.log(province)
+    // console.log(province)
     return province ? province.provinceName : '';
   }
 
@@ -388,5 +510,28 @@ export class Tab4 {
       this.provinceTrig?.openPanel();
     }, 0);
   }
+
+  recalculatePercent(q: any) {
+    const agreeOpt = this.findOption(q, 'agree');
+    const disagreeOpt = this.findOption(q, 'disagree');
+
+    const agree = Number(agreeOpt.totalVotes || 0);
+    const disagree = Number(disagreeOpt.totalVotes || 0);
+
+    const total = agree + disagree;
+
+    // เก็บ total ไว้ (ใช้ซ้ำ)
+    q.totalVotes = total;
+
+    if (total === 0) {
+      agreeOpt.percentage = 0;
+      disagreeOpt.percentage = 0;
+      return;
+    }
+
+    agreeOpt.percentage = Number(((agree / total) * 100).toFixed(2));
+    disagreeOpt.percentage = Number(((disagree / total) * 100).toFixed(2));
+  }
+
 
 }

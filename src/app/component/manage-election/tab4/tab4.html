@@ -54,26 +54,39 @@
                 <div class="update-data">
                     <span class="text-header">อัพเดทข้อมูล</span>
 
-                    <div class="top-filter-row">
+                    <div class="top-filter-row" [formGroup]="updateForm">
+
+                        <!-- จังหวัด -->
                         <div class="province-col">
-                            <label class="form-label mb-0">Province</label>
-                            <select class="form-select" [(ngModel)]="province" name="province">
-                                <option value="" disabled selected>-- เลือกจังหวัด --</option>
-                                <option *ngFor="let item of provinces" [value]="item.provinceName">
-                                    {{ item.provinceName }}
+                            <label class="form-label mb-0">จังหวัด</label>
+                            <select class="form-select" formControlName="province">
+                                <option [ngValue]="null">-- เลือกจังหวัด --</option>
+                                <option *ngFor="let p of provinces" [ngValue]="p">
+                                    {{ p.provinceName }}
                                 </option>
                             </select>
                         </div>
 
-                        <div class="zone-col">
+                        <!-- เขต -->
+                        <div class="district-col">
+                            <label class="form-label mb-0">เขต</label>
+                            <select class="form-select" formControlName="zone">
+                                <option [ngValue]="null">-- เลือกเขต --</option>
+                                <option *ngFor="let z of zonesInProvince_UPDATE" [ngValue]="z">
+                                    {{ z.areaName }}
+                                </option>
+                            </select>
                         </div>
 
+                        <!-- percent -->
                         <div class="percent-count">
                             <label class="form-label mb-0">นับไปแล้ว (%)</label>
-                            <input type="number" class="form-control" [(ngModel)]="inputPercent" name="inputPercent"
-                                min="0" step="0.1" max="100">
+                            <input type="number" class="form-control" formControlName="percent" min="0" max="100"
+                                step="0.1" />
                         </div>
+
                     </div>
+
 
                     <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
                         <div *ngFor="let q of referendumQuestions; let i = index"

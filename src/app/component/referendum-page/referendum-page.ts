@@ -31,10 +31,10 @@ import { MatIcon } from "@angular/material/icon";
 })
 export class ReferendumPage implements OnInit, AfterViewInit {
 
-
   ngAfterViewInit() {
     this.initPanzoom();
   }
+
 
   private panzoomInstance: any;
 
@@ -64,7 +64,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     this.panzoomInstance.moveTo(0, 0); // reset pan
     this.panzoomInstance.zoomAbs(0, 0, 1); // reset zoom
   }
-
 
 
   regionList: string[] = [
@@ -251,9 +250,14 @@ export class ReferendumPage implements OnInit, AfterViewInit {
               processedSvg.outerHTML
             );
             this.cdr.markForCheck();
+            setTimeout(() => {
+              this.bindSvgHoverEvents();
+            }, 0);
+
           });
         });
       })
+
     }
     else {
       this.handleGetResultReferendum(region, 'region').then(() => {
@@ -747,9 +751,65 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       });
     });
   }
+  bindSvgHoverEvents() {
+    const host = this.svgContainerRegion?.nativeElement;
+    if (!host) return;
 
+    host.onmouseenter = null;
+    host.onmouseleave = null;
 
+    this.zone.runOutsideAngular(() => {
 
+      host.addEventListener('mousemove', (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        const g = target.closest('g[id]') as HTMLElement | null;
+        if (!g) return;
 
+        // 🔥 hover element เดิม → ไม่ต้องทำอะไร
+        if (this.lastHoverId === g.id) {
+          // แค่อัปเดตตำแหน่ง tooltip
+          this.hoverX = e.clientX + 12;
+          this.hoverY = e.clientY + 12;
+          return;
+        }
+
+        this.lastHoverId = g.id;
+
+        // 🔥 เข้า Angular เฉพาะตอนเปลี่ยนเขต
+        this.zone.run(() => {
+          this.onRegionHover(g.id, e);
+        });
+      });
+
+      host.addEventListener('mouseleave', () => {
+        this.lastHoverId = null;
+        this.zone.run(() => this.onRegionLeave());
+      });
+
+    });
+  }
+
+  private lastHoverId: string | null = null;
+  hoverId: string | null = null;
+  hoverText = '';
+  hoverX = 0;
+  hoverY = 0;
+
+  onRegionHover(regionId: string, event: MouseEvent) {
+    if (!/^[A-Z]+_\d+$/.test(regionId)) return;
+
+    const data = this.colorByDistrict?.[regionId];
+    if (!data) return;
+
+    this.hoverId = regionId;
+    this.hoverText = `${data.provinceNameTH} เขต ${regionId.split('_')[1]}`;
+    this.hoverX = event.clientX + 12;
+    this.hoverY = event.clientY + 12;
+  }
+
+  onRegionLeave() {
+    this.hoverId = null;
+    this.hoverText = '';
+  }
 
 }

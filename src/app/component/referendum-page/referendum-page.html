@@ -30,7 +30,8 @@
                     <div>
 
                         <div class="referendum-layout">
-                            <app-semi-pie [agree]="question.agreePercent" [disagree]="question.disagreePercent" [question]="question">
+                            <app-semi-pie [agree]="question.agreePercent" [disagree]="question.disagreePercent"
+                                [question]="question">
                             </app-semi-pie>
 
                             <hr>
@@ -97,4 +98,8 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="svg-tooltip" *ngIf="hoverId" [style.left.px]="hoverX" [style.top.px]="hoverY">
+    {{ hoverText }}
 </div>

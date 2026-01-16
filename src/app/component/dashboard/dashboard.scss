@@ -879,18 +879,43 @@ PAGE 6
       width: 5rem;
     }
 
+    // .logo-container {
+    //   width: 7rem;
+    //   height: 7rem;
+    //   display: inline-block;
+    //   background: white;
+
+    // }
+
+    // .logo-img {
+    //   width: 100%;
+    //   height: 100%;
+    //   border-radius: 50%;
+    //   object-fit: cover;
+    // }
+
     .logo-container {
       width: 7rem;
       height: 7rem;
-      display: inline-block;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: white;
+      border-radius: 50%;
+      overflow: hidden;
+      /* ⭐ สำคัญมาก */
     }
 
     .logo-img {
       width: 100%;
       height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
+      object-fit: contain;
+      padding: 1rem;
     }
+
+
   }
 }
 

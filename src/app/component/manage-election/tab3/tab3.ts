@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -29,7 +29,8 @@ export class Tab3 {
   private destroy$ = new Subject<void>();
   private eventSource: EventSource | null = null;
   isMobile: boolean = false;
-
+  @ViewChild('provinceTrig') provinceTrig!: MatAutocompleteTrigger;
+  private showAllOnFocus = false;
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkScreenSize();
@@ -72,7 +73,7 @@ export class Tab3 {
     private _Tab3: Tab3Service,
     private cdr: ChangeDetectorRef,
     private sweetAlertService: SweetAlertService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.checkScreenSize();
@@ -235,9 +236,24 @@ export class Tab3 {
   }
 
   private _filterProvinces(value: string): any[] {
+    if (this.showAllOnFocus) {
+      this.showAllOnFocus = false;
+      return this.provinces;
+    }
     const filterValue = value.toLowerCase();
     return this.provinces.filter((p) =>
       p.provinceName.toLowerCase().includes(filterValue)
     );
+  }
+
+  openProvincePanel(): void {
+    this.showAllOnFocus = true;
+
+    const current = this.provinceCtrl.value ?? '';
+    this.provinceCtrl.setValue(current, { emitEvent: true });
+
+    setTimeout(() => {
+      this.provinceTrig?.openPanel();
+    }, 0);
   }
 }

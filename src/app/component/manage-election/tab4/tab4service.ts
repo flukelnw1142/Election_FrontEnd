@@ -15,6 +15,11 @@ export class Tab4Service {
     return this._http.get<any>(`${this.baseUrl}/DistrictElectionResults/get-provinces`);
   }
 
+  getDistrict(provID: number | string): Observable<any> {
+    return this._http.get<any>(`${this.baseUrl}/DistrictElectionResults/get-election-areas?provID=${provID}`);
+  }
+
+
   getReferendum(): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/referendum/final/referendum-constitution-2026`)
   }

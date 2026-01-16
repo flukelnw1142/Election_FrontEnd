@@ -16,9 +16,8 @@
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>ค้นหาจังหวัด</mat-label>
                             <input type="text" matInput [formControl]="provinceCtrl" [matAutocomplete]="autoProvince">
-                            <mat-autocomplete #autoProvince="matAutocomplete"
-                                (optionSelected)="onProvinceSelected($event)">
-                                <mat-option *ngFor="let p of filteredProvinces | async" [value]="p.provinceName">
+                            <mat-autocomplete #autoProvince="matAutocomplete" [displayWith]="displayProvince">
+                                <mat-option *ngFor="let p of filteredProvinces | async" [value]="p">
                                     {{ p.provinceName }}
                                 </mat-option>
                             </mat-autocomplete>
@@ -27,15 +26,19 @@
 
                     <!-- เขต -->
                     <div class="flex-fill">
-                        <!-- <label class="form-label">เขต :</label>
+                        <label class="form-label">เขต :</label>
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>เลือกเขต</mat-label>
-                            <mat-select [(ngModel)]="selectedZone" [disabled]="!selectedProvince">
+                            <mat-select [(ngModel)]="selectedZone" [disabled]="!zonesInProvince.length">
                                 <mat-option *ngFor="let zone of zonesInProvince" [value]="zone.areaName">
                                     {{ zone.areaName }}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field> -->
+                            <button *ngIf="selectedZone" mat-icon-button matSuffix type="button" aria-label="Clear zone"
+                                (click)="clearZone($event)">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
                     </div>
 
                     <!-- ปุ่ม Submit -->
@@ -50,11 +53,6 @@
                     <span class="text-header">อัพเดทข้อมูล</span>
 
                     <div class="top-filter-row">
-                        <!-- <div class="province-col">
-                            <label class="form-label mb-0">province</label>
-                            <input type="text" class="form-control"  [(ngModel)]="province"
-                                name="province">
-                        </div> -->
                         <div class="province-col">
                             <label class="form-label mb-0">Province</label>
                             <select class="form-select" [(ngModel)]="province" name="province">
@@ -75,20 +73,6 @@
                         </div>
                     </div>
 
-                    <!-- <div class="header-row fw-bold d-flex">
-                        <div class="rank-col">Rank</div>
-                        <div class="pic-col">party_pic</div>
-                        <div class="party-col">party_name</div>
-                        <div class="score-col">score</div>
-                    </div> -->
-
-                    <!-- <div class="header-row fw-bold d-flex">
-                        <div class="rank-col">Rank</div>
-                        <div class="pic-col">party_pic <span class="ex-text">01</span></div>
-                        <div class="party-col">party_name <span class="ex-text">ชาติพัฒนากล้า</span></div>
-                        <div class="score-col">score <span class="ex-text">300,000</span></div>
-                    </div> -->
-
                     <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
                         <div *ngFor="let q of referendumQuestions; let i = index"
                             class="referendum-mockup mt-4 p-4 bg-white rounded shadow-sm border mb-4">
@@ -101,8 +85,7 @@
                                     <div class="card border-0 rounded-3 shadow-sm"
                                         style="background-color: #f6ffed; border: 1px solid #b7eb8f !important;">
                                         <div class="card-body p-3">
-                                            <label class="fw-bold small text-success mb-2">AGREE (คะแนน) {{
-                                                getPercent(q, 'agree') }}%</label>
+                                            <label class="fw-bold small text-success mb-2">AGREE (คะแนน) </label>
                                             <input type="text" class="form-control text-center fw-bold"
                                                 [value]="formatNumber(findOption(q, 'agree').totalVotes)"
                                                 (input)="onInputChange($event, q, 'agree')"
@@ -115,8 +98,7 @@
                                     <div class="card border-0 rounded-3 shadow-sm"
                                         style="background-color: #fff1f0; border: 1px solid #ffa39e !important;">
                                         <div class="card-body p-3">
-                                            <label class="fw-bold small text-danger mb-2">DISAGREE (คะแนน) {{
-                                                getPercent(q, 'disagree') }}%</label>
+                                            <label class="fw-bold small text-danger mb-2">DISAGREE (คะแนน) </label>
                                             <input type="text" class="form-control text-center fw-bold"
                                                 [value]="formatNumber(findOption(q, 'disagree').totalVotes)"
                                                 (input)="onInputChange($event, q, 'disagree')"
@@ -183,7 +165,7 @@
 
 
                                 <div class="mt-3 text-center small text-muted border-top pt-2">
-                                    รวมคะแนนข้อที่ {{ q.questionNumber }}: 
+                                    รวมคะแนนข้อที่ {{ q.questionNumber }}:
                                     <span class="fw-bold text-dark">
                                         {{ formatNumber(getTotal(q)) }}
                                     </span>
@@ -195,8 +177,6 @@
                             <button class="btn btn-primary" type="submit">GEN JSON</button>
                         </div>
                     </form>
-
-
 
                 </div>
             </div>

@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BehaviorSubject, map, Observable, startWith, Subject } from 'rxjs';
+import { BehaviorSubject, interval, map, Observable, startWith, Subject, Subscription, switchMap } from 'rxjs';
 import { Tab4Service } from './tab4service';
 import { SweetAlertService } from '../../../service/sweet-alert.service';
 import { environment } from '../../../../environments/environment';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-tab4',
@@ -23,7 +24,8 @@ import { environment } from '../../../../environments/environment';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-  ],
+    MatIcon
+],
   templateUrl: './tab4.html',
   styleUrl: './tab4.scss',
 })
@@ -46,13 +48,14 @@ export class Tab4 {
   inputPercent: number = 0;
   province = '';
   zone = '';
-  private baseUrl = environment.api_url;
 
-  provinceCtrl = new FormControl('');
+  provinceCtrl = new FormControl<any>(null);
   filteredProvinces!: Observable<any[]>;
   selectedProvince: any = '';
   selectedZone: any = '';
   private responseJson$ = new BehaviorSubject<string>('');
+  private provinceAutoSub?: Subscription;
+  private provinceIndex = 0;
 
   get responseJsonObs() {
     return this.responseJson$.asObservable();
@@ -60,9 +63,10 @@ export class Tab4 {
 
   referendumQuestions: any[] = [];
   provinces: any[] = [];
+  zonesInProvince: any[] = [];
 
   constructor(
-    private tab4Service: Tab4Service,
+    private _Tab4: Tab4Service,
     private cdr: ChangeDetectorRef,
     private sweetAlertService: SweetAlertService
   ) { }
@@ -71,25 +75,66 @@ export class Tab4 {
     this.checkScreenSize();
     this.getProvince();
     this.getReferendum();
-  }
-
-  private _filterProvince(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.provinces.filter((p) => p.toLowerCase().includes(filterValue));
-  }
-
-  onProvinceSelected(event: any) {
-    const selectedName = event.option.value;
-    const selectedProv = this.provinces.find(
-      (p) => p.provinceName === selectedName
+    this.filteredProvinces = this.provinceCtrl.valueChanges.pipe(
+      startWith(null),
+      map(value => {
+        const name =
+          typeof value === 'string'
+            ? value
+            : value?.provinceName || '';
+        return this._filterProvinces(name);
+      })
     );
-    const ProvinceID = selectedProv?.provID || null;
-    this.selectedProvince = ProvinceID;
-    this.province = selectedName;
+
+    this.provinceCtrl.valueChanges.subscribe(value => {
+      if (typeof value === 'string') {
+        const found = this.provinces.find(
+          p => p.provinceName === value
+        );
+
+        if (found) {
+          this.provinceCtrl.setValue(found, { emitEvent: false });
+          this.onProvinceChange(found);
+        } else {
+          this.zonesInProvince = [];
+          this.selectedZone = null;
+        }
+        return;
+      }
+
+      // กรณีเลือกจาก dropdown (object)
+      if (value && value.provID) {
+        this.onProvinceChange(value);
+      }
+    });
+
+  }
+
+  private _filterProvinces(value: string): any[] {
+    const filterValue = value;
+    return this.provinces.filter(p =>
+      p.provinceName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onProvinceChange(province: any) {
+    const ProvinceID = province.provID;
+
+    if (!ProvinceID) return;
+
+    this._Tab4.getDistrict(ProvinceID).subscribe({
+      next: (res) => {
+        this.zonesInProvince = res.data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('API error:', err);
+      },
+    });
   }
 
   getReferendum() {
-    this.tab4Service.getReferendum().subscribe({
+    this._Tab4.getReferendum().subscribe({
       next: (res) => {
         const result = res.data ? res.data : res;
         if (result && result.questions) {
@@ -102,7 +147,8 @@ export class Tab4 {
   }
 
   onSubmitFilter() {
-    if (!this.province) {
+    const provinceObj = this.provinceCtrl.value;
+    if (!provinceObj) {
       this.sweetAlertService.showAlert(
         'Load Fail',
         'กรุณาเลือกจังหวัด',
@@ -110,22 +156,28 @@ export class Tab4 {
       );
       return;
     }
+
+    const province = provinceObj.provinceName;
+
     const jsonData = {
-      provinceNameTH: this.province
+      provinceNameTH: province,
+      ...(this.selectedZone ? { AreaNo: this.selectedZone.split(" ")[this.selectedZone.split(" ").length - 1] } : {})
     };
 
-    this.tab4Service.genElectionReferendum(jsonData).subscribe({
+    console.log(jsonData)
+
+    this._Tab4.genElectionReferendum(jsonData).subscribe({
       next: (res) => {
-        console.log("asdsad : ",res);
-        
+        console.log("genElectionReferendum() : ", res);
         console.log(JSON.stringify(res.REFERENDUM_REPORT));
         this.responseJson$.next(JSON.stringify(res.REFERENDUM_REPORT, null, 2));
+        this.disconnectProvinceStream();
+        this.checked = false;
       },
       error: (err) => {
         console.error('API error:', err);
       },
     });
-    console.log(this.responseJson$)
   }
 
   // --- ฟังก์ชันคำนวณ  ---
@@ -138,8 +190,10 @@ export class Tab4 {
   }
 
   getPercent(q: any, type: string): string {
+    // console.log(q, type)
     if (type === 'agree' || type === 'disagree') {
       const opt = this.findOption(q, type);
+      // console.log(opt)
       return opt.percentage ? opt.percentage.toFixed(2) : '0.00';
     } else if (type === 'invalid') {
       const total = q.totalVotes || 0;
@@ -178,89 +232,69 @@ export class Tab4 {
 
   onToggleChange() {
     if (this.checked) {
-      this.startStreaming();
+      this.startStreaming_Province_Auto();
     } else {
-      this.disconnectStream();
+      this.disconnectProvinceStream();
     }
   }
 
   onTimeChange() {
     if (this.checked) {
-      setTimeout(() => this.startStreaming(), 100);
+      setTimeout(() => this.startStreaming_Province_Auto(), 100);
     }
   }
 
-  private pollingSubscription: any;
+  clearZone(event: MouseEvent) {
+    event.stopPropagation(); // ❗ ป้องกัน mat-select เปิด dropdown
+    this.selectedZone = null;
+  }
 
-  private startStreaming() {
-    this.disconnectStream(); // ล้างของเก่า
+  private startStreaming_Province_Auto() {
+    // กันซ้ำ
+    this.disconnectProvinceStream();
 
-    console.log('Switching to Polling mode every', this.timeAuto, 'sec');
+    if (!this.provinces || this.provinces.length === 0) {
+      console.warn('No provinces');
+      return;
+    }
 
-    // ใช้ setInterval หรือ timer จาก rxjs เพื่อดึงข้อมูลเป็นระยะ
-    this.pollingSubscription = setInterval(() => {
-      this.tab4Service.getReferendum().subscribe({
+
+    this.provinceAutoSub = interval(this.timeAuto * 1000)
+      .pipe(
+        switchMap(() => {
+          const province = this.provinces[this.provinceIndex].provinceName;
+          // ขยับ index (วนกลับ 0)
+          this.provinceIndex =
+            (this.provinceIndex + 1) % this.provinces.length;
+          const jsonData = {
+            provinceNameTH: province,
+            // ...(this.selectedZone ? { AreaNo: this.selectedZone.split(" ")[this.selectedZone.split(" ").length - 1] } : {})
+          };
+
+          console.log(jsonData)
+          return this._Tab4.genElectionReferendum(jsonData);
+        })
+      )
+      .subscribe({
         next: (res) => {
-          const result = res.data ? res.data : res;
-          this.responseJson$.next(JSON.stringify(result, null, 2));
-
-          // ถ้าต้องการให้อัปเดต UI ด้วย
-          this.referendumQuestions = result.questions;
-          this.cdr.detectChanges();
+          console.log(JSON.stringify(res.REFERENDUM_REPORT));
+          this.responseJson$.next(JSON.stringify(res.REFERENDUM_REPORT, null, 2));
         },
-        error: (err) => console.error('Polling error:', err)
+        error: (err) => {
+          console.error('Province auto error', err);
+        }
       });
-    }, this.timeAuto * 1000); // แปลงวินาทีเป็นมิลลิวินาที
   }
 
-  private disconnectStream() {
-    if (this.pollingSubscription) {
-      clearInterval(this.pollingSubscription);
-      this.pollingSubscription = null;
+  private disconnectProvinceStream() {
+    if (this.provinceAutoSub) {
+      this.provinceAutoSub.unsubscribe();
+      this.provinceAutoSub = undefined;
+      console.log('Province auto stopped');
     }
-    if (this.eventSource) {
-      this.eventSource.close();
-      this.eventSource = null;
-    }
-    this.responseJson$.next('');
   }
 
-  // private startStreaming() {
-  //   this.disconnectStream();
-  //   const baseUrl = `${this.baseUrl}/referendum/final/referendum-constitution-2026`;
-  //   const params = new URLSearchParams({
-  //     auto_time: this.timeAuto.toString(),
-  //     is_enabled: 'true',
-  //   });
-  //   const url = `${baseUrl}?${params.toString()}`;
-  //   console.log('Connecting to SSE:', url);
-
-  //   this.eventSource = new EventSource(url);
-  //   this.eventSource.onopen = () => console.log('SSE Connected');
-  //   this.eventSource.onmessage = (event) => {
-  //     try {
-  //       const data = JSON.parse(event.data);
-  //       this.responseJson$.next(JSON.stringify(data, null, 2));
-  //     } catch (err) {
-  //       console.error('Parse error:', err);
-  //     }
-  //   };
-  //   this.eventSource.onerror = (err) => {
-  //     console.error('SSE Error:', err);
-  //   };
-  // }
-
-  // private disconnectStream() {
-  //   if (this.eventSource) {
-  //     this.eventSource.close();
-  //     this.eventSource = null;
-  //     this.responseJson$.next('');
-  //     console.log('SSE Disconnected');
-  //   }
-  // }
-
-
-  // โครงสร้าง JSON
+  // GEN JSON
   onSubmit(form: any) {
     const jsonData = {
       "REFERENDUM_REPORT": {
@@ -304,7 +338,7 @@ export class Tab4 {
   }
 
   getProvince() {
-    this.tab4Service.getProvince().subscribe({
+    this._Tab4.getProvince().subscribe({
       next: (res) => {
         this.provinces = res.data;
         this.filteredProvinces = this.provinceCtrl.valueChanges.pipe(
@@ -319,12 +353,6 @@ export class Tab4 {
     });
   }
 
-  private _filterProvinces(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.provinces.filter((p) =>
-      p.provinceName.toLowerCase().includes(filterValue)
-    );
-  }
 
   findOption(q: any, code: string) {
     if (!q || !q.options) return { totalVotes: 0, percentage: 0 };
@@ -333,10 +361,16 @@ export class Tab4 {
   }
 
   ngOnDestroy(): void {
-    this.disconnectStream();
+    this.disconnectProvinceStream();
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  displayProvince(province: any): string {
+    console.log(province)
+    return province ? province.provinceName : '';
+  }
+
 
 
 }

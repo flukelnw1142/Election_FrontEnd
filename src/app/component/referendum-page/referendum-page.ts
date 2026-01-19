@@ -825,10 +825,31 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
     console.log('data found:', data);
 
-    const text = `${data.provinceNameTH}`;
+    const agreeText = data.questions[0].options[0].optionCode === "agree"
+      ? 'เห็นด้วย'
+      : 'ไม่เห็นด้วย';
+
+    const isAgree = data.questions[0].options[0].optionCode === "agree";
+    const circleColor = isAgree ? '#22c55e' : '#ef4444'; // เขียว Tailwind-like / แดง
+
+    const voteCount = Number(data.questions[0].options[0].totalVotes).toLocaleString('th-TH');
+
     const contentEl = this.tooltipElement.querySelector('.tooltip-content');
     if (contentEl) {
-      contentEl.textContent = text;
+      contentEl.innerHTML = `
+        <div class="province-name" style="font-size: 18px;">${data.provinceNameTH}</div>
+        <div class="agree-text" style="display: flex; align-items: center; gap: 8px;">
+          <span style="
+            width: 12px;
+            height: 12px;
+            background-color: ${circleColor};
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+          "></span>
+          <span>${agreeText} ${voteCount} คน</span>
+        </div>
+      `;
       // console.log('set text to:', text);
     } else {
       // console.log('ไม่เจอ .tooltip-content ภายใน tooltipElement');
@@ -847,12 +868,13 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     el.style.zIndex = '99999';
     el.style.pointerEvents = 'none';
     el.style.minWidth = '140px';
-    el.style.fontSize = '14px';
+    el.style.fontSize = '16px';
     el.style.whiteSpace = 'nowrap';
 
     el.style.display = 'block';
     // console.log('set display block, position:', el.style.position, 'left:', el.style.left);
   }
+
   onRegionLeave() {
     if (!this.tooltipElement) {
       // console.log('[onRegionLeave] tooltipElement ไม่มีค่า');

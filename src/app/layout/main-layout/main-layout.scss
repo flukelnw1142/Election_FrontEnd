@@ -342,7 +342,7 @@ input:checked+.slider:before {
     }
 
     .referendum-link {
-        display: none;
+        // display: none;
     }
 
     .status-row {
@@ -357,25 +357,21 @@ input:checked+.slider:before {
             }
 
             .time {
-                font-size: 14px;
+                font-size: 16px;
             }
         }
 
-        .status-right.zone,
-        .status-right.party {
-            display: inline-flex;
-            font-size: 10px;
-        }
-
-        .status-right.party::before {
-            content: "|";
-            margin: 0 8px;
-            opacity: 0.6;
+        .zoneAndParty {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
         }
 
         .status-right.zone,
         .status-right.party {
-            flex-wrap: nowrap;
+            font-size: 14px;
         }
     }
 

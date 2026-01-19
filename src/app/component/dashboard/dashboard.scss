@@ -1459,18 +1459,38 @@ PAGE 7
   position: absolute;
   bottom: 0;
   right: 0;
-  display: flex;
+  display: grid;
   gap: 10px;
   z-index: 1003;
   padding: 5px;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(5, auto);
 }
 
 .banner-left-container {
   position: absolute;
   bottom: 0;
   left: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(5, auto);
+  gap: 10px;
+  z-index: 1003;
+  padding: 5px;
+}
+
+
+.banner-left-top-container {
+  position: absolute;
+  top: -50;
+  left: 0;
   display: flex;
   gap: 10px;
   z-index: 1003;
   padding: 5px;
+}
+
+.logo-image-top {
+  max-height: 150px;
+  flex-shrink: 0;
 }

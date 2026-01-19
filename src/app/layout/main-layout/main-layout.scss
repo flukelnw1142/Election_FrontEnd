@@ -23,6 +23,15 @@
     cursor: pointer;
 }
 
+
+.logo-image {
+    padding: 10px;
+    max-height: 50px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+
 .logo-frame img {
     height: 140%;
     object-fit: cover;
@@ -320,13 +329,13 @@ input:checked+.slider:before {
     }
 
     .logo-frame {
-        width: 160px;
-        height: 120px;
+        width: 100px;
+        height: 100px;
         margin: 10px;
     }
 
     .logo-frame img {
-        height: 140%;
+        height: 100%;
         object-fit: cover;
     }
 
@@ -387,4 +396,19 @@ input:checked+.slider:before {
     }
 
 
+}
+
+.banner-left-top-container {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    display: flex;
+    gap: 10px;
+    z-index: 1003;
+    padding: 5px;
+}
+
+.logo-image-top {
+    max-height: 160px;
+    flex-shrink: 0;
 }

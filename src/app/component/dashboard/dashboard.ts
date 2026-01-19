@@ -2476,10 +2476,10 @@ export class Dashboard implements OnInit {
 
         // 👉 ขวา: เอาแค่ 5 อันแรก
         // this.bannerImages = uniqueUrls.slice(0, 5);
-        this.bannerLeftImages = uniqueUrls.slice(0, 4);
+        this.bannerLeftImages = uniqueUrls.slice(0, 5);
 
         // 👉 ซ้าย: ที่เหลือ
-        this.bannerRigthtImages = uniqueUrls.slice(4);
+        this.bannerRigthtImages = uniqueUrls.slice(5);
 
       }
     });

@@ -2,14 +2,19 @@
 <div class="header-row">
     <!-- <img src="/logo/LOGO-ONEE-ELECTION.png" class="logo-image" alt="Logo"
         (click)="showVotingStatus && onCliclkLogo()" /> -->
-    <div class="logo-frame" (click)="showVotingStatus && onCliclkLogo()">
-        <img src="/logo/LOGO-ONEE-ELECTION.png" class="logo-image" alt="Logo" />
+    <!-- <div class="logo-frame" (click)="showVotingStatus && onCliclkLogo()">
+       <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-top" alt="Logo" />
+    </div> -->
+    <div class="banner-left-top-container">
+        <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-top" alt="Logo" />
     </div>
 
-    <div *ngIf="showVotingStatus" class="referendum-link" (click)="referendum()"><mat-icon>thumbs_up_down</mat-icon>
-        <p>ผลคะแนนประชามติ</p>
-    </div>
     <div *ngIf="showVotingStatus" class="voting-status-desktop">
+
+        <div *ngIf="showVotingStatus" class="referendum-link" (click)="referendum()" style="margin-right: 200px;">
+            <mat-icon>thumbs_up_down</mat-icon>
+            <p>ผลคะแนนประชามติ</p>
+        </div>
         <div class="status-row">
             <div class="status-left">
                 <span class="label">อัปเดตล่าสุด</span>

@@ -40,14 +40,29 @@ export class SemiPie implements AfterViewInit, OnChanges {
     /**
      * 1
      */
+    const ctx = document.getElementById('pieChart') as HTMLCanvasElement;
+    const chartCtx = ctx.getContext('2d');
+    if (!chartCtx) {
+      return;
+    }
+    const agreeGradient = chartCtx.createLinearGradient(0, 0, 0, 300);
+    agreeGradient.addColorStop(0, '#66BB6A');
+    agreeGradient.addColorStop(1, '#2E7D32');
+
+    const disagreeGradient = chartCtx.createLinearGradient(0, 0, 0, 300);
+    disagreeGradient.addColorStop(0, '#EF5350');
+    disagreeGradient.addColorStop(1, '#B71C1C');
+
     this.chart = new Chart('pieChart', {
       type: 'pie',
       data: {
         labels: ['เห็นด้วย', 'ไม่เห็นด้วย'],
         datasets: [{
           data: [this.agree, this.disagree],
-          backgroundColor: ['#4CAF50', '#F44336'],
-          borderWidth: 0
+          // backgroundColor: ['#4CAF50', '#F44336'],
+          backgroundColor: [agreeGradient, disagreeGradient],
+          borderWidth: 0,
+          // hoverOffset: 18
         }]
       },
       options: {
@@ -61,12 +76,12 @@ export class SemiPie implements AfterViewInit, OnChanges {
               label: (context) => `${context.label}: ${context.parsed}%`
             },
             titleFont: {
-              family: 'Kanit',   
-              size: 16,           
+              family: 'Kanit',
+              size: 16,
               weight: 'bold'
             },
             bodyFont: {
-              family: 'Kanit',   
+              family: 'Kanit',
               size: 14
             },
             footerFont: {
@@ -76,9 +91,12 @@ export class SemiPie implements AfterViewInit, OnChanges {
             padding: 12,
             boxPadding: 6
           }
-        }
+        },
+        
       }
     });
+
+
     /**
      * 2
      */

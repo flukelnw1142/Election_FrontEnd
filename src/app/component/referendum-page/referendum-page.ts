@@ -840,15 +840,16 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     const contentEl = this.tooltipElement.querySelector('.tooltip-content');
     if (contentEl) {
       contentEl.innerHTML = `
-        <div class="province-name" style="font-size: 18px;">${data.provinceNameTH}</div>
+        <div class="province-name" style="font-size: 16px; font-weight: 600;">${data.provinceNameTH}</div>
         <div class="agree-text" style="display: flex; align-items: center; gap: 8px;">
           <span style="
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             background-color: ${circleColor};
-            border-radius: 50%;
+            // border-radius: 50%;
             display: inline-block;
             flex-shrink: 0;
+            border: 1px solid #ffffff;
           "></span>
           <span>${agreeText} ${voteCount} คน</span>
         </div>
@@ -864,7 +865,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     el.style.position = 'fixed';           // สำคัญมาก!
     el.style.left = (event.clientX + 20) + 'px';
     el.style.top = (event.clientY + 20) + 'px';
-    el.style.background = 'rgba(0, 0, 0, 0.8)';
+    el.style.background = 'rgb(0, 0, 0)';
     el.style.color = 'white';
     el.style.padding = '8px 12px';
     el.style.borderRadius = '6px';

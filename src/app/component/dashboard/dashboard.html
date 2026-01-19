@@ -130,10 +130,12 @@
                         <p class="seats-label">ที่นั่ง</p>
                     </div>
                 </div>
-                <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
-                    class="head-logo">
-                <!-- <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlParty(selectedParty) !== ''" alt="Party Logo"
-                    class="party-logo"> -->
+                <div class="head-logo-container">
+                    <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
+                        class="head-logo">
+                </div>
+                <!-- <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
+                    class="head-logo"> -->
                 <div class="party-logo-wrapper">
                     <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlParty(selectedParty) !== ''" alt="Party Logo"
                         class="party-logo">

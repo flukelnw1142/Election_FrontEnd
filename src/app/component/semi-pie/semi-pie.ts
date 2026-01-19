@@ -92,8 +92,8 @@ export class SemiPie implements AfterViewInit, OnChanges {
             boxPadding: 6
           }
         },
-        
-      }
+
+      },
     });
 
 

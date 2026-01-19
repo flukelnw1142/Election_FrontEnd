@@ -15,7 +15,7 @@
                     <mat-icon>restart_alt</mat-icon>
                 </div>
                 <span class="loader" *ngIf="loading_tab2"></span>
-                <div class="svg-container" (click)="onSvgClickRegion($event)" [class.hidden]="loading_tab2">
+                <div class="svg-container" (click)="onSvgClickRegion($event)" (pointerup)="onSvgPointerUp($event)" [class.hidden]="loading_tab2">
                     <div class="region-map-wrapper">
                         <div #svgContainerRegion [innerHTML]="svgContentRegion"></div>
                     </div>

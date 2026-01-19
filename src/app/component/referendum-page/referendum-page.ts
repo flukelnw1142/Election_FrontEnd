@@ -891,4 +891,13 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     // console.log('[onRegionLeave] tooltip ถูกซ่อนแล้ว');
   }
 
+  onSvgPointerUp(event: PointerEvent) {
+    // กรองเฉพาะ touch และไม่ใช่การ pan
+    if (event.pointerType === 'touch') {
+      // ถ้าต้องการกรองว่าไม่ใช่การลาก (optional แต่ช่วยลด false positive)
+      // คุณอาจเก็บตำแหน่ง pointerdown แล้วเช็คระยะห่างที่นี่
+      this.onSvgClickRegion(event as any);  // เรียกฟังก์ชันเดิม
+    }
+  }
+
 }

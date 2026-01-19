@@ -1393,12 +1393,12 @@ export class Dashboard implements OnInit {
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         if (this.partyColorMap[keyword].IMG_HEAD === '') {
-          return 'https://vote66.workpointtoday.com/assets/placeholder_candidate.svg?v=17';
+          return 'http://localhost:4200/background/user_avatar.png';
         }
         return this.partyColorMap[keyword].IMG_HEAD;
       }
     }
-    return 'https://vote66.workpointtoday.com/assets/placeholder_candidate.svg?v=17';
+    return 'http://localhost:4200/background/user_avatar.png';
   }
 
   getUrlParty(winner: any): string {

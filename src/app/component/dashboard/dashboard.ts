@@ -2458,7 +2458,7 @@ export class Dashboard implements OnInit {
       กรุงเทพมหานคร: '/assets/Bangkok.svg',
       ภาคกลาง: '/assets/Central.svg',
       ภาคตะวันออก: '/assets/Eastern.svg',
-      ภาคตะวันออกเฉียงเหนือ: '/assets/South-east.svg',
+      ภาคตะวันออกเฉียงเหนือ: '/assets/North-east.svg',
       ภาคเหนือ: '/assets/North.svg',
       ภาคใต้: '/assets/South.svg',
     };

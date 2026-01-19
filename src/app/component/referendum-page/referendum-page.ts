@@ -238,7 +238,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   async onRegionSelect(region: string) {
     this.loading_tab2 = true
     this.textShow = region
-    console.log('region', region);
+    // console.log('region', region);
 
     this.selectedRegion = region;
     const svgText = await this.loadSvgByRegion(region);
@@ -295,7 +295,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       const id = current.getAttribute('id');
 
       if (id) {
-        console.log('Clicked element ID:', id, this.selectRegion_Province_district);
+        // console.log('Clicked element ID:', id, this.selectRegion_Province_district);
         const oldSvgIsAll = this.selectRegion_Province_district.value === 'ทั้งประเทศ'
         this.loading = true;
         if (/^[A-Z]+_\d+$/.test(id)) {
@@ -303,7 +303,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
           const districtId = id.trim().toUpperCase();
           let displayName = this.getDistrictDisplayNameFromDom(districtId);
-          console.log("districtId : ", districtId, "displayName :", displayName, this.colorByDistrict[districtId]);
+          // console.log("districtId : ", districtId, "displayName :", displayName, this.colorByDistrict[districtId]);
           let svgTextCurrent = this.currentSvg!
           if (oldSvgIsAll) {
             const provinceName = this.colorByDistrict[districtId].provinceNameTH.split(' ')[0]
@@ -339,11 +339,11 @@ export class ReferendumPage implements OnInit, AfterViewInit {
           // ✅ ชื่อจังหวัด เช่น BKK_name
           matchedElement = current;
           const provinceId = id.trim().toUpperCase(); // BKK_name
-          console.log('provinceId  ', provinceId);
+          // console.log('provinceId  ', provinceId);
 
           const districtIds = this.getDistrictIdsByProvinceId(provinceId);
           const provinceName = matchedElement.textContent?.trim();
-          console.log("provinceName : ", provinceName, "\ndistrictIds: ", districtIds);
+          // console.log("provinceName : ", provinceName, "\ndistrictIds: ", districtIds);
           if (provinceName) {
             let svgTextCurrent = this.currentSvg!
             if (oldSvgIsAll) {
@@ -446,7 +446,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       กรุงเทพมหานคร: '/assets/Bangkok.svg',
       ภาคกลาง: '/assets/Central.svg',
       ภาคตะวันออก: '/assets/Eastern.svg',
-      ภาคตะวันออกเฉียงเหนือ: '/assets/South-east.svg',
+      ภาคตะวันออกเฉียงเหนือ: '/assets/North-east.svg',
       ภาคเหนือ: '/assets/North.svg',
       ภาคใต้: '/assets/South.svg',
     };
@@ -479,9 +479,9 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       p.style.stroke = 'none';
     });
 
-    console.log(this.selectRegion_Province_district)
+    // console.log(this.selectRegion_Province_district)
     let districtIds = Object.keys(this.colorByDistrict)
-    console.log(districtIds, this.selectedRegion, svg)
+    // console.log(districtIds, this.selectedRegion, svg)
 
     // ทั้งประเทศ
     if (this.selectedRegion === 'ทั้งประเทศ') {
@@ -672,7 +672,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       this._referendumService.getResultReferendum(region, province, area)
         .subscribe({
           next: (res) => {
-            console.log('result referendum:', res);
+            // console.log('result referendum:', res);
             this.colorByDistrict = res.data.byProvince
             const question = res.data.questions[0]
             const agreePercent = question.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
@@ -719,7 +719,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       ?.textContent
       ?.trim();
 
-    console.log(districtId, match, provinceNameElement, provinceName)
+    // console.log(districtId, match, provinceNameElement, provinceName)
 
     return provinceName
       ? `${provinceName} เขต ${num}`
@@ -767,13 +767,16 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
       host.addEventListener('mousemove', (e: MouseEvent) => {
         const target = e.target as HTMLElement;
-        const g = target.closest('g[id]') as HTMLElement | null;
-        // console.log(g)
+        let g = target.closest('g[id]') as HTMLElement | null;
+        if (g && g.id.startsWith('text_')) {
+          g = g.parentElement?.closest('g[id]') as HTMLElement | null;
+        }
         if (!g) {
           this.onRegionLeave();
           return
         };
 
+        console.log(g)
         const id = g.id;
 
         // กรองให้เร็วที่สุด - ถ้า id เดิม → แค่ขยับ tooltip ไม่ต้อง zone.run
@@ -823,7 +826,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       return;
     }
 
-    console.log('data found:', data);
+    // console.log('data found:', data);
 
     const agreeText = data.questions[0].options[0].optionCode === "agree"
       ? 'เห็นด้วย'

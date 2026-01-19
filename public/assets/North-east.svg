@@ -2,7 +2,7 @@
   <g id="region-3">
     <g id="province-42">
       <g id="LEI_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
-        <g id="text">
+        <g id="text_1">
           <circle cx="140" cy="195" r="18" fill="rgb(146, 146, 157)"/>
           <text x="140" y="201" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
         </g>

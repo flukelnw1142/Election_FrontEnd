@@ -100,6 +100,6 @@
     </div>
 </div>
 
-<div class="svg-tooltip" *ngIf="hoverId" [style.left.px]="hoverX" [style.top.px]="hoverY">
-    {{ hoverText }}
+<div class="svg-tooltip-custom" #tooltipRef>
+    <span class="tooltip-content"></span>
 </div>

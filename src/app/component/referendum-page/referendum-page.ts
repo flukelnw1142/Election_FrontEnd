@@ -32,7 +32,9 @@ import { MatIcon } from "@angular/material/icon";
 export class ReferendumPage implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
+    this.tooltipElement = this.tooltipRef.nativeElement;
     this.initPanzoom();
+
   }
 
 
@@ -83,6 +85,9 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   loading: boolean = false;
   loading_tab2: boolean = false;
 
+  @ViewChild('tooltipRef') tooltipRef!: ElementRef;
+
+  private tooltipElement: HTMLElement | null = null;
 
   //old
 
@@ -763,27 +768,37 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       host.addEventListener('mousemove', (e: MouseEvent) => {
         const target = e.target as HTMLElement;
         const g = target.closest('g[id]') as HTMLElement | null;
-        if (!g) return;
+        // console.log(g)
+        if (!g) {
+          this.onRegionLeave();
+          return
+        };
 
-        // 🔥 hover element เดิม → ไม่ต้องทำอะไร
-        if (this.lastHoverId === g.id) {
-          // แค่อัปเดตตำแหน่ง tooltip
+        const id = g.id;
+
+        // กรองให้เร็วที่สุด - ถ้า id เดิม → แค่ขยับ tooltip ไม่ต้อง zone.run
+        if (this.lastHoverId === id) {
           this.hoverX = e.clientX + 12;
           this.hoverY = e.clientY + 12;
-          return;
+          return;   // <--- สำคัญมาก ช่วยลดการเข้า zone ได้เยอะ
         }
 
-        this.lastHoverId = g.id;
+        this.lastHoverId = id;
 
-        // 🔥 เข้า Angular เฉพาะตอนเปลี่ยนเขต
+        // เข้า zone เฉพาะตอนเปลี่ยน id จริง ๆ
         this.zone.run(() => {
-          this.onRegionHover(g.id, e);
+          this.onRegionHover(id, e);
         });
       });
 
       host.addEventListener('mouseleave', () => {
-        this.lastHoverId = null;
-        this.zone.run(() => this.onRegionLeave());
+        if (this.lastHoverId !== null) {
+          this.lastHoverId = null;
+          this.zone.run(() => {
+            this.hoverId = null;
+            this.hoverText = '';
+          });
+        }
       });
 
     });
@@ -796,20 +811,58 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   hoverY = 0;
 
   onRegionHover(regionId: string, event: MouseEvent) {
-    if (!/^[A-Z]+_\d+$/.test(regionId)) return;
+    if (!this.tooltipElement) {
+      // console.log('tooltipElement is null!');
+      return;
+    }
 
     const data = this.colorByDistrict?.[regionId];
-    if (!data) return;
+    if (!data) {
+      // console.log('no data for', regionId);
+      this.tooltipElement.style.display = 'none';
+      return;
+    }
 
-    this.hoverId = regionId;
-    this.hoverText = `${data.provinceNameTH} เขต ${regionId.split('_')[1]}`;
-    this.hoverX = event.clientX + 12;
-    this.hoverY = event.clientY + 12;
+    console.log('data found:', data);
+
+    const text = `${data.provinceNameTH}`;
+    const contentEl = this.tooltipElement.querySelector('.tooltip-content');
+    if (contentEl) {
+      contentEl.textContent = text;
+      // console.log('set text to:', text);
+    } else {
+      // console.log('ไม่เจอ .tooltip-content ภายใน tooltipElement');
+    }
+
+    const el = this.tooltipElement as HTMLElement;
+
+    // Force style ให้เห็นชัด ๆ
+    el.style.position = 'fixed';           // สำคัญมาก!
+    el.style.left = (event.clientX + 20) + 'px';
+    el.style.top = (event.clientY + 20) + 'px';
+    el.style.background = 'rgba(0, 0, 0, 0.8)';
+    el.style.color = 'white';
+    el.style.padding = '8px 12px';
+    el.style.borderRadius = '6px';
+    el.style.zIndex = '99999';
+    el.style.pointerEvents = 'none';
+    el.style.minWidth = '140px';
+    el.style.fontSize = '14px';
+    el.style.whiteSpace = 'nowrap';
+
+    el.style.display = 'block';
+    // console.log('set display block, position:', el.style.position, 'left:', el.style.left);
   }
-
   onRegionLeave() {
-    this.hoverId = null;
-    this.hoverText = '';
+    if (!this.tooltipElement) {
+      // console.log('[onRegionLeave] tooltipElement ไม่มีค่า');
+      return;
+    }
+
+    // ซ่อน tooltip อย่างชัดเจน
+    this.tooltipElement.style.display = 'none';
+
+    // console.log('[onRegionLeave] tooltip ถูกซ่อนแล้ว');
   }
 
 }

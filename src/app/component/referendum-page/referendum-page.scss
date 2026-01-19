@@ -92,19 +92,6 @@
     display: none; // Chrome / Safari / Edge
 }
 
-.svg-tooltip {
-    position: fixed;
-    background: rgba(0, 0, 0, 0.85);
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    pointer-events: none; // ⭐⭐⭐ ตัวนี้สำคัญมาก
-    z-index: 9999;
-    white-space: pre-line;
-    transition: opacity 0.1s ease;
-}
-
 
 // NEW!
 .show-province-all {

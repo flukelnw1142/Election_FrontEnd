@@ -1,38 +1,38 @@
 <!-- Header -->
 <div class="header-row">
-    <img src="https://onee.oneeclick.co/assets/images/logo-onee.png" class="logo-image" alt="Logo"
-        (click)="showVotingStatus && onCliclkLogo()" />
+    <!-- <img src="/logo/LOGO-ONEE-ELECTION.png" class="logo-image" alt="Logo"
+        (click)="showVotingStatus && onCliclkLogo()" /> -->
+    <div class="logo-frame" (click)="showVotingStatus && onCliclkLogo()">
+        <img src="/logo/LOGO-ONEE-ELECTION.png" class="logo-image" alt="Logo" />
+    </div>
+
     <div *ngIf="showVotingStatus" class="referendum-link" (click)="referendum()"><mat-icon>thumbs_up_down</mat-icon>
         <p>ผลคะแนนประชามติ</p>
     </div>
     <div *ngIf="showVotingStatus" class="voting-status-desktop">
-        <div class="status-layout">
-            <div class="row">
-                <div class="left-cell">
-                    <span class="label">อัพเดตล่าสุด</span>
-                </div>
-                <div class="right-cell">
+        <div class="status-row">
+            <div class="status-left">
+                <span class="label">อัปเดตล่าสุด</span>
+                <span class="time ti_bf updateDate">22/10/2025 11:15:00</span>
+            </div>
+
+            <div class="zoneAndParty">
+                <div class="status-right zone">
                     <span class="prefix">นับแล้ว</span>
-                    <span class="type zone">เขต</span>
+                    <span class="type">เขต</span>
                     <span id="totalVoteZone">0</span>
                     <span id="percentZone">0%</span>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="left-cell">
-                    <span class="time font_number timerFill">
-                        <span class="ti_bf updateDate">22/10/2025 11:15:00</span>
-                    </span>
-                </div>
-                <div class="divider"></div>
-                <div class="right-cell">
-                    <span class="type party">บัญชีรายชื่อ</span>
+                <div class="status-right party">
+                    <span class="type">บัญชีรายชื่อ</span>
                     <span id="totalVotePartylist">0</span>
                     <span id="percentPartylist">0%</span>
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <div *ngIf="!showVotingStatus"

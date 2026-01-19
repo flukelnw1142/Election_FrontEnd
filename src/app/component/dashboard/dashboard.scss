@@ -311,6 +311,67 @@ mat-icon {
   object-fit: contain;
 }
 
+// responsive
+@media (min-width: 2560px) {
+  .button-container button {
+    transform: scale(1.2);
+  }
+
+  .toggle-panel-btn {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 2559px) and (min-width: 1024px) {
+
+  .banner-left-container img,
+  .banner-right-container img {
+    max-height: 60px;
+  }
+
+}
+
+@media (max-width: 1023px) {
+  .toggle-panel-btn {
+    display: none;
+  }
+
+  .col-md-5 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .col-md-7 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+}
+
+@media (max-width: 375px) {
+  .button-container {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .btn-change {
+    width: 100% !important;
+    font-size: 14px;
+  }
+
+  .banner-left-container,
+  .banner-right-container {
+    display: none;
+  }
+
+  .svg-tooltip {
+    font-size: 12px;
+    max-width: 90vw;
+  }
+}
+
+
 
 /*
 

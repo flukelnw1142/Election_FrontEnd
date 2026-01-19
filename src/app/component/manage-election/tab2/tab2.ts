@@ -11,7 +11,6 @@ import { Tab2Service } from './tab2service';
 import { SweetAlertService } from '../../../service/sweet-alert.service';
 import { environment } from '../../../../environments/environment';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIcon } from "@angular/material/icon";
 @Component({
   selector: 'app-tab2',
   imports: [
@@ -24,7 +23,6 @@ import { MatIcon } from "@angular/material/icon";
     MatButtonModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatIcon
   ],
   templateUrl: './tab2.html',
   styleUrl: './tab2.scss',

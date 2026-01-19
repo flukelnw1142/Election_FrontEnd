@@ -59,7 +59,22 @@ export class SemiPie implements AfterViewInit, OnChanges {
           tooltip: {
             callbacks: {
               label: (context) => `${context.label}: ${context.parsed}%`
-            }
+            },
+            titleFont: {
+              family: 'Kanit',   
+              size: 16,           
+              weight: 'bold'
+            },
+            bodyFont: {
+              family: 'Kanit',   
+              size: 14
+            },
+            footerFont: {
+              family: 'Kanit',
+              size: 12
+            },
+            padding: 12,
+            boxPadding: 6
           }
         }
       }

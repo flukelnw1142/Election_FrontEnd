@@ -66,13 +66,13 @@
         <!-- ขวา -->
         <div class="right-section" (click)="onSelectPartyListAndPartyZone(party.partyName); $event.stopPropagation()">
           <div class="non-desktop">
-            <div class="party-name">{{party.partyName}}</div>
-            <div class="party-total-seat">{{party.zone_seats + party.partylist_seats}}</div>
+            <div class="partyAndscore">
+              <div class="party-name">{{party.partyName}}</div>
+              <div class="party-total-seat">{{party.zone_seats + party.partylist_seats}}</div>
+            </div>
             <!-- <div class="party-vote">( {{party.total_vote | number:'1.0-0'}} คะแนน )</div> -->
             <div class="party-score">
-              <!-- <span class="zone">เขต </span> -->
               <span>( {{ party.zone_seats }} </span>/
-              <!-- <span class="partylist">บัญชีรายชื่อ</span> -->
               <span>{{ party.partylist_seats }} )</span>
             </div>
 

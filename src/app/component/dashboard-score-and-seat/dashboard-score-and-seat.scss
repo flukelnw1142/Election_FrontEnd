@@ -517,6 +517,10 @@
             }
         }
 
+        .party-vote {
+            display: none;
+        }
+
     }
 }
 
@@ -556,6 +560,8 @@
                 font-weight: 500;
             }
         }
+
+
 
     }
 }
@@ -619,7 +625,7 @@
     }
 }
 
-@media (max-width: 365px) {
+@media (max-width: 319px) {
     .party-card {
         gap: 1rem;
         padding: .3rem .6rem 0rem .6rem;
@@ -631,39 +637,35 @@
     }
 
     .left-section {
-        width: 50%;
-
-        .img-head {
-            width: auto;
-            height: 100px;
-            position: relative;
-            bottom: -18px;
-        }
-
-
-        .party-frame {
-            bottom: 2px;
-            left: 90px;
-            display: none;
-        }
-
+        display: none;
     }
 
     .right-section {
-        width: 50%;
+        width: 90%;
         justify-content: space-between
     }
 
     .non-desktop {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
         .party-name {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 18px;
         }
 
         .party-total-seat {
             font-weight: 600;
             font-size: 30px;
+        }
+
+        .partyAndscore {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
         }
 
         .party-score {
@@ -673,6 +675,12 @@
                 font-weight: 500;
             }
         }
+
+        .party-vote {
+            display: block;
+            font-size: 14px;
+        }
+
 
     }
 }

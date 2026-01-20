@@ -268,6 +268,7 @@ export class DashboardScoreAndSeat implements OnInit {
       .trim();
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+        console.log(partyName, this.partyColorMap[keyword].COLOR)
         return this.partyColorMap[keyword].COLOR;
       }
     }

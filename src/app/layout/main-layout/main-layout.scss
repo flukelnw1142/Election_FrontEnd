@@ -437,9 +437,7 @@ input:checked+.slider:before {
         object-fit: cover;
     }
 
-
 }
-
 
 .banner-left-top-container {
     position: absolute;
@@ -452,6 +450,7 @@ input:checked+.slider:before {
 }
 
 .logo-image-top {
+    cursor: pointer;
     max-height: 160px;
     flex-shrink: 0;
 
@@ -488,6 +487,46 @@ input:checked+.slider:before {
         max-height: 200px;
     }
 }
+// .footer {
+//     position: fixed;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     max-height: 60px;
+//     overflow: hidden;
+
+//     background: rgba(255, 255, 255, 0.75);
+//     backdrop-filter: blur(8px);
+//     z-index: 100;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     border-top: 1px solid rgba(255, 255, 255, 0.12);
+//     padding: 0 1rem;
+//     box-sizing: border-box;
+
+//     .banner-scroller {
+//         width: 100%;
+//         overflow: hidden;
+//         padding: 10px 0;
+//     }
+
+//     .banner-track {
+//         display: flex;
+//         flex-wrap: wrap;
+//         gap: 20px;
+//         justify-content: center;
+//     }
+
+//     .banner-img {
+//         height: 50px;
+//         width: auto;
+//         flex-shrink: 0;
+//         object-fit: contain;
+//     }
+
+
+// }
 
 .footer {
     position: fixed;
@@ -495,42 +534,41 @@ input:checked+.slider:before {
     left: 0;
     right: 0;
     height: 60px;
+    overflow: hidden;
     background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(8px);
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 0 1rem;
-    box-sizing: border-box;
+}
 
-    .banner-scroller {
-        width: 100%;
-        overflow: hidden;
-        padding: 10px 0;
+.banner-scroller {
+    width: 100%;
+    overflow: hidden;
+}
+
+.banner-track {
+    display: flex;
+    width: max-content;
+    gap: 20px;
+    animation: scroll 30s linear infinite;
+    justify-content: center;
+}
+
+.banner-img {
+    height: 40px;
+    width: auto;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+@keyframes scroll {
+    from {
+        transform: translateX(0);
     }
 
-    .banner-track {
-        display: flex;
-        animation: scroll 30s linear infinite;
-        gap: 20px;
-    }
-
-    .banner-img {
-        height: 50px;
-        width: auto;
-        flex-shrink: 0;
-        object-fit: contain;
-    }
-
-    @keyframes scroll {
-        0% {
-            transform: translateX(0);
-        }
-
-        100% {
-            transform: translateX(-50%);
-        }
+    to {
+        transform: translateX(-50%);
     }
 }

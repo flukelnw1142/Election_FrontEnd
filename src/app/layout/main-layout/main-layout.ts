@@ -27,6 +27,7 @@ export class MainLayout {
   bannerRigthtImages: any;
   bannerLeftImages: any;
   isReferendumPage = false;
+  
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private _dashboard: DashboardService,

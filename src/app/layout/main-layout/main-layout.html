@@ -65,6 +65,16 @@
     <router-outlet></router-outlet>
 </div>
 
+<!-- Footer - แค่ banner เล็ก ๆ -->
+<div class="footer" *ngIf="is768">
+    <div class="banner-scroller">
+        <div class="banner-track">
+            <img *ngFor="let url of bannerImages" [src]="url" alt="ผู้สนับสนุน" class="banner-img" />
+            <img *ngFor="let url of bannerImages" [src]="url" alt="ผู้สนับสนุน" class="banner-img" />
+        </div>
+    </div>
+</div>
+
 <div class="source-label">
     {{dataSourceLabel}}
 </div>

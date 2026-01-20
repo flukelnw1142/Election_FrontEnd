@@ -13,14 +13,14 @@ import { SweetAlertService } from '../../service/sweet-alert.service';
 })
 export class MainLayout {
   isDesktop: boolean = true;
+  is768: boolean = false;
   showVotingStatus = true;
   username: any = '';
   isChecked: boolean = false;
   dataSource: string = '';
   dataSourceLabel: string = '';
   toggleLabel: string = '';
-  bannerRigthtImages: any;
-  bannerLeftImages: any;
+  bannerImages: any;
 
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -44,6 +44,7 @@ export class MainLayout {
     if (isPlatformBrowser(this.platformId)) {
       this.username = localStorage.getItem('UserName');
       this.getDataSource();
+      this.getBannersponsor();
     }
   }
 
@@ -54,6 +55,7 @@ export class MainLayout {
 
   private checkScreenSize() {
     this.isDesktop = window.innerWidth >= 1024;
+    this.is768 = window.innerWidth <= 768;
   }
 
   logout(): void {
@@ -158,13 +160,9 @@ export class MainLayout {
 
         const uniqueUrls = Array.from(new Set(urls));
 
-        // 👉 ขวา: เอาแค่ 5 อันแรก
-        // this.bannerImages = uniqueUrls.slice(0, 5);
-        this.bannerLeftImages = uniqueUrls.slice(0, 5);
+        this.bannerImages = uniqueUrls
 
-        // 👉 ซ้าย: ที่เหลือ
-        this.bannerRigthtImages = uniqueUrls.slice(5);
-
+        console.log(this.bannerImages)
       }
     });
   }

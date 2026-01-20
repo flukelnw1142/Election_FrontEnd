@@ -262,6 +262,11 @@ input:checked+.slider:before {
     user-select: none;
 }
 
+.master-padding {
+    border-radius: 2rem;
+    margin: 1rem 1rem 0 1rem;
+}
+
 .source-label {
     position: fixed;
     bottom: 10px;
@@ -278,11 +283,12 @@ input:checked+.slider:before {
 
 
 // responsive 
-@media (min-width: 2560px) {}
+@media (max-width: 1023px) {
 
-@media (max-width: 2559px) and (min-width: 1024px) {}
+    .master-padding {
+        margin: 1rem 1rem 2rem 1rem;
+    }
 
-@media (max-width: 1023px) and (min-width: 450px) {
     .header-row {
         width: 100%;
         display: flex;
@@ -380,7 +386,12 @@ input:checked+.slider:before {
 
         .status-right.zone,
         .status-right.party {
+            display: flex;
             font-size: 14px;
+        }
+
+        .status-right.party::before {
+            display: none;
         }
     }
 
@@ -398,6 +409,7 @@ input:checked+.slider:before {
 
 }
 
+
 .banner-left-top-container {
     position: absolute;
     top: 10px;
@@ -413,16 +425,60 @@ input:checked+.slider:before {
     flex-shrink: 0;
 }
 
-.master-padding {
-    border-radius: 2rem;
-    margin: 1rem 1rem 0 1rem;
-}
-
 @media (max-width: 768px) {
+
+    .source-label {
+        bottom: 70px;
+    }
 
     .master-padding {
         border-radius: 2rem;
-        margin: 0rem;
+        margin: 1rem 1rem 5rem 1rem;
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0 1rem;
+    box-sizing: border-box;
+
+    .banner-scroller {
+        width: 100%;
+        overflow: hidden;
+        padding: 10px 0;
     }
 
+    .banner-track {
+        display: flex;
+        animation: scroll 30s linear infinite;
+        gap: 20px;
+    }
+
+    .banner-img {
+        height: 50px;
+        width: auto;
+        flex-shrink: 0;
+        object-fit: contain;
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+    }
 }

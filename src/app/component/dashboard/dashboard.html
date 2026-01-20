@@ -227,7 +227,7 @@
                     </div>
                     <div class="tab-content" style="margin-top: 20px;">
                         <div *ngIf=" activeTab==='district'">
-                            <div *ngIf="detailWinnerZonePerRegion?.length === 0"
+                            <!-- <div *ngIf="detailWinnerZonePerRegion?.length === 0"
                                 style="text-align: end; color: #929292; padding-bottom: .5rem;">
                                 <p style="font-size: 1rem;">จำนวนหน่วยที่นับไปแล้ว :
                                     {{formatTotalVotes(detailWinnerZonePerProvince[0]?.candidates[0].total_votes_in_area
@@ -238,7 +238,7 @@
                                         {{detailWinnerZonePerProvince[0]?.candidates[0].progress ||""}} %
                                     </span>
                                 </p>
-                            </div>
+                            </div> -->
                             <!-- CLICK REGION -->
                             <div *ngIf="detailWinnerZonePerRegion?.length > 0; else showZoneData" #scrollContainer
                                 class="scroll-container-dt70vh">

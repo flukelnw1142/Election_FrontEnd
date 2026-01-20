@@ -1991,6 +1991,7 @@ export class Dashboard implements OnInit {
     this._dashboard
       .getAllwinnerZoneByProvinceName(province)
       .subscribe((data) => {
+        console.log(data)
         // this.detailWinnerZonePerProvince = data;
 
         const grouped = new Map<string, any[]>();
@@ -2018,7 +2019,7 @@ export class Dashboard implements OnInit {
           }
         );
 
-        // console.log("detailWinnerZonePerProvince",this.detailWinnerZonePerProvince)
+        console.log("detailWinnerZonePerProvince",this.detailWinnerZonePerProvince)
 
         this.cd.markForCheck();
       });

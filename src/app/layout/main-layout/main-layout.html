@@ -5,11 +5,16 @@
     <div class="logo-frame" (click)="showVotingStatus && onCliclkLogo()" *ngIf="!isDesktop">
         <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-top" alt="Logo" />
     </div>
-    <div class="banner-left-top-container"   *ngIf="isDesktop">
-        <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-top" alt="Logo" [class.referendum]="isReferendumPage" />
+    <div class="banner-left-top-container" *ngIf="isDesktop" (click)="showVotingStatus && onCliclkLogo()">
+        <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-top" alt="Logo"
+            [class.referendum]="isReferendumPage" />
     </div>
 
     <div *ngIf="showVotingStatus" class="voting-status-desktop">
+        <!-- <div *ngIf="showVotingStatus" class="referendum-link" (click)="referendum()" style="margin-right: 200px;">
+            <mat-icon>thumbs_up_down</mat-icon>
+            <p>ผลคะแนนประชามติ</p>
+        </div> -->
         <div class="status-row">
             <div class="status-left">
                 <span class="label">อัปเดตล่าสุด</span>
@@ -31,11 +36,18 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="showVotingStatus" class="referendum-link" (click)="referendum()" >
-            <mat-icon>thumbs_up_down</mat-icon>
-            <p>ผลคะแนนประชามติ</p>
-        </div>
+    </div>
 
+    <div *ngIf="showVotingStatus" class="referendum-link-2" (click)="referendum()">
+        <div class="logo-frame" *ngIf="isDesktop">
+            <img src="/logo/referendum.png" alt="Logo" />
+        </div>
+        <p *ngIf="isDesktop">ผลคะแนนประชามติ</p>
+        <div *ngIf="!isDesktop" style="display: flex; justify-content: center; align-items: center;">
+            <mat-icon style="font-size: 14px; width: 18px; height: 16px;">thumbs_up_down</mat-icon>
+            <p style="text-decoration: underline;">
+                คลิกเพื่อดูผลคะแนนประชามติ</p>
+        </div>
     </div>
 
     <div *ngIf="!showVotingStatus"

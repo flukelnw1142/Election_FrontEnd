@@ -4,7 +4,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardService } from '../../component/dashboard/service/dashboardservice';
 import { SweetAlertService } from '../../service/sweet-alert.service';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { UiStateService } from '../../component/share/ui-state.service';
 
 @Component({
@@ -27,7 +27,10 @@ export class MainLayout {
   bannerRigthtImages: any;
   bannerLeftImages: any;
   isReferendumPage = false;
+  isMainPage = true;
   default = false;
+
+  private sub = new Subscription();
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private _dashboard: DashboardService,
@@ -37,6 +40,17 @@ export class MainLayout {
     private uiState: UiStateService
   ) {
     this.checkScreenSize()
+    this.sub.add(
+      this.uiState.isMainPage$.subscribe(isMain => {
+        // รับค่าดิบจาก service
+        const isDashboardPage = this.router.url.startsWith('/dashboard');
+
+        // ถ้า service บอกว่า main แต่เราไม่ได้อยู่ใน /dashboard → บังคับเป็น false
+        this.isMainPage = isMain && isDashboardPage;
+        // this.isMainPage = isMain;
+        console.log('MainLayout: isMainPage =', this.isMainPage);
+      })
+    );
     this.router.events.subscribe((event) => {
       // console.log(event);
       if (event instanceof NavigationEnd) {
@@ -54,11 +68,11 @@ export class MainLayout {
         console.log(" this.isReferendumPage : ", this.isReferendumPage);
         this.default = this.isReferendumPage;
         this.uiState.referendumLogoSmall$.subscribe((small) => {
-          console.log("small : ",small);
-          
+          console.log("small : ", small);
+
           const url = this.router.url;
           if (url.startsWith('/dashboard') && !this.isDesktop) {
-            this.isReferendumPage = small; 
+            this.isReferendumPage = small;
           }
         });
 

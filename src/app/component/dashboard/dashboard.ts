@@ -17,6 +17,7 @@ import {
   debounceTime,
   firstValueFrom,
   Subject,
+  Subscription,
   takeUntil,
   timeout,
 } from 'rxjs';
@@ -115,11 +116,18 @@ export class Dashboard implements OnInit {
   @ViewChild('partylistScroll') partylistScroll!: ElementRef;
   private zoomBehavior!: d3.ZoomBehavior<Element, unknown>;
   private lastWinnersHash: string = '';
+
+  currentIsMain: boolean = true;
+  currentIsShowParty: boolean = false;
+  currentIsShowProvinceAll: boolean = false;
+  currentIsShowPartylistAndDistrictPerParty: boolean = false;
+
   STACK_MODAL: any[] = [
     {
       page: 'main',
     },
   ];
+  private sub = new Subscription();
 
   show_dashboard_score_and_seat_Panel: boolean = true;
 
@@ -197,6 +205,7 @@ export class Dashboard implements OnInit {
   async ngOnInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
+    this.updateFooterVisibility();
 
     try {
       // โหลดข้อมูลสำคัญทั้งหมด
@@ -1232,6 +1241,10 @@ export class Dashboard implements OnInit {
       this.magnifier.nativeElement.innerHTML = '';
     }
     this.isMagnifierInitialized = false;
+
+    this.sub.unsubscribe();
+    // Optional: reset เมื่อออกจากหน้า
+    this.uiState.updateMainPageStatus(true);
   }
 
   openDialog() {
@@ -1250,6 +1263,7 @@ export class Dashboard implements OnInit {
   }
 
   getCurrentPage(page: string) {
+    this.updateFooterVisibility();
     if (this.STACK_MODAL[this.STACK_MODAL.length - 1].page === page) {
       return true;
     } else {
@@ -1284,6 +1298,7 @@ export class Dashboard implements OnInit {
           });
       }
     }
+    this.updateCurrentPageStates();
     // this.clickOnPopup !== ''
     //   ? ((this.selectedParty = this.clickOnPopup),
     //     (this.clickOnPopup = ''),
@@ -1574,6 +1589,7 @@ export class Dashboard implements OnInit {
         partyName: partyName,
       });
     }
+    this.updateCurrentPageStates();
 
     if (!this.isMappingComplete) {
       return;
@@ -1618,6 +1634,7 @@ export class Dashboard implements OnInit {
         partyName: partyName,
       });
     }
+    this.updateCurrentPageStates();
 
     if (!this.isMappingComplete) {
       return;
@@ -1652,6 +1669,7 @@ export class Dashboard implements OnInit {
         page: 'show-province-all',
       });
     }
+    this.updateCurrentPageStates();
     this.uiState.setReferendumLogoSmall(true);
     if (
       target.tagName === 'path' ||
@@ -2209,6 +2227,7 @@ export class Dashboard implements OnInit {
         page: 'show-province-all',
       });
     }
+    this.updateCurrentPageStates();
     this.selectedProvince = '';
     this.detailDistrict = [];
     console.log("districtId : ", districtId);
@@ -2259,7 +2278,7 @@ export class Dashboard implements OnInit {
         page: 'show-province-all',
       });
     }
-
+    this.updateCurrentPageStates();
     this.detailDistrict = [];
     this.detailWinnerZonePerRegion = [];
     this.detailWinnerPartyPerRegion = [];
@@ -2491,5 +2510,31 @@ export class Dashboard implements OnInit {
 
       }
     });
+  }
+
+  // เรียก method นี้ทุกครั้งที่ STACK_MODAL เปลี่ยน (push, pop, reset)
+  private updateFooterVisibility() {
+    if (this.STACK_MODAL.length === 0) {
+      this.uiState.updateMainPageStatus(true); // ถ้าว่าง = กลับ main
+      return;
+    }
+
+    const topPage = this.STACK_MODAL[this.STACK_MODAL.length - 1].page;
+    const isMain = topPage === 'main';
+
+    this.uiState.updateMainPageStatus(isMain);
+
+    // Optional: log เพื่อ debug
+    // console.log('STACK_MODAL top page:', topPage, '→ isMainPage:', isMain);
+  }
+
+  // เพิ่ม method
+  private updateCurrentPageStates() {
+    const topPage = this.STACK_MODAL[this.STACK_MODAL.length - 1]?.page;
+    this.currentIsMain = topPage === 'main';
+    this.currentIsShowParty = topPage === 'show-dashboard-party';
+    this.currentIsShowProvinceAll = topPage === 'show-province-all';
+    this.currentIsShowPartylistAndDistrictPerParty = topPage === 'show-party-list_&_show-district-per-party';
+    this.updateFooterVisibility(); // ถ้ามี
   }
 }

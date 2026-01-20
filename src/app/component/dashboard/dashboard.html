@@ -1,7 +1,8 @@
 <!-- PAGE 1 : main -->
 <!-- <div *ngIf="selectedParty === '' && selectedDistric === '' && selectedProvince === '' && selectedPartyListAndZoneSeat === '' "> -->
 
-<div *ngIf="getCurrentPage('main') ">
+<!-- <div *ngIf="getCurrentPage('main') "> -->
+<div *ngIf="currentIsMain">
     <div class="row h-100 align-items-stretch">
         <div class="col-12 d-flex" [ngClass]="show_dashboard_score_and_seat_Panel ? 'col-md-7' : 'col-md-12'">
             <div class="glass-card flex-fill">
@@ -115,7 +116,8 @@
 
 <!-- PAGE 2 : show-dashboard-party -->
 <!-- <div *ngIf="selectedParty !== '' " style="position: relative;"> -->
-<div *ngIf="getCurrentPage('show-dashboard-party') " class="page-container">
+<!-- <div *ngIf="getCurrentPage('show-dashboard-party') " class="page-container"> -->
+<div *ngIf="currentIsShowParty" class="page-container">
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="row">
         <div class="col-4">
@@ -186,7 +188,8 @@
 
 <!-- PAGE 6 : show-Province ALL (Zone / Party) -->
 <!-- <div *ngIf="selectedProvince !== '' || selectedDistric !== ''" style="position: relative;" class="show-province-all"> -->
-<div *ngIf="getCurrentPage('show-province-all')" style="position: relative;" class="show-province-all">
+<!-- <div *ngIf="getCurrentPage('show-province-all')" style="position: relative;" class="show-province-all"> -->
+<div *ngIf="currentIsShowProvinceAll" style="position: relative;" class="show-province-all">
     <button class="ds-Button" (click)="closeDialog()">X</button>
 
     <div class="glass-card card" style="color: white;">
@@ -542,11 +545,13 @@
 
 <!-- PAGE 7 : แสดงส.ส.เขต และ บัญชีรายชื่อ ของ 1 พรรค | show-party-list & show-district-per-party -->
 <!-- <div *ngIf="selectedPartyListAndZoneSeat !== '' " style="position: relative;" class="show-partyList-ZoneSeat"> -->
-<div *ngIf="getCurrentPage('show-party-list_&_show-district-per-party') " class="show-partyList-ZoneSeat">
+<!-- <div *ngIf="getCurrentPage('show-party-list_&_show-district-per-party') " class="show-partyList-ZoneSeat"> -->
+<div *ngIf="currentIsShowPartylistAndDistrictPerParty" class="show-partyList-ZoneSeat">
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="glass-card card" style="color: white;">
         <div class="column-grid">
-            <div class="left" style="display: flex; justify-content: space-between; flex-direction: column; margin-top: 10px;">
+            <div class="left"
+                style="display: flex; justify-content: space-between; flex-direction: column; margin-top: 10px;">
                 <div>
                     <div>
                         <div class="partyName">{{partySeatCounts.partyName}}

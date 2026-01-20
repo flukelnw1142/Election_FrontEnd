@@ -164,14 +164,6 @@ export class Dashboard implements OnInit {
   private isRollbacking = false;
   private lastValidZoneId: string | null = null;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkScreenSize();
-  }
-
-  private checkScreenSize() {
-    this.isDesktop = window.innerWidth > 768;
-  }
   constructor(
     private _dashboard: DashboardService,
     private http: HttpClient,
@@ -181,7 +173,9 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {
+    this.checkScreenSize();
+  }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -193,6 +187,7 @@ export class Dashboard implements OnInit {
   bannerRigthtImages: any;
   bannerLeftImages: any;
   async ngOnInit(): Promise<void> {
+    // this.checkScreenSize();
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
 
@@ -285,6 +280,15 @@ export class Dashboard implements OnInit {
     } catch (error) {
       console.error('Error loading data:', error);
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.isDesktop = window.innerWidth > 768;
   }
 
   private updateWinnerUI(winners: any): void {

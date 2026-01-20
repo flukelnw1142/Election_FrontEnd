@@ -19,6 +19,8 @@ export class MainLayout {
   dataSource: string = '';
   dataSourceLabel: string = '';
   toggleLabel: string = '';
+  bannerRigthtImages: any;
+  bannerLeftImages: any;
 
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -27,6 +29,7 @@ export class MainLayout {
     private cdr: ChangeDetectorRef,
     private zone: NgZone
   ) {
+    this.checkScreenSize()
     this.router.events.subscribe((event) => {
       // console.log(event);
       if (event instanceof NavigationEnd) {
@@ -143,6 +146,27 @@ export class MainLayout {
         : 'อาสาสมัคร';
 
     this.cdr.markForCheck();
+  }
+
+
+  getBannersponsor() {
+    this._dashboard.getBanner().subscribe({
+      next: (res) => {
+        const urls = (res ?? [])
+          .map((x: any) => x.supporterLogo)
+          .filter(Boolean);
+
+        const uniqueUrls = Array.from(new Set(urls));
+
+        // 👉 ขวา: เอาแค่ 5 อันแรก
+        // this.bannerImages = uniqueUrls.slice(0, 5);
+        this.bannerLeftImages = uniqueUrls.slice(0, 5);
+
+        // 👉 ซ้าย: ที่เหลือ
+        this.bannerRigthtImages = uniqueUrls.slice(5);
+
+      }
+    });
   }
 
 }

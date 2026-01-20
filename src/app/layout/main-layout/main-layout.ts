@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,14 +12,13 @@ import { SweetAlertService } from '../../service/sweet-alert.service';
   styleUrl: './main-layout.scss',
 })
 export class MainLayout {
+  isDesktop: boolean = true;
   showVotingStatus = true;
   username: any = '';
   isChecked: boolean = false;
   dataSource: string = '';
   dataSourceLabel: string = '';
   toggleLabel: string = '';
-
-
 
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -43,6 +42,15 @@ export class MainLayout {
       this.username = localStorage.getItem('UserName');
       this.getDataSource();
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.isDesktop = window.innerWidth >= 1024;
   }
 
   logout(): void {

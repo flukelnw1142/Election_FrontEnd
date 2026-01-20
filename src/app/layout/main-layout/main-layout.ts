@@ -54,11 +54,16 @@ export class MainLayout {
         console.log(" this.isReferendumPage : ", this.isReferendumPage);
         this.default = this.isReferendumPage;
         this.uiState.referendumLogoSmall$.subscribe((small) => {
-          console.log("small : ",small);
-          
+          console.log("small : ", small);
+
           const url = this.router.url;
-          if (url.startsWith('/dashboard') && !this.isDesktop) {
-            this.isReferendumPage = small; 
+          if (url.startsWith('/dashboard')) {
+            if (!this.isDesktop) {
+              this.isReferendumPage = small;
+            }
+            else{
+              this.default = small
+            }
           }
         });
 

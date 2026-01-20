@@ -7,7 +7,7 @@
     </div>
     <div class="banner-left-top-container" *ngIf="isDesktop" (click)="showVotingStatus && onCliclkLogo()">
         <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-top" alt="Logo"
-            [class.referendum]="isReferendumPage" />
+            [class.referendum]="default" />
     </div>
 
     <div *ngIf="showVotingStatus" class="voting-status-desktop">

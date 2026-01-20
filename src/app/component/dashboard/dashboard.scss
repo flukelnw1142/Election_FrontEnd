@@ -1503,3 +1503,205 @@ PAGE 7
   flex-shrink: 0;
   margin-bottom: 15px;
 }
+
+/* ---------------------------
+   Responsive Layout
+---------------------------- */
+
+/* กัน container หลุดจอ */
+.show-province-all {
+  height: auto; // มือถือไม่บังคับสูง
+  min-height: 85dvh;
+}
+
+/* เดสก์ท็อป: 3 คอลัมน์เดิม */
+.show-province-all .three-column-grid {
+  grid-template-columns: 1fr 3fr 3fr;
+  align-items: stretch;
+}
+
+/* ให้คอลัมน์สูงเท่ากันและไม่ดันล้น */
+.show-province-all .column {
+  min-height: 0;
+}
+
+/* map container ให้ยืดหดได้จริง */
+.show-province-all .svg-container {
+  flex: 1;
+  height: auto; // อย่า fix 90% บนจอแคบ
+  min-height: 360px; // desktop/ tablet ดูดี
+  overflow: auto;
+}
+
+.show-province-all .region-map-wrapper,
+.show-province-all .region-map-wrapper>div {
+  width: 100%;
+  height: 100%;
+}
+
+/* ให้ svg ไม่ล้น */
+.show-province-all .region-map-wrapper svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* ---------------------------
+   Tablet (<= 1024px)
+   ทำเป็น 2 คอลัมน์:
+   Tabs (ซ้าย) + Map (ขวา) แถวบน
+   Summary ลงแถวล่างเต็ม
+---------------------------- */
+@media (max-width: 1024px) {
+  .show-province-all {
+    width: 96vw;
+    min-height: auto;
+    padding: 0.5rem;
+  }
+
+  .show-province-all .header,
+  .show-province-all h4 {
+    font-size: 1.25rem;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .show-province-all .three-column-grid {
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto auto;
+    gap: 0.75rem;
+  }
+
+  /* col1: region tabs */
+  .show-province-all .three-column-grid>.column:nth-child(1) {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  /* col2: map */
+  .show-province-all .three-column-grid>.column:nth-child(2) {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  /* col3: summary full width */
+  .show-province-all .three-column-grid>.column:nth-child(3) {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+  }
+
+  /* tabs เป็นแนวนอนในแท็บเล็ตก็ได้ (อ่านง่าย) */
+  .show-province-all .region-tabs {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-height: none;
+    overflow: auto;
+    gap: 0.5rem;
+  }
+
+  .show-province-all .region-tab {
+    white-space: nowrap;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .show-province-all .svg-container {
+    min-height: 320px;
+    max-height: 55dvh;
+    padding: 12px;
+  }
+
+  .show-province-all .summary-card {
+    padding: 16px 18px;
+  }
+
+  .show-province-all .value {
+    font-size: 22px;
+  }
+}
+
+/* ---------------------------
+   Mobile (<= 640px)
+   ทำเป็น 1 คอลัมน์เรียงลง
+---------------------------- */
+@media (max-width: 640px) {
+  .show-province-all {
+    padding: 0.5rem;
+  }
+
+  .show-province-all h4 {
+    font-size: 1.05rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .show-province-all .glass-card.card {
+    border-radius: 12px;
+  }
+
+  .show-province-all .three-column-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Tabs: ทำเป็นแถบเลื่อนแนวนอน */
+  .show-province-all .column {
+    padding: 0.75rem;
+  }
+
+  .show-province-all .region-tabs {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 0.25rem;
+  }
+
+  .show-province-all .region-tab {
+    flex: 0 0 auto;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.9rem;
+  }
+
+  /* map: จำกัดความสูงให้พอดีมือถือ */
+  .show-province-all .svg-container {
+    min-height: 260px;
+    max-height: 45dvh;
+    padding: 10px;
+  }
+
+  /* ปุ่ม reset อย่าใหญ่เกิน */
+  .show-province-all .svg-column .reset-btn {
+    width: 40px;
+    height: 40px;
+    top: 0.5rem;
+    right: 0.5rem;
+
+    mat-icon {
+      font-size: 22px;
+    }
+  }
+
+  /* summary: ลดขนาด */
+  .show-province-all .summary-card {
+    padding: 14px 14px;
+  }
+
+  .show-province-all .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    border-top: none;
+    padding-top: 10px;
+  }
+
+  .show-province-all .divider {
+    border-right: none;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+  }
+
+  .show-province-all .value {
+    font-size: 20px;
+  }
+}

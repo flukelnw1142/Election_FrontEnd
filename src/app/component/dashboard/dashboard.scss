@@ -311,6 +311,47 @@ mat-icon {
   object-fit: contain;
 }
 
+
+.banner-right-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: grid;
+  gap: 10px;
+  z-index: 1003;
+  padding: 5px;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(5, auto);
+}
+
+.banner-left-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(5, auto);
+  gap: 10px;
+  z-index: 1003;
+  padding: 5px;
+}
+
+
+.banner-left-top-container {
+  position: absolute;
+  top: -50;
+  left: 0;
+  display: flex;
+  gap: 10px;
+  z-index: 1003;
+  padding: 5px;
+}
+
+.logo-image-top {
+  max-height: 150px;
+  flex-shrink: 0;
+}
+
 // responsive
 @media (min-width: 2560px) {
   .button-container button {
@@ -347,6 +388,14 @@ mat-icon {
     max-width: 100%;
   }
 
+}
+
+@media (max-width: 700px) {
+
+  .banner-left-container,
+  .banner-right-container {
+    display: none;
+  }
 }
 
 @media (max-width: 375px) {
@@ -1453,44 +1502,4 @@ PAGE 7
   object-fit: contain;
   flex-shrink: 0;
   margin-bottom: 15px;
-}
-
-.banner-right-container {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  display: grid;
-  gap: 10px;
-  z-index: 1003;
-  padding: 5px;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(5, auto);
-}
-
-.banner-left-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(5, auto);
-  gap: 10px;
-  z-index: 1003;
-  padding: 5px;
-}
-
-
-.banner-left-top-container {
-  position: absolute;
-  top: -50;
-  left: 0;
-  display: flex;
-  gap: 10px;
-  z-index: 1003;
-  padding: 5px;
-}
-
-.logo-image-top {
-  max-height: 150px;
-  flex-shrink: 0;
 }

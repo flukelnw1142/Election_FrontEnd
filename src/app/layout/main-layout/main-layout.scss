@@ -429,9 +429,6 @@ input:checked+.slider:before {
         max-height: 120px;
     }
 
-    &.main {
-        max-height: 160px;
-    }
 }
 
 @media (max-width: 768px) {
@@ -443,6 +440,22 @@ input:checked+.slider:before {
     .master-padding {
         border-radius: 2rem;
         margin: 1rem 1rem 5rem 1rem;
+    }
+}
+
+@media (min-height: 689px) AND (max-width: 1536px) {
+    .logo-image-top.referendum {
+        max-height: 100px;
+    }
+}
+
+@media (min-height: 874px) AND (max-width: 1920px) {
+    .logo-image-top.referendum {
+        max-height: 130px;
+    }
+
+    .logo-image-top {
+        max-height: 200px;
     }
 }
 

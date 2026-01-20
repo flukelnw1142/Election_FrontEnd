@@ -72,12 +72,12 @@
 </div>
 
 <!-- Content -->
-<div class="master-padding"  [class.pad]="isReferendumPage">
+<div class="master-padding" [class.pad]="isReferendumPage">
     <router-outlet></router-outlet>
 </div>
 
 <!-- Footer - แค่ banner เล็ก ๆ -->
-<div #footer class="footer" *ngIf="is768">
+<div #footer class="footer" *ngIf="is768 && isMainPage">
     <div class="banner-scroller">
         <div class="banner-track">
             <img *ngFor="let url of bannerImages" [src]="url" class="banner-img" />
@@ -87,6 +87,6 @@
 </div>
 
 
-<div class="source-label">
+<div class="source-label" [style.bottom]="isMainPage ? '70px' : '10px'">
     {{dataSourceLabel}}
 </div>

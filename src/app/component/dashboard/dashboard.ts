@@ -1637,7 +1637,7 @@ export class Dashboard implements OnInit {
   }
   // Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
-    this.uiState.setReferendumLogoSmall(true);
+
     this.detailDistrict = [];
 
     const target = event.target as SVGElement;
@@ -1652,7 +1652,7 @@ export class Dashboard implements OnInit {
         page: 'show-province-all',
       });
     }
-
+    this.uiState.setReferendumLogoSmall(true);
     if (
       target.tagName === 'path' ||
       target.tagName === 'text' ||
@@ -1693,6 +1693,7 @@ export class Dashboard implements OnInit {
         this.selectedParty = '';
       }
     }
+
   }
   // Click Zone-Seat Page 2 (ส.ส.เขต) ----
   // onClickZoneSeatPerParty(party: string) {

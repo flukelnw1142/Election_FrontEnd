@@ -27,7 +27,7 @@ export class MainLayout {
   bannerRigthtImages: any;
   bannerLeftImages: any;
   isReferendumPage = false;
-  
+  default = false;
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private _dashboard: DashboardService,
@@ -51,8 +51,11 @@ export class MainLayout {
       .subscribe((event: any) => {
         const url = event.urlAfterRedirects;
         this.isReferendumPage = url.startsWith('/referendum');
-
+        console.log(" this.isReferendumPage : ", this.isReferendumPage);
+        this.default = this.isReferendumPage;
         this.uiState.referendumLogoSmall$.subscribe((small) => {
+          console.log("small : ",small);
+          
           const url = this.router.url;
           if (url.startsWith('/dashboard')) {
             this.isReferendumPage = small; 

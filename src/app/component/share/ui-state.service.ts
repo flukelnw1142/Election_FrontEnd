@@ -10,7 +10,6 @@ export class UiStateService {
   referendumLogoSmall$ = this._referendumLogoSmall$.asObservable();
 
   setReferendumLogoSmall(value: boolean) {
-    localStorage.setItem('modal', value ? 'true' : 'false');
     this._referendumLogoSmall$.next(value);
   }
 

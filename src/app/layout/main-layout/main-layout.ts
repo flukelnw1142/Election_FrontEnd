@@ -57,7 +57,7 @@ export class MainLayout {
           console.log("small : ",small);
           
           const url = this.router.url;
-          if (url.startsWith('/dashboard')) {
+          if (url.startsWith('/dashboard') && !this.isDesktop) {
             this.isReferendumPage = small; 
           }
         });

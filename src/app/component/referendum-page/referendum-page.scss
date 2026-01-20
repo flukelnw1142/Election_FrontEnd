@@ -102,6 +102,19 @@
     display: flex;
     flex-direction: column;
 
+    .question-row {
+        display: grid;
+        grid-template-columns: 0.5fr 3fr 3fr; // ต้องเหมือน .three-column-grid
+        gap: 1rem;
+    }
+
+    .question-title {
+        grid-column: 2 / 4; // ✅ เริ่มคอลัมน์ 2 และกินถึงคอลัมน์ 3
+        color: white;
+        margin-bottom: 1rem;
+        margin-top: 0;
+    }
+
     .card {
         flex: 1;
         display: flex;
@@ -190,6 +203,7 @@
                 font-size: 26px;
             }
         }
+
     }
 
     .svg-container {
@@ -466,8 +480,6 @@
 
 /* กัน container หลุดจอ */
 .show-province-all {
-    width: min(94vw, 1400px);
-    margin: 0 auto;
     height: auto; // มือถือไม่บังคับสูง
     min-height: 85dvh;
 }
@@ -488,7 +500,6 @@
     flex: 1;
     height: auto; // อย่า fix 90% บนจอแคบ
     min-height: 360px; // desktop/ tablet ดูดี
-    max-height: 70dvh;
     overflow: auto;
 }
 

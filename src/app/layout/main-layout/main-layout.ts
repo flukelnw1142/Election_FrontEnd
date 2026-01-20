@@ -4,6 +4,8 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardService } from '../../component/dashboard/service/dashboardservice';
 import { SweetAlertService } from '../../service/sweet-alert.service';
+import { filter } from 'rxjs';
+import { UiStateService } from '../../component/share/ui-state.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -22,12 +24,16 @@ export class MainLayout {
   toggleLabel: string = '';
   bannerImages: any;
 
+  bannerRigthtImages: any;
+  bannerLeftImages: any;
+  isReferendumPage = false;
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private _dashboard: DashboardService,
     private sweetAlertService: SweetAlertService,
     private cdr: ChangeDetectorRef,
-    private zone: NgZone
+    private zone: NgZone,
+    private uiState: UiStateService
   ) {
     this.checkScreenSize()
     this.router.events.subscribe((event) => {
@@ -38,6 +44,21 @@ export class MainLayout {
         this.showVotingStatus = true;
       }
     });
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        const url = event.urlAfterRedirects;
+        this.isReferendumPage = url.startsWith('/referendum');
+
+        this.uiState.referendumLogoSmall$.subscribe((small) => {
+          const url = this.router.url;
+          if (url.startsWith('/dashboard')) {
+            this.isReferendumPage = small; 
+          }
+        });
+
+      });
   }
 
   ngOnInit(): void {
@@ -165,6 +186,11 @@ export class MainLayout {
         console.log(this.bannerImages)
       }
     });
+  }
+
+  private isDashboardLogoSmall(url: string): boolean {
+    if (!url.startsWith('/dashboard')) return false;
+    return this.uiState.current;
   }
 
 }

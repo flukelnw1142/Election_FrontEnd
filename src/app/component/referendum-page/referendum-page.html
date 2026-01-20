@@ -1,5 +1,7 @@
 <div style="position: relative;" class="show-province-all">
-    <h4 style="color: white; margin-bottom: 1rem;">คำถาม : {{ question.questionText }}</h4>
+    <div class="question-row">
+        <h4 class="question-title">คำถาม : {{ question.questionText }}</h4>
+    </div>
     <div class="glass-card card" style="color: white;">
         <div class="three-column-grid">
             <div class="column">
@@ -10,6 +12,7 @@
                     </p>
                 </div>
             </div>
+
             <div class="column svg-column">
                 <div class="reset-btn" (click)="resetZoom()">
                     <mat-icon>restart_alt</mat-icon>

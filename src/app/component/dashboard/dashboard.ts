@@ -40,6 +40,7 @@ import { DashboardScoreAndSeat } from '../dashboard-score-and-seat/dashboard-sco
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 import Swal from 'sweetalert2';
+import { UiStateService } from '../share/ui-state.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -164,6 +165,14 @@ export class Dashboard implements OnInit {
   private isRollbacking = false;
   private lastValidZoneId: string | null = null;
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.isDesktop = window.innerWidth > 768;
+  }
   constructor(
     private _dashboard: DashboardService,
     private http: HttpClient,
@@ -172,10 +181,9 @@ export class Dashboard implements OnInit {
     private zone: NgZone,
     private dialog: MatDialog,
     private renderer: Renderer2,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.checkScreenSize();
-  }
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private uiState: UiStateService
+  ) { }
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
@@ -187,7 +195,6 @@ export class Dashboard implements OnInit {
   bannerRigthtImages: any;
   bannerLeftImages: any;
   async ngOnInit(): Promise<void> {
-    // this.checkScreenSize();
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
 
@@ -280,15 +287,6 @@ export class Dashboard implements OnInit {
     } catch (error) {
       console.error('Error loading data:', error);
     }
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkScreenSize();
-  }
-
-  private checkScreenSize() {
-    this.isDesktop = window.innerWidth > 768;
   }
 
   private updateWinnerUI(winners: any): void {
@@ -1174,6 +1172,7 @@ export class Dashboard implements OnInit {
           if (group && group.id && group.getAttribute('data-party')) {
             this.zoneId = group.id;
             this.handleDistrictClick(this.zoneId);
+            this.uiState.setReferendumLogoSmall(true);
           }
           // return;
         }
@@ -1267,6 +1266,7 @@ export class Dashboard implements OnInit {
         this.onPartySelected(previous.partyName);
       } else if (previous.page === 'main') {
         this.selectedParty = '';
+        this.uiState.setReferendumLogoSmall(false);
         firstValueFrom(
           this.http.get('/assets/thailand.svg', { responseType: 'text' })
         )
@@ -1563,6 +1563,7 @@ export class Dashboard implements OnInit {
 
   // Click Card "dashboard-score-and-seat" (Open Page 2)
   onPartySelected(partyName: string) {
+    this.uiState.setReferendumLogoSmall(true);
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
@@ -1606,6 +1607,7 @@ export class Dashboard implements OnInit {
   }
   // Click PartyListAndPartyZone
   onClickPartyListAndPartyZone(partyName: string, command: string) {
+    this.uiState.setReferendumLogoSmall(true);
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
@@ -1635,6 +1637,7 @@ export class Dashboard implements OnInit {
   }
   // Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
+    this.uiState.setReferendumLogoSmall(true);
     this.detailDistrict = [];
 
     const target = event.target as SVGElement;

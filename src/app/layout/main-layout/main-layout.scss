@@ -171,6 +171,7 @@
     align-items: center;
     gap: 6px;
     color: white;
+    margin-left: 10px;
     font-weight: 500;
     cursor: pointer;
 
@@ -423,6 +424,14 @@ input:checked+.slider:before {
 .logo-image-top {
     max-height: 160px;
     flex-shrink: 0;
+
+    &.referendum {
+        max-height: 120px;
+    }
+
+    &.main {
+        max-height: 160px;
+    }
 }
 
 @media (max-width: 768px) {

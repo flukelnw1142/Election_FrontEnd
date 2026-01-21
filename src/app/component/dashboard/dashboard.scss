@@ -492,7 +492,7 @@ PAGE 2
   .head-logo-container {
     position: absolute;
     inset: auto 0 0 0; // bottom:0, left:0, right:0
-    height: 60%; // ← ปรับตรงนี้เพื่อจำกัดพื้นที่หลัก
+    height: 70%; // ← ปรับตรงนี้เพื่อจำกัดพื้นที่หลัก
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -1064,6 +1064,8 @@ PAGE 7
 
 
     .left {
+      position: relative;
+
       .header {
         font-size: clamp(1.5rem, 3vw, 2rem);
       }
@@ -1101,10 +1103,28 @@ PAGE 7
         /* หรือ cover */
       }
 
+      // .head-logo {
+      //   // width: 100%;
+      //   // max-height: 45dvh;
+      //   height: 55vh;
+      //   object-fit: contain;
+      // }
+
+      .head-logo-container {
+        position: absolute;
+        inset: auto 0 0 0; // bottom:0, left:0, right:0
+        height: 100%; // ← ปรับตรงนี้เพื่อจำกัดพื้นที่หลัก
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        overflow: hidden;
+      }
+
       .head-logo {
-        // width: 100%;
-        // max-height: 45dvh;
-        height: 45vh;
+        // max-height: 80%;
+        // width: auto;
+        // height: auto;
+        width: 70%;
         object-fit: contain;
       }
 

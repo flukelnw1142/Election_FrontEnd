@@ -1,4 +1,5 @@
 .scroll-container {
+    padding-top: 25px;
     overflow-y: auto;
     overflow-x: hidden;
     height: 74vh;
@@ -75,7 +76,7 @@
     gap: 1rem;
     margin-bottom: 2%;
     height: 140px;
-    padding: 1rem 1rem 0rem 1rem;
+    padding: 0rem 1rem 0rem 1rem;
     border-radius: 1rem;
     position: relative;
     z-index: 0;
@@ -89,7 +90,7 @@
             rgba(255, 255, 255, 0.05));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    // border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
@@ -131,15 +132,28 @@
     height: 300px;
 }
 
+.number {
+    // background: #ffffff;
+    color: #fff;
+    height: 55px;
+    width: 2.5rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    align-content: center;
+    border-radius: 15px;
+}
+
 .left-section {
-    width: 30%;
-    position: relative;
+    width: 140px;
+    flex-shrink: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
 
     .img-head {
         width: auto;
-        height: 140px;
-        position: relative;
-        bottom: 8px;
+        height: 100%;
     }
 
     .img-head img {
@@ -191,9 +205,10 @@
         height: 100px;
         border: 1px solid #ccc;
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        margin: auto;
 
         overflow: hidden;
         /* สำคัญมาก */
@@ -208,37 +223,18 @@
         height: 100%;
         object-fit: contain;
     }
-
-
-
-    // .img-party {
-    //     height: 4rem;
-    //     width: 4rem;
-    //     position: absolute;
-    //     bottom: -5px;
-    //     right: 10px;
-    //     border-radius: 100%;
-    //     // animation: bounce 1s ease-in;
-    // }
-
 }
 
-.number {
-    // background: #ffffff;
-    color: #fff;
-    height: 60px;
-    width: 2.5rem;
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-align: center;
-    align-content: center;
-    border-radius: 15px;
-}
 
 .middle-section {
+    flex: 1 1 auto; // ยืดได้ หดได้
+    min-width: 0; // ❗ สำคัญสำหรับ text-overflow
+    color: #fff;
     white-space: nowrap;
-    width: 60%;
-    color: #ffffff;
+
+    // white-space: nowrap;
+    // width: 40%;
+    // color: #ffffff;
 }
 
 .partyName {
@@ -398,8 +394,12 @@
 }
 
 .right-section {
+    // display: flex;
+    // width: 10%;
+    flex: 0 1 40px; // ปรับตามดีไซน์
+    min-width: 40px;
     display: flex;
-    width: 10%;
+
 }
 
 .zoneAndPartyList-seats {
@@ -455,27 +455,8 @@
     }
 
     .left-section {
-        width: 40%;
-
-        .img-head {
-            width: auto;
-            height: 120px;
-            position: relative;
-            bottom: -2px;
-        }
-
-        .img-head img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: 50% 0%;
-        }
-
-        .party-frame {
-            bottom: 0px;
-            left: 140px;
-        }
-
+        width: 140px;
+        min-width: 140px;
     }
 
     .middle-section {
@@ -483,7 +464,8 @@
     }
 
     .right-section {
-        width: 50%;
+        flex: 0 1 50%;
+        min-width: 80px;
         justify-content: space-between
     }
 
@@ -525,21 +507,6 @@
 }
 
 @media (max-width: 550px) {
-    .left-section {
-        width: 30%;
-
-
-        .party-frame {
-            bottom: 2px;
-            left: 90px;
-        }
-
-    }
-
-    .right-section {
-        width: 50%;
-        justify-content: space-between
-    }
 
     .non-desktop {
 
@@ -568,10 +535,9 @@
 
 @media (max-width: 450px) {
     .party-card {
-        gap: 1rem;
-        padding: .5rem .8rem 0rem .8rem;
+        gap: .5rem;
+        padding: 0rem .8rem 0rem .8rem;
     }
-
 
     .number {
         width: 1.5rem;
@@ -579,26 +545,23 @@
     }
 
     .left-section {
-        width: 50%;
+        width: 120px;
+        min-width: 120px;
 
         .img-head {
-            width: auto;
+            width: 120px;
             height: 120px;
-            position: relative;
-            bottom: -6px;
+            margin-top: 20px;
         }
 
-
-        .party-frame {
-            bottom: 2px;
-            left: 90px;
-            display: none;
+        .img-head img {
+            width: 100%;
         }
-
     }
 
     .right-section {
-        width: 50%;
+        flex: 0 1 50%;
+        min-width: 80px;
         justify-content: space-between
     }
 
@@ -625,62 +588,74 @@
     }
 }
 
-@media (max-width: 319px) {
+@media (max-width: 340px) {
     .party-card {
         gap: 1rem;
-        padding: .3rem .6rem 0rem .6rem;
+        padding: 0rem .6rem 0rem .6rem;
     }
 
     .number {
-        width: 1.5rem;
-        font-size: 1.5rem;
+        width: 1rem;
+        font-size: 1rem;
     }
+
+    // .left-section {
+    //     display: none;
+    // }
 
     .left-section {
-        display: none;
+        width: 100px;
+        min-width: 100px;
+
+        .img-head {
+            width: 100px;
+            height: 100px;
+            margin-top: 40px;
+        }
+
+        .img-head img {
+            width: 100%;
+        }
     }
 
-    .right-section {
-        width: 90%;
-        justify-content: space-between
-    }
+    
 
-    .non-desktop {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    // .non-desktop {
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: center;
+    //     align-items: center;
 
-        .party-name {
-            font-weight: 600;
-            font-size: 18px;
-        }
+    //     .party-name {
+    //         font-weight: 600;
+    //         font-size: 18px;
+    //     }
 
-        .party-total-seat {
-            font-weight: 600;
-            font-size: 30px;
-        }
+    //     .party-total-seat {
+    //         font-weight: 600;
+    //         font-size: 30px;
+    //     }
 
-        .partyAndscore {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-        }
+    //     .partyAndscore {
+    //         display: flex;
+    //         justify-content: center;
+    //         align-items: center;
+    //         gap: 1rem;
+    //     }
 
-        .party-score {
-            font-size: 14px;
+    //     .party-score {
+    //         font-size: 14px;
 
-            .seat {
-                font-weight: 500;
-            }
-        }
+    //         .seat {
+    //             font-weight: 500;
+    //         }
+    //     }
 
-        .party-vote {
-            display: block;
-            font-size: 14px;
-        }
+    //     .party-vote {
+    //         display: block;
+    //         font-size: 14px;
+    //     }
 
 
-    }
+    // }
 }

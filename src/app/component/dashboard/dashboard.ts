@@ -1578,7 +1578,7 @@ export class Dashboard implements OnInit {
 
   // Click Card "dashboard-score-and-seat" (Open Page 2)
   onPartySelected(partyName: string) {
-    this.uiState.setReferendumLogoSmall(false);
+    this.uiState.setReferendumLogoSmall(true);
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==
@@ -1623,7 +1623,7 @@ export class Dashboard implements OnInit {
   }
   // Click PartyListAndPartyZone
   onClickPartyListAndPartyZone(partyName: string, command: string) {
-    this.uiState.setReferendumLogoSmall(false);
+    this.uiState.setReferendumLogoSmall(true);
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==

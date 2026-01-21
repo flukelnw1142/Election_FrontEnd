@@ -260,17 +260,13 @@
 
     .question-block {
         color: white;
-        overflow-y: auto;
         scrollbar-width: none; // Firefox
         -ms-overflow-style: none;
     }
 
     .referendum-layout {
-        display: flex;
         flex-direction: column;
-        // justify-content: space-around;
         padding: 10px;
-        // overflow-y: auto;
     }
 
     .left {
@@ -480,7 +476,6 @@
 
 /* กัน container หลุดจอ */
 .show-province-all {
-    height: auto; // มือถือไม่บังคับสูง
     min-height: 85dvh;
 }
 
@@ -597,6 +592,7 @@
 @media (max-width: 640px) {
     .show-province-all {
         padding: 0.5rem;
+        height: auto;
     }
 
     .show-province-all h4 {
@@ -674,4 +670,42 @@
     .show-province-all .value {
         font-size: 20px;
     }
+
+    .question-block {
+        color: white;
+        overflow-y: auto;
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .question-block {
+        color: white;
+        overflow-y: auto;
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none;
+    }
+
+}
+
+.hint {
+    display: flex;
+    gap: 1rem;
+    font-size: .8rem;
+    text-align: center;
+    padding: .75rem;
+    border-radius: 2rem;
+    align-items: center;
+    justify-content: end;
+    position: absolute;
+    top: 0.75rem;
+    right: 4rem;
+    white-space: nowrap;
+    font-weight: 900;
+    background-color: #1e1e1e;
+    color: #fff;
+    z-index: 1;
 }

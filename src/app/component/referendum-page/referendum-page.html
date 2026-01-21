@@ -14,6 +14,7 @@
             </div>
 
             <div class="column svg-column">
+                <div class="hint"> <mat-icon>pinch_zoom_out</mat-icon>ลาก ซูม แตะ เพื่อเลือกเขต</div>
                 <div class="reset-btn" (click)="resetZoom()">
                     <mat-icon>restart_alt</mat-icon>
                 </div>
@@ -24,6 +25,7 @@
                         <div #svgContainerRegion [innerHTML]="svgContentRegion"></div>
                     </div>
                 </div>
+
             </div>
             <div class="column">
                 <span class="loader" *ngIf="loading"></span>

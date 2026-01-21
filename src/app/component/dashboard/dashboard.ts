@@ -1168,6 +1168,7 @@ export class Dashboard implements OnInit {
               this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
               this.activeTab = 'district';
               this.handleProvinceClick(this.selectedProvince);
+              this.uiState.setReferendumLogoSmall(true);
               return;
             }
           }
@@ -2019,7 +2020,7 @@ export class Dashboard implements OnInit {
           }
         );
 
-        console.log("detailWinnerZonePerProvince",this.detailWinnerZonePerProvince)
+        console.log("detailWinnerZonePerProvince", this.detailWinnerZonePerProvince)
 
         this.cd.markForCheck();
       });

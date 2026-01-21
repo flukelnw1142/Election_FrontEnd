@@ -219,7 +219,8 @@
 
     &:hover {
         // color: #4b0a69;
-        background-color: #4b0a69;
+        // background-color: #4b0a69;
+        transform: translateY(-2px) scale(1.05);
         border-radius: 10px;
     }
 

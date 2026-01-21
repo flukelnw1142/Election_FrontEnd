@@ -691,6 +691,16 @@
 
 }
 
+@media (min-height: 689px) AND (max-width: 1536px) {
+    .question-block {
+        color: white;
+        overflow-y: auto;
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none;
+    }
+}
+
+
 .hint {
     display: flex;
     gap: 1rem;

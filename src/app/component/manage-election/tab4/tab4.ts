@@ -439,27 +439,27 @@ export class Tab4 {
     console.log(displayArea)
 
     const jsonData = {
-      "REFERENDUM_REPORT": {
-        "province": displayArea,
-        "counted_percent": percent || 0,
-        "questions": this.referendumQuestions.map(q => {
-          const agreeScore = Number(this.findOption(q, 'agree').totalVotes || 0);
-          const disagreeScore = Number(this.findOption(q, 'disagree').totalVotes || 0);
-          const invalidScore = Number(q.invalidVotes || 0);
-          const noScore = Number(q.noVotes || 0);
+      // "REFERENDUM_REPORT": {
+      "province": displayArea,
+      "counted_percent": percent || 0,
+      "questions": this.referendumQuestions.map(q => {
+        const agreeScore = Number(this.findOption(q, 'agree').totalVotes || 0);
+        const disagreeScore = Number(this.findOption(q, 'disagree').totalVotes || 0);
+        const invalidScore = Number(q.invalidVotes || 0);
+        const noScore = Number(q.noVotes || 0);
 
-          return {
-            "questionNumber": q.questionNumber,
-            "questionText": q.questionText,
-            "options": q.options,
-            "goodVotes": agreeScore + disagreeScore,
-            "invalidVotes": invalidScore,
-            "noVotes": noScore,
-            "totalVotes": agreeScore + disagreeScore + invalidScore + noScore
-          };
-        }),
-        "total": this.referendumQuestions.length
-      }
+        return {
+          "questionNumber": q.questionNumber,
+          "questionText": q.questionText,
+          "options": q.options,
+          "goodVotes": agreeScore + disagreeScore,
+          "invalidVotes": invalidScore,
+          "noVotes": noScore,
+          "totalVotes": agreeScore + disagreeScore + invalidScore + noScore
+        };
+      }),
+      "total": this.referendumQuestions.length
+      // }
     };
 
     this.responseJson$.next(JSON.stringify(jsonData, null, 2));

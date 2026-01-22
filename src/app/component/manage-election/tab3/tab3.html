@@ -15,8 +15,9 @@
                         <label class="form-label">จังหวัด :</label>
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>ค้นหาจังหวัด</mat-label>
-                            <input type="text" matInput [formControl]="provinceCtrl" [matAutocomplete]="autoProvince" (focus)="openProvincePanel()"
-                                    #provinceTrig="matAutocompleteTrigger" matAutocompleteTrigger>
+                            <input type="text" matInput [formControl]="provinceCtrl" [matAutocomplete]="autoProvince"
+                                (focus)="openProvincePanel()" #provinceTrig="matAutocompleteTrigger"
+                                matAutocompleteTrigger>
                             <mat-autocomplete #autoProvince="matAutocomplete"
                                 (optionSelected)="onProvinceSelected($event)">
                                 <mat-option *ngFor="let p of filteredProvinces | async" [value]="p.provinceName">
@@ -78,28 +79,21 @@
 
                     <div class="header-row fw-bold d-flex">
                         <div class="rank-col">อันดับ</div>
-                        <div class="pic-col">party_pic</div>
                         <div class="party-col">party_name</div>
+                        <div class="party-logo-col">party_logo</div>
                         <div class="score-col">score</div>
                     </div>
-
-                    <!-- <div class="header-row fw-bold d-flex">
-                        <div class="rank-col">Rank</div>
-                        <div class="pic-col">party_pic <span class="ex-text">01</span></div>
-                        <div class="party-col">party_name <span class="ex-text">ชาติพัฒนากล้า</span></div>
-                        <div class="score-col">score <span class="ex-text">300,000</span></div>
-                    </div> -->
 
                     <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
                         <div *ngFor="let rank of ranks; let i = index" class="data-row d-flex mt-2 align-items-center">
                             <div class="rank-col text-center">อันดับ {{i+1}} :</div>
-                            <div class="pic-col">
-                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input1"
-                                    name="input1-{{i}}" [placeholder]="isMobile ? 'party_pic' : ''" required>
-                            </div>
                             <div class="party-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input1"
+                                    name="input1-{{i}}" [placeholder]="isMobile ? 'party_name' : ''" required>
+                            </div>
+                            <div class="party-logo-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input2"
-                                    name="input2-{{i}}" [placeholder]="isMobile ? 'party_name' : ''" required>
+                                    name="input2-{{i}}" [placeholder]="isMobile ? 'party_pic' : ''" required>
                             </div>
                             <div class="score-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input3"

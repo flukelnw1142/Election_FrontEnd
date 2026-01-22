@@ -183,8 +183,8 @@ export class Tab3 {
     const jsonData = {
       parties: this.ranks.map((rank, index) => ({
         row: index + 1,
-        party_name: rank.input2,
-        party_pic: rank.input1,
+        party_name: rank.input1,
+        party_logo: rank.input2,
         score: rank.input3,
         province: this.province.trim(),
         counted: this.inputPercent.toString(),

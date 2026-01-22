@@ -116,68 +116,82 @@
 <!-- PAGE 2 : show-dashboard-party -->
 <!-- <div *ngIf="selectedParty !== '' " style="position: relative;"> -->
 <!-- <div *ngIf="getCurrentPage('show-dashboard-party') " class="page-container"> -->
-<div *ngIf="currentIsShowParty" class="page-container">
-    <button class="ds-Button" (click)="closeDialog()">X</button>
-    <div class="row">
-        <div class="col-4">
-            <div class="glass-card card-left" [style.color]="getColor(selectedParty)">
-                <div class="party-rank-row">
-                    <div class="party-text-left">
-                        <p class="rank"> อันดับ {{ ranking }}</p>
-                        <p class="party-name">{{ selectedParty }}</p>
-                    </div>
-                    <div class="party-text-right">
-                        <p class="seats">{{ totalSeats }}</p>
-                        <p class="seats-label">ที่นั่ง</p>
-                    </div>
-                </div>
-                <div class="head-logo-container">
-                    <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
-                        class="head-logo">
-                </div>
-            </div>
-        </div>
-        <div class="col-2">
-            <div class=" glass-card card-m">
-                <div style="text-align: center;">
-                    <p class="zone-label">ส.ส.เขต</p>
-                    <p class="zone-seats" (click)="onClickPartyListAndPartyZone(selectedParty, '')">{{zoneSeats}}</p>
-                    <p class="zone-total">จากผู้สมัครจำนวน {{zoneSeatsAll}} คน</p>
-                </div>
-            </div>
-            <div class="glass-card card-m"
-                style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <div style="text-align: center;">
-                        <p class="party-list-label"> ส.ส.บัญชีรายชื่อ</p>
-                        <p class="party-list-seats" (click)="onClickPartyListAndPartyZone(selectedParty, 'partyList')">
-                            {{partylistSeats}}</p>
-                        <p class="party-list-total">จากผู้สมัครจำนวน {{partylistSeatsAll}} คน</p>
-                    </div>
-                    <div class="orange-dots">
-                        <span class="dot" *ngFor="let i of getPartylistSeatsArray()"
-                            [style.background-color]="getColor(selectedParty)"></span>
-                    </div>
-                </div>
-                <p class="total-votes">({{ formatTotalVotes(totalVote) }} คะแนน)</p>
+<div *ngIf="currentIsShowParty" class="party-page">
+  <button class="ds-Button" (click)="closeDialog()">X</button>
 
-            </div>
+  <div class="party-page__row">
+    <!-- LEFT -->
+    <div class="party-page__col party-page__col--left">
+      <div class="party-card party-card--left" [style.color]="getColor(selectedParty)">
+        <div class="party-card__rank-row">
+          <div class="party-card__text-left">
+            <p class="rank">อันดับ {{ ranking }}</p>
+            <p class="party-name">{{ selectedParty }}</p>
+          </div>
+
+          <div class="party-card__text-right">
+            <p class="seats">{{ totalSeats }}</p>
+            <p class="seats-label">ที่นั่ง</p>
+          </div>
         </div>
-        <div class="col-6">
-            <div class="glass-card">
-                <div class="svg-container" #svgContainer (click)="onSvgClick($event)">
-                    <!-- <div class="svg-container" #svgContainer> -->
-                    <div [innerHTML]="svgContent"></div>
-                </div>
-                <!-- <div
-                    style="justify-content: end;display: flex; color: #ffffffc8; margin-right: 12px; font-size: 16px; ">
-                    <mat-icon style="font-size: 16px; display: flex; align-items: center;">schedule</mat-icon>
-                    อัพเดตล่าสุด ณ วันที่ &nbsp;<span class="ti_bf updateDate"></span>
-                </div> -->
-            </div>
+
+        <div class="party-card__head-container">
+          <img
+            [src]="getUrlHead(selectedParty)"
+            *ngIf="getUrlHead(selectedParty)"
+            alt="Head Logo"
+            class="party-card__head"
+          />
         </div>
+      </div>
     </div>
+
+    <!-- MIDDLE -->
+    <div class="party-page__col party-page__col--mid">
+      <div class="party-card party-card--mid">
+        <div class="party-mid__center">
+          <p class="zone-label">ส.ส.เขต</p>
+          <p class="zone-seats" (click)="onClickPartyListAndPartyZone(selectedParty, '')">
+            {{ zoneSeats }}
+          </p>
+          <p class="zone-total">จากผู้สมัครจำนวน {{ zoneSeatsAll }} คน</p>
+        </div>
+      </div>
+
+      <div class="party-card party-card--mid party-mid--bottom">
+        <div>
+          <div class="party-mid__center">
+            <p class="party-list-label">ส.ส.บัญชีรายชื่อ</p>
+            <p class="party-list-seats" (click)="onClickPartyListAndPartyZone(selectedParty, 'partyList')">
+              {{ partylistSeats }}
+            </p>
+            <p class="party-list-total">จากผู้สมัครจำนวน {{ partylistSeatsAll }} คน</p>
+          </div>
+
+          <div class="party-dots">
+            <span
+              class="party-dots__dot"
+              *ngFor="let i of getPartylistSeatsArray()"
+              [style.background-color]="getColor(selectedParty)"
+            ></span>
+          </div>
+        </div>
+
+        <p class="total-votes">({{ formatTotalVotes(totalVote) }} คะแนน)</p>
+      </div>
+    </div>
+
+    <!-- MAP -->
+    <div class="party-page__col party-page__col--map">
+      <div class="party-card party-card--map">
+        <div class="party-map" #svgContainer (click)="onSvgClick($event)">
+          <div [innerHTML]="svgContent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 <!-- PAGE 6 : show-Province ALL (Zone / Party) -->
 <!-- <div *ngIf="selectedProvince !== '' || selectedDistric !== ''" style="position: relative;" class="show-province-all"> -->

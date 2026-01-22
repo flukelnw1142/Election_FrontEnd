@@ -208,24 +208,19 @@
     }
 
     .rank-col {
-        flex: 0 0 60px;
+        flex: 0 0 20px;
         text-align: center;
     }
 
-    .name-col {
-        flex: 2.5;
-    }
-
-    .pic-col {
-        flex: 1.5;
-    }
-
+    .name-col,
+    .title-col,
+    .fName-col,
+    .lName-col,
+    .cImg-col,
+    .party-col,
+    .party-logo-col,
     .score-col {
-        flex: 1.5;
-    }
-
-    .party-col {
-        flex: 2.5;
+        flex: 1;
     }
 
     .name-col .form-control,

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BehaviorSubject, interval, map, Observable, startWith, Subject, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, interval, last, map, Observable, startWith, Subject, Subscription, switchMap } from 'rxjs';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -88,11 +88,11 @@ export class Tab2 {
   }
 
   ranks = [
-    { input1: '', input2: '', input3: '', input4: '' },
-    { input1: '', input2: '', input3: '', input4: '' },
-    { input1: '', input2: '', input3: '', input4: '' },
-    { input1: '', input2: '', input3: '', input4: '' },
-    { input1: '', input2: '', input3: '', input4: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '', input8: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '', input8: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '', input8: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '', input8: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '', input8: '' },
   ];
 
   provinces: any[] = [];
@@ -324,9 +324,13 @@ export class Tab2 {
     const result = this.ranks.map((rank, index) => ({
       row: index + 1,
       name: rank.input1.trim(),
-      party_name: rank.input3.trim(),
-      party_pic: `${rank.input2.trim()}`, // แปลง 01 → P_01.png
-      score: rank.input4.replace(/,/g, ''), // เอา , ออก → 41143
+      title: rank.input2.trim(),
+      firstName: rank.input3.trim(),
+      lastName: rank.input4.trim(),
+      candidate_img: rank.input5.trim(),
+      party_name: rank.input6.trim(),
+      party_logo: rank.input7.trim(),
+      score: rank.input8.replace(/,/g, ''), // เอา , ออก → 41143
       province: this.province.trim(),
       zone: this.zone.trim(),
       counted: this.inputPercent.toString(),

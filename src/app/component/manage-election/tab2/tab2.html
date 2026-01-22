@@ -132,29 +132,50 @@
                     <div class="header-row fw-bold">
                         <div class="rank-col">อันดับ</div>
                         <div class="name-col">name</div>
-                        <div class="pic-col">party_pic</div>
+                        <div class="title-col">title</div>
+                        <div class="fName-col">firstName</div>
+                        <div class="lName-col">lastName</div>
+                        <div class="cImg-col">candidate_img</div>
                         <div class="party-col">party_name</div>
+                        <div class="party-logo-col">party_logo</div>
                         <div class="score-col">score</div>
                     </div>
 
                     <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
                         <div *ngFor="let rank of ranks; let i = index" class="data-row d-flex mt-2 align-items-center">
-                            <div class="rank-col text-center">อันดับ {{i+1}} :</div>
+                            <div class="rank-col text-center">{{i+1}} :</div>
+                            <!-- <div class="rank-col text-center">อันดับ {{i+1}} :</div> -->
                             <div class="name-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input1"
                                     name="input1-{{i}}" [placeholder]="isMobile ? 'name' : ''" required>
                             </div>
-                            <div class="pic-col">
+                            <div class="title-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input2"
-                                    name="input2-{{i}}" [placeholder]="isMobile ? 'party_pic' : ''" required>
+                                    name="input2-{{i}}" [placeholder]="isMobile ? 'title' : ''" required>
+                            </div>
+                            <div class="fName-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input3"
+                                    name="input3-{{i}}" [placeholder]="isMobile ? 'firstName' : ''" required>
+                            </div>
+                            <div class="lName-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input4"
+                                    name="input4-{{i}}" [placeholder]="isMobile ? 'lastName' : ''" required>
+                            </div>
+                            <div class="cImg-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input5"
+                                    name="input5-{{i}}" [placeholder]="isMobile ? 'candidate_img' : ''" required>
                             </div>
                             <div class="party-col">
-                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input3"
-                                    name="input3-{{i}}" [placeholder]="isMobile ? 'party_name' : ''" required>
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input6"
+                                    name="input6-{{i}}" [placeholder]="isMobile ? 'party_name' : ''" required>
+                            </div>
+                            <div class="party-logo-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input7"
+                                    name="input7-{{i}}" [placeholder]="isMobile ? 'party_logo' : ''" required>
                             </div>
                             <div class="score-col">
-                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input4"
-                                    name="input4-{{i}}" [placeholder]="isMobile ? 'score' : ''" required>
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input8"
+                                    name="input8-{{i}}" [placeholder]="isMobile ? 'score' : ''" required>
                             </div>
                         </div>
 

@@ -95,19 +95,29 @@
     }
 
     .rank-col {
-        flex: 0 0 60px;
+        flex: 0 0 20px;
         text-align: center;
     }
 
     .name-col {
-        flex: 2.5;
+        flex: 1.5;
     }
 
     .pic-col {
         flex: 1.5;
     }
 
+    .pic-logo-col {
+        flex: 1.5;
+    }
+
     .score-col {
+        flex: 1.5;
+    }
+
+    .zone_seats-col,
+    .partylist_seats-col,
+    .total_seats-col {
         flex: 1.5;
     }
 

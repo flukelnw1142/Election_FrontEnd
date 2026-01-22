@@ -16,7 +16,7 @@
                         <span class="form-label mb-0">นับไปแล้ว (%)</span>
                         <!-- <span>นับไปแล้ว (%) <span class="ex-text">50.0</span></span> -->
                         <input type="number" class="form-control w-auto" placeholder="" [(ngModel)]="inputPercent"
-                            name="inputPercent"  min="0" step="0.1" max="100">
+                            name="inputPercent" min="0" step="0.1" max="100">
                     </div>
 
                     <!-- <div class="header-row fw-bold d-flex">
@@ -29,24 +29,45 @@
                     <div class="header-row fw-bold d-flex">
                         <div class="rank-col">อันดับ</div>
                         <div class="name-col">party_name</div>
-                        <div class="pic-col">party_pic</div>
+                        <div class="pic-logo-col">party_logo</div>
+                        <div class="pic-col">party_head</div>
                         <div class="score-col">score</div>
+                        <div class="zone_seats-col">zone_seats</div>
+                        <div class="partylist_seats-col">partylist_seats</div>
+                        <div class="total_seats-col">total_seats</div>
                     </div>
 
                     <form #rankForm="ngForm" (ngSubmit)="onSubmit(rankForm)">
                         <div *ngFor="let rank of ranks; let i = index" class="data-row d-flex mt-2 align-items-center">
-                            <div class="rank-col text-center">อันดับ {{i+1}} :</div>
+                            <div class="rank-col text-center">{{i+1}} :</div>
+                            <!-- <div class="rank-col text-center">อันดับ {{i+1}} :</div> -->
                             <div class="name-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input1"
                                     name="input1-{{i}}" [placeholder]="isMobile ? 'party_name' : ''" required>
                             </div>
-                            <div class="pic-col">
+                            <div class="pic-logo-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input2"
-                                    name="input2-{{i}}" [placeholder]="isMobile ? 'party_pic' : ''" required>
+                                    name="input2-{{i}}" [placeholder]="isMobile ? 'party_logo' : ''" required>
+                            </div>
+                            <div class="pic-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input3"
+                                    name="input3-{{i}}" [placeholder]="isMobile ? 'party_head' : ''" required>
                             </div>
                             <div class="score-col">
-                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input3"
-                                    name="input3-{{i}}" [placeholder]="isMobile ? 'score' : ''" required>
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input4"
+                                    name="input4-{{i}}" [placeholder]="isMobile ? 'score' : ''" required>
+                            </div>
+                            <div class="zone_seats-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input5"
+                                    name="input5-{{i}}" [placeholder]="isMobile ? 'zone_seats' : ''" required>
+                            </div>
+                            <div class="partylist_seats-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input6"
+                                    name="input6-{{i}}" [placeholder]="isMobile ? 'partylist_seats' : ''" required>
+                            </div>
+                            <div class="total_seats-col">
+                                <input type="text" class="form-control" [(ngModel)]="ranks[i].input7"
+                                    name="input7-{{i}}" [placeholder]="isMobile ? 'total_seats' : ''" required>
                             </div>
                         </div>
 

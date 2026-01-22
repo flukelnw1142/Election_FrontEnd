@@ -12,7 +12,7 @@ import { environment } from '../../../../environments/environment';
   styleUrl: './tab1.scss',
 })
 export class Tab1 {
-  constructor(private _Tab1: Tab1Service, private cd: ChangeDetectorRef) {}
+  constructor(private _Tab1: Tab1Service, private cd: ChangeDetectorRef) { }
   private destroy$ = new Subject<void>();
   private eventSource: EventSource | null = null;
   private baseUrl = environment.api_url;
@@ -41,11 +41,11 @@ export class Tab1 {
   }
 
   ranks = [
-    { input1: '', input2: '', input3: '' },
-    { input1: '', input2: '', input3: '' },
-    { input1: '', input2: '', input3: '' },
-    { input1: '', input2: '', input3: '' },
-    { input1: '', input2: '', input3: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '' },
+    { input1: '', input2: '', input3: '', input4: '', input5: '', input6: '', input7: '' },
   ];
 
   ngOnDestroy(): void {
@@ -107,7 +107,7 @@ export class Tab1 {
       this._Tab1.disconnect();
       console.log('SSE Disconnected');
     }
-    
+
   }
 
   onTimeChange() {
@@ -124,8 +124,12 @@ export class Tab1 {
       parties: this.ranks.map((rank, index) => ({
         row: index + 1,
         party_name: rank.input1,
-        party_pic: rank.input2,
-        score: rank.input3,
+        party_logo: rank.input2,
+        party_head: rank.input3,
+        score: rank.input4,
+        zone_seats: rank.input5,
+        partylist_seats: rank.input6,
+        total_seats: rank.input7,
         counted: this.inputPercent.toString(),
       })),
     };

@@ -501,46 +501,17 @@ input:checked+.slider:before {
     }
 }
 
-// .footer {
-//     position: fixed;
-//     bottom: 0;
-//     left: 0;
-//     right: 0;
-//     max-height: 60px;
-//     overflow: hidden;
+@media (min-height: 784px) AND (max-width: 1440px) {
+    .logo-image-top {
+        max-height: 150px;
+    }
+}
 
-//     background: rgba(255, 255, 255, 0.75);
-//     backdrop-filter: blur(8px);
-//     z-index: 100;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     border-top: 1px solid rgba(255, 255, 255, 0.12);
-//     padding: 0 1rem;
-//     box-sizing: border-box;
-
-//     .banner-scroller {
-//         width: 100%;
-//         overflow: hidden;
-//         padding: 10px 0;
-//     }
-
-//     .banner-track {
-//         display: flex;
-//         flex-wrap: wrap;
-//         gap: 20px;
-//         justify-content: center;
-//     }
-
-//     .banner-img {
-//         height: 50px;
-//         width: auto;
-//         flex-shrink: 0;
-//         object-fit: contain;
-//     }
-
-
-// }
+@media (min-height: 784px) AND (max-width: 1124px) {
+    .logo-image-top {
+        max-height: 120px;
+    }
+}
 
 .footer {
     position: fixed;

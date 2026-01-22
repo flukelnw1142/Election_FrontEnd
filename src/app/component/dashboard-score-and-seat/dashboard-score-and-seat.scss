@@ -446,7 +446,42 @@
 // responsive
 @media (min-width: 2560px) {}
 
-@media (max-width: 2559px) and (min-width: 1024px) {}
+@media (max-width: 1160px) AND (min-width: 1024px) {
+
+    .party-card {
+        gap: .5rem;
+    }
+
+    .number {
+        width: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    .middle-section {
+        width: 25%;
+    }
+
+    .left-section {
+        width: 110px;
+        min-width: 110px;
+
+        .img-head {
+            width: 110px;
+            height: 110px;
+            margin-top: 30px;
+        }
+
+        .img-head img {
+            width: 100%;
+        }
+    }
+
+    .right-section {
+        flex: 0 1 10%;
+        min-width: 15px;
+        justify-content: space-between
+    }
+}
 
 @media (max-width: 650px) {
     .number {
@@ -618,7 +653,7 @@
         }
     }
 
-    
+
 
     // .non-desktop {
     //     display: flex;

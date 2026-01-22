@@ -42,6 +42,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 import Swal from 'sweetalert2';
 import { UiStateService } from '../share/ui-state.service';
+import panzoom from "panzoom";
 
 @Component({
   selector: 'app-dashboard',
@@ -181,7 +182,7 @@ export class Dashboard implements OnInit {
   private checkScreenSize() {
     this.isDesktop = window.innerWidth > 768;
   }
-  
+
   constructor(
     private _dashboard: DashboardService,
     private http: HttpClient,
@@ -297,6 +298,11 @@ export class Dashboard implements OnInit {
     } catch (error) {
       console.error('Error loading data:', error);
     }
+  }
+
+  ngAfterViewInit() {
+    this.initPanzoom();
+
   }
 
   private updateWinnerUI(winners: any): void {
@@ -781,23 +787,23 @@ export class Dashboard implements OnInit {
     });
   }
 
-  zoomIn() {
-    if (isPlatformBrowser(this.platformId) && this.zoomBehavior) {
-      d3.select(this.svgContainer.nativeElement)
-        .select('svg')
-        .transition()
-        .call(this.zoomBehavior.scaleBy as any, 1.5);
-    }
-  }
+  // zoomIn() {
+  //   if (isPlatformBrowser(this.platformId) && this.zoomBehavior) {
+  //     d3.select(this.svgContainer.nativeElement)
+  //       .select('svg')
+  //       .transition()
+  //       .call(this.zoomBehavior.scaleBy as any, 1.5);
+  //   }
+  // }
 
-  zoomOut() {
-    if (isPlatformBrowser(this.platformId) && this.zoomBehavior) {
-      d3.select(this.svgContainer.nativeElement)
-        .select('svg')
-        .transition()
-        .call(this.zoomBehavior.scaleBy as any, 0.5);
-    }
-  }
+  // zoomOut() {
+  //   if (isPlatformBrowser(this.platformId) && this.zoomBehavior) {
+  //     d3.select(this.svgContainer.nativeElement)
+  //       .select('svg')
+  //       .transition()
+  //       .call(this.zoomBehavior.scaleBy as any, 0.5);
+  //   }
+  // }
 
   simmulateSvgClick(event: MouseEvent) {
     const target = event.target as SVGElement;
@@ -1885,6 +1891,11 @@ export class Dashboard implements OnInit {
     //   );
     //   this.cd.markForCheck();
     // });
+
+    setTimeout(() => {
+      this.initPanzoom();
+      // this.loading_tab2 = false
+    }, 0);
   }
 
   /**
@@ -2324,6 +2335,11 @@ export class Dashboard implements OnInit {
           );
           this.cd.markForCheck();
         });
+
+        setTimeout(() => {
+          this.initPanzoom();
+          // this.loading_tab2 = false
+        }, 0);
       }
     } catch (error) {
       console.error('Error loading region SVG:', error);
@@ -2539,5 +2555,35 @@ export class Dashboard implements OnInit {
     this.currentIsShowProvinceAll = topPage === 'show-province-all';
     this.currentIsShowPartylistAndDistrictPerParty = topPage === 'show-party-list_&_show-district-per-party';
     this.updateFooterVisibility(); // ถ้ามี
+  }
+
+
+  private panzoomInstance: any;
+
+  initPanzoom() {
+    if (!this.svgContainerRegion?.nativeElement) return;
+
+    // 🔥 destroy ตัวเก่าทุกครั้ง
+    if (this.panzoomInstance) {
+      this.panzoomInstance.dispose();
+    }
+
+    this.panzoomInstance = panzoom(this.svgContainerRegion.nativeElement, {
+      minZoom: 1,
+      maxZoom: 4,
+      bounds: true,
+      boundsPadding: 0.1,
+      smoothScroll: false
+    });
+  }
+
+  zoomIn() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() + 0.3); }
+  zoomOut() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() - 0.3); }
+  resetZoom() {
+    console.log("reset")
+    if (!this.panzoomInstance) return;
+
+    this.panzoomInstance.moveTo(0, 0); // reset pan
+    this.panzoomInstance.zoomAbs(0, 0, 1); // reset zoom
   }
 }

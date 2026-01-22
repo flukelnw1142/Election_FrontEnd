@@ -197,14 +197,27 @@
 
 
             </div>
-            <div class="column">
-                <div class="svg-container" #svgContainerRegion (click)="onSvgClickRegion($event)"
-                    (mousemove)="onSvgMouseMove($event)">
+            <!-- <div class="column svg-column">
+                <div class="svg-container" (click)="onSvgClickRegion($event)" (mousemove)="onSvgMouseMove($event)">
                     <div class="region-map-wrapper">
-                        <div [innerHTML]="svgContentRegion"></div>
+                        <div #svgContainerRegion [innerHTML]="svgContentRegion"></div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="column svg-column">
+                <div class="hint"> <mat-icon>pinch_zoom_out</mat-icon>ลาก ซูม แตะ เพื่อเลือกเขต</div>
+                <div class="reset-btn" (click)="resetZoom()">
+                    <mat-icon>restart_alt</mat-icon>
+                </div>
+                <!-- <span class="loader" *ngIf="loading_tab2"></span> -->
+                <div class="svg-container" (click)="onSvgClickRegion($event)">
+                <!-- <div class="svg-container" (click)="onSvgClickRegion($event)" (pointerup)="onSvgPointerUp($event)"> -->
+                    <div class="region-map-wrapper">
+                        <div #svgContainerRegion [innerHTML]="svgContentRegion"></div>
                     </div>
                 </div>
             </div>
+
             <div class="column">
                 <!-- เลือกจังหวัด / เลือกภาค-->
                 <div *ngIf="selectedProvince !== ''">
@@ -593,8 +606,8 @@
                     </div>
                 </div>
                 <div class="head-logo-container">
-                    <img [src]="getUrlHead(partySeatCounts.partyName)" *ngIf="getUrlHead(partySeatCounts.partyName)" alt="Head Logo"
-                        class="head-logo">
+                    <img [src]="getUrlHead(partySeatCounts.partyName)" *ngIf="getUrlHead(partySeatCounts.partyName)"
+                        alt="Head Logo" class="head-logo">
                 </div>
                 <!-- <div style="display: flex; justify-content: center; position: relative;">
                     <img [src]="getUrlHead(partySeatCounts.partyName)" *ngIf="getUrlHead(partySeatCounts.partyName)"

@@ -1,6 +1,5 @@
 <!-- PAGE 1 : main -->
 <!-- <div *ngIf="selectedParty === '' && selectedDistric === '' && selectedProvince === '' && selectedPartyListAndZoneSeat === '' "> -->
-
 <!-- <div *ngIf="getCurrentPage('main') "> -->
 <div *ngIf="currentIsMain">
     <div class="row h-100 align-items-stretch">
@@ -136,12 +135,6 @@
                     <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
                         class="head-logo">
                 </div>
-                <!-- <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
-                    class="head-logo"> -->
-                <!-- <div class="party-logo-wrapper">
-                    <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlParty(selectedParty) !== ''" alt="Party Logo"
-                        class="party-logo">
-                </div> -->
             </div>
         </div>
         <div class="col-2">

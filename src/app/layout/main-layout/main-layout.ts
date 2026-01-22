@@ -101,7 +101,7 @@ export class MainLayout {
     this.isDesktop = window.innerWidth >= 1024;
     this.is768 = window.innerWidth <= 768;
     if (this.is768) {
-      this.isReferendumPage = true;
+      this.default = true;
     }
   }
 

@@ -181,6 +181,7 @@ export class Dashboard implements OnInit {
   private checkScreenSize() {
     this.isDesktop = window.innerWidth > 768;
   }
+  
   constructor(
     private _dashboard: DashboardService,
     private http: HttpClient,

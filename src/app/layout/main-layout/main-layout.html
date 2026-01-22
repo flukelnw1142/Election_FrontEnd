@@ -5,9 +5,9 @@
     <div class="logo-frame" (click)="showVotingStatus && onCliclkLogo()" *ngIf="!isDesktop">
         <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-top" alt="Logo" />
     </div>
-    <div class="banner-left-top-container" *ngIf="isDesktop && showVotingStatus" (click)="showVotingStatus && onCliclkLogo()">
-        <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-top" alt="Logo"
-            [class.referendum]="default" />
+    <div class="banner-left-top-container" *ngIf="isDesktop && showVotingStatus"
+        (click)="showVotingStatus && onCliclkLogo()">
+        <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-top" alt="Logo" [class.referendum]="default" />
     </div>
 
     <div *ngIf="showVotingStatus" class="voting-status-desktop">

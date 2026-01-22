@@ -75,7 +75,7 @@ export class MainLayout {
             if (!this.isDesktop) {
               this.isReferendumPage = small;
             }
-            else{
+            else {
               this.default = small
             }
           }
@@ -100,6 +100,9 @@ export class MainLayout {
   private checkScreenSize() {
     this.isDesktop = window.innerWidth >= 1024;
     this.is768 = window.innerWidth <= 768;
+    if (this.is768) {
+      this.isReferendumPage = true;
+    }
   }
 
   logout(): void {

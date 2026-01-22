@@ -117,79 +117,110 @@
 <!-- <div *ngIf="selectedParty !== '' " style="position: relative;"> -->
 <!-- <div *ngIf="getCurrentPage('show-dashboard-party') " class="page-container"> -->
 <div *ngIf="currentIsShowParty" class="party-page">
-  <button class="ds-Button" (click)="closeDialog()">X</button>
+    <button class="ds-Button" (click)="closeDialog()">X</button>
 
-  <div class="party-page__row">
-    <!-- LEFT -->
-    <div class="party-page__col party-page__col--left">
-      <div class="party-card party-card--left" [style.color]="getColor(selectedParty)">
-        <div class="party-card__rank-row">
-          <div class="party-card__text-left">
-            <p class="rank">อันดับ {{ ranking }}</p>
-            <p class="party-name">{{ selectedParty }}</p>
-          </div>
+    <div class="party-page__row">
+        <!-- LEFT -->
+        <div class="party-page__col party-page__col--left">
+            <div class="party-card party-card--left" [style.color]="getColor(selectedParty)">
+                <div class="party-card__rank-row">
+                    <div class="party-card__text-left">
+                        <p class="rank">อันดับ {{ ranking }}</p>
+                        <p class="party-name">{{ selectedParty }}</p>
+                    </div>
 
-          <div class="party-card__text-right">
-            <p class="seats">{{ totalSeats }}</p>
-            <p class="seats-label">ที่นั่ง</p>
-          </div>
+                    <div class="party-card__text-right">
+                        <p class="seats">{{ totalSeats }}</p>
+                        <p class="seats-label">ที่นั่ง</p>
+                    </div>
+                </div>
+
+                <div class="party-card__head-container">
+                    <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
+                        class="party-card__head" />
+                </div>
+            </div>
         </div>
 
-        <div class="party-card__head-container">
-          <img
-            [src]="getUrlHead(selectedParty)"
-            *ngIf="getUrlHead(selectedParty)"
-            alt="Head Logo"
-            class="party-card__head"
-          />
+        <!-- MIDDLE -->
+        <div class="party-page__col party-page__col--mid">
+            <div class="party-card party-card--mid">
+                <div class="party-mid__center">
+                    <p class="zone-label">ส.ส.เขต</p>
+                    <p class="zone-seats" (click)="onClickPartyListAndPartyZone(selectedParty, '')">
+                        {{ zoneSeats }}
+                    </p>
+                    <p class="zone-total">จากผู้สมัครจำนวน {{ zoneSeatsAll }} คน</p>
+                </div>
+            </div>
+
+            <div class="party-card party-card--mid party-mid--bottom">
+                <div>
+                    <div class="party-mid__center">
+                        <p class="party-list-label">ส.ส.บัญชีรายชื่อ</p>
+                        <p class="party-list-seats" (click)="onClickPartyListAndPartyZone(selectedParty, 'partyList')">
+                            {{ partylistSeats }}
+                        </p>
+                        <p class="party-list-total">จากผู้สมัครจำนวน {{ partylistSeatsAll }} คน</p>
+                    </div>
+
+                    <div class="party-dots">
+                        <span class="party-dots__dot" *ngFor="let i of getPartylistSeatsArray()"
+                            [style.background-color]="getColor(selectedParty)"></span>
+                    </div>
+                </div>
+
+                <p class="total-votes">({{ formatTotalVotes(totalVote) }} คะแนน)</p>
+            </div>
         </div>
-      </div>
+
+        <!-- TOP : mobile -->
+        <div class="party-page__col party-page__col--top">
+            <div class="party-card party-card--top" [style.color]="getColor(selectedParty)">
+                <div class="party-card__text-left">
+                    <div class="row1">
+                        <div class="left">
+                            <p class="rank">อันดับ {{ ranking }}</p>
+                            <p class="party-name">{{ selectedParty }}</p>
+                        </div>
+                        <div class="right">
+                            <p class="seats">{{ totalSeats }}</p>
+                            <p class="seats-label">ที่นั่ง</p>
+                        </div>
+                    </div>
+                    <div class="zone-party" [style.background]="getColor(selectedParty)">
+                        <div class="row2">
+                            <p class="zone-label">ส.ส.เขต <span> {{ zoneSeats }}</span> ที่นั่ง</p>
+                        </div>
+                        <div class="row2">
+                            <p class="zone-label">ส.ส.บัญชีรายชื่อ <span> {{ partylistSeats }}</span> ที่นั่ง</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="party-card__container">
+                    <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
+                        class="party-card__head" />
+                </div>
+                <!-- <div class="party-mid__center">
+                    <p class="zone-label">ส.ส.เขต</p>
+                    <p class="zone-seats" (click)="onClickPartyListAndPartyZone(selectedParty, '')">
+                        {{ zoneSeats }}
+                    </p>
+                    <p class="zone-total">จากผู้สมัครจำนวน {{ zoneSeatsAll }} คน</p>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- MAP -->
+        <div class="party-page__col party-page__col--map">
+            <div class="party-card party-card--map">
+                <div class="party-map" #svgContainer (click)="onSvgClick($event)">
+                    <div [innerHTML]="svgContent"></div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- MIDDLE -->
-    <div class="party-page__col party-page__col--mid">
-      <div class="party-card party-card--mid">
-        <div class="party-mid__center">
-          <p class="zone-label">ส.ส.เขต</p>
-          <p class="zone-seats" (click)="onClickPartyListAndPartyZone(selectedParty, '')">
-            {{ zoneSeats }}
-          </p>
-          <p class="zone-total">จากผู้สมัครจำนวน {{ zoneSeatsAll }} คน</p>
-        </div>
-      </div>
-
-      <div class="party-card party-card--mid party-mid--bottom">
-        <div>
-          <div class="party-mid__center">
-            <p class="party-list-label">ส.ส.บัญชีรายชื่อ</p>
-            <p class="party-list-seats" (click)="onClickPartyListAndPartyZone(selectedParty, 'partyList')">
-              {{ partylistSeats }}
-            </p>
-            <p class="party-list-total">จากผู้สมัครจำนวน {{ partylistSeatsAll }} คน</p>
-          </div>
-
-          <div class="party-dots">
-            <span
-              class="party-dots__dot"
-              *ngFor="let i of getPartylistSeatsArray()"
-              [style.background-color]="getColor(selectedParty)"
-            ></span>
-          </div>
-        </div>
-
-        <p class="total-votes">({{ formatTotalVotes(totalVote) }} คะแนน)</p>
-      </div>
-    </div>
-
-    <!-- MAP -->
-    <div class="party-page__col party-page__col--map">
-      <div class="party-card party-card--map">
-        <div class="party-map" #svgContainer (click)="onSvgClick($event)">
-          <div [innerHTML]="svgContent"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
 
@@ -225,7 +256,7 @@
                 </div>
                 <!-- <span class="loader" *ngIf="loading_tab2"></span> -->
                 <div class="svg-container" (click)="onSvgClickRegion($event)">
-                <!-- <div class="svg-container" (click)="onSvgClickRegion($event)" (pointerup)="onSvgPointerUp($event)"> -->
+                    <!-- <div class="svg-container" (click)="onSvgClickRegion($event)" (pointerup)="onSvgPointerUp($event)"> -->
                     <div class="region-map-wrapper">
                         <div #svgContainerRegion [innerHTML]="svgContentRegion"></div>
                     </div>

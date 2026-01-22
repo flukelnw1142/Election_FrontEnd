@@ -454,6 +454,10 @@ PAGE 2
   display: flex;
 }
 
+.party-page__col--top {
+  display: none;
+}
+
 .party-page__col--left {
   flex: 4;
 }
@@ -523,6 +527,85 @@ PAGE 2
     background-position: 0 0;
   }
 }
+
+.party-card--top {
+  padding: 1rem 1rem 0rem 1rem;
+
+  .party-card__text-left {
+    width: 100%;
+
+    .row1 {
+      display: flex;
+      justify-content: space-between;
+      padding: 2rem 2rem 0rem 2rem;
+
+      .left,
+      .right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .left {
+        .rank {
+          font-size: 50px;
+        }
+
+        .party-name {
+          font-size: 40px;
+        }
+      }
+
+      .right {
+        // color: white;
+
+        .seats {
+          font-size: 45px;
+          font-weight: 500;
+        }
+
+        .seats-label {
+          font-size: 40px;
+        }
+      }
+    }
+
+    .zone-party {
+      margin: 0rem 1.5rem 0rem 1.5rem;
+      padding: .3rem 0rem;
+    }
+
+    .row2 {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0rem 1rem 0rem 2rem;
+
+      .zone-label {
+        font-size: 25px;
+        font-weight: 300;
+
+        span {
+          padding: 0rem 1rem;
+        }
+      }
+
+    }
+
+  }
+
+  .party-card__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    img {
+      width: 40%;
+      align-items: center;
+    }
+  }
+}
+
 
 /* LEFT card */
 .party-card--left {
@@ -672,8 +755,20 @@ PAGE 2
     max-height: none;
   }
 
+  .party-page__col--top {
+    display: block;
+    flex: 1 1 100%;
+  }
+
   .party-page__col--left {
     flex: 1 1 100%;
+    display: none;
+  }
+
+  .party-page__col--mid {
+    flex: 1 1 100%;
+    flex-direction: row;
+    display: none;
   }
 
   .party-page__col--map {
@@ -681,46 +776,262 @@ PAGE 2
     min-height: 55dvh;
   }
 
-  .party-page__col--mid {
-    flex: 1 1 100%;
-    flex-direction: row;
-  }
 
   .party-card__head-container {
     height: 60%;
   }
 }
 
-/* Mobile: เรียงลง 1 คอลัมน์ */
-@media (max-width: 640px) {
-  .party-page {
-    width: 96vw;
+@media (max-width: 768px) {
+  .party-card--top {
+    padding: 1rem 1rem 0rem 1rem;
+
+    .party-card__text-left {
+      width: 100%;
+
+      .row1 {
+        padding: 1rem 1rem 0rem 1rem;
+
+        .left {
+          .rank {
+            font-size: 40px;
+          }
+
+          .party-name {
+            font-size: 30px;
+          }
+        }
+
+        .right {
+          .seats {
+            font-size: 35px;
+            font-weight: 500;
+          }
+
+          .seats-label {
+            font-size: 30px;
+          }
+        }
+      }
+
+      .zone-party {
+        margin: 0rem 1rem 0rem 1rem;
+        padding: .3rem 0rem;
+      }
+
+      .row2 {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0rem 0.5rem 0rem 0.5rem;
+
+        .zone-label {
+          font-size: 20px;
+          font-weight: 300;
+
+          span {
+            padding: 0rem 1rem;
+          }
+        }
+      }
+    }
+
   }
-
-  .party-page__row {
-    flex-direction: column;
-    height: auto;
-    max-height: none;
-  }
-
-  .party-page__col--mid {
-    flex-direction: column;
-  }
-
-  .party-page__col--map {
-    min-height: 45dvh;
-  }
-
-  .party-card--left {
-    padding: 1rem;
-  }
-
-  .party-card__rank-row {
-    margin: 0 0 0.75rem 0;
-  }
-
-
 }
+
+@media (max-width: 600px) {
+  .party-card--top {
+    padding: 1rem 1rem 0rem 1rem;
+
+    .party-card__text-left {
+      width: 100%;
+      gap: .3rem;
+
+      .row1 {
+        // flex-direction: column;
+
+        .left {
+          .rank {
+            font-size: 30px;
+          }
+
+          .party-name {
+            font-size: 20px;
+          }
+        }
+
+        .right {
+          .seats {
+            font-size: 25px;
+            font-weight: 500;
+          }
+
+          .seats-label {
+            font-size: 20px;
+          }
+        }
+      }
+
+      .row2 {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0rem 0.5rem 0rem 0.5rem;
+
+        .zone-label {
+          font-size: 18px;
+          font-weight: 300;
+
+          span {
+            padding: 0rem 1rem;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+@media (max-width: 425px) {
+  .party-card--top {
+    padding: 1rem 1rem 0rem 1rem;
+
+    .party-card__text-left {
+      width: 100%;
+      gap: .3rem;
+
+      .row1 {
+        .left {
+          .rank {
+            font-size: 25px;
+          }
+
+          .party-name {
+            font-size: 18px;
+          }
+        }
+
+        .right {
+          .seats {
+            font-size: 18px;
+            font-weight: 500;
+          }
+
+          .seats-label {
+            font-size: 18px;
+          }
+        }
+      }
+
+      .row2 {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0rem 0.5rem 0rem 0.5rem;
+
+        .zone-label {
+          font-size: 16px;
+          font-weight: 300;
+
+          span {
+            padding: 0rem 1rem;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+@media (max-width: 375px) {
+  .party-card--top {
+    padding: 1rem 1rem 0rem 1rem;
+
+    .party-card__text-left {
+      width: 100%;
+      gap: .3rem;
+
+      .zone-party {
+        margin: 0rem .5rem 0rem .5rem;
+        padding: .3rem 0rem;
+      }
+
+      .row1 {
+        // flex-direction: column;
+        padding: 2rem .5rem 0rem .5rem;
+
+        .left {
+          gap: .5rem;
+
+          .rank {
+            font-size: 18px;
+          }
+
+          .party-name {
+            font-size: 16px;
+          }
+        }
+
+        .right {
+          gap: .5rem;
+
+          .seats {
+            font-size: 16px;
+            font-weight: 500;
+          }
+
+          .seats-label {
+            font-size: 16px;
+          }
+        }
+      }
+
+      .row2 {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0rem 0.5rem 0rem 0.5rem;
+
+        .zone-label {
+          font-size: 16px;
+          font-weight: 300;
+
+          span {
+            padding: 0rem 1rem;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+/* Mobile: เรียงลง 1 คอลัมน์ */
+// @media (max-width: 640px) {
+//   .party-page {
+//     width: 96vw;
+//   }
+
+//   .party-page__row {
+//     flex-direction: column;
+//     height: auto;
+//     max-height: none;
+//   }
+
+//   .party-page__col--mid {
+//     flex-direction: column;
+//   }
+
+//   .party-page__col--map {
+//     min-height: 45dvh;
+//   }
+
+//   .party-card--left {
+//     padding: 1rem;
+//   }
+
+//   .party-card__rank-row {
+//     margin: 0 0 0.75rem 0;
+//   }
+
+
+// }
 
 
 /*

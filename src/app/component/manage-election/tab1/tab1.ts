@@ -104,8 +104,10 @@ export class Tab1 {
       this.eventSource.close();
       this.eventSource = null;
       this.responseJson$.next('');
+      this._Tab1.disconnect();
       console.log('SSE Disconnected');
     }
+    
   }
 
   onTimeChange() {

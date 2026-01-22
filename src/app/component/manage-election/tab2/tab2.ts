@@ -325,7 +325,7 @@ export class Tab2 {
       row: index + 1,
       name: rank.input1.trim(),
       party_name: rank.input3.trim(),
-      party_pic: `V:\\\\party_pic\\\\${rank.input2.trim()}.png`, // แปลง 01 → P_01.png
+      party_pic: `${rank.input2.trim()}`, // แปลง 01 → P_01.png
       score: rank.input4.replace(/,/g, ''), // เอา , ออก → 41143
       province: this.province.trim(),
       zone: this.zone.trim(),

@@ -454,9 +454,19 @@ PAGE 2
   display: flex;
 }
 
-.party-page__col--left { flex: 4; }
-.party-page__col--mid  { flex: 2; flex-direction: column; gap: 1rem; }
-.party-page__col--map  { flex: 6; }
+.party-page__col--left {
+  flex: 4;
+}
+
+.party-page__col--mid {
+  flex: 2;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.party-page__col--map {
+  flex: 6;
+}
 
 /* card เฉพาะหน้านี้ (แทน glass-card แบบ global) */
 .party-card {
@@ -477,19 +487,17 @@ PAGE 2
   position: absolute;
   left: -2px;
   top: -2px;
-  background: linear-gradient(
-    45deg,
-    #fb0094,
-    #0000ff,
-    #00ff00,
-    #ffff00,
-    #ff0000,
-    #fb0094,
-    #0000ff,
-    #00ff00,
-    #ffff00,
-    #ff0000
-  );
+  background: linear-gradient(45deg,
+      #fb0094,
+      #0000ff,
+      #00ff00,
+      #ffff00,
+      #ff0000,
+      #fb0094,
+      #0000ff,
+      #00ff00,
+      #ffff00,
+      #ff0000);
   background-size: 400%;
   width: calc(100% + 4px);
   height: calc(100% + 4px);
@@ -497,16 +505,29 @@ PAGE 2
   animation: steam 120s linear infinite;
   border-radius: 1rem;
 }
-.party-card::after { filter: blur(10px); }
+
+.party-card::after {
+  filter: blur(10px);
+}
 
 @keyframes steam {
-  0% { background-position: 0 0; }
-  50% { background-position: 400% 0; }
-  100% { background-position: 0 0; }
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 400% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
 }
 
 /* LEFT card */
-.party-card--left { padding: 1.5rem; }
+.party-card--left {
+  padding: 1.5rem;
+}
 
 .party-card__rank-row {
   display: flex;
@@ -518,15 +539,32 @@ PAGE 2
 
 .party-card__text-left,
 .party-card__text-right {
-  text-shadow: 2px 2px 4px rgba(0,0,0,.6);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, .6);
 }
 
-.party-card__text-left .rank { font-size: clamp(1.1rem, 2.2vw, 2.5rem); font-weight: 700; }
-.party-card__text-left .party-name { font-size: clamp(.9rem, 1.6vw, 1.8rem); font-weight: 500; }
+.party-card__text-left .rank {
+  font-size: clamp(1.1rem, 2.2vw, 2.5rem);
+  font-weight: 700;
+}
 
-.party-card__text-right { text-align: right; }
-.party-card__text-right .seats { font-size: clamp(1.8rem, 4.2vw, 4.5rem); font-weight: 800; }
-.party-card__text-right .seats-label { font-size: clamp(.9rem, 1.6vw, 1.8rem); font-weight: 500; }
+.party-card__text-left .party-name {
+  font-size: clamp(.9rem, 1.6vw, 1.8rem);
+  font-weight: 500;
+}
+
+.party-card__text-right {
+  text-align: right;
+}
+
+.party-card__text-right .seats {
+  font-size: clamp(1.8rem, 4.2vw, 4.5rem);
+  font-weight: 800;
+}
+
+.party-card__text-right .seats-label {
+  font-size: clamp(.9rem, 1.6vw, 1.8rem);
+  font-weight: 500;
+}
 
 .party-card__head-container {
   position: absolute;
@@ -544,12 +582,18 @@ PAGE 2
   width: auto;
   max-width: 100%;
   object-fit: contain;
-  object-position: center bottom; /* ยืนล่างไว้ */
+  object-position: center bottom;
+  /* ยืนล่างไว้ */
 }
 
 /* MID cards */
-.party-card--mid { padding: 1rem; }
-.party-mid__center { text-align: center; }
+.party-card--mid {
+  padding: 1rem;
+}
+
+.party-mid__center {
+  text-align: center;
+}
 
 .zone-label,
 .party-list-label {
@@ -590,11 +634,14 @@ PAGE 2
   width: clamp(8px, 1.2dvw, 20px);
   height: clamp(8px, 1.2dvw, 20px);
   border-radius: 50%;
-  box-shadow: 2px 2px 4px rgba(0,0,0,.6);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, .6);
 }
 
 /* MAP */
-.party-card--map { padding: 0.5rem; }
+.party-card--map {
+  padding: 0.5rem;
+}
+
 .party-map {
   flex: 1;
   min-height: 0;
@@ -603,7 +650,8 @@ PAGE 2
   justify-content: center;
   overflow: hidden;
 }
-.party-map > div,
+
+.party-map>div,
 .party-map svg {
   width: 100%;
   height: 100%;
@@ -624,16 +672,30 @@ PAGE 2
     max-height: none;
   }
 
-  .party-page__col--left { flex: 1 1 100%; }
-  .party-page__col--map  { flex: 1 1 100%; min-height: 55dvh; }
-  .party-page__col--mid  { flex: 1 1 100%; flex-direction: row; }
+  .party-page__col--left {
+    flex: 1 1 100%;
+  }
 
-  .party-card__head-container { height: 60%; }
+  .party-page__col--map {
+    flex: 1 1 100%;
+    min-height: 55dvh;
+  }
+
+  .party-page__col--mid {
+    flex: 1 1 100%;
+    flex-direction: row;
+  }
+
+  .party-card__head-container {
+    height: 60%;
+  }
 }
 
 /* Mobile: เรียงลง 1 คอลัมน์ */
 @media (max-width: 640px) {
-  .party-page { width: 96vw; }
+  .party-page {
+    width: 96vw;
+  }
 
   .party-page__row {
     flex-direction: column;
@@ -641,13 +703,23 @@ PAGE 2
     max-height: none;
   }
 
-  .party-page__col--mid { flex-direction: column; }
-  .party-page__col--map { min-height: 45dvh; }
+  .party-page__col--mid {
+    flex-direction: column;
+  }
 
-  .party-card--left { padding: 1rem; }
-  .party-card__rank-row { margin: 0 0 0.75rem 0; }
+  .party-page__col--map {
+    min-height: 45dvh;
+  }
 
-  
+  .party-card--left {
+    padding: 1rem;
+  }
+
+  .party-card__rank-row {
+    margin: 0 0 0.75rem 0;
+  }
+
+
 }
 
 
@@ -1851,5 +1923,12 @@ PAGE 7
 
   .show-province-all .value {
     font-size: 20px;
+  }
+}
+
+@media (min-height: 689px) AND (max-width: 1536px) {
+  .head-logo {
+    width: 60% !important;
+    object-fit: contain;
   }
 }

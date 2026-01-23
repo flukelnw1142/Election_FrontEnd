@@ -1754,6 +1754,102 @@ PAGE 7
 
 }
 
+/* =========================
+   PAGE 7 ONLY - Layout Responsive (NO inner css changes)
+   Scope: .show-partyList-ZoneSeat
+   ========================= */
+
+/* Desktop: ใช้ของเดิมคุณได้เลย ไม่ยุ่ง */
+
+/* Tablet (<=1024px): เหมือน Page6 -> 2 แถว
+   แถวบน: ซ้าย (summary) + ขวา (list)
+   แถวล่าง: (ถ้าต้องการให้ list เต็ม ก็ปล่อยไว้) */
+
+
+/* Mobile (<=640px): เหมือน Page6 -> เรียงลง 1 คอลัมน์ */
+@media (max-width: 1024px) {
+  .show-partyList-ZoneSeat {
+    width: 96vw;
+    height: auto;
+
+    .head-logo-container {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end !important;
+      overflow: hidden;
+
+    }
+
+    .head-logo {
+      width: 25% !important;
+      object-fit: contain;
+    }
+
+  }
+
+  .show-partyList-ZoneSeat .column-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    height: auto;
+  }
+
+  /* ✅ กัน overflow แบบไม่แตะข้างใน */
+  .show-partyList-ZoneSeat .column-grid>* {
+    min-width: 0;
+    min-height: 0;
+  }
+
+}
+
+@media (max-width: 886px) {
+  .show-partyList-ZoneSeat {
+    width: 96vw;
+    height: auto;
+
+    .head-logo-container {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end !important;
+      overflow: hidden;
+
+    }
+
+    .head-logo {
+      width: 30% !important;
+      object-fit: contain;
+    }
+
+  }
+}
+
+@media (max-width: 600px) {
+  .show-partyList-ZoneSeat {
+    width: 96vw;
+    height: auto;
+
+    .head-logo-container {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end !important;
+      overflow: hidden;
+
+    }
+
+    .head-logo {
+      width: 40% !important;
+      object-fit: contain;
+    }
+
+  }
+}
+
 
 .scroll-container {
   overflow-y: auto;
@@ -2252,6 +2348,13 @@ PAGE 7
 @media (min-height: 689px) AND (max-width: 1536px) {
   .head-logo {
     width: 60% !important;
+    object-fit: contain;
+  }
+}
+
+@media (max-height: 1054px) AND (max-width: 768px) {
+  .head-logo {
+    width: 100% !important;
     object-fit: contain;
   }
 }

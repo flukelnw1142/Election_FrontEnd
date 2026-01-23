@@ -937,6 +937,18 @@ PAGE 2
       }
     }
 
+    .party-card__container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      img {
+        width: 60%;
+        align-items: center;
+      }
+    }
+
   }
 }
 

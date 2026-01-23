@@ -190,10 +190,13 @@
                     </div>
                     <div class="zone-party" [style.background]="getColor(selectedParty)">
                         <div class="row2">
-                            <p class="zone-label">ส.ส.เขต <span> {{ zoneSeats }}</span> ที่นั่ง</p>
+                            <p class="zone-label" (click)="onClickPartyListAndPartyZone(selectedParty, '')">ส.ส.เขต
+                                <span> {{ zoneSeats }}</span> ที่นั่ง
+                            </p>
                         </div>
                         <div class="row2">
-                            <p class="zone-label">ส.ส.บัญชีรายชื่อ <span> {{ partylistSeats }}</span> ที่นั่ง</p>
+                            <p class="zone-label" (click)="onClickPartyListAndPartyZone(selectedParty, 'partyList')">
+                                ส.ส.บัญชีรายชื่อ <span> {{ partylistSeats }}</span> ที่นั่ง</p>
                         </div>
                     </div>
                 </div>
@@ -202,13 +205,6 @@
                     <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
                         class="party-card__head" />
                 </div>
-                <!-- <div class="party-mid__center">
-                    <p class="zone-label">ส.ส.เขต</p>
-                    <p class="zone-seats" (click)="onClickPartyListAndPartyZone(selectedParty, '')">
-                        {{ zoneSeats }}
-                    </p>
-                    <p class="zone-total">จากผู้สมัครจำนวน {{ zoneSeatsAll }} คน</p>
-                </div> -->
             </div>
         </div>
 

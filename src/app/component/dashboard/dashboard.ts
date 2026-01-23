@@ -10,7 +10,7 @@ import {
   ChangeDetectionStrategy,
   HostListener,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
   BehaviorSubject,
@@ -192,7 +192,8 @@ export class Dashboard implements OnInit {
     private dialog: MatDialog,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private uiState: UiStateService
+    private uiState: UiStateService,
+    private viewportScroller: ViewportScroller
   ) { }
 
   allElectionData: any = {};
@@ -1598,6 +1599,7 @@ export class Dashboard implements OnInit {
       });
     }
     this.updateCurrentPageStates();
+    this.scrollTop();
 
     if (!this.isMappingComplete) {
       return;
@@ -2586,4 +2588,12 @@ export class Dashboard implements OnInit {
     this.panzoomInstance.moveTo(0, 0); // reset pan
     this.panzoomInstance.zoomAbs(0, 0, 1); // reset zoom
   }
+
+  scrollTop() {
+    setTimeout(() => {
+      this.viewportScroller.scrollToPosition([0, 0]);
+    });
+  }
 }
+
+

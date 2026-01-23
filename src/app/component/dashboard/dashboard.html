@@ -50,7 +50,7 @@
                     </div> -->
 
                 <div class="svg-container" [hidden]="selectDashboard !== 'dashboard'" #svgContainer
-                    (mousemove)="onSvgMouseMove($event)">
+                    (mousemove)="onSvgMouseMove($event)" (pointerup)="onSvgSelect($event)">
                     <div class="thailand-map-wrapper">
                         <div [innerHTML]="svgContent"></div>
                     </div>

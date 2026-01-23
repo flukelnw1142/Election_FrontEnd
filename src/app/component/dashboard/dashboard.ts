@@ -965,8 +965,6 @@ export class Dashboard implements OnInit {
           this.showMagnifier(event);
           this.simmulateSvgClick(event);
           this.mouseMoveSubject.next(event);
-        } else {
-          this.onSvgClick(event);
         }
       } else {
         this.hideMagnifier();
@@ -2611,6 +2609,28 @@ export class Dashboard implements OnInit {
       this.onSvgClickRegion(event as any);  // เรียกฟังก์ชันเดิม
     }
   }
+
+  onSvgSelect(event: PointerEvent): void {
+    if (!this.isMappingComplete) return;
+
+    if (this.isDesktop) return;
+
+    const target = event.target as SVGElement;
+
+    const isDistrict =
+      (target.tagName === 'path' ||
+        target.tagName === 'text' ||
+        (target instanceof SVGTSpanElement &&
+          /^\d+$/.test((target.textContent || '').trim()))) &&
+      target.closest('svg') &&
+      target.closest('g[id]');
+
+    if (!isDistrict) return;
+
+    this.onSvgClick(event as any);
+  }
+
+
 }
 
 

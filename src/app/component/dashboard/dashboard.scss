@@ -706,6 +706,17 @@ PAGE 2
   /* ยืนล่างไว้ */
 }
 
+.party-card__logo {
+  // height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  border-radius: 100%;
+  /* ยืนล่างไว้ */
+}
+
+
 /* MID cards */
 .party-card--mid {
   padding: 1rem;

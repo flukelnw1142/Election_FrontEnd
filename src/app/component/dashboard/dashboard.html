@@ -70,7 +70,7 @@
 
 
         <div class="col-12 col-md-5 d-flex" [ngClass]="{ 'd-none': !show_dashboard_score_and_seat_Panel }">
-        <!-- <div class="col-12 col-md-5 d-flex" *ngIf="show_dashboard_score_and_seat_Panel"> -->
+            <!-- <div class="col-12 col-md-5 d-flex" *ngIf="show_dashboard_score_and_seat_Panel"> -->
             <div class="glass-card flex-fill">
                 <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"
                     (partyListAndPartyZone)="onClickPartyListAndPartyZone($event, '')"></app-dashboard-score-and-seat>
@@ -144,8 +144,10 @@
                 </div>
 
                 <div class="party-card__head-container">
-                    <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
+                    <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty) !== '-'" alt="Head Logo"
                         class="party-card__head" />
+                    <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlHead(selectedParty) ==='-'" alt="Head Logo"
+                        class="party-card__logo" />
                 </div>
             </div>
         </div>

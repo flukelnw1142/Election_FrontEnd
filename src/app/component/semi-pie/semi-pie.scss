@@ -69,3 +69,14 @@ canvas#pieChart {
     width: 100%;
   }
 }
+
+@media (min-height: 839px) AND (max-width: 1920px) {
+  .chart-container {
+    width: 100%;
+    max-width: 290px !important;
+    margin: 0rem auto;
+    padding: 1rem;
+    text-align: center;
+    box-sizing: border-box;
+  }
+}

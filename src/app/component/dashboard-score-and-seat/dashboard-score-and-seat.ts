@@ -135,6 +135,7 @@ export class DashboardScoreAndSeat implements OnInit {
   // เรียกหลังจาก view อัปเดต
   ngAfterViewChecked(): void {
     this.applyFlipAnimation();
+
   }
 
   private applyFlipAnimation(): void {

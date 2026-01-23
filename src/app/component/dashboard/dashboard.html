@@ -1,7 +1,7 @@
 <!-- PAGE 1 : main -->
 <!-- <div *ngIf="selectedParty === '' && selectedDistric === '' && selectedProvince === '' && selectedPartyListAndZoneSeat === '' "> -->
 <!-- <div *ngIf="getCurrentPage('main') "> -->
-<div *ngIf="currentIsMain">
+<div [ngClass]="{ 'd-none': !currentIsMain }">
     <div class="row h-100 align-items-stretch">
         <div class="col-12 d-flex" [ngClass]="show_dashboard_score_and_seat_Panel ? 'col-md-7' : 'col-md-12'">
             <div class="glass-card flex-fill">
@@ -69,7 +69,8 @@
         </button>
 
 
-        <div class="col-12 col-md-5 d-flex" *ngIf="show_dashboard_score_and_seat_Panel">
+        <div class="col-12 col-md-5 d-flex" [ngClass]="{ 'd-none': !show_dashboard_score_and_seat_Panel }">
+        <!-- <div class="col-12 col-md-5 d-flex" *ngIf="show_dashboard_score_and_seat_Panel"> -->
             <div class="glass-card flex-fill">
                 <app-dashboard-score-and-seat (partySelected)="onPartySelected($event)"
                     (partyListAndPartyZone)="onClickPartyListAndPartyZone($event, '')"></app-dashboard-score-and-seat>
@@ -122,6 +123,7 @@
 <!-- PAGE 2 : show-dashboard-party -->
 <!-- <div *ngIf="selectedParty !== '' " style="position: relative;"> -->
 <!-- <div *ngIf="getCurrentPage('show-dashboard-party') " class="page-container"> -->
+
 <div *ngIf="currentIsShowParty" class="party-page">
     <button class="ds-Button" (click)="closeDialog()">X</button>
 

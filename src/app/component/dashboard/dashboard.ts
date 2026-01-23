@@ -205,6 +205,7 @@ export class Dashboard implements OnInit {
   loading$ = this.loadingSubject.asObservable();
   bannerRigthtImages: any;
   bannerLeftImages: any;
+  bannerImages: any;
   async ngOnInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
@@ -2528,6 +2529,7 @@ export class Dashboard implements OnInit {
 
         const uniqueUrls = Array.from(new Set(urls));
 
+        this.bannerImages = uniqueUrls;
         // 👉 ขวา: เอาแค่ 5 อันแรก
         // this.bannerImages = uniqueUrls.slice(0, 5);
         this.bannerLeftImages = uniqueUrls.slice(0, 5);
@@ -2599,6 +2601,15 @@ export class Dashboard implements OnInit {
     setTimeout(() => {
       this.viewportScroller.scrollToPosition([0, 0]);
     });
+  }
+
+  onSvgPointerUp(event: PointerEvent) {
+    // กรองเฉพาะ touch และไม่ใช่การ pan
+    if (event.pointerType === 'touch') {
+      // ถ้าต้องการกรองว่าไม่ใช่การลาก (optional แต่ช่วยลด false positive)
+      // คุณอาจเก็บตำแหน่ง pointerdown แล้วเช็คระยะห่างที่นี่
+      this.onSvgClickRegion(event as any);  // เรียกฟังก์ชันเดิม
+    }
   }
 }
 

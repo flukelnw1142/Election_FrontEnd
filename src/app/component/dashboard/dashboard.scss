@@ -312,6 +312,10 @@ mat-icon {
 }
 
 
+.banner-container {
+  display: none;
+}
+
 .banner-right-container {
   position: absolute;
   bottom: 0;
@@ -372,6 +376,38 @@ mat-icon {
 
 }
 
+@media (max-width: 2240px) {
+
+  .banner-left-container.dashboard2 {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(5, auto);
+    display: none;
+  }
+
+  .banner-right-container.dashboard2 {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(5, auto);
+    display: none;
+  }
+
+  .banner-container.dashboard2 {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    z-index: 1003;
+    padding: 5px;
+  }
+}
+
+
 @media (max-width: 1023px) {
   .toggle-panel-btn {
     display: none;
@@ -393,7 +429,8 @@ mat-icon {
 @media (max-width: 768px) {
 
   .banner-left-container,
-  .banner-right-container {
+  .banner-right-container,
+  .banner-container.dashboard2 {
     display: none;
   }
 }

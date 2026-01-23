@@ -22,11 +22,17 @@
                         </div>
                     </button>
                 </div>
-                <div class="banner-left-container">
+                <div class="banner-left-container"
+                    [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
                     <img *ngFor="let img of bannerLeftImages" [src]="img" class="logo-image" alt="Logo" />
                 </div>
-                <div class="banner-right-container">
+                <div class="banner-right-container"
+                    [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
                     <img *ngFor="let img of bannerRigthtImages" [src]="img" class="logo-image" alt="Logo" />
+                </div>
+                <div class="banner-container"
+                    [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
+                    <img *ngFor="let img of bannerImages" [src]="img" class="logo-image" alt="Logo" />
                 </div>
                 <!-- <div style="display: flex; top: 160px ; left: 20px; position: absolute;"
                         [hidden]="selectDashboard !== 'dashboard'">
@@ -251,7 +257,7 @@
                     <mat-icon>restart_alt</mat-icon>
                 </div>
                 <!-- <span class="loader" *ngIf="loading_tab2"></span> -->
-                <div class="svg-container" (click)="onSvgClickRegion($event)">
+                <div class="svg-container" (click)="onSvgClickRegion($event)" (pointerup)="onSvgPointerUp($event)">
                     <!-- <div class="svg-container" (click)="onSvgClickRegion($event)" (pointerup)="onSvgPointerUp($event)"> -->
                     <div class="region-map-wrapper">
                         <div #svgContainerRegion [innerHTML]="svgContentRegion"></div>
@@ -541,11 +547,11 @@
                                 <p style="align-self: end;"> อันดับ</p>
                                 <div style="text-align: end;">
                                     <p style="font-size: 1rem;">จำนวนหน่วยที่นับไปแล้ว :
-                                        {{formatTotalVotes(totalvoteZone_party)}}
+                                        {{progress_party}} %
                                     </p>
-                                    <p>นับคะแนนแล้ว :
+                                    <p>จำนวนผู้มาใช้สิทธิ์ทั้งหมด :
                                         <span style="font-size: 1.1rem; font-weight: 500; color: #ffffff;">
-                                            {{progress_party}} %
+                                            {{formatTotalVotes(totalvoteZone_party)}}
                                         </span>
                                     </p>
                                 </div>

@@ -131,8 +131,8 @@
                     </div>
                     <div class="header-row fw-bold">
                         <div class="rank-col">อันดับ</div>
-                        <div class="name-col">name</div>
-                        <div class="title-col">title</div>
+                        <!-- <div class="name-col">name</div> -->
+                        <!-- <div class="title-col">title</div> -->
                         <div class="fName-col">firstName</div>
                         <div class="lName-col">lastName</div>
                         <div class="cImg-col">candidate_img</div>
@@ -145,14 +145,14 @@
                         <div *ngFor="let rank of ranks; let i = index" class="data-row d-flex mt-2 align-items-center">
                             <div class="rank-col text-center">{{i+1}} :</div>
                             <!-- <div class="rank-col text-center">อันดับ {{i+1}} :</div> -->
-                            <div class="name-col">
+                            <!-- <div class="name-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input1"
                                     name="input1-{{i}}" [placeholder]="isMobile ? 'name' : ''" required>
-                            </div>
-                            <div class="title-col">
+                            </div> -->
+                            <!-- <div class="title-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input2"
                                     name="input2-{{i}}" [placeholder]="isMobile ? 'title' : ''" required>
-                            </div>
+                            </div> -->
                             <div class="fName-col">
                                 <input type="text" class="form-control" [(ngModel)]="ranks[i].input3"
                                     name="input3-{{i}}" [placeholder]="isMobile ? 'firstName' : ''" required>

@@ -1287,6 +1287,10 @@ export class Dashboard implements OnInit {
     if (previous) {
       if (previous.page === 'show-dashboard-party') {
         this.onPartySelected(previous.partyName);
+        // this.uiState.setReferendumLogoSmall(false);
+        if (!this.isDesktop) {
+          this.uiState.setReferendumLogoSmall(false);
+        }
       } else if (previous.page === 'main') {
         this.selectedParty = '';
         this.uiState.setReferendumLogoSmall(false);
@@ -1587,7 +1591,9 @@ export class Dashboard implements OnInit {
 
   // Click Card "dashboard-score-and-seat" (Open Page 2)
   onPartySelected(partyName: string) {
-    this.uiState.setReferendumLogoSmall(true);
+    if (this.isDesktop) {
+      this.uiState.setReferendumLogoSmall(true);
+    }
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !==

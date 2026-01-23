@@ -522,9 +522,11 @@
                                             <span class="no">เบอร์ {{candidate.no}}</span> {{
                                             candidate.party_name }}
                                         </p>
-                                        <p [style.color]="i === 0 ? getColor(candidate.party_name) : null"
-                                            [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem'} : {}">
-                                            คะแนน: {{ candidate.totalVotes | number }}
+                                        <p>
+                                            <span [style.background]="i === 0 ? getColor(candidate.party_name) : null"
+                                                [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}">
+                                                คะแนน: {{ candidate.totalVotes | number }}
+                                            </span>
                                             <span
                                                 style="font-weight: 300; color: rgb(199, 199, 199); font-size:1.2rem;">
                                                 (

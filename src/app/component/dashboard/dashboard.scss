@@ -828,6 +828,58 @@ PAGE 2
   .party-card__head-container {
     height: 60%;
   }
+
+  .party-card__text-left {
+    width: 100%;
+
+    .row1 {
+      padding: 1rem 1rem 0rem 1rem;
+      display: flex;
+
+      flex-wrap: wrap;
+
+      .left {
+        .rank {
+          font-size: 35px;
+        }
+
+        .party-name {
+          font-size: 30px;
+        }
+      }
+
+      .right {
+        .seats {
+          font-size: 35px;
+          font-weight: 500;
+        }
+
+        .seats-label {
+          font-size: 30px;
+        }
+      }
+    }
+
+    .zone-party {
+      margin: 0rem 1rem 0rem 1rem;
+      padding: .3rem 0rem;
+    }
+
+    .row2 {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0rem 0.5rem 0rem 0.5rem;
+
+      .zone-label {
+        font-size: 20px;
+        font-weight: 300;
+
+        span {
+          padding: 0rem 1rem;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {

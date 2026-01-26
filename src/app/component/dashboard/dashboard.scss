@@ -1997,8 +1997,8 @@ PAGE 7
       object-fit: contain;
     }
 
-    .scroll-container-detail{
-        height: 50vh !important;
+    .scroll-container-detail {
+      height: 50vh !important;
     }
   }
 }
@@ -2274,9 +2274,16 @@ PAGE 7
   }
 }
 
+
+@media screen and (min-width: 1536px) and (min-height: 690px) {
+  .scroll-container-dtprovince {
+    height: 74vh !important;
+  }
+}
+
 @media screen and (min-width: 1200px) and (min-height: 800px) {
   .scroll-container-detail {
-    height: 74vh !important;
+    height: 64vh !important;
   }
 
   .scroll-container-dtprovince {

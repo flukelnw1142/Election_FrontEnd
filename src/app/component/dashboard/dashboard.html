@@ -46,7 +46,7 @@
                 <div class="svg-container" [hidden]="selectDashboard !== 'dashboard'" #svgContainer
                     (mousemove)="onSvgMouseMove($event)" (pointerup)="onSvgSelect($event)">
                     <div class="thailand-map-wrapper">
-                        <div [innerHTML]="svgContent"></div>
+                        <div #svgContainerAll [innerHTML]="svgContent"></div>
                     </div>
                 </div>
                 <div *ngIf="selectDashboard === 'dashboard_2'">
@@ -681,7 +681,7 @@
                 <div class="tab-content" style="margin-top: 20px;">
                     <div *ngIf="activeTab === 'district'">
                         <div style="position: relative;">
-                            <div #partylistScroll class="scroll-container" style="height: 74vh;">
+                            <div #partylistScroll class="scroll-container-detail">
                                 <div
                                     *ngIf="detailWinnerZonePerParty && detailWinnerZonePerParty.length > 0; else noSeat">
                                     <div *ngFor="let candidate of detailWinnerZonePerParty; let i = index"
@@ -719,7 +719,7 @@
                     </div>
                     <div *ngIf=" activeTab==='partyList'">
                         <div style="position: relative;">
-                            <div #zoneScroll class="scroll-container" style="height: 74vh;">
+                            <div #zoneScroll class="scroll-container-detail" >
                                 <div *ngFor="let candidate of detailPartyListPerPartyName; let i = index"
                                     class="candidate-item" style="justify-content: space-between;">
                                     <div style=" display: flex;  align-items: center; gap: 1rem;">

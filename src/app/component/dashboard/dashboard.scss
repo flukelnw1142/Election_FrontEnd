@@ -1983,6 +1983,9 @@ PAGE 7
       object-fit: contain;
     }
 
+    .scroll-container-detail{
+        height: 50vh !important;
+    }
   }
 }
 
@@ -2493,4 +2496,18 @@ PAGE 7
     width: 100% !important;
     object-fit: contain;
   }
+}
+
+.scroll-container-detail-page7 {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 74vh !important;
+  height: 100%;
+  max-height: calc(100vh - 200px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-container-detail-page7::-webkit-scrollbar {
+  display: none;
 }

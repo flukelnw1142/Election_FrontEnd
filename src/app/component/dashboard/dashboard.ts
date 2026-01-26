@@ -136,6 +136,9 @@ export class Dashboard implements OnInit {
     this.show_dashboard_score_and_seat_Panel = !this.show_dashboard_score_and_seat_Panel;
   }
 
+  private isDesktopOnly(): boolean {
+    return window.matchMedia("(pointer: fine)").matches;
+  }
 
   tooltipVisible = false;
   tooltipText = '';
@@ -961,7 +964,9 @@ export class Dashboard implements OnInit {
 
 
       if (isNearMap || isDistrict) {
-        if (this.isDesktop) {
+        console.log(this.isDesktopOnly());
+          
+        if (this.isDesktop && this.isDesktopOnly()) {
           this.showMagnifier(event);
           this.simmulateSvgClick(event);
           this.mouseMoveSubject.next(event);

@@ -2047,6 +2047,7 @@ export class Dashboard implements OnInit {
         console.log("detailWinnerZonePerProvince", this.detailWinnerZonePerProvince)
 
         this.cd.markForCheck();
+        this.cd.detectChanges();
       });
   }
   // Data แสดงข้อมูลคะแนะตามลำดับพรรค ของแต่ละจังหวัด BY Province
@@ -2091,6 +2092,7 @@ export class Dashboard implements OnInit {
       //   this.detailWinnerPartyPerProvince
       // );
       this.cd.markForCheck();
+      this.cd.detectChanges();
     });
   }
 
@@ -2140,6 +2142,7 @@ export class Dashboard implements OnInit {
       // ✅ 3. เซ็ตเข้า array ที่ใช้ *ngFor ได้เลย
       this.detailWinnerZonePerRegion = structuredArray;
       this.cd.markForCheck();
+      this.cd.detectChanges();
     });
   }
   // Data แสดงข้อมูล พรรค 2 อันดับแรก ของแต่ละจังหวัด BY Region
@@ -2234,6 +2237,7 @@ export class Dashboard implements OnInit {
           );
 
           this.cd.markForCheck();
+          this.cd.detectChanges();
           resolve(); // ✅ บอกว่าโหลดเสร็จแล้ว
         },
         error: (err) => {

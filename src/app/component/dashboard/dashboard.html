@@ -301,7 +301,7 @@
                             <div *ngIf="detailWinnerZonePerRegion?.length > 0; else showZoneData" #scrollContainer
                                 class="scroll-container-dt70vh">
                                 <div *ngFor="let district of detailWinnerZonePerRegion; let i = index"
-                                    class="candidate-item">
+                                    class="candidate-item" [style.background]="getColor2tone(district.candidates[0].party_name, district.candidates[1].party_name)">
                                     <div>
                                         <p style="font-size: 1.rem; cursor: pointer;"
                                             (click)="onClickDistrict(district.districtId)"> {{ district.province }}
@@ -343,7 +343,8 @@
                             <ng-template #showZoneData>
                                 <div #scrollContainer class="scroll-container-dtprovince">
                                     <div *ngFor="let district of detailWinnerZonePerProvince; let i = index"
-                                        class="candidate-item">
+                                        class="candidate-item"
+                                        [style.background]="getColor2tone(district.candidates[0].party_name, district.candidates[1].party_name)">
                                         <div>
                                             <p style="font-size: 1rem; cursor: pointer;"
                                                 (click)="onClickDistrict(district.districtId)"> {{ district.province

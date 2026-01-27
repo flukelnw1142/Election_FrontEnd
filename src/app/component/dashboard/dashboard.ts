@@ -2693,6 +2693,20 @@ export class Dashboard implements OnInit {
     return hex;
   }
 
+  getColor2tone(partyName1: string, partyName2: string) {
+    console.log(partyName1, partyName2)
+
+    const color1 = this.getColor(partyName1);
+    const color2 = this.getColor(partyName2);
+
+    // เฉียงซ้ายบน → ขวาล่าง
+    return `linear-gradient(135deg, ${color1}70 0%, ${color1}70 50%, ${color2}70 65%, ${color2}70 100%)`;
+
+    // return `linear-gradient(135deg, ${color1}50 0%, ${color1}50 60%, ${color2}50 60%, ${color2}50 100%)`;
+    // return `linear-gradient(135deg, ${color1}30 0%, ${color1}30 50%, ${color2}30 50%, ${color2}30 100%)`;
+
+  }
+
 
 
 

@@ -2301,6 +2301,25 @@ PAGE 7
   }
 }
 
+@media screen and (min-width: 1200px) and (max-height: 740px) {
+  .scroll-container-detail {
+    height: 60vh !important;
+  }
+
+  .scroll-container-dtprovince {
+    height: 76vh !important;
+  }
+
+  .scroll-container-dt70vh {
+    height: 74vh !important;
+  }
+
+  .scroll-container-detail-page7 {
+    height: 74vh !important;
+  }
+}
+
+
 .logo-image {
   padding: 10px;
   max-height: 70px;
@@ -2528,7 +2547,7 @@ PAGE 7
 .scroll-container-detail-page7 {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 74vh !important;
+  height: 58vh ;
   height: 100%;
   max-height: calc(100vh - 200px);
   scrollbar-width: none;

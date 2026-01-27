@@ -688,7 +688,7 @@
                 <div class="tab-content" style="margin-top: 20px;">
                     <div *ngIf="activeTab === 'district'">
                         <div style="position: relative;">
-                            <div #partylistScroll class="scroll-container-detail">
+                            <div #partylistScroll class="scroll-container-detail-page7">
                                 <div
                                     *ngIf="detailWinnerZonePerParty && detailWinnerZonePerParty.length > 0; else noSeat">
                                     <div *ngFor="let candidate of detailWinnerZonePerParty; let i = index"
@@ -726,7 +726,7 @@
                     </div>
                     <div *ngIf=" activeTab==='partyList'">
                         <div style="position: relative;">
-                            <div #zoneScroll class="scroll-container-detail" >
+                            <div #zoneScroll class="scroll-container-detail-page7" >
                                 <div *ngFor="let candidate of detailPartyListPerPartyName; let i = index"
                                     class="candidate-item" style="justify-content: space-between;">
                                     <div style=" display: flex;  align-items: center; gap: 1rem;">

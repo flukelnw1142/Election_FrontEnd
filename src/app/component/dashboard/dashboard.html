@@ -322,9 +322,12 @@
                                                     <span class="no">เบอร์ {{candidate.no}}</span>
                                                     {{candidate.party_name}}
                                                 </p>
-                                                <p [style.color]="i === 0 ? getColor(candidate.party_name) : null"
-                                                    [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem'} : {}">
-                                                    คะแนน: {{ candidate.totalVotes | number }}
+                                                <p>
+                                                    <span
+                                                        [style.background]="i === 0 ? getColor(candidate.party_name) : null"
+                                                        [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}">
+                                                        คะแนน: {{ candidate.totalVotes | number }}
+                                                    </span>
                                                 </p>
                                             </div>
                                         </div>
@@ -359,9 +362,12 @@
                                                         <span class="no">เบอร์ {{candidate.no}}</span>
                                                         {{candidate.party_name}}
                                                     </p>
-                                                    <p [style.color]="i === 0 ? getColor(candidate.party_name) : null"
-                                                        [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem'} : {}">
-                                                        คะแนน: {{ candidate.totalVotes | number }}
+                                                    <p>
+                                                        <span
+                                                            [style.background]="i === 0 ? getColor(candidate.party_name) : null"
+                                                            [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}">
+                                                            คะแนน: {{ candidate.totalVotes | number }}
+                                                        </span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -404,9 +410,12 @@
                                                 <p style="font-size: 1.1rem;">
                                                     {{ party.partyName || '-' }}
                                                 </p>
-                                                <p [style.color]="i === 0 ? getColor(party.partyName) : null"
-                                                    [ngStyle]="i === 0 ? { 'font-weight': '700', 'font-size': '1.5rem' } : {}">
-                                                    คะแนน: {{ party.totalVote | number }}
+                                                <p>
+                                                    <span
+                                                        [style.background]="i === 0 ? getColor(party.partyName) : null"
+                                                        [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}">
+                                                        คะแนน: {{ party.totalVote | number }}
+                                                    </span>
                                                 </p>
                                             </div>
                                         </div>
@@ -449,9 +458,12 @@
                                                     <p style="font-size: 1.1rem;">
                                                         {{ party.partyName || '-' }}
                                                     </p>
-                                                    <p [style.color]="i === 0 ? getColor(party.partyName) : null"
-                                                        [ngStyle]="i === 0 ? { 'font-weight': '700', 'font-size': '1.5rem' } : {}">
-                                                        คะแนน: {{ party.totalVote | number }}
+                                                    <p>
+                                                        <span
+                                                            [style.background]="i === 0 ? getColor(party.partyName) : null"
+                                                            [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}">
+                                                            คะแนน: {{ party.totalVote | number }}
+                                                        </span>
                                                         <span style="font-weight: 300; color: rgb(199, 199, 199);"
                                                             [style.fontSize]="i !== 0 ? '.8rem' : '1.1rem'">({{party.vote_percentage}}
                                                             %)</span>
@@ -660,8 +672,10 @@
                     </div>
                 </div>
                 <div class="head-logo-container">
-                    <img [src]="getUrlHead(partySeatCounts.partyName)" *ngIf="getUrlHead(partySeatCounts.partyName)"
-                        alt="Head Logo" class="head-logo">
+                    <img [src]="getUrlHead(partySeatCounts.partyName)"
+                        *ngIf="getUrlHead(partySeatCounts.partyName) !=='-'" alt="Head Logo" class="head-logo">
+                    <img [src]="getUrlParty(partySeatCounts.partyName)"
+                        *ngIf="getUrlHead(partySeatCounts.partyName) ==='-'" alt="party Logo" class="head-logo" />
                 </div>
                 <!-- <div style="display: flex; justify-content: center; position: relative;">
                     <img [src]="getUrlHead(partySeatCounts.partyName)" *ngIf="getUrlHead(partySeatCounts.partyName)"
@@ -726,7 +740,7 @@
                     </div>
                     <div *ngIf=" activeTab==='partyList'">
                         <div style="position: relative;">
-                            <div #zoneScroll class="scroll-container-detail-page7" >
+                            <div #zoneScroll class="scroll-container-detail-page7">
                                 <div *ngFor="let candidate of detailPartyListPerPartyName; let i = index"
                                     class="candidate-item" style="justify-content: space-between;">
                                     <div style=" display: flex;  align-items: center; gap: 1rem;">

@@ -30,6 +30,9 @@ export class MainLayout {
   isMainPage = true;
   default = false;
 
+  // เช็คว่าเป็นหน้า manage
+  isSourceLabelPage = true;
+
   private sub = new Subscription();
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -39,6 +42,9 @@ export class MainLayout {
     private zone: NgZone,
     private uiState: UiStateService
   ) {
+    this.router.events.subscribe(() => {
+      this.isSourceLabelPage = this.router.url.includes('/manage');
+    });
     this.checkScreenSize()
     this.sub.add(
       this.uiState.isMainPage$.subscribe(isMain => {
@@ -100,7 +106,7 @@ export class MainLayout {
   private checkScreenSize() {
     this.isDesktop = window.innerWidth >= 1024;
     this.is768 = window.innerWidth <= 768;
-    if (this.is768 || !this.isDesktopOnly()) {  
+    if (this.is768 || !this.isDesktopOnly()) {
       this.default = true;
     }
   }

@@ -196,7 +196,8 @@ export class Dashboard implements OnInit {
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object,
     private uiState: UiStateService,
-    private viewportScroller: ViewportScroller
+    private viewportScroller: ViewportScroller,
+    
   ) { }
 
   allElectionData: any = {};
@@ -331,6 +332,8 @@ export class Dashboard implements OnInit {
       );
       this.setText('percentZone', winners.percentZone);
       this.setText('percentPartylist', winners.percentPartylist);
+
+      this.setText('resultFrom', winners.dataSourceLabel);
 
       // อัพเดทข้อมูล
       if (winners.candidates) this.allWinners = winners.candidates;

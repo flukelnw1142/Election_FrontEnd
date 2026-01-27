@@ -87,6 +87,21 @@
 </div>
 
 
+<!-- <div class="source-label" [style.bottom]="isMainPage && is768 ? '70px' : '10px'">
+    {{dataSourceLabel }} 
+    ผลคะแนนจาก <span id="resultFrom" ></span>
+</div> -->
+
 <div class="source-label" [style.bottom]="isMainPage && is768 ? '70px' : '10px'">
-    {{dataSourceLabel}}
+
+    <!-- หน้าแรก -->
+    <ng-container *ngIf="isSourceLabelPage; else resultFromBlock">
+        {{ dataSourceLabel }}
+    </ng-container>
+
+    <!-- อีกหน้า -->
+    <ng-template #resultFromBlock>
+        ผลคะแนนจาก <span id="resultFrom"></span>
+    </ng-template>
+
 </div>

@@ -209,6 +209,7 @@ export class Dashboard implements OnInit {
   bannerRigthtImages: any;
   bannerLeftImages: any;
   bannerImages: any;
+  test: any;
   async ngOnInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
@@ -971,6 +972,9 @@ export class Dashboard implements OnInit {
           this.simmulateSvgClick(event);
           this.mouseMoveSubject.next(event);
         }
+        else{
+          this.onSvgClick(event);
+        }
       } else {
         this.hideMagnifier();
         this.hideTooltip();
@@ -1295,6 +1299,7 @@ export class Dashboard implements OnInit {
         if (!this.isDesktop) {
           this.uiState.setReferendumLogoSmall(false);
         }
+  
       } else if (previous.page === 'main') {
         this.selectedParty = '';
         this.uiState.setReferendumLogoSmall(false);

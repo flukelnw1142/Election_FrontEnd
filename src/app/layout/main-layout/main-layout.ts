@@ -100,7 +100,7 @@ export class MainLayout {
   private checkScreenSize() {
     this.isDesktop = window.innerWidth >= 1024;
     this.is768 = window.innerWidth <= 768;
-    if (this.is768) {
+    if (this.is768 || !this.isDesktopOnly()) {  
       this.default = true;
     }
   }
@@ -219,4 +219,7 @@ export class MainLayout {
     return this.uiState.current;
   }
 
+  private isDesktopOnly(): boolean {
+    return window.matchMedia("(pointer: fine)").matches;
+  }
 }

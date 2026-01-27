@@ -207,7 +207,7 @@ export class Tab3 {
     if (this.checked) {
       this.startStreaming();
     } else {
-      this.disconnectStream();
+      this._Tab3.disconnect();
     }
   }
 

@@ -23,4 +23,16 @@ export class Tab3Service {
     return this._http.post<any>(`${this.baseUrl}/PartyListProvinceResults/gen-party-list-province-results`, req);
   }
 
+
+  disconnect() {
+    this._http.get(
+      `${this.baseUrl}/PartyListProvinceResults/stream-and-control-party-list-province-results`,
+      {
+        params: { auto_time: 0, is_enabled: false }
+      }
+    ).subscribe({
+      next: () => console.log('Auto disabled'),
+      error: err => console.error('Disable auto failed', err)
+    });
+  }
 }

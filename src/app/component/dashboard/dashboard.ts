@@ -2678,12 +2678,19 @@ export class Dashboard implements OnInit {
 
         const baseColor = this.partyColorMap[keyword].COLOR || '#808080';
 
-        // ✅ สว่างขึ้น 2 shade
-        return this.lightenColor(baseColor, 60);
+        // จางลง
+        return this.withAlpha(baseColor, '50');
       }
     }
 
     return 'gray';
+  }
+
+  withAlpha(hex: string, alpha: string): string {
+    if (hex.length === 7) {
+      return hex + alpha; // #RRGGBB + AA
+    }
+    return hex;
   }
 
 

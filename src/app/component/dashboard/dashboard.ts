@@ -1448,6 +1448,7 @@ export class Dashboard implements OnInit {
     const partyName = rawName
       .replace(/^พรรค\s*/g, '')   // ✅ ตัดคำว่า "พรรค" ข้างหน้า
       .trim();
+
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
         return this.partyColorMap[keyword].IMG_PARTY;

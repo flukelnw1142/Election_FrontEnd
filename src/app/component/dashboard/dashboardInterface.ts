@@ -54,5 +54,6 @@ export interface CandidatePartyList {
   active: string;
   partyID: number;
   avatarURL: string;
+  PartyName: string;
   updateAt: string;
 }

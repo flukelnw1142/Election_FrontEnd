@@ -966,13 +966,13 @@ export class Dashboard implements OnInit {
 
       if (isNearMap || isDistrict) {
         console.log(this.isDesktopOnly());
-          
+
         if (this.isDesktop && this.isDesktopOnly()) {
           this.showMagnifier(event);
           this.simmulateSvgClick(event);
           this.mouseMoveSubject.next(event);
         }
-        else{
+        else {
           this.onSvgClick(event);
         }
       } else {
@@ -1299,7 +1299,7 @@ export class Dashboard implements OnInit {
         if (!this.isDesktop) {
           this.uiState.setReferendumLogoSmall(false);
         }
-  
+
       } else if (previous.page === 'main') {
         this.selectedParty = '';
         this.uiState.setReferendumLogoSmall(false);
@@ -2643,6 +2643,49 @@ export class Dashboard implements OnInit {
 
     this.onSvgClick(event as any);
   }
+
+  lightenColor(hex: string, amount: number): string {
+    let color = hex.replace('#', '');
+
+    // รองรับแบบ #RGB → #RRGGBB
+    if (color.length === 3) {
+      color = color.split('').map(c => c + c).join('');
+    }
+
+    const num = parseInt(color, 16);
+
+    let r = (num >> 16) + amount;
+    let g = ((num >> 8) & 0x00ff) + amount;
+    let b = (num & 0x0000ff) + amount;
+
+    r = Math.min(255, r);
+    g = Math.min(255, g);
+    b = Math.min(255, b);
+
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  getColor2Shade(winner: any): string {
+    const rawName = typeof winner === 'string' ? winner : winner?.party || '';
+
+    const partyName = rawName
+      .replace(/^พรรค\s*/g, '')
+      .trim();
+
+    for (const keyword in this.partyColorMap) {
+      if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
+
+        const baseColor = this.partyColorMap[keyword].COLOR || '#808080';
+
+        // ✅ สว่างขึ้น 2 shade
+        return this.lightenColor(baseColor, 60);
+      }
+    }
+
+    return 'gray';
+  }
+
+
 
 
 }

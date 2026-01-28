@@ -1592,6 +1592,12 @@ PAGE 6
     color: #ffffff8e;
     display: flex;
     justify-content: space-between;
+
+    .count-percent,
+    .count-total {
+      font-size: 1rem;
+    }
+
   }
 
   // คลิก จังหวัด
@@ -1653,7 +1659,7 @@ PAGE 6
       // height: 100px;
       // width: 60px;
       height: 5rem;
-      width: 4rem;
+      width: 5rem;
       object-fit: cover;
       object-position: top;
       border-radius: 10px;
@@ -1690,7 +1696,6 @@ PAGE 6
       background: white;
       border-radius: 50%;
       overflow: hidden;
-      /* ⭐ สำคัญมาก */
     }
 
     .logo-img {
@@ -1702,6 +1707,8 @@ PAGE 6
 
 
   }
+
+
 
   // .candidate-item>div>div {
   //   transition: transform 0.2s ease;
@@ -1746,7 +1753,120 @@ PAGE 6
     font-size: 20px;
   }
 
+
+  .score-badge {
+    font-weight: 400;
+    font-size: 1rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  /* ผู้ชนะ */
+  .score-badge.winner {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 10px;
+  }
+
+  .percent {
+    font-size: .8rem;
+  }
+
+  .percent.winner {
+    font-size: 1.1rem;
+  }
+
 }
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .show-province-all {
+    .score-badge.winner {
+      font-size: 1rem;
+      padding: 2px 8px;
+    }
+
+    .percent.winner {
+      font-size: .8rem;
+    }
+  }
+}
+
+/* 📱 จอเล็กมาก */
+@media (max-width: 480px) {
+
+  .show-province-all {
+
+
+    .header-table {
+
+      .count-percent,
+      .count-total {
+        font-size: 14px;
+      }
+    }
+
+    .candidate-item {
+      .logo-container {
+        width: 5rem;
+        height: 5rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: white;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+    }
+
+    .score-badge.winner {
+      font-size: 16px;
+      padding: 2px 8px;
+    }
+
+    .percent.winner {
+      font-size: .8rem;
+    }
+  }
+}
+
+@media (max-width: 380px) {
+
+  .show-province-all {
+
+    .candidate-item {
+      gap: 1rem;
+
+      .logo-container {
+        width: 4rem;
+        height: 4rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: white;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+    }
+
+    .score-badge.winner {
+      font-size: 16px;
+      padding: 2px 8px;
+    }
+
+    .percent.winner {
+      font-size: .8rem;
+    }
+  }
+}
+
 
 /*
 

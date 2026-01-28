@@ -288,7 +288,7 @@
                         </button>
                         <button class="tab-button" [class.active]="activeTab === 'partyList'"
                             (click)="changeTab('partyList')">
-                            คะแนนบัญชีรายชื่อ
+                            บัญชีรายชื่อ
                         </button>
                     </div>
                     <div class="tab-content" style="margin-top: 20px;">
@@ -319,7 +319,6 @@
 
                                         <div class="battle-container">
 
-                                            <!-- ผู้สมัครคนที่ 1 -->
                                             <div *ngFor="let candidate of district.candidates; let i = index"
                                                 class="candidate-row" [ngClass]="{ 'right': i % 2 === 1 }" [ngStyle]="i === 0 ? {
                                                             'margin-bottom': '40px',
@@ -543,7 +542,7 @@
                             <ng-template #showPartyListData>
                                 <div #scrollContainer class="scroll-container-dt70vh">
                                     <div *ngFor="let district of detailWinnerPartyPerProvince" class="candidate-item">
-                                        <div>
+                                        <div style="width: 100%;">
                                             <p style="font-size: 1rem; cursor: pointer;"
                                                 (click)="onClickDistrict(district.districtId)">
                                                 <!-- <p style="font-size: 1rem; cursor: pointer;"> -->
@@ -551,7 +550,7 @@
                                             </p>
 
                                             <div *ngFor="let party of district.parties; let i = index"
-                                                style="display: flex; align-items: center; gap: 1rem; margin: .5rem;">
+                                                style="display: flex; align-items: center; gap: 1rem; margin: .5rem; width: 100%;">
                                                 <p class="number" [style.background]="getColor(party.partyName)">
                                                     {{ i + 1 }}
                                                 </p>
@@ -568,14 +567,16 @@
                                                     <p style="font-size: 1.1rem;">
                                                         {{ party.partyName || '-' }}
                                                     </p>
-                                                    <p>
-                                                        <span
-                                                            [style.background]="i === 0 ? getColor(party.partyName) : null"
-                                                            [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}">
+                                                    <p
+                                                        style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+                                                        <span class="score-badge" [class.winner]="i === 0"
+                                                            [style.background]="i === 0 ? getColor(party.partyName) : null">
+                                                            <!-- [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}" -->
                                                             คะแนน: {{ party.totalVote | number }}
                                                         </span>
                                                         <span style="font-weight: 300; color: rgb(199, 199, 199);"
-                                                            [style.fontSize]="i !== 0 ? '.8rem' : '1.1rem'">({{party.vote_percentage}}
+                                                            class="percent"
+                                                            [class.winner]="i === 0">({{party.vote_percentage}}
                                                             %)</span>
                                                     </p>
                                                 </div>
@@ -605,7 +606,7 @@
                         </button>
                         <button class="tab-button" [class.active]="activeTab === 'partyList'"
                             (click)="changeTab('partyList')">
-                            คะแนนบัญชีรายชื่อ
+                            บัญชีรายชื่อ
                         </button>
                     </div>
                     <div class="tab-content" style="margin-top: 20px;">
@@ -618,11 +619,11 @@
                             <div class="header-table">
                                 <p style="align-self: end;"> อันดับ</p>
                                 <div style=" text-align: end;">
-                                    <p style="font-size: 1rem;">
+                                    <p class="count-percent">
                                         จำนวนหน่วยที่นับไปแล้ว : {{progress}} %
                                     </p>
-                                    <p>จำนวนผู้มาใช้สิทธิ์ทั้งหมด :
-                                        <span style="font-size: 1.1rem; font-weight: 500; color: #ffffff;">
+                                    <p class="count-total">จำนวนผู้มาใช้สิทธิ์ทั้งหมด :
+                                        <span style=" font-weight: 500; color: #ffffff;">
                                             {{formatTotalVotes(totalvoteZone)}}
                                         </span>
                                     </p>
@@ -676,10 +677,10 @@
                             <div class="header-table">
                                 <p style="align-self: end;"> อันดับ</p>
                                 <div style="text-align: end;">
-                                    <p style="font-size: 1rem;">จำนวนหน่วยที่นับไปแล้ว :
+                                    <p class="count-percent">จำนวนหน่วยที่นับไปแล้ว :
                                         {{progress_party}} %
                                     </p>
-                                    <p>จำนวนผู้มาใช้สิทธิ์ทั้งหมด :
+                                    <p class="count-total">จำนวนผู้มาใช้สิทธิ์ทั้งหมด :
                                         <span style="font-size: 1.1rem; font-weight: 500; color: #ffffff;">
                                             {{formatTotalVotes(totalvoteZone_party)}}
                                         </span>
@@ -884,13 +885,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 
 <!-- PAGE 3 : show-distric -->
 <!-- <div *ngIf="selectedDistric !== '' " style="position: relative;" class="show-distric">

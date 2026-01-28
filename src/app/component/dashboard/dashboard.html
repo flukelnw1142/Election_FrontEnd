@@ -183,8 +183,15 @@
 
                 <p class="total-votes">({{ formatTotalVotes(totalVote) }} คะแนน)</p>
             </div>
-        </div>
 
+        </div>
+        <div class="party-page__col party-page__col--map">
+            <div class="party-card party-card--map">
+                <div class="party-map" #svgContainer (click)="onSvgClick($event)">
+                    <div [innerHTML]="svgContent"></div>
+                </div>
+            </div>
+        </div>
     </div>
     <ng-template #mobileLayout>
         <div class="party-page__col party-page__col--top">
@@ -219,18 +226,14 @@
                 </div>
             </div>
         </div>
-    </ng-template>
-    <!-- TOP : mobile -->
-
-
-    <!-- MAP -->
-    <div class="party-page__col party-page__col--map">
-        <div class="party-card party-card--map">
-            <div class="party-map" #svgContainer (click)="onSvgClick($event)">
-                <div [innerHTML]="svgContent"></div>
+        <div class="party-page__col party-page__col--map">
+            <div class="party-card party-card--map">
+                <div class="party-map" #svgContainer (click)="onSvgClick($event)">
+                    <div [innerHTML]="svgContent"></div>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-template>
 </div>
 
 

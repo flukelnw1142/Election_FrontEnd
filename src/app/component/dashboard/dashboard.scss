@@ -1772,13 +1772,27 @@ PAGE 6
   }
 
   .percent {
-    font-size: .8rem;
+    font-size: 1rem;
   }
 
   .percent.winner {
     font-size: 1.1rem;
   }
 
+}
+
+/* 📱 Mobile */
+@media (max-width: 1180px) AND (min-width: 1024px) {
+  .show-province-all {
+    .score-badge.winner {
+      font-size: 1rem;
+      padding: 2px 8px;
+    }
+
+    .percent.winner {
+      font-size: .8rem;
+    }
+  }
 }
 
 /* 📱 Mobile */

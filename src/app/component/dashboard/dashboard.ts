@@ -197,7 +197,7 @@ export class Dashboard implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private uiState: UiStateService,
     private viewportScroller: ViewportScroller,
-    
+
   ) { }
 
   allElectionData: any = {};
@@ -1960,6 +1960,8 @@ export class Dashboard implements OnInit {
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY District
   private onWinnerZoneByDistrict(areaId: number) {
+    this.loading = true;
+
     if (this.isRollbacking) {
       this.isRollbacking = false;
     }
@@ -1991,6 +1993,8 @@ export class Dashboard implements OnInit {
       this.progress = data[0].progress;
       this.totalvoteZone = data[0].total_votes_in_area;
       console.log(data[0])
+      this.loading = false;
+
     });
   }
   // Data แสดงข้อมูล แสดงคะแนนบัญชีรายชื่อทั้งหมด BY District
@@ -2022,6 +2026,8 @@ export class Dashboard implements OnInit {
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต 2 อันดับแรก ของแต่ละเขต BY Province
   private onWinnerZoneByProvince(province: string) {
+    this.loading = true;
+
     this._dashboard
       .getAllwinnerZoneByProvinceName(province)
       .subscribe((data) => {
@@ -2054,7 +2060,7 @@ export class Dashboard implements OnInit {
         );
 
         console.log("detailWinnerZonePerProvince", this.detailWinnerZonePerProvince)
-
+        this.loading = false;
         this.cd.markForCheck();
         this.cd.detectChanges();
       });

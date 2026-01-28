@@ -403,7 +403,7 @@
                                 <div #scrollContainer class="scroll-container-dtprovince">
                                     <div *ngFor="let district of detailWinnerZonePerProvince; let i = index"
                                         class="candidate-item"
-                                        [style.background]="getColor2tone(district.candidates[0].party_name, district.candidates[1].party_name)">
+                                        [style.background]="getColor2tone(district.candidates[0]?.party_name, district.candidates[1]?.party_name)">
                                         <div style="width: 100%;">
                                             <p style="font-size: 1rem; cursor: pointer; "
                                                 (click)="onClickDistrict(district.districtId)"> {{ district.province

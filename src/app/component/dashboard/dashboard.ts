@@ -2114,6 +2114,7 @@ export class Dashboard implements OnInit {
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต 2 อันดับแรก ของแต่ละเขต BY Region
   private onWinnerZoneByRegion(region: string) {
     this._dashboard.getWinnerZoneByRegionName_NEW(region).subscribe((data) => {
+      // console.log(data)
       const structuredArray: any[] = [];
 
       const grouped: {
@@ -2156,6 +2157,7 @@ export class Dashboard implements OnInit {
 
       // ✅ 3. เซ็ตเข้า array ที่ใช้ *ngFor ได้เลย
       this.detailWinnerZonePerRegion = structuredArray;
+      // console.log("structuredArray",structuredArray)
       // this.cd.markForCheck();
       this.cd.detectChanges();
     });
@@ -2703,7 +2705,7 @@ export class Dashboard implements OnInit {
   }
 
   getColor2tone(partyName1: string, partyName2: string) {
-    console.log("partyName1 : ",partyName1, "partyName2 : ", partyName2)
+    // console.log("partyName1 : ",partyName1, "partyName2 : ", partyName2)
 
     const color1 = this.getColor(partyName1);
     const color2 = this.getColor(partyName2);

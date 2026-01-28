@@ -340,7 +340,7 @@ export class Dashboard implements OnInit {
       if (winners.candidates_party)
         this.allWinnersParty = winners.candidates_party;
 
-      this.cd.markForCheck();
+      this.cd.detectChanges();
     });
   }
 
@@ -2156,7 +2156,7 @@ export class Dashboard implements OnInit {
 
       // ✅ 3. เซ็ตเข้า array ที่ใช้ *ngFor ได้เลย
       this.detailWinnerZonePerRegion = structuredArray;
-      this.cd.markForCheck();
+      // this.cd.markForCheck();
       this.cd.detectChanges();
     });
   }
@@ -2251,7 +2251,7 @@ export class Dashboard implements OnInit {
             this.detailWinnerPartyPerRegion
           );
 
-          this.cd.markForCheck();
+          // this.cd.markForCheck();
           this.cd.detectChanges();
           resolve(); // ✅ บอกว่าโหลดเสร็จแล้ว
         },
@@ -2703,7 +2703,7 @@ export class Dashboard implements OnInit {
   }
 
   getColor2tone(partyName1: string, partyName2: string) {
-    console.log(partyName1, partyName2)
+    console.log("partyName1 : ",partyName1, "partyName2 : ", partyName2)
 
     const color1 = this.getColor(partyName1);
     const color2 = this.getColor(partyName2);

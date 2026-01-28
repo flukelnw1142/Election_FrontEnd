@@ -1701,6 +1701,50 @@ PAGE 6
 
 
   }
+
+  // .candidate-item>div>div {
+  //   transition: transform 0.2s ease;
+  // }
+
+  // .candidate-item>div>div:hover {
+  //   transform: scale(1.02);
+  // }
+
+  .candidate-row {
+    transition: transform 0.2s ease;
+  }
+
+  .candidate-row:hover {
+    transform: scale(1.02);
+  }
+
+  .battle-container {
+    position: relative;
+  }
+
+  .candidate-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: .5rem;
+  }
+
+  .candidate-row.right {
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+
+  .vs-center {
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    font-weight: 700;
+    color: white;
+    font-size: 20px;
+  }
+
 }
 
 /*
@@ -1902,6 +1946,7 @@ PAGE 7
       color: #d42e2e;
     }
   }
+
 
 }
 
@@ -2566,7 +2611,7 @@ PAGE 7
 .scroll-container-detail-page7 {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 58vh ;
+  height: 58vh;
   height: 100%;
   max-height: calc(100vh - 200px);
   scrollbar-width: none;

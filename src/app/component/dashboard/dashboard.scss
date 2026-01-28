@@ -2329,12 +2329,14 @@ PAGE 7
   .scroll-container-dtprovince {
     height: 74vh !important;
   }
+
 }
 
 @media screen and (min-width: 1200px) and (min-height: 800px) {
   .scroll-container-detail {
     height: 74vh !important;
   }
+
 }
 
 @media screen and (min-width: 1200px) and (max-height: 800px) {
@@ -2348,6 +2350,10 @@ PAGE 7
 
   .scroll-container-dt70vh {
     height: 76vh !important;
+  }
+
+  .party-card__logo {
+    max-width: 70%;
   }
 }
 

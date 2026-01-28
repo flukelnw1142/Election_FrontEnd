@@ -764,6 +764,7 @@ PAGE 2
   object-fit: contain;
   object-position: center bottom;
   border-radius: 100%;
+  margin: 14px;
   /* ยืนล่างไว้ */
 }
 
@@ -1830,7 +1831,7 @@ PAGE 7
       .head-logo-container {
         position: absolute;
         inset: auto 0 0 0; // bottom:0, left:0, right:0
-        height: 100%; // ← ปรับตรงนี้เพื่อจำกัดพื้นที่หลัก
+        // height: 100%; // ← ปรับตรงนี้เพื่อจำกัดพื้นที่หลัก
         display: flex;
         align-items: flex-end;
         justify-content: center;
@@ -1838,11 +1839,14 @@ PAGE 7
       }
 
       .head-logo {
-        // max-height: 80%;
-        // width: auto;
-        // height: auto;
         width: 70%;
         object-fit: contain;
+      }
+
+      .party-logo {
+        width: 50%;
+        object-fit: contain;
+        border-radius: 100%;
       }
 
       .score {

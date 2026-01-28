@@ -221,8 +221,10 @@
                 </div>
 
                 <div class="party-card__container">
-                    <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty)" alt="Head Logo"
+                    <img [src]="getUrlHead(selectedParty)" *ngIf="getUrlHead(selectedParty) !== '-'" alt="Head Logo"
                         class="party-card__head" />
+                    <img [src]="getUrlParty(selectedParty)" *ngIf="getUrlHead(selectedParty) === '-'" alt="Head Logo"
+                        class="party-card__logo" />
                 </div>
             </div>
         </div>
@@ -784,7 +786,7 @@
                     <img [src]="getUrlHead(partySeatCounts.partyName)"
                         *ngIf="getUrlHead(partySeatCounts.partyName) !=='-'" alt="Head Logo" class="head-logo">
                     <img [src]="getUrlParty(partySeatCounts.partyName)"
-                        *ngIf="getUrlHead(partySeatCounts.partyName) ==='-'" alt="party Logo" class="head-logo" />
+                        *ngIf="getUrlHead(partySeatCounts.partyName) ==='-'" alt="party Logo" class="party-logo" />
                 </div>
                 <!-- <div style="display: flex; justify-content: center; position: relative;">
                     <img [src]="getUrlHead(partySeatCounts.partyName)" *ngIf="getUrlHead(partySeatCounts.partyName)"

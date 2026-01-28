@@ -128,7 +128,7 @@
 <div *ngIf="currentIsShowParty" class="party-page">
     <button class="ds-Button" (click)="closeDialog()">X</button>
 
-    <div class="party-page__row">
+    <div class="party-page__row" *ngIf="isDesktopOnly(); else mobileLayout">
         <!-- LEFT -->
         <div class="party-page__col party-page__col--left">
             <div class="party-card party-card--left" [style.color]="getColor(selectedParty)">
@@ -185,7 +185,8 @@
             </div>
         </div>
 
-        <!-- TOP : mobile -->
+    </div>
+    <ng-template #mobileLayout>
         <div class="party-page__col party-page__col--top">
             <div class="party-card party-card--top" [style.color]="getColor(selectedParty)">
                 <div class="party-card__text-left">
@@ -218,13 +219,15 @@
                 </div>
             </div>
         </div>
+    </ng-template>
+    <!-- TOP : mobile -->
 
-        <!-- MAP -->
-        <div class="party-page__col party-page__col--map">
-            <div class="party-card party-card--map">
-                <div class="party-map" #svgContainer (click)="onSvgClick($event)">
-                    <div [innerHTML]="svgContent"></div>
-                </div>
+
+    <!-- MAP -->
+    <div class="party-page__col party-page__col--map">
+        <div class="party-card party-card--map">
+            <div class="party-map" #svgContainer (click)="onSvgClick($event)">
+                <div [innerHTML]="svgContent"></div>
             </div>
         </div>
     </div>
@@ -301,7 +304,8 @@
                             <div *ngIf="detailWinnerZonePerRegion?.length > 0; else showZoneData" #scrollContainer
                                 class="scroll-container-dt70vh">
                                 <div *ngFor="let district of detailWinnerZonePerRegion; let i = index"
-                                    class="candidate-item" [style.background]="getColor2tone(district.candidates[0].party_name, district.candidates[1].party_name)">
+                                    class="candidate-item"
+                                    [style.background]="getColor2tone(district.candidates[0].party_name, district.candidates[1].party_name)">
                                     <div>
                                         <p style="font-size: 1.rem; cursor: pointer;"
                                             (click)="onClickDistrict(district.districtId)"> {{ district.province }}

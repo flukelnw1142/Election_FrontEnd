@@ -136,7 +136,7 @@ export class Dashboard implements OnInit {
     this.show_dashboard_score_and_seat_Panel = !this.show_dashboard_score_and_seat_Panel;
   }
 
-  private isDesktopOnly(): boolean {
+  isDesktopOnly(): boolean {
     return window.matchMedia("(pointer: fine)").matches;
   }
 

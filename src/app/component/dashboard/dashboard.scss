@@ -1933,13 +1933,7 @@ PAGE 7
         background: #fff;
       }
 
-      .party-logo {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        padding: 10px;
-        /* หรือ cover */
-      }
+
 
       // .head-logo {
       //   // width: 100%;
@@ -1964,8 +1958,9 @@ PAGE 7
       }
 
       .party-logo {
-        width: 50%;
-        object-fit: contain;
+        height: 100%;
+        padding: 10px;
+        width: auto;
         border-radius: 100%;
       }
 
@@ -2169,6 +2164,36 @@ PAGE 7
 
     .scroll-container-detail {
       height: 50vh !important;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .show-partyList-ZoneSeat {
+    .column-grid {
+      .left {
+        .party-logo {
+          height: 80%;
+          padding: 10px;
+          width: auto;
+          border-radius: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 370px) {
+  .show-partyList-ZoneSeat {
+    .column-grid {
+      .left {
+        .party-logo {
+          height: 60%;
+          padding: 10px;
+          width: auto;
+          border-radius: 100%;
+        }
+      }
     }
   }
 }

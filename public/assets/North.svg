@@ -3,14 +3,14 @@
     <g id="province-61">
       <g id="UTI_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_1">
-          <circle cx="565" cy="695" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="565" cy="695" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="565" y="701" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
 
       <g id="UTI_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_2">
-          <circle cx="525" cy="695" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="525" cy="695" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="525" y="701" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -24,42 +24,42 @@
     <g id="province-60">
       <g id="NSN_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_3">
-          <circle cx="425" cy="715" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="425" cy="715" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="425" y="721" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
         </g>
       </g>
 
       <g id="NSN_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_4">
-          <circle cx="385" cy="715" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="385" cy="715" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="385" y="721" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
         </g>
       </g>
 
       <g id="NSN_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_5">
-          <circle cx="345" cy="715" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="345" cy="715" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="345" y="721" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
         </g>
       </g>
 
       <g id="NSN_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_6">
-          <circle cx="425" cy="675" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="425" cy="675" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="425" y="681" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
 
       <g id="NSN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_7">
-          <circle cx="385" cy="675" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="385" cy="675" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="385" y="681" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
 
       <g id="NSN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_8">
-          <circle cx="345" cy="675" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="345" cy="675" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="345" y="681" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -76,28 +76,28 @@
     <g id="province-62">
       <g id="KPT_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_9">
-          <circle cx="165" cy="595" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="165" cy="595" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="165" y="601" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
         </g>
       </g>
 
       <g id="KPT_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_10">
-          <circle cx="125" cy="595" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="125" cy="595" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="125" y="601" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
 
       <g id="KPT_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_11">
-          <circle cx="165" cy="555" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="165" cy="555" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="165" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
 
       <g id="KPT_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_12">
-          <circle cx="125" cy="555" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="125" cy="555" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="125" y="561" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -113,21 +113,21 @@
     <g id="province-66">
       <g id="PCT_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_13">
-          <circle cx="365" cy="575" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="365" cy="575" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="365" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
 
       <g id="PCT_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_14">
-          <circle cx="325" cy="575" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="325" cy="575" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="325" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
 
       <g id="PCT_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_15">
-          <circle cx="285" cy="575" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="285" cy="575" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="285" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -141,37 +141,37 @@
     <g id="province-67">
       <g id="PNB_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_16">
-          <circle cx="585" cy="575" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="585" cy="575" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="585" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
         </g>
       </g>
       <g id="PNB_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_17">
-          <circle cx="545" cy="575" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="545" cy="575" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="545" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
         </g>
       </g>
       <g id="PNB_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_18">
-          <circle cx="505" cy="575" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="505" cy="575" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="505" y="581" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
         </g>
       </g>
       <g id="PNB_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_19">
-          <circle cx="585" cy="535" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="585" cy="535" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="585" y="541" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="PNB_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_20">
-          <circle cx="545" cy="535" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="545" cy="535" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="545" y="541" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="PNB_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_21">
-          <circle cx="505" cy="535" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="505" cy="535" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="505" y="541" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -185,24 +185,24 @@
 
     <g id="province-64">
       <g id="STI_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
-        <circle cx="326" cy="455" r="18" fill="rgb(146, 146, 157)" />
+        <circle cx="326" cy="455" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="326" y="461" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
       </g>
       <g id="STI_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_22">
-        <circle cx="286" cy="455" r="18" fill="rgb(146, 146, 157)" />
+        <circle cx="286" cy="455" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="286" y="461" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="STI_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_23">
-         <circle cx="326" cy="415" r="18" fill="rgb(146, 146, 157)" />
+         <circle cx="326" cy="415" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="326" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="STI_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_24">
-         <circle cx="286" cy="415" r="18" fill="rgb(146, 146, 157)" />
+         <circle cx="286" cy="415" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="286" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -216,31 +216,31 @@
     <g id="province-65">
       <g id="PLK_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_25">
-         <circle cx="445" cy="455" r="18" fill="rgb(146, 146, 157)" />
+         <circle cx="445" cy="455" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="445" y="461" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
         </g>
       </g>
       <g id="PLK_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_26">
-         <circle cx="405" cy="455" r="18" fill="rgb(146, 146, 157)" />
+         <circle cx="405" cy="455" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="405" y="461" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
         </g>
       </g>
       <g id="PLK_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_27">
-         <circle cx="485" cy="415" r="18" fill="rgb(146, 146, 157)" />
+         <circle cx="485" cy="415" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="485" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="PLK_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_28">
-         <circle cx="445" cy="415" r="18" fill="rgb(146, 146, 157)" />
+         <circle cx="445" cy="415" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="445" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="PLK_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_29">
-         <circle cx="405" cy="415" r="18" fill="rgb(146, 146, 157)" />
+         <circle cx="405" cy="415" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="405" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -255,19 +255,19 @@
     <g id="province-63">
       <g id="TAK_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_30">
-          <circle cx="165" cy="435" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="165" cy="435" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="165" y="441" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="TAK_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_31">
-          <circle cx="125" cy="435" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="125" cy="435" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="125" y="441" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="TAK_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_32">
-          <circle cx="85" cy="435" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="85" cy="435" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="85" y="441" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -282,19 +282,19 @@
     <g id="province-53">
       <g id="UTT_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_33">
-          <circle cx="645" cy="415" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="645" cy="415" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="645" y="421" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="UTT_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_34">
-          <circle cx="645" cy="375" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="645" cy="375" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="645" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="UTT_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_35">
-          <circle cx="605" cy="375" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="605" cy="375" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="605" y="381" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -309,13 +309,13 @@
     <g id="province-51">
       <g id="LPN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_36">
-          <circle cx="345" cy="275" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="345" cy="275" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="345" y="281" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="LPN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_37">
-          <circle cx="345" cy="235" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="345" cy="235" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="345" y="241" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -329,25 +329,25 @@
     <g id="province-52">
       <g id="LPG_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_38">
-          <circle cx="485" cy="215" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="485" cy="215" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="485" y="221" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
         </g>
       </g>
       <g id="LPG_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_39">
-          <circle cx="445" cy="215" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="445" cy="215" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="445" y="221" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="LPG_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_40">
-          <circle cx="485" cy="175" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="485" cy="175" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="485" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="LPG_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_41">
-          <circle cx="445" cy="175" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="445" cy="175" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="445" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -361,13 +361,13 @@
     <g id="province-58">
       <g id="MSN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_42">
-          <circle cx="85" cy="335" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="85" cy="335" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="85" y="341" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="MSN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_43">
-          <circle cx="85" cy="295" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="85" cy="295" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="85" y="301" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -381,19 +381,19 @@
     <g id="province-54">
       <g id="PRE_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_44">
-          <circle cx="525" cy="315" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="525" cy="315" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="525" y="321" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="PRE_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_45">
-          <circle cx="485" cy="315" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="485" cy="315" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="485" y="321" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="PRE_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_46">
-          <circle cx="445" cy="315" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="445" cy="315" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="445" y="321" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -407,19 +407,19 @@
     <g id="province-56">
       <g id="PYO_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_47">
-          <circle cx="565" cy="155" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="565" cy="155" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="565" y="161" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="PYO_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_48">
-          <circle cx="605" cy="115" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="605" cy="115" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="605" y="121" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="PYO_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_49">
-          <circle cx="565" cy="115" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="565" cy="115" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="565" y="121" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -433,19 +433,19 @@
     <g id="province-55">
       <g id="NAN_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_50">
-          <circle cx="685" cy="235" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="685" cy="235" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="685" y="241" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="NAN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_51">
-          <circle cx="645" cy="235" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="645" cy="235" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="645" y="241" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="NAN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_52">
-          <circle cx="605" cy="235" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="605" cy="235" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="605" y="241" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -460,61 +460,61 @@
     <g id="province-50">
       <g id="CMI_10" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_53">
-          <circle cx="245" cy="315" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="245" cy="315" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="245" y="321" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">10</text>
         </g>
       </g>
       <g id="CMI_9" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_54">
-          <circle cx="205" cy="315" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="205" cy="315" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="205" y="321" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">9</text>
           </g>
       </g>
       <g id="CMI_8" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_55">
-          <circle cx="245" cy="275" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="245" cy="275" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="245" y="281" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">8</text>
         </g>
       </g>
       <g id="CMI_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_56">
-          <circle cx="205" cy="275" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="205" cy="275" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="205" y="281" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
         </g>
       </g>
       <g id="CMI_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_57">
-          <circle cx="245" cy="235" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="245" cy="235" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="245" y="241" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
         </g>
       </g>
       <g id="CMI_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_58">
-           <circle cx="205" cy="235" r="18" fill="rgb(146, 146, 157)" />
+           <circle cx="205" cy="235" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="205" y="241" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
         </g>
       </g>
       <g id="CMI_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_59">
-          <circle cx="205" cy="195" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="205" cy="195" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="205" y="201" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
         </g>
       </g>
       <g id="CMI_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_60">
-          <circle cx="165" cy="195" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="165" cy="195" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="165" y="201" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="CMI_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_61">
-          <circle cx="205" cy="155" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="205" cy="155" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="205" y="161" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="CMI_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_62">
-           <circle cx="165" cy="155" r="18" fill="rgb(146, 146, 157)" />
+           <circle cx="165" cy="155" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="165" y="161" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
@@ -528,43 +528,43 @@
     <g id="province-57">
       <g id="CRI_7" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_63">
- 	  <circle cx="305" cy="135" r="18" fill="rgb(146, 146, 157)" />
+ 	  <circle cx="305" cy="135" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="305" y="141" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">7</text>
         </g>
       </g>
       <g id="CRI_6" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_64">
-          <circle cx="385" cy="95" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="385" cy="95" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="385" y="101" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">6</text>
          </g>
       </g>
       <g id="CRI_5" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_65">
-           <circle cx="345" cy="95" r="18" fill="rgb(146, 146, 157)" />
+           <circle cx="345" cy="95" r="18" fill="rgb(146 146 157 / 23%)" />
            <text x="345" y="101" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">5</text>
         </g>
       </g>
       <g id="CRI_4" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_66">
-           <circle cx="305" cy="95" r="18" fill="rgb(146, 146, 157)" />
+           <circle cx="305" cy="95" r="18" fill="rgb(146 146 157 / 23%)" />
            <text x="305" y="101" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">4</text>
         </g>
       </g>
       <g id="CRI_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_67">
-          <circle cx="385" cy="55" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="385" cy="55" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="385" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="CRI_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_68">
-          <circle cx="345" cy="55" r="18" fill="rgb(146, 146, 157)" />
+          <circle cx="345" cy="55" r="18" fill="rgb(146 146 157 / 23%)" />
           <text x="345" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="CRI_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_69">
-           <circle cx="305" cy="55" r="18" fill="rgb(146, 146, 157)" />
+           <circle cx="305" cy="55" r="18" fill="rgb(146 146 157 / 23%)" />
            <text x="305" y="61" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>

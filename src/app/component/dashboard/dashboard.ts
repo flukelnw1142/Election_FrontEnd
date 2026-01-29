@@ -716,7 +716,8 @@ export class Dashboard implements OnInit {
             styleStr +=
               ' fill: ' + this.getColor(this.allWinners[id]) + ' !important;';
           } else {
-            styleStr += ' fill: #d3d3d3 !important;';
+            styleStr += ' fill: rgba(207, 212, 229)  !important;';
+            // styleStr += ' fill: rgba(207, 212, 229, 0.23)  !important;';
           }
 
           const partyData = this.partySeatCountsList.find(

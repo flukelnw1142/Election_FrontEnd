@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ElectionService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // ดูลำดับแรกของแต่ละจังหวัด
   getResults(): Observable<{ [province: string]: string }> {
@@ -55,5 +55,16 @@ export class ElectionService {
           return results;
         })
       );
+  }
+
+  // เก็บค่า "ผลคะแนนจาก"
+  private resultFromSubject = new BehaviorSubject<string>('');
+
+  // ให้ component ภายนอก subscribe
+  resultFrom$ = this.resultFromSubject.asObservable();
+
+  // ฟังก์ชันสำหรับอัปเดตค่า
+  setResultFrom(value: string): void {
+    this.resultFromSubject.next(value);
   }
 }

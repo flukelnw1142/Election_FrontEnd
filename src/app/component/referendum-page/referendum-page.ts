@@ -14,6 +14,7 @@ import { SemiPie } from "../semi-pie/semi-pie";
 import { Referendumservice } from '../referendum-page/service/referendumservice';
 import panzoom from "panzoom";
 import { MatIcon } from "@angular/material/icon";
+import { ElectionService } from '../../service/election.service';
 
 @Component({
   selector: 'app-referendum-page',
@@ -117,6 +118,9 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   textShow: string = '';
   private provinceAbbrMap = new Map<string, string>();
 
+
+  is_certified: boolean = false;
+
   constructor(
     private http: HttpClient,
     private sanitizer: DomSanitizer,
@@ -124,6 +128,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     private _referendumService: Referendumservice,
     private cdr: ChangeDetectorRef,
     private zone: NgZone,
+    private electionService: ElectionService
   ) { }
 
 
@@ -136,6 +141,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         this.winners = winners_NEW;
         console.log('winners_NEW >>>', winners_NEW)
       });
+      this.getDataSource();
 
       // อัพเดท UI ครั้งแรก
       this.updateWinnerUI(this.winners);
@@ -166,6 +172,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
             console.log('connectEctreport >>>', res);
             this.winners = res.data;
             this.updateWinnerUI(this.winners);
+            this.electionService.setResultFrom(res.dataSourceLabel);
           },
           error: (err) => console.error('WebSocket error', err),
           complete: () => console.log('WebSocket closed'),
@@ -179,6 +186,17 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     this.onRegionSelect(this.selectedRegion);
 
   }
+
+  getDataSource() {
+    this._dashboard.getStatusMode().subscribe({
+      next: (res) => {
+        this.is_certified = res.is_certified === 0 ? false : true
+        console.log("res: ", res.is_certified)
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
 
   private updateWinnerUI(winners: any): void {
     if (!winners) return;

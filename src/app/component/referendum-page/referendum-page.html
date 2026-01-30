@@ -2,7 +2,7 @@
     <div class="question-row">
         <h4 class="question-title">คำถาม : {{ question.questionText }}</h4>
     </div>
-    <div class="glass-card card" style="color: white;">
+    <div class="glass-card card" style="color: white;" *ngIf="is_certified">
         <div class="three-column-grid">
             <div class="column">
                 <div class="region-tabs">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="column">
                 <span class="loader" *ngIf="loading"></span>
                 <div class="question-block" style="height: 100%;" *ngIf="!loading">
@@ -71,6 +71,27 @@
             </div>
         </div>
     </div>
+    <!-- <div *ngIf="!is_certified">
+        รอผลจาก กกต.
+    </div> -->
+
+    <div *ngIf="!is_certified" class="waiting-container">
+        <div class="waiting-card">
+            <!-- <div class="spinner"></div> -->
+             <div class="hourglass"></div>
+
+            <h2>กำลังรอผลการรับรอง</h2>
+            <p class="subtitle">
+                ขณะนี้อยู่ระหว่างการพิจารณารับรองผลคะแนนอย่างเป็นทางการจาก
+                <span>คณะกรรมการการเลือกตั้ง (กกต.)</span>
+            </p>
+
+            <p class="note">
+                ระบบจะแสดงผลคะแนนทันทีเมื่อมีการประกาศอย่างเป็นทางการ
+            </p>
+        </div>
+    </div>
+
 </div>
 
 <div class="svg-tooltip-custom" #tooltipRef>

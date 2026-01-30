@@ -43,6 +43,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import Swal from 'sweetalert2';
 import { UiStateService } from '../share/ui-state.service';
 import panzoom from "panzoom";
+import { ElectionService } from '../../service/election.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -197,6 +198,7 @@ export class Dashboard implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private uiState: UiStateService,
     private viewportScroller: ViewportScroller,
+    private electionService: ElectionService
 
   ) { }
 
@@ -333,7 +335,9 @@ export class Dashboard implements OnInit {
       this.setText('percentZone', winners.percentZone);
       this.setText('percentPartylist', winners.percentPartylist);
 
-      this.setText('resultFrom', winners.dataSourceLabel);
+      // this.setText('resultFrom', winners.dataSourceLabel);
+      // console.log(winners.dataSourceLabel)
+      this.electionService.setResultFrom(winners.dataSourceLabel);
 
       // อัพเดทข้อมูล
       if (winners.candidates) this.allWinners = winners.candidates;

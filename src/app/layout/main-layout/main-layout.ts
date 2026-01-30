@@ -6,6 +6,7 @@ import { DashboardService } from '../../component/dashboard/service/dashboardser
 import { SweetAlertService } from '../../service/sweet-alert.service';
 import { filter, Subscription } from 'rxjs';
 import { UiStateService } from '../../component/share/ui-state.service';
+import { ElectionService } from '../../service/election.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -29,10 +30,10 @@ export class MainLayout {
   isReferendumPage = false;
   isMainPage = true;
   default = false;
+  is_certified: boolean = false;
 
   // เช็คว่าเป็นหน้า manage
   isSourceLabelPage = true;
-
   private sub = new Subscription();
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -40,12 +41,12 @@ export class MainLayout {
     private sweetAlertService: SweetAlertService,
     private cdr: ChangeDetectorRef,
     private zone: NgZone,
-    private uiState: UiStateService
+    private uiState: UiStateService,
+    private electionService: ElectionService
   ) {
     this.router.events.subscribe(() => {
       this.isSourceLabelPage = this.router.url.includes('/manage');
     });
-    this.checkScreenSize()
     this.sub.add(
       this.uiState.isMainPage$.subscribe(isMain => {
         // รับค่าดิบจาก service
@@ -92,6 +93,12 @@ export class MainLayout {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize()
+      this.electionService.resultFrom$
+        .subscribe(value => {
+          this.dataSourceLabel = value;
+          console.log("value: ", value)
+        });
       this.username = localStorage.getItem('UserName');
       this.getDataSource();
       this.getBannersponsor();
@@ -154,10 +161,10 @@ export class MainLayout {
     this.cdr.detectChanges();
   }
 
-
   getDataSource() {
     this._dashboard.getStatusMode().subscribe({
       next: (res) => {
+        this.is_certified = res.is_certified === 0 ? false : true
         this.updateDataSource(
           res.is_certified === 1 ? 'final' : 'volunteer'
         );
@@ -178,7 +185,7 @@ export class MainLayout {
     this._dashboard.setStatusMode(this.isChecked, this.username).subscribe({
       next: (res) => {
         // console.log('Mode updated successfully:', res);
-        this.sweetAlertService.showAlert(res.message, res.is_certified === 1 ? 'ผลคะแนนจาก กกต.' : 'ผลคะแนนจาก อาสาสมัคร', 'success');
+        this.sweetAlertService.showAlert(res.message, res.is_certified === 1 ? 'กกต.' : 'อาสาสมัคร', 'success');
       },
       error: (err) => {
         console.error('Error updating mode:', err);
@@ -192,8 +199,8 @@ export class MainLayout {
 
     this.dataSourceLabel =
       source === 'final'
-        ? 'ผลคะแนนจาก กกต.'
-        : 'ผลคะแนนจาก อาสาสมัคร';
+        ? 'กกต.'
+        : 'อาสาสมัคร';
 
     this.toggleLabel =
       source === 'final'

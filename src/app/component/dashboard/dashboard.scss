@@ -2210,6 +2210,16 @@ PAGE 7
       }
     }
   }
+
+}
+
+@media (max-width: 310px) {
+  .show-partyList-ZoneSeat {
+    .scroll-container-detail-page7 {
+      height: 45vh !important;
+    }
+  }
+
 }
 
 
@@ -2763,7 +2773,7 @@ PAGE 7
   }
 }
 
-@media (min-height: 689px) AND (max-width: 1536px) {
+@media (min-height: 641px) AND (max-width: 1536px) {
   .head-logo {
     width: 60% !important;
     object-fit: contain;

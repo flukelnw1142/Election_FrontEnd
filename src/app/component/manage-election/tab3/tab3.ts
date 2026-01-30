@@ -191,7 +191,7 @@ export class Tab3 {
       })),
     };
     // console.log(JSON.stringify(jsonData, null, 2));
-    console.log(jsonData);
+    console.log("onSubmit : ",jsonData);
     this._Tab3.genElection(jsonData).subscribe({
       next: (res) => {
         console.log(JSON.stringify(res.data));
@@ -207,6 +207,7 @@ export class Tab3 {
     if (this.checked) {
       this.startStreaming();
     } else {
+      this.disconnectStream()
       this._Tab3.disconnect();
     }
   }

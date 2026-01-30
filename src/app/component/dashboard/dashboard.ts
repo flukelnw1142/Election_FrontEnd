@@ -202,7 +202,7 @@ export class Dashboard implements OnInit {
 
   allElectionData: any = {};
   allWinners: { [id: string]: Winner } = {};
-  allWinnersParty: { [id: string]: string } = {};
+  allWinnersParty: { [id: string]: any } = {};
   partyColorMap: { [partyKeyword: string]: Color } = {};
   winners: any;
   private loadingSubject = new BehaviorSubject<boolean>(true);
@@ -2427,7 +2427,7 @@ export class Dashboard implements OnInit {
       districtIds = Object.keys(this.allWinners);
     }
 
-    console.log('districtIds:', districtIds, this.allWinners);
+    console.log('districtIds:', districtIds, this.allWinners, this.allWinnersParty);
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -2442,7 +2442,7 @@ export class Dashboard implements OnInit {
               ? this.allWinnersParty[id]
               : this.allWinners[id]
           );
-          const district = this.allWinners[id];
+          const district = this.activeTab === 'partyList' ? this.allWinnersParty[id] : this.allWinners[id]; //หา party ด้วย
           const isSelectedProvinceDistrict = this.selectedProvince
             ? district.provinceName === this.selectedProvince
             : false;

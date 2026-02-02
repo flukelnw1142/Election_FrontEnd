@@ -1211,6 +1211,12 @@ export class Dashboard implements OnInit {
   async changeTab(command: string) {
     this.activeTab = command;
     console.log(command);
+    console.log(this.zoneId);
+    console.log(this.selectedDistric);
+    console.log(this.selectedProvince);
+
+    const provinceBefore = this.selectedProvince || this.allWinners[this.zoneId]?.provinceName;
+
     if (command === 'partyList') {
       // ?
       const svgText = await this.loadSvgByRegion(this.selectedRegion);
@@ -1225,6 +1231,13 @@ export class Dashboard implements OnInit {
         );
         this.cd.markForCheck();
       });
+      setTimeout(() => {
+        if (!this.isDesktopOnly() && provinceBefore) {
+          this.focusProvinceOnMobile(provinceBefore);
+        } else {
+          this.initPanzoom();
+        }
+      }, 0);
     } else {
       const svgText = await this.loadSvgByRegion(this.selectedRegion);
 
@@ -1238,6 +1251,13 @@ export class Dashboard implements OnInit {
         );
         this.cd.markForCheck();
       });
+      setTimeout(() => {
+        if (!this.isDesktopOnly() && provinceBefore) {
+          this.focusProvinceOnMobile(provinceBefore);
+        } else {
+          this.initPanzoom();
+        }
+      }, 0);
     }
   }
 

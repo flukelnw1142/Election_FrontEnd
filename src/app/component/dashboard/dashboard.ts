@@ -49,7 +49,7 @@ import { UiStateService } from '../share/ui-state.service';
 import panzoom from "panzoom";
 import { ElectionService } from '../../service/election.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { Tab2Service } from '../manage-election/tab2/tab2service';
 import { SweetAlertService } from '../../service/sweet-alert.service';
@@ -240,29 +240,30 @@ export class Dashboard implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
     this.updateFooterVisibility();
-    // this.filteredProvinces_Specific = this.provinceCtrl_Specific.valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => this._filterProvince(value || ''))
-    // );
     this.filteredProvinces_Specific = this.provinceCtrl_Specific.valueChanges.pipe(
       startWith(''),
-      map(value => value || ''),
-      tap(value => {
-        const input = value.trim();
-
-        if (!input) {
-          this.selectedProvince_Specific = '';
-          return;
-        }
-
-        const matched = this.provinces.find(
-          p => p.provinceName === input
-        );
-
-        this.selectedProvince_Specific = matched ? matched.provinceName : '';
-      }),
-      map(value => this._filterProvince(value))
+      map((value) => this._filterProvince(value || ''))
     );
+
+    // this.filteredProvinces_Specific = this.provinceCtrl_Specific.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => value || ''),
+    //   tap(value => {
+    //     const input = value.trim();
+
+    //     if (!input) {
+    //       this.selectedProvince_Specific = '';
+    //       return;
+    //     }
+
+    //     const matched = this.provinces.find(
+    //       p => p.provinceName === input
+    //     );
+
+    //     this.selectedProvince_Specific = matched ? matched.provinceName : '';
+    //   }),
+    //   map(value => this._filterProvince(value))
+    // );
 
     this.getProvince();
 
@@ -2385,19 +2386,19 @@ export class Dashboard implements OnInit {
     }, 0);
   }
 
-  onProvinceSelected_Specific(event: any) {
-    const provinceName = event.option.value;
-    const prov = this.provinces.find(p => p.provinceName === provinceName);
-    if (!prov) return;
+  // onProvinceSelected_Specific(event: any) {
+  //   const provinceName = event.option.value;
+  //   const prov = this.provinces.find(p => p.provinceName === provinceName);
+  //   if (!prov) return;
 
-    this.selectedProvince_Specific = provinceName;
+  //   this.selectedProvince_Specific = provinceName;
 
-    this._Tab2.getDistrict(prov.provID).subscribe(res => {
-      this.zonesInProvince_Specific = res.data;
-      this.selectedZone_Specific = '';
-      this.cd.detectChanges();
-    });
-  }
+  //   this._Tab2.getDistrict(prov.provID).subscribe(res => {
+  //     this.zonesInProvince_Specific = res.data;
+  //     this.selectedZone_Specific = '';
+  //     this.cd.detectChanges();
+  //   });
+  // }
 
   onSubmitFilter_Specific() {
     console.log(this.provinceCtrl_Specific.value);
@@ -2446,6 +2447,27 @@ export class Dashboard implements OnInit {
   clearZone_Specific(event: MouseEvent) {
     event.stopPropagation(); // ❗ ป้องกัน mat-select เปิด dropdown
     this.selectedZone_Specific = '';
+  }
+
+  onProvinceSelected_Specific(event: MatAutocompleteSelectedEvent) {
+    const province = event.option.value;
+    this.selectedProvince_Specific = province;
+
+    // 🔥 ค้นหาทันที
+    this.triggerProvinceSearch(province);
+  }
+
+  private lastSearchedProvince = '';
+
+  private triggerProvinceSearch(province: string) {
+    if (this.lastSearchedProvince === province) return;
+
+    this.lastSearchedProvince = province;
+
+    this.focusProvince(province);
+    this.uiState.setReferendumLogoSmall(true);
+
+    console.log('auto search province:', province);
   }
 }
 

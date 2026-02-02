@@ -124,6 +124,7 @@ export class Dashboard implements OnInit {
   currentIsShowProvinceAll: boolean = false;
   currentIsShowPartylistAndDistrictPerParty: boolean = false;
 
+  isIOS = false;
   STACK_MODAL: any[] = [
     {
       page: 'main',
@@ -214,6 +215,9 @@ export class Dashboard implements OnInit {
   bannerImages: any;
   test: any;
   async ngOnInit(): Promise<void> {
+    this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
+      (/MacIntel/.test(navigator.platform || '') && navigator.maxTouchPoints > 1);
+    console.log('isIOS >>>', this.isIOS);
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
     this.updateFooterVisibility();
@@ -2261,31 +2265,45 @@ export class Dashboard implements OnInit {
       viewport.setAttribute('content', originalContent);
 
       // เพิ่ม scroll to top ด้วย (ตามที่คุยก่อนหน้า)
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      // window.scrollTo({ top: 0, behavior: 'instant' });
+      // window.scrollTo(0, document.documentElement.scrollHeight);
+      window.scrollTo(0, document.body.scrollHeight);
+
 
       console.log('Browser zoom reset attempted');
     }, 100); // ปรับเวลาได้ ถ้าไม่ทำงาน ลองเพิ่มเป็น 150–300 ms
   }
 
 
+
   private forceResetZoomAndOpenDetail() {
-    // เพิ่ม query param ชั่วคราวเพื่อหลอกเบราว์เซอร์ให้รีเซ็ต viewport + zoom
-    const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.set('zoomreset', Date.now().toString());
-
-    // เปลี่ยน URL โดยไม่ reload (ใช้ history API)
-    window.history.replaceState({}, '', currentUrl.toString());
-
-    // รอเล็กน้อยแล้วลบ param ออก (เพื่อไม่ให้ URL สกปรก)
-    setTimeout(() => {
-      currentUrl.searchParams.delete('zoomreset');
-      window.history.replaceState({}, '', currentUrl.toString());
-    }, 300);
-
-    // บังคับ scroll top + พยายามรีเซ็ต viewport
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    this.resetBrowserZoom(); // เรียกฟังก์ชันเดิมของคุณด้วย
+    if (this.isIOS) {
+      window.scrollTo({ top: 0 });
+      this.resetIOSZoom();
+    } else {
+      // Android / desktop → ใช้ scroll + reset เดิม
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      this.resetBrowserZoom();
+    }
   }
+
+  resetIOSZoom() {
+    const viewport = document.querySelector('meta[name=viewport]');
+    if (!viewport) return;
+
+    viewport.setAttribute(
+      'content',
+      'width=device-width, initial-scale=1, maximum-scale=1'
+    );
+
+    setTimeout(() => {
+      viewport.setAttribute(
+        'content',
+        'width=device-width, initial-scale=1'
+      );
+    }, 50);
+  }
+
 
 }
 

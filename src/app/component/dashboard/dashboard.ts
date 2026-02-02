@@ -22,7 +22,8 @@ import {
   Subscription,
   takeUntil,
   timeout,
-  map
+  map,
+  tap
 } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
@@ -239,10 +240,30 @@ export class Dashboard implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
     this.updateFooterVisibility();
+    // this.filteredProvinces_Specific = this.provinceCtrl_Specific.valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => this._filterProvince(value || ''))
+    // );
     this.filteredProvinces_Specific = this.provinceCtrl_Specific.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filterProvince(value || ''))
+      map(value => value || ''),
+      tap(value => {
+        const input = value.trim();
+
+        if (!input) {
+          this.selectedProvince_Specific = '';
+          return;
+        }
+
+        const matched = this.provinces.find(
+          p => p.provinceName === input
+        );
+
+        this.selectedProvince_Specific = matched ? matched.provinceName : '';
+      }),
+      map(value => this._filterProvince(value))
     );
+
     this.getProvince();
 
     try {
@@ -1967,7 +1988,12 @@ export class Dashboard implements OnInit {
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svg.style.display = 'block';
     svg.style.margin = '0 auto';
-    svg.style.height = '68vh';
+    if (this.isDesktopOnly()) {
+      svg.style.height = '68vh';
+    } else {
+
+      svg.style.height = '40vh';
+    }
 
     // Remove strokes
     const paths = svg.querySelectorAll('path');
@@ -2374,15 +2400,18 @@ export class Dashboard implements OnInit {
   }
 
   onSubmitFilter_Specific() {
+    console.log(this.provinceCtrl_Specific.value);
+
     if (!this.selectedProvince_Specific) {
       this.sweetAlertService.showAlert(
-        'Load Fail',
+        'แจ้งเตือน',
         'กรุณาเลือกจังหวัด',
         'warning'
       );
       return;
     }
     this.focusProvince(this.selectedProvince_Specific);
+    this.uiState.setReferendumLogoSmall(true);
     console.log('onSubmitFilter_Specific', this.selectedProvince_Specific, this.selectedZone_Specific);
 
   }

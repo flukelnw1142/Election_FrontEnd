@@ -4,7 +4,7 @@
 <div [ngClass]="{ 'd-none': !currentIsMain }">
     <div class="row h-100 align-items-stretch">
         <div class="col-12 d-flex" [ngClass]="show_dashboard_score_and_seat_Panel ? 'col-md-7' : 'col-md-12'">
-            <div class="glass-card flex-fill">
+            <div class="glass-card flex-fill" style="height: auto;">
                 <div class="button-container" [hidden]="!isDesktopOnly()">
                     <button class="btn-change" (click)="changeSvg('dashboard')" style="width: 52px;"
                         [class.active]="selectDashboard === 'dashboard'">
@@ -52,7 +52,7 @@
                     <div class="filter-row d-flex">
                         <!-- จังหวัด -->
                         <div class="flex-fill">
-                            <label class="form-label">จังหวัด :</label>
+                            <label class="form-label">ค้นหาจังหวัดเพื่อดูข้อมูล :</label>
                             <mat-form-field appearance="outline" class="w-90 white-input">
                                 <mat-label>ค้นหาจังหวัด</mat-label>
                                 <input type="text" matInput [formControl]="provinceCtrl_Specific"
@@ -90,7 +90,7 @@
                         <!-- ปุ่ม Submit -->
                         <div style="align-self:center">
                             <button mat-raised-button color="primary" class="px-4" (click)="onSubmitFilter_Specific()">
-                                SUBMIT
+                                ค้นหา
                             </button>
                         </div>
                     </div>

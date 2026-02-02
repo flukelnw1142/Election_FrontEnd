@@ -16,10 +16,13 @@ import {
   BehaviorSubject,
   debounceTime,
   firstValueFrom,
+  Observable,
+  startWith,
   Subject,
   Subscription,
   takeUntil,
   timeout,
+  map
 } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
@@ -44,7 +47,13 @@ import Swal from 'sweetalert2';
 import { UiStateService } from '../share/ui-state.service';
 import panzoom from "panzoom";
 import { ElectionService } from '../../service/election.service';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { Tab2Service } from '../manage-election/tab2/tab2service';
+import { SweetAlertService } from '../../service/sweet-alert.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-dashboard',
@@ -60,7 +69,12 @@ import { FormsModule } from '@angular/forms';
     DashboardScoreAndSeat,
     MatTooltipModule,
     MatTabsModule,
-    FormsModule
+    FormsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatButtonModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -204,7 +218,9 @@ export class Dashboard implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private uiState: UiStateService,
     private viewportScroller: ViewportScroller,
-    private electionService: ElectionService
+    private electionService: ElectionService,
+    private _Tab2: Tab2Service,
+    private sweetAlertService: SweetAlertService
 
   ) { }
 
@@ -223,6 +239,11 @@ export class Dashboard implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
     this.updateFooterVisibility();
+    this.filteredProvinces_Specific = this.provinceCtrl_Specific.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterProvince(value || ''))
+    );
+    this.getProvince();
 
     try {
       // โหลดข้อมูลสำคัญทั้งหมด
@@ -2314,6 +2335,89 @@ export class Dashboard implements OnInit {
     });
   }
 
+
+  // Filter mobile
+
+  provinceCtrl_Specific = new FormControl('');
+  private showAllOnFocus_Specific = false;
+  @ViewChild('specificTrig') specificTrig!: MatAutocompleteTrigger;
+  filteredProvinces_Specific!: Observable<any[]>;
+  selectedZone_Specific = '';
+  selectedProvince_Specific = '';
+  zonesInProvince_Specific: any[] = [];
+  provinces: any[] = [];
+
+
+  openProvincePanel_Specific(): void {
+    this.showAllOnFocus_Specific = true;
+
+    const current = this.provinceCtrl_Specific.value ?? '';
+    this.provinceCtrl_Specific.setValue(current, { emitEvent: true });
+
+    setTimeout(() => {
+      this.specificTrig?.openPanel();
+    }, 0);
+  }
+
+  onProvinceSelected_Specific(event: any) {
+    const provinceName = event.option.value;
+    const prov = this.provinces.find(p => p.provinceName === provinceName);
+    if (!prov) return;
+
+    this.selectedProvince_Specific = provinceName;
+
+    this._Tab2.getDistrict(prov.provID).subscribe(res => {
+      this.zonesInProvince_Specific = res.data;
+      this.selectedZone_Specific = '';
+      this.cd.detectChanges();
+    });
+  }
+
+  onSubmitFilter_Specific() {
+    if (!this.selectedProvince_Specific) {
+      this.sweetAlertService.showAlert(
+        'Load Fail',
+        'กรุณาเลือกจังหวัด',
+        'warning'
+      );
+      return;
+    }
+    this.focusProvince(this.selectedProvince_Specific);
+    console.log('onSubmitFilter_Specific', this.selectedProvince_Specific, this.selectedZone_Specific);
+
+  }
+
+
+  getProvince() {
+    this._Tab2.getProvince().subscribe({
+      next: (res) => {
+        this.provinces = res.data;
+        console.log("this.provinces :");
+
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        console.error('API error:', err);
+      },
+    });
+  }
+
+  private _filterProvince(value: string): any[] {
+    if (this.showAllOnFocus_Specific) {
+      this.showAllOnFocus_Specific = false;
+      return this.provinces;
+    }
+
+    const filterValue = (value || '').toLowerCase();
+    return this.provinces.filter((p) =>
+      p.provinceName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  clearZone_Specific(event: MouseEvent) {
+    event.stopPropagation(); // ❗ ป้องกัน mat-select เปิด dropdown
+    this.selectedZone_Specific = '';
+  }
 }
 
 

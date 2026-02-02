@@ -1007,6 +1007,12 @@ export class Dashboard implements OnInit {
     this.hideTooltip();
     this.activeTab = 'district';
 
+    const viewport = document.getElementById('viewport') as HTMLMetaElement;
+    if (!viewport) {
+      console.warn('Viewport meta tag not found');
+      return;
+    }
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
     console.log('STACK_MODAL', this.STACK_MODAL);
   }
 
@@ -1725,7 +1731,7 @@ export class Dashboard implements OnInit {
       this.cd.detectChanges();
     });
   }
-  
+
   private onWinnerPartyByRegion(region: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this._dashboard.getWinnerPartyByRegionName(region).subscribe({
@@ -1757,7 +1763,7 @@ export class Dashboard implements OnInit {
 
           this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
 
-        
+
           console.log(
             'detailWinnerPartyPerRegion',
             this.detailWinnerPartyPerRegion
@@ -1814,6 +1820,8 @@ export class Dashboard implements OnInit {
 
     this.tooltipVisible = false;
     this.hideMagnifier();
+    // this.scrollToTop();
+    this.forceResetZoomAndOpenDetail()
     console.log('STACK_MODAL', this.STACK_MODAL);
   }
   // Data จังหวัด
@@ -1839,6 +1847,8 @@ export class Dashboard implements OnInit {
     this.onWinnerZoneByProvince(provinceName);
     this.loadAndSetRegionSvg(provinceName);
     this.onWinnerPartyByProvince(provinceName);
+    // this.scrollToTop();
+    this.forceResetZoomAndOpenDetail()
     console.log('STACK_MODAL', this.STACK_MODAL);
   }
 
@@ -2220,7 +2230,62 @@ export class Dashboard implements OnInit {
   }
 
 
+  scrollToTop(smooth: boolean = true) {
+    console.log("scrollToTop smooth:", smooth);
+    if (smooth) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+    this.resetBrowserZoom();
+  }
 
+  resetBrowserZoom() {
+    const viewport = document.getElementById('viewport') as HTMLMetaElement;
+    if (!viewport) {
+      console.warn('Viewport meta tag not found');
+      return;
+    }
+
+    // บันทึกค่าเดิม
+    const originalContent = viewport.getAttribute('content') || '';
+
+    // ตั้งค่าให้ force รีเซ็ต zoom เป็น 1.0
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+
+    // รอ 50–150 ms แล้วคืนค่าเดิม (เพื่อให้เบราว์เซอร์รีเซ็ต zoom จริง)
+    setTimeout(() => {
+      viewport.setAttribute('content', originalContent);
+
+      // เพิ่ม scroll to top ด้วย (ตามที่คุยก่อนหน้า)
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      console.log('Browser zoom reset attempted');
+    }, 100); // ปรับเวลาได้ ถ้าไม่ทำงาน ลองเพิ่มเป็น 150–300 ms
+  }
+
+
+  private forceResetZoomAndOpenDetail() {
+    // เพิ่ม query param ชั่วคราวเพื่อหลอกเบราว์เซอร์ให้รีเซ็ต viewport + zoom
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('zoomreset', Date.now().toString());
+
+    // เปลี่ยน URL โดยไม่ reload (ใช้ history API)
+    window.history.replaceState({}, '', currentUrl.toString());
+
+    // รอเล็กน้อยแล้วลบ param ออก (เพื่อไม่ให้ URL สกปรก)
+    setTimeout(() => {
+      currentUrl.searchParams.delete('zoomreset');
+      window.history.replaceState({}, '', currentUrl.toString());
+    }, 300);
+
+    // บังคับ scroll top + พยายามรีเซ็ต viewport
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    this.resetBrowserZoom(); // เรียกฟังก์ชันเดิมของคุณด้วย
+  }
 
 }
 

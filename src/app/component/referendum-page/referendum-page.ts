@@ -172,7 +172,9 @@ export class ReferendumPage implements OnInit, AfterViewInit {
             console.log('connectEctreport >>>', res);
             this.winners = res.data;
             this.updateWinnerUI(this.winners);
+            this.getDataSource();
             this.electionService.setResultFrom(res.dataSourceLabel);
+            this.onRegionSelect(this.selectedRegion);
           },
           error: (err) => console.error('WebSocket error', err),
           complete: () => console.log('WebSocket closed'),

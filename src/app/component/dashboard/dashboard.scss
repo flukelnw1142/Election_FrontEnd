@@ -483,6 +483,7 @@ mat-icon {
   .banner-container.dashboard2 {
     display: none;
   }
+
 }
 
 @media (max-width: 375px) {
@@ -1039,6 +1040,14 @@ PAGE 2
       }
     }
 
+  }
+
+  .score-highlight {
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    color: white;
+    border-radius: 10px;
+    padding: 0 10px;
   }
 }
 
@@ -2815,6 +2824,7 @@ PAGE 7
     width: 100% !important;
     object-fit: contain;
   }
+
 }
 
 .scroll-container-detail-page7 {
@@ -2829,4 +2839,12 @@ PAGE 7
 
 .scroll-container-detail-page7::-webkit-scrollbar {
   display: none;
+}
+
+.score-highlight {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white;
+  border-radius: 10px;
+  padding: 0 10px;
 }

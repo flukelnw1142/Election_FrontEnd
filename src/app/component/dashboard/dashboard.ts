@@ -1887,10 +1887,11 @@ export class Dashboard implements OnInit {
         //   // this.loading_tab2 = false
         // }, 0);
         setTimeout(() => {
-          this.initPanzoom();
 
-          if (this.isMobile) {
+          if (!this.isDesktopOnly()) {
             this.focusProvinceOnMobile(province);
+          } else {
+            this.initPanzoom();
           }
         }, 0);
       }
@@ -2244,7 +2245,7 @@ export class Dashboard implements OnInit {
 
   private focusProvinceOnMobile(province: string) {
     console.log('focusProvinceOnMobile:', province);
-    if (!this.isMobile) return;
+    if (this.isDesktopOnly()) return;
 
     const container = this.svgContainerRegion?.nativeElement;
     if (!container) return;

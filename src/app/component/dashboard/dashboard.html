@@ -380,15 +380,12 @@
                                                         {{candidate.party_name}}
                                                     </p>
                                                     <p>
-                                                        <span
-                                                            [style.background]="i === 0 ? getColor(candidate.party_name) : null"
-                                                            [ngStyle]="i === 0 ? {
-                                                            'font-weight': '700',
-                                                            'font-size': '1.5rem',
-                                                            'color': 'white',
-                                                            'border-radius': '10px',
-                                                            'padding':'0 10px',
-                                                        } : {}">
+                                                        <span class="score-highlight" *ngIf="i === 0"
+                                                            [style.background]="getColor(candidate.party_name)">
+                                                            คะแนน: {{ candidate.totalVotes | number }}
+                                                        </span>
+
+                                                        <span *ngIf="i !== 0">
                                                             คะแนน: {{ candidate.totalVotes | number }}
                                                         </span>
                                                     </p>
@@ -475,15 +472,12 @@
                                                             {{candidate.party_name}}
                                                         </p>
                                                         <p>
-                                                            <span
-                                                                [style.background]="i === 0 ? getColor(candidate.party_name) : null"
-                                                                [ngStyle]="i === 0 ? {
-                                                            'font-weight': '700',
-                                                            'font-size': '1.5rem',
-                                                            'color': 'white',
-                                                            'border-radius': '10px',
-                                                            'padding':'0 10px',
-                                                        } : {}">
+                                                            <span class="score-highlight" *ngIf="i === 0"
+                                                                [style.background]="getColor(candidate.party_name)">
+                                                                คะแนน: {{ candidate.totalVotes | number }}
+                                                            </span>
+
+                                                            <span *ngIf="i !== 0">
                                                                 คะแนน: {{ candidate.totalVotes | number }}
                                                             </span>
                                                         </p>

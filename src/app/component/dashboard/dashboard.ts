@@ -1786,7 +1786,7 @@ export class Dashboard implements OnInit {
   }
 
   // Data เขต
-  private handleDistrictClick(districtId: string) {
+  private async handleDistrictClick(districtId: string) {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !== 'show-province-all'
@@ -1821,14 +1821,14 @@ export class Dashboard implements OnInit {
     else {
       provinceName = this.allWinners[this.zoneId]?.provinceName;
     }
-    this.loadAndSetRegionSvg(provinceName);
+    await this.loadAndSetRegionSvg(provinceName);
 
     this.tooltipVisible = false;
     this.hideMagnifier();
     console.log('STACK_MODAL', this.STACK_MODAL);
   }
   // Data จังหวัด
-  private handleProvinceClick(provinceName: string) {
+  private async handleProvinceClick(provinceName: string) {
     if (
       this.STACK_MODAL.length === 0 ||
       this.STACK_MODAL[this.STACK_MODAL.length - 1].page !== 'show-province-all'
@@ -1837,7 +1837,7 @@ export class Dashboard implements OnInit {
         page: 'show-province-all',
       });
     }
-    console.log("handleProvinceClick : ", provinceName);
+    console.log("provinceName : ", provinceName);
     this.updateCurrentPageStates();
     this.detailDistrict = [];
     this.detailWinnerZonePerRegion = [];
@@ -1849,7 +1849,7 @@ export class Dashboard implements OnInit {
     this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
 
     this.onWinnerZoneByProvince(provinceName);
-    this.loadAndSetRegionSvg(provinceName);
+    await this.loadAndSetRegionSvg(provinceName);
     this.onWinnerPartyByProvince(provinceName);
     console.log('STACK_MODAL', this.STACK_MODAL);
   }
@@ -1946,7 +1946,7 @@ export class Dashboard implements OnInit {
       districtIds = Object.keys(this.allWinners);
     }
 
-    console.log('districtIds:', districtIds, this.allWinners, this.allWinnersParty);
+    // console.log('districtIds:', districtIds, this.allWinners, this.allWinnersParty);
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -2253,7 +2253,7 @@ export class Dashboard implements OnInit {
     if (!svg) return;
 
     const anyDistrict = svg.querySelector(
-      `g[data-province="${province}"]`
+      `g[data-province="${province.trim()}"]`
     ) as SVGGElement | null;
 
     if (!anyDistrict) return;

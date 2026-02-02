@@ -1967,7 +1967,12 @@ export class Dashboard implements OnInit {
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svg.style.display = 'block';
     svg.style.margin = '0 auto';
-    svg.style.height = '68vh';
+    if (this.isDesktopOnly()) {
+      svg.style.height = '68vh';
+    }else {
+
+      svg.style.height = '40vh';
+    }
 
     // Remove strokes
     const paths = svg.querySelectorAll('path');
@@ -2383,6 +2388,7 @@ export class Dashboard implements OnInit {
       return;
     }
     this.focusProvince(this.selectedProvince_Specific);
+    this.uiState.setReferendumLogoSmall(true);
     console.log('onSubmitFilter_Specific', this.selectedProvince_Specific, this.selectedZone_Specific);
 
   }

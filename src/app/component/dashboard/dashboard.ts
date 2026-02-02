@@ -367,308 +367,6 @@ export class Dashboard implements OnInit {
     }
   }
 
-  // async ngOnInit(): Promise<void> {
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     try {
-  //       this.partyColorMap = await firstValueFrom(
-  //         this._dashboard.getPartyColors()
-  //       );
-
-  //       this.winners = await firstValueFrom(
-  //         this._dashboard.getDistrictWinners()
-  //       );
-
-  //       const intervalId = setInterval(async () => {
-  //         console.log('intervalId');
-  //         this.winners = await firstValueFrom(
-  //           this._dashboard.getDistrictWinners()
-  //         );
-  //         if (
-  //           this.winners.candidates &&
-  //           Object.keys(this.winners.candidates).length > 0
-  //         ) {
-  //           this.zone.run(() => {
-  //             const totalVoteZone = document.getElementById(
-  //               'totalVoteZone'
-  //             ) as HTMLElement | null;
-  //             const totalVotePartylist = document.getElementById(
-  //               'totalVotePartylist'
-  //             ) as HTMLElement | null;
-  //             const percentZone = document.getElementById(
-  //               'percentZone'
-  //             ) as HTMLElement | null;
-  //             const percentPartylist = document.getElementById(
-  //               'percentPartylist'
-  //             ) as HTMLElement | null;
-  //             const updateDateEls =
-  //               document.getElementsByClassName('updateDate');
-  //             for (let i = 0; i < updateDateEls.length; i++) {
-  //               const el = updateDateEls[i] as HTMLElement;
-  //               el.innerText = this.formatTime(this.winners.updateDate);
-  //             }
-  //             if (totalVoteZone) {
-  //               totalVoteZone.innerText = `${this.formatTotalVotes(
-  //                 this.winners.totalVoteZone
-  //               )} | `;
-  //             }
-  //             if (totalVotePartylist) {
-  //               totalVotePartylist.innerText = `${this.formatTotalVotes(
-  //                 this.winners.totalVotePartylist
-  //               )} | `;
-  //             }
-
-  //             if (percentZone) {
-  //               percentZone.innerText = this.winners.percentZone;
-  //             }
-
-  //             if (percentPartylist) {
-  //               percentPartylist.innerText = this.winners.percentPartylist;
-  //             }
-
-  //             this.allWinners = this.winners.candidates;
-  //             firstValueFrom(
-  //               this.http.get('/assets/thailand.svg', {
-  //                 responseType: 'text',
-  //               })
-  //             ).then((svgText) => {
-  //               if (
-  //                 this.selectedDistric === '' &&
-  //                 this.detailPartyListPerPartyName.length === 0
-  //               ) {
-  //                 this.settingSvg(svgText, false);
-  //               }
-  //               this.cd.detectChanges();
-  //             });
-  //           });
-  //         }
-
-  //         if (
-  //           this.winners.candidates_party &&
-  //           Object.keys(this.winners.candidates_party).length > 0
-  //         ) {
-  //           this.allWinnersParty = this.winners.candidates_party;
-  //         }
-  //       }, 2000);
-
-  //       // console.log(winners);
-
-  //       if (
-  //         this.winners.candidates &&
-  //         Object.keys(this.winners.candidates).length > 0
-  //       ) {
-  //         this.allWinners = this.winners.candidates;
-
-  //         const totalVoteZone = document.getElementById(
-  //           'totalVoteZone'
-  //         ) as HTMLElement | null;
-  //         const totalVotePartylist = document.getElementById(
-  //           'totalVotePartylist'
-  //         ) as HTMLElement | null;
-  //         const updateDateEls = document.getElementsByClassName('updateDate');
-  //         for (let i = 0; i < updateDateEls.length; i++) {
-  //           const el = updateDateEls[i] as HTMLElement;
-  //           el.innerText = this.formatTime(this.winners.updateDate);
-  //         }
-
-  //         const percentZone = document.getElementById(
-  //           'percentZone'
-  //         ) as HTMLElement | null;
-  //         const percentPartylist = document.getElementById(
-  //           'percentPartylist'
-  //         ) as HTMLElement | null;
-  //         if (totalVoteZone) {
-  //           totalVoteZone.innerText = `${this.formatTotalVotes(
-  //             this.winners.totalVoteZone
-  //           )} | `;
-  //         }
-  //         if (totalVotePartylist) {
-  //           totalVotePartylist.innerText = `${this.formatTotalVotes(
-  //             this.winners.totalVotePartylist
-  //           )} | `;
-  //         }
-  //         if (percentZone) {
-  //           percentZone.innerText = this.winners.percentZone;
-  //         }
-
-  //         if (percentPartylist) {
-  //           percentPartylist.innerText = this.winners.percentPartylist;
-  //         }
-  //         const svgText = await firstValueFrom(
-  //           this.http.get('/assets/thailand.svg', { responseType: 'text' })
-  //         );
-  //         await this.settingSvg(svgText, true);
-  //       }
-
-  //       if (
-  //         this.winners.candidates_party &&
-  //         Object.keys(this.winners.candidates_party).length > 0
-  //       ) {
-  //         this.allWinnersParty = this.winners.candidates_party;
-  //       }
-
-  //       this.intervalId = intervalId;
-
-  //       // this._dashboard.winners$.subscribe((winners) => {
-  //       //   if (
-  //       //     winners.candidates &&
-  //       //     Object.keys(winners.candidates).length > 0
-  //       //   ) {
-  //       //     this.zone.run(() => {
-  //       //       const totalVoteZone = document.getElementById(
-  //       //         'totalVoteZone'
-  //       //       ) as HTMLElement | null;
-  //       //       const totalVotePartylist = document.getElementById(
-  //       //         'totalVotePartylist'
-  //       //       ) as HTMLElement | null;
-  //       //       const percentZone = document.getElementById(
-  //       //         'percentZone'
-  //       //       ) as HTMLElement | null;
-  //       //       const percentPartylist = document.getElementById(
-  //       //         'percentPartylist'
-  //       //       ) as HTMLElement | null;
-  //       //       const updateDateEls =
-  //       //         document.getElementsByClassName('updateDate');
-  //       //       for (let i = 0; i < updateDateEls.length; i++) {
-  //       //         const el = updateDateEls[i] as HTMLElement;
-  //       //         el.innerText = this.formatTime(winners.updateDate);
-  //       //       }
-  //       //       if (totalVoteZone) {
-  //       //         totalVoteZone.innerText = `${this.formatTotalVotes(
-  //       //           winners.totalVoteZone
-  //       //         )} | `;
-  //       //       }
-  //       //       if (totalVotePartylist) {
-  //       //         totalVotePartylist.innerText = `${this.formatTotalVotes(
-  //       //           winners.totalVotePartylist
-  //       //         )} | `;
-  //       //       }
-
-  //       //       if (percentZone) {
-  //       //         percentZone.innerText = winners.percentZone;
-  //       //       }
-
-  //       //       if (percentPartylist) {
-  //       //         percentPartylist.innerText = winners.percentPartylist;
-  //       //       }
-
-  //       //       this.allWinners = winners.candidates;
-  //       //       firstValueFrom(
-  //       //         this.http.get('/assets/thailand.svg', {
-  //       //           responseType: 'text',
-  //       //         })
-  //       //       ).then((svgText) => {
-  //       //         if (
-  //       //           this.selectedDistric === '' &&
-  //       //           this.detailPartyListPerPartyName.length === 0
-  //       //         ) {
-  //       //           this.settingSvg(svgText, false);
-  //       //         }
-  //       //         this.cd.detectChanges();
-  //       //       });
-  //       //     });
-  //       //   }
-
-  //       //   if (
-  //       //     winners.candidates_party &&
-  //       //     Object.keys(winners.candidates_party).length > 0
-  //       //   ) {
-  //       //     this.allWinnersParty = winners.candidates_party;
-  //       //   }
-  //       // });
-  //     } catch (error) {
-  //       console.error('Error loading data:', error);
-
-  //       const intervalId = setInterval(async () => {
-  //         console.log('intervalId');
-  //         this.winners = await firstValueFrom(
-  //           this._dashboard.getDistrictWinners()
-  //         );
-  //         if (
-  //           this.winners.candidates &&
-  //           Object.keys(this.winners.candidates).length > 0
-  //         ) {
-  //           this.zone.run(() => {
-  //             const totalVoteZone = document.getElementById(
-  //               'totalVoteZone'
-  //             ) as HTMLElement | null;
-  //             const totalVotePartylist = document.getElementById(
-  //               'totalVotePartylist'
-  //             ) as HTMLElement | null;
-  //             const percentZone = document.getElementById(
-  //               'percentZone'
-  //             ) as HTMLElement | null;
-  //             const percentPartylist = document.getElementById(
-  //               'percentPartylist'
-  //             ) as HTMLElement | null;
-  //             const updateDateEls =
-  //               document.getElementsByClassName('updateDate');
-  //             for (let i = 0; i < updateDateEls.length; i++) {
-  //               const el = updateDateEls[i] as HTMLElement;
-  //               el.innerText = this.formatTime(this.winners.updateDate);
-  //             }
-  //             if (totalVoteZone) {
-  //               totalVoteZone.innerText = `${this.formatTotalVotes(
-  //                 this.winners.totalVoteZone
-  //               )} | `;
-  //             }
-  //             if (totalVotePartylist) {
-  //               totalVotePartylist.innerText = `${this.formatTotalVotes(
-  //                 this.winners.totalVotePartylist
-  //               )} | `;
-  //             }
-
-  //             if (percentZone) {
-  //               percentZone.innerText = this.winners.percentZone;
-  //             }
-
-  //             if (percentPartylist) {
-  //               percentPartylist.innerText = this.winners.percentPartylist;
-  //             }
-
-  //             this.allWinners = this.winners.candidates;
-  //             firstValueFrom(
-  //               this.http.get('/assets/thailand.svg', {
-  //                 responseType: 'text',
-  //               })
-  //             ).then((svgText) => {
-  //               if (
-  //                 this.selectedDistric === '' &&
-  //                 this.detailPartyListPerPartyName.length === 0
-  //               ) {
-  //                 this.settingSvg(svgText, false);
-  //               }
-  //               this.cd.detectChanges();
-  //             });
-  //           });
-  //         }
-
-  //         if (
-  //           this.winners.candidates_party &&
-  //           Object.keys(this.winners.candidates_party).length > 0
-  //         ) {
-  //           this.allWinnersParty = this.winners.candidates_party;
-  //         }
-  //       }, 2000);
-
-  //       this.intervalId = intervalId;
-  //     }
-
-  //     this.partySeatCountsList = await firstValueFrom(
-  //       this._dashboard.getPartySeatCountsList()
-  //     );
-
-  //     this.mouseMoveSubject.subscribe((event: MouseEvent) => {
-  //       this.handleTooltipLogic(event);
-  //     });
-
-  //     this.checkScreenSize();
-  //   }
-  // }
-
-  // private delay(ms: number): Promise<void> {
-  //   return new Promise((resolve) => setTimeout(resolve, ms));
-  // }
-
   async settingSvg(svgText: string, doAnimation = true): Promise<void> {
     let districtIds = Object.keys(this.allWinners);
     const currentWinnersHash = JSON.stringify(this.allWinners);
@@ -756,15 +454,6 @@ export class Dashboard implements OnInit {
           path.style.setProperty('stroke-width', '0', 'important');
           g.setAttribute('data-party', this.allWinners[id].party || '');
 
-          // if (
-          //   this.selectedParty &&
-          //   this.allWinners[id].party !== this.selectedParty
-          // ) {
-          //   g.style.pointerEvents = 'none';
-          // } else {
-          //   g.style.pointerEvents = 'auto';
-          // }
-
           // Explicit pointer-events as BOTH style AND attribute for reliability
           const pointerEvents =
             !this.selectedParty ||
@@ -801,23 +490,6 @@ export class Dashboard implements OnInit {
     });
   }
 
-  // zoomIn() {
-  //   if (isPlatformBrowser(this.platformId) && this.zoomBehavior) {
-  //     d3.select(this.svgContainer.nativeElement)
-  //       .select('svg')
-  //       .transition()
-  //       .call(this.zoomBehavior.scaleBy as any, 1.5);
-  //   }
-  // }
-
-  // zoomOut() {
-  //   if (isPlatformBrowser(this.platformId) && this.zoomBehavior) {
-  //     d3.select(this.svgContainer.nativeElement)
-  //       .select('svg')
-  //       .transition()
-  //       .call(this.zoomBehavior.scaleBy as any, 0.5);
-  //   }
-  // }
 
   simmulateSvgClick(event: MouseEvent) {
     const target = event.target as SVGElement;
@@ -1329,59 +1001,12 @@ export class Dashboard implements OnInit {
       }
     }
     this.updateCurrentPageStates();
-    // this.clickOnPopup !== ''
-    //   ? ((this.selectedParty = this.clickOnPopup),
-    //     (this.clickOnPopup = ''),
-    //     (this.keepPartyListAndZoneSeat = ''))
-    //   : this.keepPartyListAndZoneSeat !== ''
-    //   ? ((this.selectedPartyListAndZoneSeat = this.keepPartyListAndZoneSeat),
-    //     (this.keepPartyListAndZoneSeat = ''))
-    //   : ((this.selectedParty = ''), (this.selectedPartyListAndZoneSeat = ''));
-    // this.getDataMapping;
-    // this.selectedDistric = '';
-    // this.selectedZoneSeat = '';
-    // this.selectedProvince = '';
-    // this.activeTab = 'district';
-    // this.partyName = '';
-    // this.detailWinnerZonePerProvince = [];
-    // this.detailWinnerPartyPerProvince = [];
-    // this.detailWinnerPartyPerRegion = [];
+
     this.tooltipVisible = false;
     this.hideMagnifier();
     this.hideTooltip();
     this.activeTab = 'district';
-    // const status = document.getElementsByClassName(
-    //   'status-container'
-    // )[0] as HTMLElement;
-    // const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
-    // if (img) {
-    //   img.style.marginLeft = '0px';
-    // }
-    // if (status) {
-    //   status.style.display = 'inline';
-    // }
-    // if (
-    //   this.allWinners &&
-    //   Object.keys(this.allWinners).length > 0 &&
-    //   this.selectedParty === '' &&
-    //   this.selectedPartyListAndZoneSeat === ''
-    // ) {
-    //   firstValueFrom(
-    //     this.http.get('/assets/thailand.svg', { responseType: 'text' })
-    //   )
-    //     .then((svgText) => {
-    //       this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgText);
-    //       return this.settingSvg(svgText, false);
-    //     })
-    //     .then(() => {
-    //       this.isMagnifierInitialized = false;
-    //       this.magnifierVisible = false;
-    //       this.cd.markForCheck();
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error loading SVG:', error);
-    //     });
-    // }
+
     console.log('STACK_MODAL', this.STACK_MODAL);
   }
 
@@ -1748,56 +1373,6 @@ export class Dashboard implements OnInit {
 
   }
   // Click Zone-Seat Page 2 (ส.ส.เขต) ----
-  // onClickZoneSeatPerParty(party: string) {
-  //   if (!this.isMappingComplete) {
-  //     return;
-  //   }
-  //   this.selectedZoneSeat = party;
-  //   this.clickOnPopup = this.selectedParty;
-  //   this.selectedParty = '';
-
-  //   this._dashboard.getWinnerZoneByPartyName(party).subscribe((data) => {
-  //     this.detailWinnerZonePerParty = data;
-  //     this.cd.markForCheck();
-  //   });
-  // }
-  // Click PartyList-Seat Page 2 (ส.ส.บัญชีรายชื่อ)  ----
-  // onpartySelectedCandidate(partyName: string) {
-  //   if (!this.isMappingComplete) {
-  //     return;
-  //   }
-  //   const status = document.getElementsByClassName(
-  //     'status-container'
-  //   )[0] as HTMLElement;
-  //   const img = document.getElementsByClassName('logo-image')[0] as HTMLElement;
-  //   if (img) {
-  //     img.style.marginLeft = '0px';
-  //   }
-  //   if (status) {
-  //     status.style.display = 'none';
-  //   }
-
-  //   if (partyName === 'ClickCount') {
-  //     partyName = this.selectedParty;
-  //     this.clickOnPopup = this.selectedParty;
-  //   }
-
-  //   this.partyName = partyName;
-  //   this.selectedParty = '';
-  //   this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
-  //     this.detailPartyListPerPartyName = data;
-  //     this.cd.markForCheck();
-  //   });
-  //   const selectedParty = this.partySeatCountsList.find(
-  //     (p) => p.partyName === partyName
-  //   );
-  //   this.partySeatCounts = selectedParty;
-  //   const party = Object.values(this.partyColorMap).find(
-  //     (p) => p.PARTY_NAME === this.partyName
-  //   );
-
-  //   this.partyBackgroundColor = party?.COLOR || '#fefdfd';
-  // }
   // Click เขต
   onClickDistrict(districtId: string) {
     // console.log('onClickDistrict---------------------');
@@ -1908,15 +1483,6 @@ export class Dashboard implements OnInit {
     });
 
     // // Process SVG และได้ SVG element ที่ process แล้ว
-    // const processedSvg = await this.processSvgForRegion(svgText);
-
-    // // Update UI
-    // this.zone.run(() => {
-    //   this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
-    //     processedSvg.outerHTML
-    //   );
-    //   this.cd.markForCheck();
-    // });
 
     setTimeout(() => {
       this.initPanzoom();
@@ -2022,10 +1588,6 @@ export class Dashboard implements OnInit {
       this.progress_party = data[0].progress;
       this.totalvoteZone_party = data[0].total_votes_in_area;
 
-      // this.provinceName = data[0].province;
-      // this.zoneName = data[0].zone;
-      // this.progress = data[0].progress;
-      // this.totalvoteZone = data[0].total_votes_in_area;
     });
   }
 
@@ -2107,10 +1669,6 @@ export class Dashboard implements OnInit {
 
       this.detailWinnerPartyPerProvince = Array.from(groupedMap.values());
 
-      // console.log(
-      //   'detailWinnerPartyPerProvince',
-      //   this.detailWinnerPartyPerProvince
-      // );
       this.cd.markForCheck();
       this.cd.detectChanges();
     });
@@ -2167,48 +1725,7 @@ export class Dashboard implements OnInit {
       this.cd.detectChanges();
     });
   }
-  // Data แสดงข้อมูล พรรค 2 อันดับแรก ของแต่ละจังหวัด BY Region
-  // private onWinnerPartyByRegion(region: string) {
-  //   this._dashboard.getWinnerPartyByRegionName(region).subscribe((data) => {
-  //     // console.log('onWinnerPartyByRegion', data);
-  //     const groupedMap = new Map<
-  //       string,
-  //       { Province: string; areaNo: number; parties: any[] }
-  //     >();
-
-  //     data.forEach((item: { provName: any; areaNo: any }) => {
-  //       const key = `${item.provName}-${item.areaNo}`;
-  //       if (!groupedMap.has(key)) {
-  //         groupedMap.set(key, {
-  //           Province: item.provName,
-  //           areaNo: item.areaNo,
-  //           parties: [],
-  //         });
-  //       }
-  //       groupedMap.get(key)!.parties.push(item);
-  //     });
-
-  //     this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
-
-  //     const resultSVG: { [id: string]: string } = {};
-
-  //     this.detailWinnerPartyPerRegion.forEach((area: { parties: any[] }) => {
-  //       const topParty = area.parties.find((p) => p.rank === 1);
-  //       if (topParty) {
-  //         resultSVG[topParty.DistricID] = topParty.partyName;
-  //       }
-  //     });
-
-  //     this.allWinnersParty = resultSVG;
-
-  //     console.log(
-  //       'detailWinnerPartyPerRegion',
-  //       this.detailWinnerPartyPerRegion,
-  //       resultSVG
-  //     );
-  //     this.cd.markForCheck();
-  //   });
-  // }
+  
   private onWinnerPartyByRegion(region: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this._dashboard.getWinnerPartyByRegionName(region).subscribe({
@@ -2240,19 +1757,7 @@ export class Dashboard implements OnInit {
 
           this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
 
-          // const resultSVG: { [id: string]: string } = {};
-
-          // this.detailWinnerPartyPerRegion.forEach(
-          //   (area: { parties: any[] }) => {
-          //     const topParty = area.parties.find((p) => p.rank === 1);
-          //     if (topParty) {
-          //       resultSVG[topParty.DistricID] = topParty.partyName;
-          //     }
-          //   }
-          // );
-
-          // this.allWinnersParty = resultSVG;
-
+        
           console.log(
             'detailWinnerPartyPerRegion',
             this.detailWinnerPartyPerRegion
@@ -2297,15 +1802,6 @@ export class Dashboard implements OnInit {
     this.onWinnerZoneByDistrict(this.selectedDistric);
     this.onWinnerPartyByDistrict(this.selectedDistric);
 
-    // this._dashboard
-    //   .getRankByDistrict(this.selectedDistric)
-    //   .subscribe((data) => {
-    //     this.detailDistrict = data;
-
-    //     this.provinceName = data[0].province;
-    //     this.zoneName = data[0].zone;
-    //     this.progress = data[0].progress;
-    //     this.totalvoteZone = data[0].total_votes_in_area;
     //   });
     let provinceName: any
     if (districtId === "oldData") {

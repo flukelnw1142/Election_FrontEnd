@@ -22,7 +22,7 @@
                         </div>
                     </button>
                 </div>
-                <div class="banner-left-container"
+                <!-- <div class="banner-left-container"
                     [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
                     <img *ngFor="let img of bannerLeftImages" [src]="img" class="logo-image" alt="Logo" />
                 </div>
@@ -33,23 +33,14 @@
                 <div class="banner-container"
                     [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
 
-                    <!-- wrapper สำหรับ animation -->
                     <div class="marquee-wrapper">
-                        <!-- duplicate ภาพทั้งหมด 2 ชุด -->
-                        <!-- <div class="marquee-content">
-                            <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
-                            <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
-                        </div> -->
                         <div class="marquee-content marquee-3x">
-                            <!-- ชุดที่ 1 -->
                             <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
-                            <!-- ชุดที่ 2 (duplicate) -->
                             <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
-                            <!-- ชุดที่ 3 (duplicate อีก) -->
                             <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="svg-container" [hidden]="selectDashboard !== 'dashboard'" #svgContainer
                     (mousemove)="onSvgMouseMove($event)" (pointerup)="onSvgSelect($event)">
                     <div class="thailand-map-wrapper">

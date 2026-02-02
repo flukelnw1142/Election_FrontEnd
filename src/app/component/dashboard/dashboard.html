@@ -47,6 +47,11 @@
                         <div #svgContainerAll [innerHTML]="svgContent"></div>
                     </div>
                 </div>
+                <div [hidden]="!isMobile">
+                    totalSeats
+                    <input type="text" [(ngModel)]="provinceNameInput" />
+                    <button (click)="focusProvince(provinceNameInput)">Focus Province</button>
+                </div>
                 <div *ngIf="selectDashboard === 'dashboard_2'">
                     <app-dashboard-v2 (partySelected)="onPartySelected($event)"></app-dashboard-v2>
                 </div>

@@ -44,6 +44,7 @@ import Swal from 'sweetalert2';
 import { UiStateService } from '../share/ui-state.service';
 import panzoom from "panzoom";
 import { ElectionService } from '../../service/election.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -59,6 +60,7 @@ import { ElectionService } from '../../service/election.service';
     DashboardScoreAndSeat,
     MatTooltipModule,
     MatTabsModule,
+    FormsModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -111,7 +113,7 @@ export class Dashboard implements OnInit {
   zoneId: any;
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
   @ViewChild('svgContainerRegion', { static: false })
-  svgContainerRegion!: ElementRef;
+  svgContainerRegion!: ElementRef<HTMLDivElement>;
   @ViewChild('magnifier', { static: false }) magnifier!: ElementRef;
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
   @ViewChild('zoneScroll') zoneScroll!: ElementRef;
@@ -123,6 +125,8 @@ export class Dashboard implements OnInit {
   currentIsShowParty: boolean = false;
   currentIsShowProvinceAll: boolean = false;
   currentIsShowPartylistAndDistrictPerParty: boolean = false;
+
+  provinceNameInput: string = 'ชลบุรี';
 
   STACK_MODAL: any[] = [
     {
@@ -163,6 +167,7 @@ export class Dashboard implements OnInit {
   totalvoteZone_party: number = 0;
   loading: boolean = false;
   isDesktop: boolean = true;
+  isMobile: boolean = false;
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
   private zoomGroup: any;
@@ -185,6 +190,7 @@ export class Dashboard implements OnInit {
 
   private checkScreenSize() {
     this.isDesktop = window.innerWidth > 820;
+    this.isMobile = window.innerWidth <= 768;
   }
 
   constructor(
@@ -307,6 +313,8 @@ export class Dashboard implements OnInit {
     } catch (error) {
       console.error('Error loading data:', error);
     }
+
+    // this.focusProvince(this.provinceNameInput)
   }
 
   ngAfterViewInit() {
@@ -852,6 +860,7 @@ export class Dashboard implements OnInit {
 
             const textContent = textElement?.textContent?.trim() || '';
 
+            console.log(textContent);
             // ✅ ถ้าเป็นตัวเลข (เลขล้วน) → ส่งต่อไปเข้าเงื่อนไข group/path ด้านล่าง
             if (/^\d+$/.test(textContent)) {
               // ไม่ return
@@ -1351,6 +1360,7 @@ export class Dashboard implements OnInit {
         this.zoneId = parent.getAttribute('id');
         this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
 
+        console.log('zoneId', this.zoneId);
         //CLICK-SVG
         this.handleDistrictClick(this.zoneId || '');
 
@@ -1364,6 +1374,7 @@ export class Dashboard implements OnInit {
         const provinceName = (target.textContent || '').trim();
         // const provinceId = target.id;
 
+        console.log('provinceName', provinceName);
         // this.activeTab = 'district';
         this.handleProvinceClick(provinceName);
         this.clickOnPopup = this.selectedParty;
@@ -1725,7 +1736,7 @@ export class Dashboard implements OnInit {
       this.cd.detectChanges();
     });
   }
-  
+
   private onWinnerPartyByRegion(region: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this._dashboard.getWinnerPartyByRegionName(region).subscribe({
@@ -1757,7 +1768,7 @@ export class Dashboard implements OnInit {
 
           this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
 
-        
+
           console.log(
             'detailWinnerPartyPerRegion',
             this.detailWinnerPartyPerRegion
@@ -1826,6 +1837,7 @@ export class Dashboard implements OnInit {
         page: 'show-province-all',
       });
     }
+    console.log("handleProvinceClick : ", provinceName);
     this.updateCurrentPageStates();
     this.detailDistrict = [];
     this.detailWinnerZonePerRegion = [];
@@ -1870,9 +1882,16 @@ export class Dashboard implements OnInit {
           this.cd.markForCheck();
         });
 
+        // setTimeout(() => {
+        //   this.initPanzoom();
+        //   // this.loading_tab2 = false
+        // }, 0);
         setTimeout(() => {
           this.initPanzoom();
-          // this.loading_tab2 = false
+
+          if (this.isMobile) {
+            this.focusProvinceOnMobile(province);
+          }
         }, 0);
       }
     } catch (error) {
@@ -2219,8 +2238,60 @@ export class Dashboard implements OnInit {
 
   }
 
+  focusProvince(provinceName: string) {
+    this.handleProvinceClick(provinceName);
+  }
+
+  private focusProvinceOnMobile(province: string) {
+    console.log('focusProvinceOnMobile:', province);
+    if (!this.isMobile) return;
+
+    const container = this.svgContainerRegion?.nativeElement;
+    if (!container) return;
+
+    const svg = container.querySelector('svg') as SVGSVGElement | null;
+    if (!svg) return;
+
+    const anyDistrict = svg.querySelector(
+      `g[data-province="${province}"]`
+    ) as SVGGElement | null;
+
+    if (!anyDistrict) return;
+
+    const provinceGroup = anyDistrict.closest(
+      'g[id^="province-"]'
+    ) as SVGGElement | null;
+
+    if (!provinceGroup) return;
+
+    const bbox = provinceGroup.getBBox();
+    const padding = 20;
+
+    svg.setAttribute(
+      'viewBox',
+      `${bbox.x - padding} ${bbox.y - padding}
+     ${bbox.width + padding * 2} ${bbox.height + padding * 2}`
+    );
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+    this.lockOtherProvinces(svg, provinceGroup.id);
+  }
 
 
+
+  lockOtherProvinces(svg: SVGSVGElement, activeGroupId: string) {
+    const allProvinceGroups = svg.querySelectorAll('g[id^="province-"], g[id$="_id"]');
+
+    allProvinceGroups.forEach((g: any) => {
+      if (g.id !== activeGroupId) {
+        g.style.opacity = '0';
+        g.style.pointerEvents = 'none';
+      } else {
+        g.style.opacity = '1';
+        g.style.pointerEvents = 'auto';
+      }
+    });
+  }
 
 }
 

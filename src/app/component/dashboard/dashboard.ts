@@ -2503,26 +2503,22 @@ export class Dashboard implements OnInit {
     this.selectedProvince_Specific = province;
 
     this.provinceCtrl_Specific.setValue('');
-    console.log(!this.provinces.find(p => p.provinceName === province).hasLeader)
+    // console.log(this.provinces.find(p => p.provinceName === province).hasLeader)
     if (!this.provinces.find(p => p.provinceName === province).hasLeader) {
       this.sweetAlertService.showAlert(
         'แจ้งเตือน',
         'ยังไม่พบคะแนน',
-        // 'ยังไม่มีผลคะแนน ในจังหวัดนี้',
         'info'
       ); return;
     }
+
 
     // 🔥 ค้นหาทันที
     this.triggerProvinceSearch(province);
   }
 
-  private lastSearchedProvince = '';
 
   private triggerProvinceSearch(province: string) {
-    if (this.lastSearchedProvince === province) return;
-
-    this.lastSearchedProvince = province;
 
     this.focusProvince(province);
     this.uiState.setReferendumLogoSmall(true);

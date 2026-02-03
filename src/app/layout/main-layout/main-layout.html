@@ -86,14 +86,8 @@
     </div>
 </div> -->
 
-
-<!-- <div class="source-label" [style.bottom]="isMainPage && is768 ? '70px' : '10px'">
-    {{dataSourceLabel }} 
-    ผลคะแนนจาก <span id="resultFrom" ></span>
-</div> -->
-
-<div class="source-label" [style.bottom]="isMainPage && is768 ? '70px' : '10px'" *ngIf="is_certified || !isReferendumPage">
-
+<div class="source-label" [class.top]="!isDesktop"
+ *ngIf="(is_certified || !isReferendumPage) ">
     <!-- หน้าแรก -->
     <ng-container *ngIf="isReferendumPage">
         ผลคะแนนจาก กกต.
@@ -102,11 +96,4 @@
     <ng-container *ngIf="!isReferendumPage">
         ผลคะแนนจาก {{ dataSourceLabel }}
     </ng-container>
-
-    <!-- อีกหน้า -->
-    <!-- <ng-template #resultFromBlock>
-        {{ dataSourceLabel }}
-        <span id="resultFrom"></span>
-    </ng-template> -->
-
 </div>

@@ -3503,11 +3503,11 @@
     fill="#fff"
     id="circle-500"
   />
-  <text x="490" y="370" text-anchor="middle" font-size="30" fill="#000">
+  <text x="460" y="370" text-anchor="middle" font-size="30" fill="#000">
     รวม ส.ส.
   </text>
   <text
-    x="450"
+    x="460"
     y="415"
     text-anchor="middle"
     font-size="50"
@@ -3515,7 +3515,7 @@
   >
     500
   </text>
-  <text x="500" y="450" text-anchor="middle" font-size="30" fill="#000">
+  <text x="460" y="450" text-anchor="middle" font-size="30" fill="#000">
     ที่นั่ง
   </text>
 </svg>

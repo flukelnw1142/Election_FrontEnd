@@ -65,8 +65,8 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="svg-container" [hidden]="selectDashboard !== 'dashboard' || (!isDesktopOnly() && !isIpad)" #svgContainer
-                    (mousemove)="onSvgMouseMove($event)" (pointerup)="onSvgSelect($event)">
+                <div class="svg-container" [hidden]="selectDashboard !== 'dashboard' || (!isDesktopOnly() && !isIpad)"
+                    #svgContainer (mousemove)="onSvgMouseMove($event)" (pointerup)="onSvgSelect($event)">
                     <div class="thailand-map-wrapper">
                         <div #svgContainerAll [innerHTML]="svgContent"></div>
                     </div>
@@ -653,7 +653,7 @@
                                     <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
                                         (error)="onImgError($event)" alt="avatarURL">
                                     <div>
-                                        <p style="font-size: 1.3rem;">{{ candidate.fullname }}</p>
+                                        <p class="fullname">{{ candidate.fullname }}</p>
                                         <p
                                             style="font-weight: 300; color: rgb(199, 199, 199); padding-top: 5px; padding-bottom: 5px;">
                                             <span class="no">เบอร์ {{candidate.no}}</span> {{

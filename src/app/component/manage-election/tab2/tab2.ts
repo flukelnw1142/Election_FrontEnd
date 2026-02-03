@@ -211,6 +211,8 @@ export class Tab2 {
       areaNo: zoneId,
     };
 
+    console.log("jsonData", jsonData);
+
     // this.onToggleChange();
     this._Tab2.genElectionByProviceAndZone(jsonData).subscribe({
       next: (res) => {
@@ -287,11 +289,13 @@ export class Tab2 {
           const payload = {
             ProvinceName: this.selectedProvince_Province
           };
+          console.log("payload", payload)
           return this._Tab2.genElectionByProviceAndZone(payload);
         })
       )
       .subscribe({
         next: (res) => {
+          console.log('Province auto data received', res);
           this.responseJsonProvince_auto$.next(
             JSON.stringify(res.data, null, 2)
           );

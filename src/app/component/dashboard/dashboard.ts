@@ -2471,7 +2471,7 @@ export class Dashboard implements OnInit {
     this._Tab2.getProvince().subscribe({
       next: (res) => {
         this.provinces = res.data;
-        console.log("this.provinces :", this.provinces);
+        // console.log("this.provinces :", this.provinces);
 
         this.cd.detectChanges();
       },

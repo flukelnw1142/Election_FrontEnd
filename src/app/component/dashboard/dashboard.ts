@@ -321,6 +321,7 @@ export class Dashboard implements OnInit {
                 this.winners = res.data;
                 this.updateWinnerUI(this.winners);
                 this.loadSvgIfNeeded();
+                this.getProvince();
               });
             }
           },
@@ -1385,7 +1386,7 @@ export class Dashboard implements OnInit {
   // Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
 
-    if(this.isIpad){
+    if (this.isIpad) {
       return;
     }
 
@@ -2425,7 +2426,7 @@ export class Dashboard implements OnInit {
     this._Tab2.getProvince().subscribe({
       next: (res) => {
         this.provinces = res.data;
-        console.log("this.provinces :");
+        console.log("this.provinces :", this.provinces);
 
         this.cd.detectChanges();
       },
@@ -2455,6 +2456,17 @@ export class Dashboard implements OnInit {
   onProvinceSelected_Specific(event: MatAutocompleteSelectedEvent) {
     const province = event.option.value;
     this.selectedProvince_Specific = province;
+
+    this.provinceCtrl_Specific.setValue('');
+    console.log(!this.provinces.find(p => p.provinceName === province).hasLeader)
+    if (!this.provinces.find(p => p.provinceName === province).hasLeader) {
+      this.sweetAlertService.showAlert(
+        'แจ้งเตือน',
+        'ยังไม่พบคะแนน',
+        // 'ยังไม่มีผลคะแนน ในจังหวัดนี้',
+        'info'
+      ); return;
+    }
 
     // 🔥 ค้นหาทันที
     this.triggerProvinceSearch(province);

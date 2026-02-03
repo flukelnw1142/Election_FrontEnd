@@ -125,9 +125,17 @@ export class MainLayout {
   }
 
   referendum(): void {
-    console.log('Navigating to referendum page...');
-    this.router.navigate(['/referendum']);
+
+    if (this.isReferendumPage && !this.isDesktopOnly()) {
+      console.log('Going back to dashboard...');
+      this.router.navigate(['/dashboard']);
+    } else {
+      console.log('Navigating to referendum page...');
+      this.router.navigate(['/referendum']);
+    }
+
   }
+
 
   onCliclkLogo(): void {
     this.router.navigate(['/dashboard']);

@@ -1688,7 +1688,7 @@ export class Dashboard implements OnInit {
         // this.detailWinnerZonePerProvince = data;
 
         const grouped = new Map<string, any[]>();
-        for (const candidate of data) {
+        for (const candidate of data.data) {
           const key = `${candidate.province}/${candidate.zone}/${candidate.districtId}`;
           if (!grouped.has(key)) {
             grouped.set(key, []);

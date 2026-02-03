@@ -27,4 +27,16 @@ export class Tab2Service {
     return this._http.post<any>(`${this.baseUrl}/DistrictElectionResults/gen-district-election-results`, req);
   }
 
+
+  disconnect() {
+    this._http.get(
+      `${this.baseUrl}/DistrictElectionResults/stream-district-election-results-random`,
+      {
+        params: { auto_time: 1, is_enabled: false }
+      }
+    ).subscribe({
+      next: () => console.log('Auto disabled'),
+      error: err => console.error('Disable auto failed', err)
+    });
+  }
 }

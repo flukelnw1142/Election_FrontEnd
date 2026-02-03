@@ -99,6 +99,8 @@ export class Tab2 {
 
   zonesInProvince2: any[] = [];
 
+  private zoneIndex = 0;
+
   constructor(
     private _Tab2: Tab2Service,
     private cdr: ChangeDetectorRef,
@@ -258,6 +260,7 @@ export class Tab2 {
 
     this.eventSourceAll.onmessage = (event) => {
       try {
+        console.log('SSE Message received:', event);
         const data = JSON.parse(event.data);
         const pretty = JSON.stringify(data, null, 2);
         this.responseJsonAll_auto$.next(pretty);
@@ -274,6 +277,38 @@ export class Tab2 {
       }
     };
   }
+  // private startStreaming_Province_Auto() {
+  //   if (!this.selectedProvince_Province) {
+  //     console.warn('No province selected');
+  //     return;
+  //   }
+
+  //   // กันซ้ำ
+  //   this.disconnectProvinceStream();
+
+  //   this.provinceAutoSub = interval(this.timeAuto_Province * 1000)
+  //     .pipe(
+  //       switchMap(() => {
+  //         const payload = {
+  //           ProvinceName: this.selectedProvince_Province
+  //         };
+  //         console.log("payload", payload)
+  //         return this._Tab2.genElectionByProviceAndZone(payload);
+  //       })
+  //     )
+  //     .subscribe({
+  //       next: (res) => {
+  //         console.log('Province auto data received', res);
+  //         this.responseJsonProvince_auto$.next(
+  //           JSON.stringify(res.data, null, 2)
+  //         );
+  //       },
+  //       error: (err) => {
+  //         console.error('Province auto error', err);
+  //       }
+  //     });
+  // }
+
   private startStreaming_Province_Auto() {
     if (!this.selectedProvince_Province) {
       console.warn('No province selected');
@@ -286,8 +321,17 @@ export class Tab2 {
     this.provinceAutoSub = interval(this.timeAuto_Province * 1000)
       .pipe(
         switchMap(() => {
+          const zone = this.zonesInProvince_Province[this.zoneIndex]?.zone || 0;
+
+          this.zoneIndex++;
+          if (this.zoneIndex >= this.zonesInProvince_Province.length) {
+            this.zoneIndex = 0;
+          }
+
+          console.log('Auto selected province:', this.zonesInProvince_Province, 'zone:', zone);
           const payload = {
-            ProvinceName: this.selectedProvince_Province
+            ProvinceName: this.selectedProvince_Province,
+            areaNo: zone
           };
           console.log("payload", payload)
           return this._Tab2.genElectionByProviceAndZone(payload);
@@ -310,6 +354,7 @@ export class Tab2 {
       this.eventSourceAll.close();
       this.eventSourceAll = null;
       this.responseJsonAll_auto$.next('');
+      this._Tab2.disconnect();
       console.log('All SSE Disconnected');
     }
   }

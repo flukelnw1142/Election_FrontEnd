@@ -150,7 +150,7 @@
       </g>
       <g id="PTE_name" style="cursor: pointer;">
         <rect x="329" y="299" width="102" height="35" rx="4"  fill="transparent"></rect>
-        <text x="380" y="326" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ปทุมธานี</text>
+        <text x="400" y="326" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ปทุมธานี</text>
       </g>
     </g>
 
@@ -338,7 +338,7 @@
       </g>
       <g id="SKN_name" style="cursor: pointer;">
         <rect x="395.5" y="735" width="128" height="35" rx="4"  fill="transparent"></rect>
-        <text x="459" y="760" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สมุทรสาคร</text>
+        <text x="480" y="760" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สมุทรสาคร</text>
       </g>
     </g>
 
@@ -346,14 +346,14 @@
     <g id="province-75">
       <g id="SKM_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_43">
-          <circle cx="340" cy="714" r="18" fill="rgb(146 146 157 / 23%)"/>
-          <text x="340" y="720" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+          <circle cx="330" cy="714" r="18" fill="rgb(146 146 157 / 23%)"/>
+          <text x="330" y="720" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
 
         </g>
       </g>
       <g id="SKM_name" style="cursor: pointer;">
         <rect x="235" y="660" width="156" height="35" rx="4"  fill="transparent"></rect>
-        <text x="313" y="687" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สมุทรสงคราม</text>
+        <text x="330" y="687" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สมุทรสงคราม</text>
       </g>
     </g>
 
@@ -409,7 +409,7 @@
       </g>
       <g id="SPK_name" style="cursor: pointer;">
         <rect x="481.5" y="460" width="154" height="35" rx="4"  fill="transparent"></rect>
-        <text x="558" y="487" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สมุทรปราการ</text>
+        <text x="580" y="487" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สมุทรปราการ</text>
       </g>
     </g>
 
@@ -462,7 +462,7 @@
       </g>
       <g id="NYK_name" style="cursor: pointer;">
         <rect x="483.5" y="380" width="116" height="35" rx="4"  fill="transparent"></rect>
-        <text x="541" y="407" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">นครนายก</text>
+        <text x="560" y="407" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">นครนายก</text>
       </g>
     </g>
 
@@ -561,25 +561,25 @@
     <g id="province-76">
       <g id="PBI_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_70">
-          <circle cx="60" cy="435" r="18" fill="rgb(146 146 157 / 23%)"/>
-          <text x="60" y="441" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+          <circle cx="40" cy="435" r="18" fill="rgb(146 146 157 / 23%)"/>
+          <text x="40" y="441" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="PBI_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_71">
-          <circle cx="100" cy="395" r="18" fill="rgb(146 146 157 / 23%)"/>
-          <text x="100" y="401" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+          <circle cx="80" cy="395" r="18" fill="rgb(146 146 157 / 23%)"/>
+          <text x="80" y="401" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="PBI_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_72">
-          <circle cx="60" cy="395" r="18" fill="rgb(146 146 157 / 23%)"/>
-          <text x="60" y="401" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+          <circle cx="40" cy="395" r="18" fill="rgb(146 146 157 / 23%)"/>
+          <text x="40" y="401" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
       <g id="PBI_name" style="cursor: pointer;">
         <rect x="20" y="340" width="94" height="35" rx="4"  fill="transparent"></rect>
-        <text x="66" y="367" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">เพชรบุรี</text>
+        <text x="63" y="367" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">เพชรบุรี</text>
       </g>
     </g>
 
@@ -587,20 +587,20 @@
     <g id="province-77">
       <g id="PKN_3" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_73">
-          <circle cx="200" cy="735" r="18" fill="rgb(146 146 157 / 23%)"/>
-          <text x="200" y="740" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
+          <circle cx="170" cy="735" r="18" fill="rgb(146 146 157 / 23%)"/>
+          <text x="170" y="740" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">3</text>
         </g>
       </g>
       <g id="PKN_2" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_74">
-          <circle cx="200" cy="695" r="18" fill="rgb(146 146 157 / 23%)"/>
-          <text x="200" y="700" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
+          <circle cx="170" cy="695" r="18" fill="rgb(146 146 157 / 23%)"/>
+          <text x="170" y="700" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">2</text>
         </g>
       </g>
       <g id="PKN_1" style="pointer-events: all; cursor: pointer; transform: scale(1);">
         <g id="text_75">
-          <circle cx="200" cy="655" r="18" fill="rgb(146 146 157 / 23%)"/>
-          <text x="200" y="660" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
+          <circle cx="170" cy="655" r="18" fill="rgb(146 146 157 / 23%)"/>
+          <text x="170" y="660" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
         </g>
       </g>
       <g id="PKN_name" style="cursor: pointer;">

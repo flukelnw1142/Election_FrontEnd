@@ -31,7 +31,7 @@
 <text x="422" y="1066" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
 </g></g>
 <g id="NWT_name" style="cursor: pointer;"><rect x="370.5" y="1005" width="110" height="35" rx="4" fill="transparent"></rect>
-<text x="425" y="1030 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">นราธิวาส</text>
+<text x="430" y="1030 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">นราธิวาส</text>
 </g></g>
 
 <g id="province-95">
@@ -87,7 +87,7 @@
 <text x="321" y="926" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFFBF8">1</text>
 </g></g>
 <g id="PTN_name" style="cursor: pointer;"><rect x="283" y="865" width="88" height="35" rx="4" fill="transparent"></rect>
-<text x="326" y="890 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ปัตตานี</text>
+<text x="345" y="890 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ปัตตานี</text>
 </g></g>
 
 <g id="province-93">
@@ -185,7 +185,7 @@
 </g></g>
 
 <g id="STN_name" style="cursor: pointer;"><rect x="44" y="745" width="59" height="35" rx="4" fill="transparent"></rect>
-<text x="74" y="770 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สตูล</text>
+<text x="80" y="770 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สตูล</text>
 </g></g>
 
 <g id="province-92">
@@ -237,7 +237,7 @@
 </g></g>
 
 <g id="PKT_name" style="cursor: pointer;"><rect x="25" y="605" width="66" height="35" rx="4" fill="transparent"></rect>
-<text x="58" y="630 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ภูเก็ต</text>
+<text x="65" y="630 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ภูเก็ต</text>
 </g></g>
 
 <g id="province-80">
@@ -296,7 +296,7 @@
 </g></g>
 
 <g id="NST_name" style="cursor: pointer;"><rect y="425" width="182" height="35" rx="4" fill="transparent"></rect>
-<text x="92" y="450 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">นครศรีธรรมราช</text>
+<text x="140" y="450 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">นครศรีธรรมราช</text>
 </g></g>
 
 <g id="province-82">
@@ -336,7 +336,7 @@
 </g></g>
 
 <g id="KBI_name" style="cursor: pointer;"><rect x="19.5" y="265" width="66" height="35" rx="4" fill="transparent"></rect>
-<text x="53" y="293 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">กระบี่</text>
+<text x="70" y="293 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">กระบี่</text>
 </g></g>
 
 <g id="province-84">
@@ -383,7 +383,7 @@
 </g></g>
 
 <g id="SNI_name" style="cursor: pointer;"><rect x="49.5" y="145" width="141" height="35" rx="4" fill="transparent"></rect>
-<text x="120" y="170 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สุราษฎร์ธานี</text>
+<text x="140" y="170 " text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สุราษฎร์ธานี</text>
 </g></g>
 
 <g id="province-85">
@@ -394,7 +394,7 @@
 </g></g>
 
 <g id="RNG_name" style="cursor: pointer;"><rect x="111" y="45" width="77" height="35" rx="4" fill="transparent"></rect>
-<text x="150" y="70" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ระนอง</text>
+<text x="160" y="70" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ระนอง</text>
 </g></g>
 
 <g id="province-86">

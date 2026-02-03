@@ -104,7 +104,7 @@
 
       <g id="KPT_name" style="cursor: pointer;">
         <rect x="56" y="499" width="136" height="35" rx="4" fill="transparent"></rect>
-        <text x="124" y="527" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">กำแพงเพชร</text>
+        <text x="150" y="527" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">กำแพงเพชร</text>
       </g>
     </g>
 
@@ -208,7 +208,7 @@
       </g>
       <g id="STI_name" style="cursor: pointer;">
         <rect x="253.5" y="360" width="80" height="35" rx="4" fill="transparent"></rect>
-        <text x="293" y="386" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สุโขทัย</text>
+        <text x="305" y="386" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">สุโขทัย</text>
       </g>
     </g>
 
@@ -321,7 +321,7 @@
       </g>
       <g id="LPN_name" style="cursor: pointer;">
         <rect x="298.5" y="180" width="75" height="35" rx="4" fill="transparent"></rect>
-        <text x="336" y="206" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ลำพูน</text>
+        <text x="345" y="206" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ลำพูน</text>
       </g>
     </g>
 
@@ -353,7 +353,7 @@
       </g>
       <g id="LPG_name" style="cursor: pointer;">
         <rect x="412" y="121" width="80" height="35" rx="4" fill="transparent"></rect>
-        <text x="451" y="150" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ลำปาง</text>
+        <text x="465" y="150" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">ลำปาง</text>
       </g>
     </g>
 
@@ -373,7 +373,7 @@
       </g>
       <g id="MSN_name" style="cursor: pointer;">
         <rect y="240" width="127" height="35" rx="4" fill="transparent"></rect>
-        <text x="64" y="270" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">แม่ฮ่องสอน</text>
+        <text x="80" y="270" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">แม่ฮ่องสอน</text>
       </g>
     </g>
 
@@ -425,7 +425,7 @@
       </g>
       <g id="PYO_name" style="cursor: pointer;">
         <rect x="542.5" y="60" width="75" height="35" rx="4" fill="transparent"></rect>
-        <text x="580" y="90" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">พะเยา</text>
+        <text x="585" y="90" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">พะเยา</text>
       </g>
     </g>
 
@@ -520,7 +520,7 @@
       </g>
       <g id="CMI_name" style="cursor: pointer;">
         <rect x="119" y="100" width="103" height="35" rx="4" fill="transparent"></rect>
-        <text x="170" y="125" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">เชียงใหม่</text>
+        <text x="210" y="125" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">เชียงใหม่</text>
       </g>
     </g>
 
@@ -570,7 +570,7 @@
       </g>
       <g id="CRI_name" style="cursor: pointer;">
         <rect x="288" width="100" height="35" rx="4" fill="transparent"></rect>
-        <text x="339" y="25" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">เชียงราย</text>
+        <text x="345" y="25" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">เชียงราย</text>
       </g>
     </g>
   </g>

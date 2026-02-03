@@ -95,14 +95,14 @@
                         </div> -->
                     </div>
                 </div>
-                <div *ngIf="selectDashboard === 'dashboard_2'">
+                <div *ngIf="selectDashboard === 'dashboard_2'" >
                     <app-dashboard-v2 (partySelected)="onPartySelected($event)"></app-dashboard-v2>
                 </div>
             </div>
         </div>
 
         <!-- Toggle Button -->
-        <button class="toggle-panel-btn" (click)="toggleScorePanel()">
+        <button class="toggle-panel-btn" (click)="toggleScorePanel()" [hidden]="!isDesktopOnly()">
             <mat-icon>
                 {{ show_dashboard_score_and_seat_Panel ? 'chevron_right' : 'chevron_left' }}
             </mat-icon>

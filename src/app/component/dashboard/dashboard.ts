@@ -1441,7 +1441,6 @@ export class Dashboard implements OnInit {
         const provinceName = (target.textContent || '').trim();
         // const provinceId = target.id;
 
-        console.log('provinceName', provinceName);
         // this.activeTab = 'district';
         this.handleProvinceClick(provinceName);
         this.clickOnPopup = this.selectedParty;
@@ -1499,6 +1498,15 @@ export class Dashboard implements OnInit {
           if (provinceName) {
             // this.activeTab = 'district';
             console.log("provinceName : ", provinceName);
+
+            console.log(!this.provinces.find(p => p.provinceName === provinceName).hasLeader)
+            if (!this.provinces.find(p => p.provinceName === provinceName).hasLeader) {
+              this.sweetAlertService.showAlert(
+                'แจ้งเตือน',
+                'ยังไม่พบคะแนน',
+                'info'
+              ); return;
+            }
 
             this.handleProvinceClick(provinceName);
           }
@@ -2019,6 +2027,20 @@ export class Dashboard implements OnInit {
       districtIds = Object.keys(this.allWinners);
     }
 
+    svg.querySelectorAll('g[id]').forEach(g => {
+      const id = g.id;
+
+      // pattern: ABC_123
+      const isDistrict = /^[A-Z]{3}_\d+$/.test(id);
+
+      if (isDistrict) {
+        (g as SVGGElement).style.pointerEvents = 'none';
+        g.setAttribute('pointer-events', 'none');
+      }
+    });
+
+
+
     // console.log('districtIds:', districtIds, this.allWinners, this.allWinnersParty);
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
@@ -2089,14 +2111,17 @@ export class Dashboard implements OnInit {
           );
 
           // // Explicit pointer-events as BOTH style AND attribute for reliability
-          const pointerEvents =
-            !this.selectedParty ||
-              this.allWinners[id].party === this.selectedParty
-              ? 'auto'
-              : 'none';
-          g.style.pointerEvents = pointerEvents;
-          g.setAttribute('pointer-events', pointerEvents);
+          // const pointerEvents =
+          //   !this.selectedParty ||
+          //     this.allWinners[id].party === this.selectedParty
+          //     ? 'auto'
+          //     : 'none';
+          // g.style.pointerEvents = pointerEvents;
+          // g.setAttribute('pointer-events', pointerEvents);
+          g.style.pointerEvents = 'auto';
+          g.setAttribute('pointer-events', 'auto');
         }
+
       }
     }
 

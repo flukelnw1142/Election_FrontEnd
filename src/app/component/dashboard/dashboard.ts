@@ -183,6 +183,7 @@ export class Dashboard implements OnInit {
   loading: boolean = false;
   isDesktop: boolean = true;
   isMobile: boolean = false;
+  isIpad: boolean = false;
   private isMagnifierInitialized = false;
   private clonedSvg: SVGSVGElement | null = null;
   private zoomGroup: any;
@@ -206,6 +207,7 @@ export class Dashboard implements OnInit {
   private checkScreenSize() {
     this.isDesktop = window.innerWidth > 820;
     this.isMobile = window.innerWidth <= 768;
+    this.isIpad = window.innerWidth > 768 && window.innerWidth <= 820;
   }
 
   constructor(
@@ -447,7 +449,6 @@ export class Dashboard implements OnInit {
       p.style.stroke = 'none';
     });
 
-    const startTime = performance.now();
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -511,8 +512,8 @@ export class Dashboard implements OnInit {
               this.allWinners[id].party === this.selectedParty
               ? 'auto'
               : 'none';
-          g.style.pointerEvents = pointerEvents;
-          g.setAttribute('pointer-events', pointerEvents);
+          g.style.pointerEvents = this.isIpad ? 'none' : pointerEvents;
+          g.setAttribute('pointer-events', this.isIpad ? 'none' : pointerEvents);
 
           if (
             doAnimation &&
@@ -520,13 +521,11 @@ export class Dashboard implements OnInit {
               this.allWinners[id].party === this.selectedParty)
           ) {
             path.classList.add('animated-path');
-            // await this.delay(1);
           }
         }
       }
     }
 
-    const endTime = performance.now();
 
     this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg.outerHTML);
     this.isMappingComplete = true;
@@ -1385,6 +1384,10 @@ export class Dashboard implements OnInit {
   }
   // Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
+
+    if(this.isIpad){
+      return;
+    }
 
     this.detailDistrict = [];
 

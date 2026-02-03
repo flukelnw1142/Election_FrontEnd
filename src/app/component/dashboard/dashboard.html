@@ -5,7 +5,7 @@
     <div class="row h-100 align-items-stretch">
         <div class="col-12 d-flex" [ngClass]="show_dashboard_score_and_seat_Panel ? 'col-md-7' : 'col-md-12'">
             <div class="glass-card flex-fill" style="height: auto;">
-                <div class="button-container" [hidden]="!isDesktopOnly()">
+                <div class="button-container" [hidden]="!isDesktopOnly() && !isIpad">
                     <button class="btn-change" (click)="changeSvg('dashboard')" style="width: 52px;"
                         [class.active]="selectDashboard === 'dashboard'">
                         <div class="icon-text-container">
@@ -22,32 +22,7 @@
                         </div>
                     </button>
                 </div>
-                <!-- <div class="banner-left-container"
-                    [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
-                    <img *ngFor="let img of bannerLeftImages" [src]="img" class="logo-image" alt="Logo" />
-                </div>
-                <div class="banner-right-container"
-                    [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
-                    <img *ngFor="let img of bannerRigthtImages" [src]="img" class="logo-image" alt="Logo" />
-                </div>
-                <div class="banner-container"
-                    [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
-
-                    <div class="marquee-wrapper">
-                        <div class="marquee-content marquee-3x">
-                            <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
-                            <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
-                            <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
-                        </div>
-                    </div>
-                </div> -->
-                <div class="svg-container" [hidden]="selectDashboard !== 'dashboard' || !isDesktopOnly()" #svgContainer
-                    (mousemove)="onSvgMouseMove($event)" (pointerup)="onSvgSelect($event)">
-                    <div class="thailand-map-wrapper">
-                        <div #svgContainerAll [innerHTML]="svgContent"></div>
-                    </div>
-                </div>
-                <div [hidden]="isDesktopOnly()" class="mobile-filter">
+                <div [hidden]="isDesktopOnly()" class="mobile-filter" [class.ipad-filter]="isIpad">
                     <!-- ค้นหาจังหวัด -->
                     <div class="filter-row d-flex">
                         <!-- จังหวัด -->
@@ -69,33 +44,35 @@
                                 </mat-autocomplete>
                             </mat-form-field>
                         </div>
-
-                        <!-- เขต -->
-                        <!-- <div class="flex-fill">
-                            <label class="form-label">เขต :</label>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>เลือกเขต</mat-label>
-                                <mat-select [(ngModel)]="selectedZone_Specific" [disabled]="!selectedProvince_Specific">
-                                    <mat-option *ngFor="let zone of zonesInProvince_Specific" [value]="zone.areaName">
-                                        {{ zone.areaName }}
-                                    </mat-option>
-                                </mat-select>
-                                <button *ngIf="selectedZone_Specific" mat-icon-button matSuffix type="button"
-                                    aria-label="Clear zone" (click)="clearZone_Specific($event)">
-                                    <mat-icon>close</mat-icon>
-                                </button>
-                            </mat-form-field>
-                        </div> -->
-
-                        <!-- ปุ่ม Submit -->
-                        <!-- <div style="align-self:center">
-                            <button mat-raised-button color="primary" class="px-4" (click)="onSubmitFilter_Specific()">
-                                ค้นหา
-                            </button>
-                        </div> -->
                     </div>
                 </div>
-                <div *ngIf="selectDashboard === 'dashboard_2'" >
+                <!-- <div class="banner-left-container"
+                    [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
+                    <img *ngFor="let img of bannerLeftImages" [src]="img" class="logo-image" alt="Logo" />
+                </div>
+                <div class="banner-right-container"
+                    [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
+                    <img *ngFor="let img of bannerRigthtImages" [src]="img" class="logo-image" alt="Logo" />
+                </div>
+                <div class="banner-container"
+                    [ngClass]="selectDashboard === 'dashboard_2' ? 'dashboard2' : 'dashboard1'">
+
+                    <div class="marquee-wrapper">
+                        <div class="marquee-content marquee-3x">
+                            <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
+                            <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
+                            <img *ngFor="let img of bannerImages" [src]="img" class="logo-image_2" alt="Logo" />
+                        </div>
+                    </div>
+                </div> -->
+                <div class="svg-container" [hidden]="selectDashboard !== 'dashboard' || (!isDesktopOnly() && !isIpad)" #svgContainer
+                    (mousemove)="onSvgMouseMove($event)" (pointerup)="onSvgSelect($event)">
+                    <div class="thailand-map-wrapper">
+                        <div #svgContainerAll [innerHTML]="svgContent"></div>
+                    </div>
+                </div>
+
+                <div *ngIf="selectDashboard === 'dashboard_2'">
                     <app-dashboard-v2 (partySelected)="onPartySelected($event)"></app-dashboard-v2>
                 </div>
             </div>

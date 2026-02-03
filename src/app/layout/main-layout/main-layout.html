@@ -42,13 +42,21 @@
         <div class="logo-frame" *ngIf="isDesktop">
             <img src="/logo/referendum.png" alt="Logo" />
         </div>
-        <p *ngIf="isDesktop">ผลคะแนนประชามติ</p>
+        <p *ngIf="isDesktop">
+            ผลคะแนนประชามติ
+        </p>
         <div *ngIf="!isDesktop" style="display: flex; justify-content: center; align-items: center;">
-            <mat-icon style="font-size: 14px; width: 18px; height: 16px;">thumbs_up_down</mat-icon>
+            <mat-icon style="font-size: 14px; width: 18px; height: 16px;">
+                {{ isReferendumPage ? 'how_to_vote' : 'thumbs_up_down' }}
+            </mat-icon>
             <p style="text-decoration: underline;">
-                คลิกเพื่อดูผลคะแนนประชามติ</p>
+                {{ isReferendumPage
+                ? 'คลิกเพื่อดูผลการเลือกตั้ง'
+                : 'คลิกเพื่อดูผลคะแนนประชามติ' }}
+            </p>
         </div>
     </div>
+
 
     <div *ngIf="!showVotingStatus"
         style="color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; user-select: none;">
@@ -92,7 +100,8 @@
     ผลคะแนนจาก <span id="resultFrom" ></span>
 </div> -->
 
-<div class="source-label" [style.bottom]="isMainPage && is768 ? '70px' : '10px'" *ngIf="is_certified || !isReferendumPage">
+<div class="source-label" [style.bottom]="isMainPage && is768 ? '70px' : '10px'"
+    *ngIf="is_certified || !isReferendumPage">
 
     <!-- หน้าแรก -->
     <ng-container *ngIf="isReferendumPage">

@@ -450,6 +450,18 @@ export class Dashboard implements OnInit {
       p.style.stroke = 'none';
     });
 
+    svg.querySelectorAll('g[id]').forEach(g => {
+      const id = g.id;
+
+      // pattern: ABC_123
+      const isDistrict = /^[A-Z]{3}_\d+$/.test(id);
+
+      if (isDistrict) {
+        (g as SVGGElement).style.pointerEvents = 'none';
+        g.setAttribute('pointer-events', 'none');
+      }
+    });
+
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -471,8 +483,8 @@ export class Dashboard implements OnInit {
             styleStr +=
               ' fill: ' + this.getColor(this.allWinners[id]) + ' !important;';
           } else {
-            styleStr += ' fill: rgba(207, 212, 229)  !important;';
-            // styleStr += ' fill: rgba(207, 212, 229, 0.23)  !important;';
+            // styleStr += ' fill: rgba(207, 212, 229)  !important;';
+            styleStr += ' fill: rgba(207, 212, 229, 0.23)  !important;';
           }
 
           const partyData = this.partySeatCountsList.find(
@@ -1396,16 +1408,7 @@ export class Dashboard implements OnInit {
 
     if (!target || target.tagName.toLowerCase() === 'svg') return;
 
-    if (
-      this.STACK_MODAL.length === 0 ||
-      this.STACK_MODAL[this.STACK_MODAL.length - 1].page !== 'show-province-all'
-    ) {
-      this.STACK_MODAL.push({
-        page: 'show-province-all',
-      });
-    }
-    this.updateCurrentPageStates();
-    this.uiState.setReferendumLogoSmall(true);
+
     if (
       target.tagName === 'path' ||
       target.tagName === 'text' ||
@@ -1440,13 +1443,30 @@ export class Dashboard implements OnInit {
       if (group?.id === 'label_province') {
         const provinceName = (target.textContent || '').trim();
         // const provinceId = target.id;
-
+        if (!this.provinces.find(p => p.provinceName === provinceName).hasLeader) {
+          this.sweetAlertService.showAlert(
+            'แจ้งเตือน',
+            'ยังไม่พบคะแนน',
+            'info'
+          ); return;
+        }
         // this.activeTab = 'district';
         this.handleProvinceClick(provinceName);
         this.clickOnPopup = this.selectedParty;
         this.selectedParty = '';
       }
     }
+
+    if (
+      this.STACK_MODAL.length === 0 ||
+      this.STACK_MODAL[this.STACK_MODAL.length - 1].page !== 'show-province-all'
+    ) {
+      this.STACK_MODAL.push({
+        page: 'show-province-all',
+      });
+    }
+    this.updateCurrentPageStates();
+    this.uiState.setReferendumLogoSmall(true);
 
   }
   // Click Zone-Seat Page 2 (ส.ส.เขต) ----

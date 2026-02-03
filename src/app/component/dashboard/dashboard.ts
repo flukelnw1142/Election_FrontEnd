@@ -2322,7 +2322,7 @@ export class Dashboard implements OnInit {
     if (!svg) return;
 
     const anyDistrict = svg.querySelector(
-      `g[data-province="${province.trim()}"]`
+      `g[data-province="${province}"]`
     ) as SVGGElement | null;
 
     if (!anyDistrict) return;

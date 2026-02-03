@@ -317,6 +317,12 @@ input:checked+.slider:before {
     box-shadow: 2px 2px 4px rgba(157, 157, 157, 0.947);
 }
 
+.source-label.top {
+    position: fixed;
+    top: 10px;
+    bottom: auto;
+}
+
 
 // responsive 
 @media (max-width: 1023px) {
@@ -389,6 +395,14 @@ input:checked+.slider:before {
 }
 
 @media (max-width: 450px) {
+
+    .source-label {
+        width: 90px;
+        font-size: 12px;
+        text-align: center;
+        padding: 2px;
+    }
+
     .header-row {
         width: 100%;
         display: flex;
@@ -470,10 +484,6 @@ input:checked+.slider:before {
 }
 
 @media (max-width: 768px) {
-
-    .source-label {
-        bottom: 70px;
-    }
 
     .master-padding {
         border-radius: 2rem;

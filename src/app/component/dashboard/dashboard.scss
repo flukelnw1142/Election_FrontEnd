@@ -2050,6 +2050,39 @@ PAGE 7
     background: #CBCBCB;
     gap: 1rem;
 
+    .party-list {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .fullname {
+        font-size: 1.3rem;
+        color: #000;
+      }
+    }
+
+    .fullname,
+    .score {
+      font-size: 1.3rem;
+      color: #000;
+    }
+
+    .no-province {
+      font-weight: 300;
+      color: #3f3f3f;
+      cursor: pointer;
+    }
+
+    .vote-percentage {
+      font-weight: 300;
+      color: #3f3f3f;
+      font-size: 16px;
+    }
+
+    .no {
+      font-size: 14px;
+    }
+
     .number {
       background: #000;
       // height: 50px;
@@ -2188,6 +2221,34 @@ PAGE 7
     .scroll-container-detail {
       height: 50vh !important;
     }
+
+    .candidate-item {
+
+      .icon-pass,
+      .icon-unPass {
+        font-size: 30px;
+        width: 34px;
+        height: 34px;
+      }
+
+
+      .party-list {
+        .fullname {
+          font-size: 1.05rem;
+        }
+      }
+
+
+      .fullname,
+      .score {
+        font-size: 1.05rem;
+      }
+
+      .vote-percentage {
+        font-size: 16px;
+      }
+
+    }
   }
 }
 
@@ -2201,6 +2262,41 @@ PAGE 7
           width: auto;
           border-radius: 100%;
         }
+      }
+    }
+
+    .candidate-item {
+      gap: 0.8rem;
+      padding: 0.8rem;
+
+
+      .party-list {
+        gap: 0.8rem;
+
+        .fullname {
+          font-size: 1rem;
+        }
+      }
+
+
+      .fullname,
+      .score {
+        font-size: 1rem;
+      }
+
+      .no-province {
+        font-size: 14px;
+      }
+
+      .vote-percentage {
+        font-size: 14px;
+      }
+
+      .icon-pass,
+      .icon-unPass {
+        font-size: 30px;
+        width: 34px;
+        height: 34px;
       }
     }
   }
@@ -2218,6 +2314,27 @@ PAGE 7
         }
       }
     }
+
+    .candidate-item {
+      gap: 0.5rem;
+      padding: 0.5rem;
+
+
+      .icon-pass,
+      .icon-unPass {
+        font-size: 25px;
+        width: 30px;
+        height: 30px;
+      }
+
+      .party-list {
+        gap: 0.5rem;
+
+        .fullname {
+          font-size: 0.9rem;
+        }
+      }
+    }
   }
 
 }
@@ -2226,6 +2343,16 @@ PAGE 7
   .show-partyList-ZoneSeat {
     .scroll-container-detail-page7 {
       height: 45vh !important;
+    }
+  }
+
+  .candidate-item {
+    .party-list {
+      gap: 0.3rem;
+
+      .fullname {
+        font-size: 14px;
+      }
     }
   }
 
@@ -2651,7 +2778,7 @@ PAGE 7
     /* สีกรอบ */
   }
 
-  mat-label{
+  mat-label {
     color: #ffffff !important;
   }
 

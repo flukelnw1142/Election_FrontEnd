@@ -3,8 +3,8 @@
         <h4 class="question-title">คำถาม : {{ question.questionText }}</h4>
     </div>
     <div class="glass-card card" style="color: white;" *ngIf="is_certified">
-        <div class="three-column-grid">
-            <div class="column">
+        <div class="three-column-grid" [class.mobile-layout]="!isDesktopOnly()">
+            <div class="column" [hidden]="!isDesktopOnly()">
                 <div class="region-tabs">
                     <p class="region-tab" *ngFor="let region of regionList" [class.active]="selectedRegion === region"
                         (click)="onRegionSelect(region)">
@@ -14,9 +14,35 @@
             </div>
 
             <div class="column svg-column">
-                <div class="hint"> <mat-icon>pinch_zoom_out</mat-icon>ลาก ซูม แตะ เพื่อเลือกเขต</div>
-                <div class="reset-btn" (click)="resetZoom()">
+                <div class="hint" [hidden]="!isDesktopOnly()"> <mat-icon>pinch_zoom_out</mat-icon>ลาก ซูม แตะ
+                    เพื่อเลือกเขต</div>
+                <div class="reset-btn" [hidden]="!isDesktopOnly()" (click)="resetZoom()">
                     <mat-icon>restart_alt</mat-icon>
+                </div>
+
+                <div [hidden]="isDesktopOnly()" class="mobile-filter" [class.ipad-filter]="isIpad">
+                    <!-- ค้นหาจังหวัด -->
+                    <div class="filter-row d-flex">
+                        <!-- จังหวัด -->
+                        <div class="flex-fill">
+                            <!-- <label class="form-label">ค้นหาจังหวัดเพื่อดูข้อมูล :</label> -->
+                            <mat-form-field appearance="outline" class="w-100 white-input">
+                                <mat-label>ค้นหาจังหวัด</mat-label>
+                                <input type="text" matInput [formControl]="provinceCtrl_Specific"
+                                    [matAutocomplete]="autoProvinceSpecific" (focus)="openProvincePanel_Specific()"
+                                    (click)="openProvincePanel_Specific()" #specificTrig="matAutocompleteTrigger"
+                                    matAutocompleteTrigger />
+
+                                <mat-autocomplete #autoProvinceSpecific="matAutocomplete"
+                                    (optionSelected)="onProvinceSelected_Specific($event)">
+                                    <mat-option *ngFor="let p of filteredProvinces_Specific | async"
+                                        [value]="p.provinceName">
+                                        {{ p.provinceName }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                    </div>
                 </div>
                 <span class="loader" *ngIf="loading_tab2"></span>
                 <div class="svg-container" (click)="onSvgClickRegion($event)" (pointerup)="onSvgPointerUp($event)"

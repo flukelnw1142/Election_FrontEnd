@@ -2405,11 +2405,15 @@ export class Dashboard implements OnInit {
       `g[data-province="${province}"]`
     ) as SVGGElement | null;
 
+    console.log('anyDistrict:', anyDistrict);
+
     if (!anyDistrict) return;
 
     const provinceGroup = anyDistrict.closest(
       'g[id^="province-"]'
     ) as SVGGElement | null;
+
+    console.log('provinceGroup:', provinceGroup);
 
     if (!provinceGroup) return;
 

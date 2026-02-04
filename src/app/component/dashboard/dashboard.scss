@@ -1793,6 +1793,57 @@ PAGE 6
     font-size: 1.1rem;
   }
 
+  .district-detail {
+    .tab-content {
+      .provinceName-zone {
+        display: flex;
+        justify-content: space-between;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .candidate-item {
+
+        .number,
+        .fullname {
+          font-size: 24px;
+        }
+
+        img {
+          height: 5rem;
+          width: 5rem;
+        }
+
+        .no-partyName {
+          font-weight: 300;
+          color: rgb(199, 199, 199);
+          padding-top: 5px;
+          padding-bottom: 5px;
+          font-size: 18px;
+        }
+
+        .score {
+          font-size: 20px;
+        }
+
+        .score.winner {
+          font-weight: 700 !important;
+          font-size: 24px !important;
+          color: white;
+          border-radius: 10px;
+          padding: 0px 10px;
+          margin-right: 5px;
+        }
+
+        .percentage {
+          font-weight: 300;
+          color: rgb(199, 199, 199);
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
 }
 
 /* 📱 Mobile */
@@ -1863,6 +1914,45 @@ PAGE 6
         font-size: 1rem;
       }
 
+    }
+
+    .district-detail {
+      .tab-content {
+        .provinceName-zone {
+          font-size: 20px;
+        }
+
+        .candidate-item {
+
+          .number,
+          .fullname {
+            font-size: 20px;
+          }
+
+          img {
+            height: 5rem;
+            width: 5rem;
+          }
+
+          .no-partyName {
+            font-size: 16px;
+          }
+
+          .score {
+            font-size: 18px;
+          }
+
+          .score.winner {
+            font-size: 20px !important;
+          }
+
+          .percentage {
+            font-weight: 300;
+            color: rgb(199, 199, 199);
+            font-size: 18px;
+          }
+        }
+      }
     }
   }
 }
@@ -1946,6 +2036,97 @@ PAGE 6
       }
 
     }
+
+    .district-detail {
+      .tab-content {
+        .provinceName-zone {
+          font-size: 18px;
+        }
+
+        .candidate-item {
+          gap: 0.7rem;
+
+          .number,
+          .fullname {
+            font-size: 18px;
+          }
+
+          .number {
+            height: 2.5rem;
+            width: 1.5rem;
+          }
+
+          img {
+            height: 4rem;
+            width: 4rem;
+          }
+
+          .no-partyName {
+            font-size: 14px;
+          }
+
+          .score {
+            font-size: 16px;
+          }
+
+          .score.winner {
+            font-size: 18px !important;
+          }
+
+          .percentage {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+
+  .show-province-all {
+    .district-detail {
+      .tab-content {
+        .provinceName-zone {
+          font-size: 18px;
+        }
+
+        .candidate-item {
+          gap: 0.7rem;
+
+          .number,
+          .fullname {
+            font-size: 16px;
+          }
+
+          .number {
+            height: 2.2rem;
+            width: 1.2rem;
+          }
+
+          img {
+            height: 3.5rem;
+            width: 3.5rem;
+          }
+
+          .no-partyName {
+            font-size: 12px;
+          }
+
+          .score {
+            font-size: 14px;
+          }
+
+          .score.winner {
+            font-size: 16px !important;
+          }
+
+          .percentage {
+            font-size: 14px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -1983,6 +2164,50 @@ PAGE 6
 
     .percent.winner {
       font-size: .8rem;
+    }
+
+    .district-detail {
+      .tab-content {
+        .provinceName-zone {
+          font-size: 18px;
+        }
+
+        .candidate-item {
+          gap: 0.5rem;
+
+          .number,
+          .fullname {
+            font-size: 14px;
+          }
+
+          .number {
+            height: 2.2rem;
+            width: 1.2rem;
+          }
+
+          img {
+            height: 3.2rem;
+            width: 3.2rem;
+          }
+
+          .no-partyName {
+            font-size: 12px;
+          }
+
+          .score {
+            font-size: 14px;
+          }
+
+          .score.winner {
+            font-size: 16px !important;
+            padding: 0px 6px;
+          }
+
+          .percentage {
+            font-size: 14px;
+          }
+        }
+      }
     }
   }
 }

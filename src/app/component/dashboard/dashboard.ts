@@ -202,12 +202,13 @@ export class Dashboard implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkScreenSize();
+    this.checkDeviceInfo();
   }
 
   private checkScreenSize() {
     this.isDesktop = window.innerWidth > 820;
     this.isMobile = window.innerWidth <= 768;
-    this.isIpad = window.innerWidth > 768 && window.innerWidth <= 820;
+    this.isIpad = window.innerWidth > 768 && window.innerWidth <= 1023;
   }
 
   constructor(
@@ -239,6 +240,7 @@ export class Dashboard implements OnInit {
   bannerImages: any;
   test: any;
   async ngOnInit(): Promise<void> {
+    this.checkDeviceInfo();
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadingSubject.next(true);
     this.updateFooterVisibility();
@@ -2525,6 +2527,100 @@ export class Dashboard implements OnInit {
 
     console.log('auto search province:', province);
   }
+
+  private checkDeviceInfo() {
+    console.log("========== DEVICE INFO ==========");
+
+    // ✅ Viewport size (ขนาดที่ browser ใช้จริง)
+    console.log("Viewport Width :", window.innerWidth);
+    console.log("Viewport Height:", window.innerHeight);
+
+    // ✅ Screen size (ขนาดจอจริง)
+    console.log("Screen Width :", screen.width);
+    console.log("Screen Height:", screen.height);
+
+    // ✅ User Agent (บอกว่าเป็น iPhone / Android / Windows)
+    console.log("UserAgent:", navigator.userAgent);
+
+    // ✅ Orientation (แนวตั้ง/แนวนอน)
+    console.log("Orientation:", screen.orientation?.type);
+
+    // ✅ Detect Device Type
+    console.log("Device Type:", this.detectDeviceType());
+
+    // ✅ Detect Screen Category (Mobile / iPad / Desktop / Samsung Flip)
+    console.log("Screen Category:", this.detectScreenCategory());
+
+    console.log("Brand / Model:", this.detectBrandAndModel());
+
+
+    console.log("=================================");
+  }
+  private detectDeviceType(): string {
+    const ua = navigator.userAgent;
+
+    if (/iPhone/i.test(ua)) return "📱 iPhone";
+    if (/iPad/i.test(ua)) return "📱 iPad";
+    if (/Android/i.test(ua)) return "📱 Android Device";
+    if (/Windows/i.test(ua)) return "💻 Windows Desktop";
+    if (/Macintosh/i.test(ua)) return "💻 Mac Desktop";
+
+    return "❓ Unknown Device";
+  } private detectScreenCategory(): string {
+    const width = window.innerWidth;
+
+    // 📌 Samsung Flip / 4K Display
+    if (screen.width >= 3000) {
+      return "📺 Large Display (Samsung Flip / 4K Screen)";
+    }
+
+    // 📌 Mobile
+    if (width <= 768) {
+      return "📱 Mobile Screen";
+    }
+
+    // 📌 iPad / Tablet
+    if (width > 768 && width <= 1024) {
+      return "📟 Tablet / iPad Screen";
+    }
+
+    // 📌 Desktop
+    return "💻 Desktop Screen";
+  }
+  private detectBrandAndModel(): string {
+    const ua = navigator.userAgent;
+
+    // Samsung
+    const samsungMatch = ua.match(/SM-[A-Z0-9]+/);
+    if (samsungMatch) {
+      return `Samsung (${samsungMatch[0]})`;
+    }
+
+    // Xiaomi
+    const xiaomiMatch = ua.match(/Mi\s?[A-Z0-9]+|Redmi\s?[A-Z0-9]+/i);
+    if (xiaomiMatch) {
+      return `Xiaomi (${xiaomiMatch[0]})`;
+    }
+
+    // Huawei
+    const huaweiMatch = ua.match(/HUAWEI\s?[A-Z0-9-]+/i);
+    if (huaweiMatch) {
+      return `Huawei (${huaweiMatch[0]})`;
+    }
+
+    // Google Pixel
+    const pixelMatch = ua.match(/Pixel\s?[A-Z0-9]+/i);
+    if (pixelMatch) {
+      return `Google Pixel (${pixelMatch[0]})`;
+    }
+
+    // iPhone / iPad
+    if (/iPhone/i.test(ua)) return "Apple iPhone (ไม่สามารถระบุรุ่นได้)";
+    if (/iPad/i.test(ua)) return "Apple iPad (ไม่สามารถระบุรุ่นได้)";
+
+    return "Unknown Brand / Model";
+  }
+
 }
 
 

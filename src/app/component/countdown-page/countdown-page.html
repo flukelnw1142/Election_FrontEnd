@@ -43,8 +43,40 @@
         </div>
 
         <div class="actions">
-            <button class="primary" (click)="goToWebsite()"><mat-icon>how_to_vote</mat-icon>ดูผลการเลือกตั้งเรียลไทม์</button>
+            <button class="primary"
+                (click)="goToWebsite()"><mat-icon>how_to_vote</mat-icon>ดูผลการเลือกตั้งเรียลไทม์</button>
         </div>
         <a href="/live-stream" class="link-live"> <mat-icon>live_tv</mat-icon>รับชมการถ่ายทอดสด</a>
     </div>
 </div>
+
+<section id="news-section" class="news-section">
+    <div class="news-header">
+        <h2 class="news-title">วันเลือกตั้ง 2569</h2>
+        <div class="news-subtitle">อัปเดตข่าวล่าสุดจาก ONE</div>
+    </div>
+
+    <div class="news-grid">
+        <article class="news-card" *ngFor="let n of newsData; trackBy: trackById" (click)="openNews(n)">
+
+            <div class="thumb">
+                <img [src]="n.resizeThumbnail || n.thumbnail" [alt]="n.title" loading="lazy" />
+            </div>
+
+            <div class="content">
+                <div class="title">{{ n.title }}</div>
+                <div class="caption">{{ n.caption }}</div>
+                <div class="meta">
+                    <mat-icon>schedule</mat-icon>
+                    <span>{{ n.createdTime | date:'dd/MM/yyyy HH:mm' }}</span>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <div class="news-footer">
+        <div class="loading" *ngIf="loadingNews">
+            <mat-icon class="spin">autorenew</mat-icon> กำลังโหลด...
+        </div>
+    </div>
+</section>

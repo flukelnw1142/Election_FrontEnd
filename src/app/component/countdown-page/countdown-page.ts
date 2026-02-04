@@ -1,7 +1,9 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { CountdownService } from './countdown.service';
+import { firstValueFrom } from 'rxjs';
 
 type Countdown = {
   totalMs: number;
@@ -24,7 +26,7 @@ type Particle = {
 @Component({
   selector: 'app-countdown-page',
   standalone: true,
-  imports: [CommonModule,MatIcon],
+  imports: [CommonModule, MatIcon],
   templateUrl: './countdown-page.html',
   styleUrls: ['./countdown-page.scss'],
 })
@@ -51,10 +53,28 @@ export class CountdownPage implements OnInit, OnDestroy {
 
   particles: Particle[] = [];
   private timerId: any = null;
+  newsData: any;
+  loadingNews = false;
+  noMoreNews = false;
+
+
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const viewport = window.innerHeight;
+    const full = document.documentElement.scrollHeight;
+
+    // เหลืออีก ~600px ถึงล่างสุด
+    if (scrollTop + viewport >= full - 600) {
+      this.getElectionNews();
+    }
+  }
   constructor(
     private cd: ChangeDetectorRef,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private countdownserive: CountdownService
   ) { }
 
 
@@ -68,6 +88,7 @@ export class CountdownPage implements OnInit, OnDestroy {
     console.log('targetMs =', new Date(this.targetIso).getTime());
     this.tick();
     this.timerId = setInterval(() => this.tick(), 1000);
+    this.getElectionNews();
   }
 
   ngOnDestroy(): void {
@@ -136,5 +157,49 @@ export class CountdownPage implements OnInit, OnDestroy {
       duration: 10 + Math.random() * 18,    // 10-28s
       opacity: 0.12 + Math.random() * 0.45, // 0.12-0.57
     }));
+  }
+
+  async getElectionNews() {
+
+    let page = 1;
+    const take = 10;
+
+    let allNews: any[] = [];
+
+    while (true) {
+
+      console.log("Fetching page:", page);
+
+      const res: any = await firstValueFrom(
+        this.countdownserive.getNews(page, take)
+      );
+
+      const items = res?.detail?.news || [];
+
+      if (items.length === 0) {
+        console.log("หมดแล้ว หยุด loop");
+        break;
+      }
+
+      allNews.push(...items);
+
+      page++;
+    }
+
+    this.newsData = allNews;
+
+    console.log("ข่าวทั้งหมด:", this.newsData);
+  }
+
+  scrollToNews() {
+    document.getElementById('news-section')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  openNews(item: any) {
+    window.open(`https://www.one31.net/news/detail/${item.id}`, '_blank');
+  }
+
+  trackById(_i: number, item: any) {
+    return item.id;
   }
 }

@@ -57,19 +57,14 @@ export class CountdownPage implements OnInit, OnDestroy {
   loadingNews = false;
   noMoreNews = false;
   private isFetchingNews = false;
-
+  showScrollTop = false;
 
   @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const viewport = window.innerHeight;
-    const full = document.documentElement.scrollHeight;
-
-    // เหลืออีก ~600px ถึงล่างสุด
-    if (scrollTop + viewport >= full - 600) {
-      this.getElectionNews();
-    }
+  onScroll() {
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    this.showScrollTop = scrollY > 2000;
   }
+
   constructor(
     private cd: ChangeDetectorRef,
     private router: Router,
@@ -160,7 +155,7 @@ export class CountdownPage implements OnInit, OnDestroy {
   }
 
   async getElectionNews() {
-    if(this.isFetchingNews) return;
+    if (this.isFetchingNews) return;
     this.loadingNews = true;
     let page = 1;
     const take = 10;
@@ -168,15 +163,11 @@ export class CountdownPage implements OnInit, OnDestroy {
     let allNews: any[] = [];
 
     while (true) {
-
       console.log("Fetching page:", page);
-
       const res: any = await firstValueFrom(
         this.countdownserive.getNews(page, take)
       );
-
       const items = res?.detail?.news || [];
-
       if (items.length === 0) {
         console.log("หมดแล้ว หยุด loop");
         break;
@@ -186,9 +177,7 @@ export class CountdownPage implements OnInit, OnDestroy {
 
       page++;
     }
-
     this.newsData = allNews;
-
     console.log("ข่าวทั้งหมด:", this.newsData);
     this.loadingNews = false;
     this.isFetchingNews = true;
@@ -205,5 +194,12 @@ export class CountdownPage implements OnInit, OnDestroy {
 
   trackById(_i: number, item: any) {
     return item.id;
+  }
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   }
 }

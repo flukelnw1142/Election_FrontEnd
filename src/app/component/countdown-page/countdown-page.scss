@@ -355,10 +355,13 @@
 
     .loading,
     .nomore {
-        color: rgba(255, 255, 255, 0.75);
+        color: #000;
         display: flex;
         align-items: center;
         gap: 8px;
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1.25;
     }
 
     .spin {
@@ -384,4 +387,37 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+}
+
+.scroll-top {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+
+    border: none;
+    cursor: pointer;
+
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    transition: all 0.25s ease;
+
+    z-index: 9999;
+
+    &:hover {
+        transform: translateY(-4px);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    mat-icon {
+        font-size: 26px;
+    }
 }

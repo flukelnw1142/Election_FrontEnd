@@ -160,6 +160,13 @@ export class Dashboard implements OnInit {
     return window.matchMedia("(pointer: fine)").matches;
   }
 
+  private isIpadReal(): boolean {
+    return (
+      /iPad/i.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    );
+  }
+
   tooltipVisible = false;
   tooltipText = '';
   tooltipSubText = '';
@@ -207,8 +214,20 @@ export class Dashboard implements OnInit {
   private checkScreenSize() {
     this.isDesktop = window.innerWidth > 820;
     this.isMobile = window.innerWidth <= 768;
-    this.isIpad = window.innerWidth > 768 && window.innerWidth <= 820;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    this.isIpad =
+      (w === 768 && h === 1024) || //ipad mini แนวตั้ง
+      (w === 1024 && h === 768) || //ipad mini แนวนอน
+      (w === 820 && h === 1180) || //ipad air แนวตั้ง
+      (w === 1180 && h === 820) || //ipad air แนวนอน
+      (w === 1366 && h === 1024) || //ipad pro แนวนอน
+      (w === 1024 && h === 1366);   //ipad pro แนวตั้ง
+
   }
+
+
 
   constructor(
     private _dashboard: DashboardService,

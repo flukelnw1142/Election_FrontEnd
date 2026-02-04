@@ -160,6 +160,7 @@ export class CountdownPage implements OnInit, OnDestroy {
   }
 
   async getElectionNews() {
+    if(this.isFetchingNews) return;
     this.loadingNews = true;
     let page = 1;
     const take = 10;
@@ -190,6 +191,7 @@ export class CountdownPage implements OnInit, OnDestroy {
 
     console.log("ข่าวทั้งหมด:", this.newsData);
     this.loadingNews = false;
+    this.isFetchingNews = true;
 
   }
 

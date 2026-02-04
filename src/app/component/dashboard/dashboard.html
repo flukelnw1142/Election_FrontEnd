@@ -96,6 +96,10 @@
 
     </div>
 
+    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999; color: white;">
+        H{{TESTSizeH }} | W{{TESTSizeW}}
+    </div>
+
     <!-- MAGNIFIER -->
     <div class="magnifier" #magnifier [hidden]="!magnifierVisible"
         [ngStyle]="{ 'top': magnifierY + 'px', 'left': magnifierX + 'px' }"></div>
@@ -448,7 +452,7 @@
                                                     class="logo-img">
                                             </div>
                                             <div>
-                                                <p style="font-size: 1.1rem;">
+                                                <p class="partyName">
                                                     {{ party.partyName || '-' }}
                                                 </p>
                                                 <p>
@@ -496,7 +500,7 @@
                                                         class="logo-img">
                                                 </div>
                                                 <div>
-                                                    <p style="font-size: 1.1rem;">
+                                                    <p class="partyName">
                                                         {{ party.partyName || '-' }}
                                                     </p>
                                                     <p
@@ -555,7 +559,7 @@
                                         จำนวนหน่วยที่นับไปแล้ว : {{progress}} %
                                     </p>
                                     <p class="count-total">จำนวนผู้มาใช้สิทธิ์ทั้งหมด :
-                                        <span style=" font-weight: 500; color: #ffffff;">
+                                        <span style="font-size: 1rem; font-weight: 500; color: #ffffff;">
                                             {{formatTotalVotes(totalvoteZone)}}
                                         </span>
                                     </p>
@@ -598,9 +602,9 @@
                         </div>
 
                         <div *ngIf="activeTab === 'partyList'">
-                            <div style="display: flex; justify-content: space-between;">
+                            <div class="provinceName-zone">
                                 <div>
-                                    <p class="province">{{provinceName || ""}} เขต {{zoneName || ""}}</p>
+                                    <p>{{provinceName || ""}} เขต {{zoneName || ""}}</p>
                                 </div>
                             </div>
                             <div class="header-table">
@@ -610,7 +614,7 @@
                                         {{progress_party}} %
                                     </p>
                                     <p class="count-total">จำนวนผู้มาใช้สิทธิ์ทั้งหมด :
-                                        <span style="font-size: 1.1rem; font-weight: 500; color: #ffffff;">
+                                        <span style="font-size: 1rem; font-weight: 500; color: #ffffff;">
                                             {{formatTotalVotes(totalvoteZone_party)}}
                                         </span>
                                     </p>
@@ -629,12 +633,12 @@
                                             class="logo-img">
                                     </div>
                                     <div>
-                                        <p style="font-size: 1.3rem;">{{ party.partyName }} </p>
-                                        <div style="display: flex;gap: 0.5rem; justify-content: space-between;">
-                                            <p>คะแนน: {{ party.totalVote | number }} <span
-                                                    style="font-size: 1rem; font-weight: 300; color: #ffffffce;">(
-                                                    {{
-                                                    party.vote_percentage}}% )</span></p>
+                                        <p class="partyName">{{ party.partyName }} </p>
+                                        <div class="score">
+                                            <p>คะแนน: {{ party.totalVote | number }}
+                                                <span class="percentage">(
+                                                    {{party.vote_percentage}}% )</span>
+                                            </p>
 
                                         </div>
                                     </div>

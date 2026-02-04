@@ -206,6 +206,9 @@ export class Dashboard implements OnInit {
   private isRollbacking = false;
   private lastValidZoneId: string | null = null;
 
+  TESTSizeH: string = '';
+  TESTSizeW: string = '';
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkScreenSize();
@@ -218,11 +221,16 @@ export class Dashboard implements OnInit {
     const w = window.innerWidth;
     const h = window.innerHeight;
 
+    this.TESTSizeH = h.toString();
+    this.TESTSizeW = w.toString();
+
     this.isIpad =
+      (w === 1080 && (h >= 682 && h <= 753)) || //ipad แนวตั้ง
+      (w === 810 && (h >= 952 && h <= 1023)) || //ipad แนวนอน
       (w === 768 && h === 1024) || //ipad mini แนวตั้ง
       (w === 1024 && h === 768) || //ipad mini แนวนอน
-      (w === 820 && h === 1180) || //ipad air แนวตั้ง
-      (w === 1180 && h === 820) || //ipad air แนวนอน
+      (w === 820 && (h >= 1052 && h <= 1123)) || //ipad air แนวตั้ง
+      (w === 1180 && (h >= 692 && h <= 763)) || //ipad air แนวนอน
       (w === 1366 && h === 1024) || //ipad pro แนวนอน
       (w === 1024 && h === 1366);   //ipad pro แนวตั้ง
 

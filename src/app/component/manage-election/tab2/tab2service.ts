@@ -29,13 +29,14 @@ export class Tab2Service {
 
 
   disconnect() {
-    this._http.get(
+    return this._http.get(
       `${this.baseUrl}/DistrictElectionResults/stream-district-election-results-random`,
       {
-        params: { auto_time: 1, is_enabled: false }
+        params: { auto_time: 1, is_enabled: false },
+        responseType: 'text' 
       }
     ).subscribe({
-      next: () => console.log('Auto disabled'),
+      next: (res) => console.log('Auto disabled:', res),
       error: err => console.error('Disable auto failed', err)
     });
   }

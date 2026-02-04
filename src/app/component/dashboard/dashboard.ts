@@ -2397,6 +2397,8 @@ export class Dashboard implements OnInit {
     if (!container) return;
 
     const svg = container.querySelector('svg') as SVGSVGElement | null;
+    console.log("sadasdsadsads ; ",svg);
+    
     if (!svg) return;
 
     const anyDistrict = svg.querySelector(

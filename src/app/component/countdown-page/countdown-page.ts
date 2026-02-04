@@ -56,7 +56,7 @@ export class CountdownPage implements OnInit, OnDestroy {
   newsData: any;
   loadingNews = false;
   noMoreNews = false;
-
+  private isFetchingNews = false;
 
 
   @HostListener('window:scroll', [])
@@ -81,14 +81,14 @@ export class CountdownPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
+    this.getElectionNews();
     this.buildParticles(55);
     console.log('targetIso =', this.targetIso);
     console.log('parsed date =', new Date(this.targetIso));
     console.log('targetMs =', new Date(this.targetIso).getTime());
     this.tick();
     this.timerId = setInterval(() => this.tick(), 1000);
-    this.getElectionNews();
+
   }
 
   ngOnDestroy(): void {
@@ -160,7 +160,7 @@ export class CountdownPage implements OnInit, OnDestroy {
   }
 
   async getElectionNews() {
-
+    this.loadingNews = true;
     let page = 1;
     const take = 10;
 
@@ -189,6 +189,8 @@ export class CountdownPage implements OnInit, OnDestroy {
     this.newsData = allNews;
 
     console.log("ข่าวทั้งหมด:", this.newsData);
+    this.loadingNews = false;
+
   }
 
   scrollToNews() {

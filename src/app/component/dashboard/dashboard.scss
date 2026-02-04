@@ -1718,26 +1718,12 @@ PAGE 6
       padding: 1rem;
     }
 
+    .provinceName-zone {
+      font-size: 1rem;
+      cursor: pointer;
+    }
 
   }
-
-
-
-  // .candidate-item>div>div {
-  //   transition: transform 0.2s ease;
-  // }
-
-  // .candidate-item>div>div:hover {
-  //   transform: scale(1.02);
-  // }
-
-  .candidate-row {
-    transition: transform 0.2s ease;
-  }
-
-  // .candidate-row:hover {
-  //   transform: scale(1.02);
-  // }
 
   .battle-container {
     position: relative;
@@ -1748,6 +1734,22 @@ PAGE 6
     align-items: center;
     gap: 1rem;
     margin: .5rem;
+    transition: transform 0.2s ease;
+
+    .fullname {
+      font-size: 1.2rem;
+    }
+
+    .no-partyName {
+      font-weight: 300;
+      color: rgb(235, 235, 235);
+      margin-bottom: 5px;
+    }
+
+    .score {
+      font-size: 18px;
+    }
+
   }
 
   .candidate-row.right {
@@ -1765,7 +1767,6 @@ PAGE 6
     color: white;
     font-size: 20px;
   }
-
 
   .score-badge {
     font-weight: 400;
@@ -1834,10 +1835,35 @@ PAGE 6
         font-size: 1rem;
       }
 
+      .no-partyName {
+        font-size: 16px;
+      }
 
     }
 
+    .candidate-row {
+      gap: 0.6rem;
 
+      .fullname {
+        font-size: 1rem;
+      }
+
+      .no {
+        font-size: 0.8rem;
+      }
+
+      img {
+        height: 4rem;
+        width: 4rem;
+      }
+
+      .number {
+        height: 2.5rem;
+        width: 1.5rem;
+        font-size: 1rem;
+      }
+
+    }
   }
 }
 
@@ -1868,6 +1894,10 @@ PAGE 6
         border-radius: 50%;
         overflow: hidden;
       }
+
+      .provinceName-zone {
+        font-size: 14px;
+      }
     }
 
     .score-badge.winner {
@@ -1878,6 +1908,44 @@ PAGE 6
     .percent.winner {
       font-size: .8rem;
     }
+
+    .candidate-item {
+      // padding: 0.4rem;
+
+      .candidate-row {
+        gap: 0.3rem;
+        margin: 0rem;
+
+        .fullname {
+          font-size: 12px;
+
+        }
+
+        .no {
+          font-size: 12px;
+        }
+
+        img {
+          height: 3.5rem;
+          width: 3.5rem;
+        }
+
+        .number {
+          height: 2rem;
+          width: 1.3rem;
+          font-size: 16px;
+        }
+
+        .no-partyName {
+          font-size: 14px;
+        }
+
+        .score {
+          font-size: 16px !important;
+        }
+      }
+
+    }
   }
 }
 
@@ -1887,6 +1955,7 @@ PAGE 6
 
     .candidate-item {
       gap: 1rem;
+      padding: 0.5rem;
 
       .logo-container {
         width: 4rem;
@@ -1899,6 +1968,11 @@ PAGE 6
         background: white;
         border-radius: 50%;
         overflow: hidden;
+      }
+
+      .provinceName-zone {
+        margin: 5px 0 0 5px;
+        font-size: 12px;
       }
     }
 

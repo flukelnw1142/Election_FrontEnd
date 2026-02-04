@@ -273,23 +273,15 @@
 
 
             </div>
-            <!-- <div class="column svg-column">
-                <div class="svg-container" (click)="onSvgClickRegion($event)" (mousemove)="onSvgMouseMove($event)">
-                    <div class="region-map-wrapper">
-                        <div #svgContainerRegion [innerHTML]="svgContentRegion"></div>
-                    </div>
-                </div>
-            </div> -->
             <div class="column svg-column">
                 <div class="hint" *ngIf="isDesktopOnly();"> <mat-icon>pinch_zoom_out</mat-icon>ลาก ซูม แตะ เพื่อเลือกเขต
                 </div>
                 <div class="reset-btn" (click)="resetZoom()" *ngIf="isDesktopOnly();">
                     <mat-icon>restart_alt</mat-icon>
                 </div>
-                <!-- <span class="loader" *ngIf="loading_tab2"></span> -->
                 <div class="svg-container" (click)="onSvgClickRegion($event)" (pointerup)="onSvgPointerUp($event)"
                     [ngStyle]="{ 'overflow-y': isDesktopOnly() ? 'auto' : 'hidden' }">
-                    <!-- <div class="svg-container" (click)="onSvgClickRegion($event)" (pointerup)="onSvgPointerUp($event)"> -->
+
                     <div class="region-map-wrapper">
                         <div #svgContainerRegion [innerHTML]="svgContentRegion"></div>
                     </div>
@@ -311,18 +303,6 @@
                     </div>
                     <div class="tab-content" style="margin-top: 20px;">
                         <div *ngIf=" activeTab==='district'">
-                            <!-- <div *ngIf="detailWinnerZonePerRegion?.length === 0"
-                                style="text-align: end; color: #929292; padding-bottom: .5rem;">
-                                <p style="font-size: 1rem;">จำนวนหน่วยที่นับไปแล้ว :
-                                    {{formatTotalVotes(detailWinnerZonePerProvince[0]?.candidates[0].total_votes_in_area
-                                    )|| ""}}
-                                </p>
-                                <p>นับคะแนนแล้ว :
-                                    <span style="font-size: 1.1rem; font-weight: 500; color: #ffffff;">
-                                        {{detailWinnerZonePerProvince[0]?.candidates[0].progress ||""}} %
-                                    </span>
-                                </p>
-                            </div> -->
                             <!-- CLICK REGION -->
                             <div *ngIf="detailWinnerZonePerRegion?.length > 0; else showZoneData" #scrollContainer
                                 class="scroll-container-dt70vh">
@@ -330,8 +310,8 @@
                                     class="candidate-item"
                                     [style.background]="getColor2tone(district.candidates[0]?.party_name, district.candidates[1]?.party_name)">
                                     <div style="width: 100%;">
-                                        <p style="font-size: 1.rem; cursor: pointer;"
-                                            (click)="onClickDistrict(district.districtId)"> {{ district.province }}
+                                        <p class="provinceName-zone" (click)="onClickDistrict(district.districtId)"> {{
+                                            district.province }}
                                             เขต {{ district.zone }}
                                         </p>
 
@@ -350,9 +330,8 @@
                                                     (error)="onImgError($event)" alt="avatarURL">
 
                                                 <div class="info">
-                                                    <p style="font-size: 1.1rem;">{{ candidate.fullname }}</p>
-                                                    <p
-                                                        style="font-weight: 300; color: rgb(235, 235, 235); margin-bottom: 5px;">
+                                                    <p class="fullname">{{ candidate.fullname }}</p>
+                                                    <p class="no-partyName">
                                                         <span class="no">เบอร์ {{candidate.no}}</span>
                                                         {{candidate.party_name}}
                                                     </p>
@@ -373,37 +352,6 @@
                                             <div class="vs-center">VS</div>
 
                                         </div>
-
-
-                                        <!-- <div *ngFor="let candidate of  district.candidates; let i = index"
-                                            style="display: flex; align-items: center; gap: 1rem; margin: 1rem .5rem;"
-                                            [ngStyle]="{
-                                                'justify-content': i % 2 === 0 ? 'flex-start' : '',
-                                                'flex-direction': i % 2 === 0 ? 'row' : 'row-reverse',
-                                                'text-align': i % 2 === 0 ? 'left' : 'right'
-                                                }">
-                                            <p class="number" [style.background]="getColor(candidate.party_name)">{{ i +
-                                                1
-                                                }}</p>
-                                            <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
-                                                (error)="onImgError($event)" alt="avatarURL">
-                                            <div>
-                                                <p style=" font-size: 1.1rem;">{{ candidate.fullname }}</p>
-                                                <p
-                                                    style="font-weight: 300; color: rgb(235, 235, 235); padding-top: 3px; padding-bottom: 3px;">
-                                                    <span class="no">เบอร์ {{candidate.no}}</span>
-                                                    {{candidate.party_name}}
-                                                </p>
-                                                <p>
-                                                    <span
-                                                        [style.background]="i === 0 ? getColor(candidate.party_name) : null"
-                                                        [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}">
-                                                        คะแนน: {{ candidate.totalVotes | number }}
-                                                    </span>
-                                                </p>
-                                            </div>
-
-                                        </div> -->
                                     </div>
                                 </div>
                                 <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
@@ -413,15 +361,14 @@
                                 </div>
                             </div>
                             <!-- CLICK PROVINCE -->
-                            <!-- [style.background]="getColor2tone(district.candidates[0].party_name, district.candidates[1].party_name)" -->
                             <ng-template #showZoneData>
                                 <div #scrollContainer class="scroll-container-dtprovince">
                                     <div *ngFor="let district of detailWinnerZonePerProvince; let i = index"
                                         class="candidate-item"
                                         [style.background]="getColor2tone(district.candidates[0]?.party_name, district.candidates[1]?.party_name)">
                                         <div style="width: 100%;">
-                                            <p style="font-size: 1rem; cursor: pointer; "
-                                                (click)="onClickDistrict(district.districtId)"> {{ district.province
+                                            <p class="provinceName-zone" (click)="onClickDistrict(district.districtId)">
+                                                {{ district.province
                                                 }} เขต {{ district.zone}}
                                             </p>
                                             <div class="battle-container">
@@ -442,13 +389,13 @@
                                                         (error)="onImgError($event)" alt="avatarURL">
 
                                                     <div class="info">
-                                                        <p style="font-size: 1.1rem;">{{ candidate.fullname }}</p>
-                                                        <p
-                                                            style="font-weight: 300; color: rgb(235, 235, 235); margin-bottom: 5px;">
+                                                        <p class="fullname">{{ candidate.fullname }}</p>
+                                                        <p class="no-partyName">
+
                                                             <span class="no">เบอร์ {{candidate.no}}</span>
                                                             {{candidate.party_name}}
                                                         </p>
-                                                        <p>
+                                                        <p class="score">
                                                             <span class="score-highlight" *ngIf="i === 0"
                                                                 [style.background]="getColor(candidate.party_name)">
                                                                 คะแนน: {{ candidate.totalVotes | number }}
@@ -465,33 +412,6 @@
                                                 <div class="vs-center">VS</div>
 
                                             </div>
-                                            <!-- <div *ngFor="let candidate of  district.candidates; let i = index"
-                                                style="display: flex; align-items: center; gap: 1rem; margin: 1rem .5rem;"
-                                                [ngStyle]="{
-                                                'justify-content': i % 2 === 0 ? 'flex-start' : '',
-                                                'flex-direction': i % 2 === 0 ? 'row' : 'row-reverse',
-                                                'text-align': i % 2 === 0 ? 'left' : 'right'
-                                                }">
-                                                <p class="number" [style.background]="getColor(candidate.party_name)">
-                                                    {{i + 1}}</p>
-                                                <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
-                                                    (error)="onImgError($event)" alt="avatarURL">
-                                                <div>
-                                                    <p style=" font-size: 1.1rem;">{{ candidate.fullname }}</p>
-                                                    <p
-                                                        style="font-weight: 300; color: rgb(235, 235, 235); padding-top: 3px; padding-bottom: 3px;">
-                                                        <span class="no">เบอร์ {{candidate.no}}</span>
-                                                        {{candidate.party_name}}
-                                                    </p>
-                                                    <p>
-                                                        <span
-                                                            [style.background]="i === 0 ? getColor(candidate.party_name) : null"
-                                                            [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}">
-                                                            คะแนน: {{ candidate.totalVotes | number }}
-                                                        </span>
-                                                    </p>
-                                                </div>
-                                            </div> -->
                                         </div>
                                     </div>
                                     <div style="position: absolute; color: rgba(0, 0, 0, 0.614); cursor: pointer; bottom: 10px; right: 10px; background: #ffffff; border-radius: 15px; padding: 0.3rem; display: flex; align-items: center; justify-content: center;"
@@ -610,7 +530,7 @@
                 </div>
                 <!-- เลือกเขต -->
                 <span class="loader" *ngIf="loading"></span>
-                <div *ngIf="selectedDistric !== '' && selectedProvince === '' && !loading">
+                <div *ngIf="selectedDistric !== '' && selectedProvince === '' && !loading" class="district-detail">
                     <div class="tabs">
                         <button class="tab-button" [class.active]="activeTab === 'district'"
                             (click)="changeTab('district')">
@@ -623,9 +543,9 @@
                     </div>
                     <div class="tab-content" style="margin-top: 20px;">
                         <div *ngIf=" activeTab==='district'">
-                            <div style="display: flex; justify-content: space-between;">
+                            <div class="provinceName-zone">
                                 <div>
-                                    <p class="province">{{provinceName || ""}} เขต {{zoneName || ""}}</p>
+                                    <p>{{provinceName || ""}} เขต {{zoneName || ""}}</p>
                                 </div>
                             </div>
                             <div class="header-table">
@@ -649,23 +569,20 @@
 
                                     <p class="number" [style.background]="getColor(candidate.party_name)">{{ i + 1 }}
                                     </p>
-                                    <!-- <img [src]="candidate.avatarURL" alt="Party Logo"> -->
                                     <img [src]="candidate.avatarURL !== '-' ? candidate.avatarURL : '/background/user_avatar.png'"
                                         (error)="onImgError($event)" alt="avatarURL">
                                     <div>
                                         <p class="fullname">{{ candidate.fullname }}</p>
-                                        <p
-                                            style="font-weight: 300; color: rgb(199, 199, 199); padding-top: 5px; padding-bottom: 5px;">
+                                        <p class="no-partyName">
                                             <span class="no">เบอร์ {{candidate.no}}</span> {{
                                             candidate.party_name }}
                                         </p>
                                         <p>
                                             <span [style.background]="i === 0 ? getColor(candidate.party_name) : null"
-                                                [ngStyle]="i === 0 ? {'font-weight': '700', 'font-size' : '1.5rem', 'color' : 'white', 'border-radius' : '10px', 'padding':'0px 10px', 'margin-right':'5px'} : {}">
+                                                class="score" [class.winner]="i === 0">
                                                 คะแนน: {{ candidate.totalVotes | number }}
                                             </span>
-                                            <span
-                                                style="font-weight: 300; color: rgb(199, 199, 199); font-size:1.2rem;">
+                                            <span class="percentage">
                                                 (
                                                 {{
                                                 candidate.vote_percentage}}% )</span>

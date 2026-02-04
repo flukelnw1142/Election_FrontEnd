@@ -1718,26 +1718,12 @@ PAGE 6
       padding: 1rem;
     }
 
+    .provinceName-zone {
+      font-size: 1rem;
+      cursor: pointer;
+    }
 
   }
-
-
-
-  // .candidate-item>div>div {
-  //   transition: transform 0.2s ease;
-  // }
-
-  // .candidate-item>div>div:hover {
-  //   transform: scale(1.02);
-  // }
-
-  .candidate-row {
-    transition: transform 0.2s ease;
-  }
-
-  // .candidate-row:hover {
-  //   transform: scale(1.02);
-  // }
 
   .battle-container {
     position: relative;
@@ -1748,6 +1734,22 @@ PAGE 6
     align-items: center;
     gap: 1rem;
     margin: .5rem;
+    transition: transform 0.2s ease;
+
+    .fullname {
+      font-size: 1.2rem;
+    }
+
+    .no-partyName {
+      font-weight: 300;
+      color: rgb(235, 235, 235);
+      margin-bottom: 5px;
+    }
+
+    .score {
+      font-size: 18px;
+    }
+
   }
 
   .candidate-row.right {
@@ -1765,7 +1767,6 @@ PAGE 6
     color: white;
     font-size: 20px;
   }
-
 
   .score-badge {
     font-weight: 400;
@@ -1790,6 +1791,57 @@ PAGE 6
 
   .percent.winner {
     font-size: 1.1rem;
+  }
+
+  .district-detail {
+    .tab-content {
+      .provinceName-zone {
+        display: flex;
+        justify-content: space-between;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .candidate-item {
+
+        .number,
+        .fullname {
+          font-size: 24px;
+        }
+
+        img {
+          height: 5rem;
+          width: 5rem;
+        }
+
+        .no-partyName {
+          font-weight: 300;
+          color: rgb(199, 199, 199);
+          padding-top: 5px;
+          padding-bottom: 5px;
+          font-size: 18px;
+        }
+
+        .score {
+          font-size: 20px;
+        }
+
+        .score.winner {
+          font-weight: 700 !important;
+          font-size: 24px !important;
+          color: white;
+          border-radius: 10px;
+          padding: 0px 10px;
+          margin-right: 5px;
+        }
+
+        .percentage {
+          font-weight: 300;
+          color: rgb(199, 199, 199);
+          font-size: 20px;
+        }
+      }
+    }
   }
 
 }
@@ -1834,10 +1886,74 @@ PAGE 6
         font-size: 1rem;
       }
 
+      .no-partyName {
+        font-size: 16px;
+      }
 
     }
 
+    .candidate-row {
+      gap: 0.6rem;
 
+      .fullname {
+        font-size: 1rem;
+      }
+
+      .no {
+        font-size: 0.8rem;
+      }
+
+      img {
+        height: 4rem;
+        width: 4rem;
+      }
+
+      .number {
+        height: 2.5rem;
+        width: 1.5rem;
+        font-size: 1rem;
+      }
+
+    }
+
+    .district-detail {
+      .tab-content {
+        .provinceName-zone {
+          font-size: 20px;
+        }
+
+        .candidate-item {
+
+          .number,
+          .fullname {
+            font-size: 20px;
+          }
+
+          img {
+            height: 5rem;
+            width: 5rem;
+          }
+
+          .no-partyName {
+            font-size: 16px;
+          }
+
+          .score {
+            font-size: 18px;
+          }
+
+          .score.winner {
+            font-size: 20px !important;
+          }
+
+          .percentage {
+            font-weight: 300;
+            color: rgb(199, 199, 199);
+            font-size: 18px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -1868,6 +1984,10 @@ PAGE 6
         border-radius: 50%;
         overflow: hidden;
       }
+
+      .provinceName-zone {
+        font-size: 14px;
+      }
     }
 
     .score-badge.winner {
@@ -1878,6 +1998,135 @@ PAGE 6
     .percent.winner {
       font-size: .8rem;
     }
+
+    .candidate-item {
+      // padding: 0.4rem;
+
+      .candidate-row {
+        gap: 0.3rem;
+        margin: 0rem;
+
+        .fullname {
+          font-size: 12px;
+
+        }
+
+        .no {
+          font-size: 12px;
+        }
+
+        img {
+          height: 3.5rem;
+          width: 3.5rem;
+        }
+
+        .number {
+          height: 2rem;
+          width: 1.3rem;
+          font-size: 16px;
+        }
+
+        .no-partyName {
+          font-size: 14px;
+        }
+
+        .score {
+          font-size: 16px !important;
+        }
+      }
+
+    }
+
+    .district-detail {
+      .tab-content {
+        .provinceName-zone {
+          font-size: 18px;
+        }
+
+        .candidate-item {
+          gap: 0.7rem;
+
+          .number,
+          .fullname {
+            font-size: 18px;
+          }
+
+          .number {
+            height: 2.5rem;
+            width: 1.5rem;
+          }
+
+          img {
+            height: 4rem;
+            width: 4rem;
+          }
+
+          .no-partyName {
+            font-size: 14px;
+          }
+
+          .score {
+            font-size: 16px;
+          }
+
+          .score.winner {
+            font-size: 18px !important;
+          }
+
+          .percentage {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+
+  .show-province-all {
+    .district-detail {
+      .tab-content {
+        .provinceName-zone {
+          font-size: 18px;
+        }
+
+        .candidate-item {
+          gap: 0.7rem;
+
+          .number,
+          .fullname {
+            font-size: 16px;
+          }
+
+          .number {
+            height: 2.2rem;
+            width: 1.2rem;
+          }
+
+          img {
+            height: 3.5rem;
+            width: 3.5rem;
+          }
+
+          .no-partyName {
+            font-size: 12px;
+          }
+
+          .score {
+            font-size: 14px;
+          }
+
+          .score.winner {
+            font-size: 16px !important;
+          }
+
+          .percentage {
+            font-size: 14px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -1887,6 +2136,7 @@ PAGE 6
 
     .candidate-item {
       gap: 1rem;
+      padding: 0.5rem;
 
       .logo-container {
         width: 4rem;
@@ -1900,6 +2150,11 @@ PAGE 6
         border-radius: 50%;
         overflow: hidden;
       }
+
+      .provinceName-zone {
+        margin: 5px 0 0 5px;
+        font-size: 12px;
+      }
     }
 
     .score-badge.winner {
@@ -1909,6 +2164,50 @@ PAGE 6
 
     .percent.winner {
       font-size: .8rem;
+    }
+
+    .district-detail {
+      .tab-content {
+        .provinceName-zone {
+          font-size: 18px;
+        }
+
+        .candidate-item {
+          gap: 0.5rem;
+
+          .number,
+          .fullname {
+            font-size: 14px;
+          }
+
+          .number {
+            height: 2.2rem;
+            width: 1.2rem;
+          }
+
+          img {
+            height: 3.2rem;
+            width: 3.2rem;
+          }
+
+          .no-partyName {
+            font-size: 12px;
+          }
+
+          .score {
+            font-size: 14px;
+          }
+
+          .score.winner {
+            font-size: 16px !important;
+            padding: 0px 6px;
+          }
+
+          .percentage {
+            font-size: 14px;
+          }
+        }
+      }
     }
   }
 }

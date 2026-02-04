@@ -514,7 +514,18 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
     console.log(this.selectRegion_Province_district)
     let districtIds = Object.keys(this.colorByDistrict)
-    // console.log(districtIds, this.selectedRegion, svg)
+    console.log(svg)
+    svg.querySelectorAll('g[id]').forEach(g => {
+      const id = g.id;
+
+      // pattern: ABC_123
+      const isDistrict = /^[A-Z]{3}_\d+$/.test(id);
+
+      if (isDistrict) {
+        (g as SVGGElement).style.pointerEvents = 'none';
+        g.setAttribute('pointer-events', 'none');
+      }
+    });
 
     // ทั้งประเทศ
     if (this.selectedRegion === 'ทั้งประเทศ') {
@@ -633,6 +644,8 @@ export class ReferendumPage implements OnInit, AfterViewInit {
             //     : 'none';
             // g.style.pointerEvents = pointerEvents;
             // g.setAttribute('pointer-events', pointerEvents);
+            g.style.pointerEvents = 'auto';
+            g.setAttribute('pointer-events', 'auto');
           }
         }
       }
@@ -789,9 +802,15 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       });
     });
   }
+
   bindSvgHoverEvents() {
+
+    if (this.isDesktopOnly() === false) {
+      return;
+    }
     const host = this.svgContainerRegion?.nativeElement;
     if (!host) return;
+
 
     host.onmouseenter = null;
     host.onmouseleave = null;
@@ -1044,26 +1063,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   zonesInProvince_Specific: any[] = [];
   provinces: any[] = [];
 
-
-  // onProvinceSelected_Specific(event: MatAutocompleteSelectedEvent) {
-  //   const province = event.option.value;
-  //   this.selectedProvince_Specific = province;
-
-  //   this.provinceCtrl_Specific.setValue('');
-  //   // console.log(this.provinces.find(p => p.provinceName === province).hasLeader)
-  //   if (!this.provinces.find(p => p.provinceName === province).hasLeader) {
-  //     this.sweetAlertService.showAlert(
-  //       'แจ้งเตือน',
-  //       'ยังไม่พบคะแนน',
-  //       'info'
-  //     ); return;
-  //   }
-
-
-  //   // 🔥 ค้นหาทันที
-  //   this.triggerProvinceSearch(province);
-  // }
-
   async onProvinceSelected_Specific(event: MatAutocompleteSelectedEvent) {
     const province = event.option.value;
     this.selectedProvince_Specific = province;
@@ -1129,7 +1128,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         this.initPanzoom();
       }
       this.loading = false;
-    }, 1000);
+    }, 300);
 
   }
 
@@ -1173,7 +1172,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       } else {
         this.initPanzoom();
       }
-    }, 1000);
+    }, 300);
 
   }
 

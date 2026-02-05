@@ -118,7 +118,7 @@
 
     .news-subtitle {
         color: rgba(255, 255, 255, 0.75);
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -560,6 +560,17 @@
 
 
 @media (max-width: 1100px) {
+
+    .news-header {
+        .news-title {
+            font-size: 26px;
+        }
+    }
+
+    .news-container {
+        margin: 0 30px;
+    }
+
     .countdown-section {
         background-image: none;
 
@@ -597,6 +608,22 @@
 
 
 @media (max-width: 600px) {
+    .news-header {
+        padding: 20px 50px;
+
+        .news-title {
+            font-size: 22px;
+        }
+
+        .news-subtitle {
+            font-size: 14px;
+        }
+    }
+
+    .news-container {
+        margin: 0 10px;
+    }
+
     .countdown-section {
 
         .logo-image-mobile {
@@ -674,6 +701,18 @@
 }
 
 @media (max-width: 400px) {
+    .news-header {
+        padding: 20px 38px;
+
+        .news-title {
+            font-size: 20px;
+        }
+    }
+
+    .news-container {
+        margin: 0 5px;
+    }
+
     .countdown-section {
 
         .title {

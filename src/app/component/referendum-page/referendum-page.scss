@@ -222,6 +222,7 @@
         height: 90%;
         scrollbar-width: none; // Firefox
         -ms-overflow-style: none;
+        overflow-y: hidden;
     }
 
     .region-map-wrapper {
@@ -251,7 +252,7 @@
             width: auto;
             height: auto;
             display: block;
-            margin: 0 auto; // ตรงกลาง SVG
+            margin: 0 auto; // ตรงกลาง SVG  
 
         }
     }

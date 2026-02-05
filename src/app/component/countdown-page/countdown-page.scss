@@ -88,19 +88,25 @@
 
 
 /* ให้ section ข่าวมีพื้นที่อ่านง่าย */
-.news-section {
+.news-section {}
+
+.news-container {
     position: relative;
     z-index: 2;
     padding: 32px 18px 60px;
     margin: 0 40px;
 }
 
-
 .news-header {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 18px;
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 20px 58px;
+    background: rgba(96, 96, 96, 0.55);
 
     .news-title {
         margin: 0;
@@ -282,18 +288,6 @@
         font-size: 26px;
     }
 }
-
-// body {
-//     scroll-snap-type: y mandatory;
-// }
-
-// .hero,
-// .news-section {
-//     scroll-snap-align: start;
-// }
-
-
-
 
 //
 

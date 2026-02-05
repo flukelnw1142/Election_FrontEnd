@@ -165,7 +165,7 @@
 
         .title {
             font-size: 18px;
-            font-weight: 800;
+            font-weight: 700;
             line-height: 1.25;
             margin-bottom: 8px;
 
@@ -337,16 +337,6 @@
         text-align: center;
     }
 
-    // .badge {
-    //     display: inline-block;
-    //     padding: 6px 12px;
-    //     border-radius: 999px;
-    //     font-size: 12px;
-    //     letter-spacing: 0.12em;
-    //     background: rgba(109, 109, 109, 0.728);
-    //     margin-bottom: 14px;
-    // }
-
     .title {
         margin: 0 0 6px;
         font-size: clamp(26px, 3.5vw, 35px);
@@ -440,9 +430,9 @@
 }
 
 
-@media (max-width: 1440px) and (min-height: 745px) {
+@media (max-width: 1440px) {
     .countdown-section {
-        background-position: center -30px;
+        background-position: center 0px;
 
         .card {
             grid-column: 2;
@@ -502,8 +492,7 @@
     }
 }
 
-
-@media (max-width: 1024px) and (min-height: 745px) {
+@media (max-width: 1024px) {
     .countdown-section {
         background-position: center 0px;
 
@@ -568,16 +557,27 @@
     }
 }
 
-@media (max-width: 768px) and (min-height: 745px) {
+
+
+@media (max-width: 768px) {
     .countdown-section {
         background-image: none;
 
 
         .logo-image-mobile {
             display: flex;
-            width: 50%;
+            width: 35%;
             align-items: center;
             justify-content: center;
+        }
+
+        .logo-image {
+            display: none;
+            padding: 10px;
+            max-height: 70px;
+            object-fit: contain;
+            flex-shrink: 0;
+            margin-bottom: 15px;
         }
 
         .page {
@@ -586,6 +586,7 @@
         }
 
         .card {
+            margin: 30px;
             grid-column: 1;
             justify-self: center;
             background: rgb(50 17 90 / 30%);
@@ -655,19 +656,3 @@
     //     }
     // }
 }
-
-// @media (max-width: 1024px) {
-//     .countdown-section {
-//         background-image: none;
-
-//         .page {
-//             grid-template-columns: 1fr;
-//             width: 80%;
-//         }
-
-//         .card {
-//             grid-column: 1;
-//             justify-self: center;
-//         }
-//     }
-// }

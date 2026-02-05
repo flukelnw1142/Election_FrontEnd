@@ -17,47 +17,47 @@ import { ReferendumPageV2 } from './component/referendum-page-V2/referendum-page
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/index' },
   { path: '*', pathMatch: 'full', redirectTo: '/index' },
-  { path: 'login', component: Login },
+  // { path: 'login', component: Login },
   { path: 'index', component: CountdownPage },
-  {
-    path: '',
-    component: MainLayout,
-    children: [
-      {
-        path: 'dashboard',
-        component: Dashboard,
-      },
-      {
-        path: 'main-page',
-        component: MainPage,
-      },
-      {
-        path: 'dashboardV2',
-        component: DashboardV2,
-      },
-      {
-        path: 'dashboardv3',
-        component: DashboardScoreAndSeat,
-      },
-      {
-        path: 'detail',
-        component: DetailDialog,
-      },
-      {
-        path: 'manage',
-        component: ManageElection,
-      },
-      {
-        path: 'referendum',
-        component: ReferendumPage,
-      },
-      {
-        path: 'referendumV2',
-        component: ReferendumPageV2,
-      },
+  // {
+  //   path: '',
+  //   component: MainLayout,
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       component: Dashboard,
+  //     },
+  //     {
+  //       path: 'main-page',
+  //       component: MainPage,
+  //     },
+  //     {
+  //       path: 'dashboardV2',
+  //       component: DashboardV2,
+  //     },
+  //     {
+  //       path: 'dashboardv3',
+  //       component: DashboardScoreAndSeat,
+  //     },
+  //     {
+  //       path: 'detail',
+  //       component: DetailDialog,
+  //     },
+  //     {
+  //       path: 'manage',
+  //       component: ManageElection,
+  //     },
+  //     {
+  //       path: 'referendum',
+  //       component: ReferendumPage,
+  //     },
+  //     {
+  //       path: 'referendumV2',
+  //       component: ReferendumPageV2,
+  //     },
 
-    ],
-  },
+  //   ],
+  // },
 
   { path: '**', pathMatch: 'full', redirectTo: '/index' },
 ];

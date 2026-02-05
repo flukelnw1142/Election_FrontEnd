@@ -992,7 +992,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   @ViewChild('specificTrig') specificTrig!: MatAutocompleteTrigger;
   filteredProvinces_Specific!: Observable<any[]>;
   selectedZone_Specific = '';
-  selectedProvince_Specific = '';
+  selectedProvince_Specific = 'ทั้งประเทศ';
   zonesInProvince_Specific: any[] = [];
   provinces: any[] = [];
 

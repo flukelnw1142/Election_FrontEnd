@@ -657,6 +657,18 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         .subscribe({
           next: (res) => {
             console.log('result referendum:', res);
+
+            if (res.message === 'ไม่พบข้อมูลการเลือกตั้งในระบบ') {
+              this.sweetAlertService.showAlert(
+                'แจ้งเตือน',
+                'ยังไม่พบคะแนน',
+                'info'
+              );
+              this.selectedRegion = 'ทั้งประเทศ'
+              this.handleGetResultReferendum();
+              return;
+            }
+
             // this.colorByDistrict = res.data.byProvince
             const question = res.data.questions[0]
             const agreePercent = question.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
@@ -987,7 +999,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   }
 
 
-  provinceCtrl_Specific = new FormControl('');
+  provinceCtrl_Specific = new FormControl('ทั้งประเทศ');
   private showAllOnFocus_Specific = false;
   @ViewChild('specificTrig') specificTrig!: MatAutocompleteTrigger;
   filteredProvinces_Specific!: Observable<any[]>;
@@ -1029,6 +1041,13 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
     this.loading = true;
     this.textShow = province;
+
+    console.log(provinceData.provinceName)
+    if (provinceData.provinceName === 'ทั้งประเทศ') {
+      this.onRegionSelect(provinceData.provinceName)
+      this.loading = false;
+      return;
+    }
 
     try {
 
@@ -1133,7 +1152,11 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   getProvince() {
     this._Tab2.getProvince().subscribe({
       next: (res) => {
-        this.provinces = res.data;
+        // this.provinces = res.data;
+        this.provinces = [
+          { provID: 0, provinceName: 'ทั้งประเทศ', hasLeader: 1, hasReferendumVotes: 1 },
+          ...(Array.isArray(res.data) ? res.data : [])
+        ];
         console.log("this.provinces :", this.provinces);
 
         this.cdr.detectChanges();

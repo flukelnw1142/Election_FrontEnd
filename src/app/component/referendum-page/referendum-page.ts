@@ -458,6 +458,18 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     let districtIds = Object.keys(this.colorByDistrict)
     console.log(svg)
 
+    svg.querySelectorAll('g[id]').forEach(g => {
+      const id = g.id;
+
+      // pattern: ABC_123
+      const isDistrict = /^[A-Z]{3}_\d+$/.test(id);
+
+      if (isDistrict) {
+        (g as SVGGElement).style.pointerEvents = 'none';
+        g.setAttribute('pointer-events', 'none');
+      }
+    });
+
     // ทั้งประเทศ
     if (this.selectedRegion === 'ทั้งประเทศ') {
 
@@ -486,6 +498,8 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
             path.style.setProperty('stroke', 'none', 'important');
             path.style.setProperty('stroke-width', '0', 'important');
+            g.style.pointerEvents = 'auto';
+            g.setAttribute('pointer-events', 'auto');
           }
         }
       }
@@ -493,18 +507,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     // ภาคอื่นๆ (ภาคใต้, ภาคเหนือ, ภาคตะวันออก, ภาคอีสาน,ภาคกลาง)
     else {
 
-      svg.querySelectorAll('g[id]').forEach(g => {
-        const id = g.id;
-
-        // pattern: ABC_123
-        const isDistrict = /^[A-Z]{3}_\d+$/.test(id);
-
-        if (isDistrict) {
-          (g as SVGGElement).style.pointerEvents = 'none';
-          g.setAttribute('pointer-events', 'none');
-        }
-      });
-      
       for (let i = 0; i < districtIds.length; i++) {
         const id = districtIds[i];
         const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -579,8 +581,11 @@ export class ReferendumPage implements OnInit, AfterViewInit {
             // g.setAttribute('pointer-events', pointerEvents);
             g.style.pointerEvents = 'auto';
             g.setAttribute('pointer-events', 'auto');
+
           }
         }
+
+
       }
       // กรณีที่'เขต'นั้นไม่มีค่า
       if (districtIds.length === 0) {

@@ -53,7 +53,7 @@ export class CountdownPage implements OnInit, OnDestroy {
 
   particles: Particle[] = [];
   private timerId: any = null;
-  newsData: any;
+  newsData: any[] = [];
   loadingNews = false;
   noMoreNews = false;
   private isFetchingNews = false;
@@ -61,11 +61,26 @@ export class CountdownPage implements OnInit, OnDestroy {
 
   isDesktop = false;
 
+  page = 1;
+  take = 8; // 2 row (4x2)
+
+  // @HostListener('window:scroll', [])
+  // onScroll() {
+  //   const scrollY = window.scrollY || document.documentElement.scrollTop;
+  //   this.showScrollTop = scrollY > 2000;
+  // }
+
   @HostListener('window:scroll', [])
-  onScroll() {
-    const scrollY = window.scrollY || document.documentElement.scrollTop;
+  onScrollLoadMore() {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.body.offsetHeight - 600;
     this.showScrollTop = scrollY > 2000;
+
+    if (scrollPosition >= threshold) {
+      this.loadMoreNews();
+    }
   }
+
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -77,8 +92,9 @@ export class CountdownPage implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.loadMoreNews();
     if (!isPlatformBrowser(this.platformId)) return;
-    this.getElectionNews();
+    // this.getElectionNews();
     this.buildParticles(55);
     console.log('targetIso =', this.targetIso);
     console.log('parsed date =', new Date(this.targetIso));
@@ -156,35 +172,35 @@ export class CountdownPage implements OnInit, OnDestroy {
     }));
   }
 
-  async getElectionNews() {
-    if (this.isFetchingNews) return;
-    this.loadingNews = true;
-    let page = 1;
-    const take = 10;
+  // async getElectionNews() {
+  //   if (this.isFetchingNews) return;
+  //   this.loadingNews = true;
+  //   let page = 1;
+  //   const take = 10;
 
-    let allNews: any[] = [];
+  //   let allNews: any[] = [];
 
-    while (true) {
-      console.log("Fetching page:", page);
-      const res: any = await firstValueFrom(
-        this.countdownserive.getNews(page, take)
-      );
-      const items = res?.detail?.news || [];
-      if (items.length === 0) {
-        console.log("หมดแล้ว หยุด loop");
-        break;
-      }
+  //   while (true) {
+  //     console.log("Fetching page:", page);
+  //     const res: any = await firstValueFrom(
+  //       this.countdownserive.getNews(page, take)
+  //     );
+  //     const items = res?.detail?.news || [];
+  //     if (items.length === 0) {
+  //       console.log("หมดแล้ว หยุด loop");
+  //       break;
+  //     }
 
-      allNews.push(...items);
+  //     allNews.push(...items);
 
-      page++;
-    }
-    this.newsData = allNews;
-    console.log("ข่าวทั้งหมด:", this.newsData);
-    this.loadingNews = false;
-    this.isFetchingNews = true;
+  //     page++;
+  //   }
+  //   this.newsData = allNews;
+  //   console.log("ข่าวทั้งหมด:", this.newsData);
+  //   this.loadingNews = false;
+  //   this.isFetchingNews = true;
 
-  }
+  // }
 
   scrollToNews() {
     document.getElementById('news-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -204,4 +220,26 @@ export class CountdownPage implements OnInit, OnDestroy {
       behavior: "smooth"
     });
   }
+
+  async loadMoreNews() {
+    if (this.loadingNews || this.noMoreNews) return;
+
+    this.loadingNews = true;
+
+    const res: any = await firstValueFrom(
+      this.countdownserive.getNews(this.page, this.take)
+    );
+
+    const items = res?.detail?.news || [];
+
+    if (items.length === 0) {
+      this.noMoreNews = true;
+    } else {
+      this.newsData = [...this.newsData, ...items];
+      this.page++;
+    }
+
+    this.loadingNews = false;
+  }
+
 }

@@ -75,12 +75,12 @@ export class DashboardService {
     return this.wsService.connect(environment.ws_ectreport_url);
   }
 
-  // เรียกข้อมูลผู้ที่ชนะในแต่ละเขตเลือกตั้ง ทั้งแบบส.ส.เขต และ ส.ส.บัญชีรายชื่อ >> ใช้ websocket แทน
+  // เรียกข้อมูลผู้ที่ชนะในแต่ละเขตเลือกตั้ง ทั้งแบบสส. เขต และ สส. บัญชีรายชื่อ >> ใช้ websocket แทน
   getDistrictWinners(): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/Election/results`);
   }
 
-  // เรียกข้อมูลผู้ที่ชนะในแต่ละเขตเลือกตั้ง ทั้งแบบส.ส.เขต และ ส.ส.บัญชีรายชื่อ >> ใช้ websocket แทน
+  // เรียกข้อมูลผู้ที่ชนะในแต่ละเขตเลือกตั้ง ทั้งแบบสส. เขต และ สส. บัญชีรายชื่อ >> ใช้ websocket แทน
   getDistrictWinners_NEW(): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/realtime/volunteer/constituency/leaders`);
   }
@@ -117,14 +117,14 @@ export class DashboardService {
     return this._http.get<any>(`${this.baseUrl}/Election/color`);
   }
 
-  // ส.ส. แบ่งเขต --
+  // สส. แบ่งเขต --
   getPartySeatCountsZone(): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/Election/SummaryCountPartyZone`
     );
   }
 
-  // ส.ส. บัญชีรายชื่อ >> ใช้ websocket แทน
+  // สส. บัญชีรายชื่อ >> ใช้ websocket แทน
   getPartySeatCountsList(): Observable<any> {
     return this._http.get<any>(
       `${this.baseUrl}/Election/GetSummaryCountPartyZoneAndPartyList`
@@ -235,7 +235,7 @@ export class DashboardService {
   }
 
 
-   getBanner(): Observable<any> {
+  getBanner(): Observable<any> {
     return this._http.get<any>(`${this.baseUrl}/mode/supporters`);
   }
 }

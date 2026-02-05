@@ -59,6 +59,8 @@ export class CountdownPage implements OnInit, OnDestroy {
   private isFetchingNews = false;
   showScrollTop = false;
 
+  isDesktop = false;
+
   @HostListener('window:scroll', [])
   onScroll() {
     const scrollY = window.scrollY || document.documentElement.scrollTop;

@@ -50,7 +50,7 @@
                 {{ isReferendumPage ? 'how_to_vote' : 'thumbs_up_down' }}
             </mat-icon>
             <p style="text-decoration: underline;">
-                {{ isReferendumPage
+                {{ (isReferendumPage && isRealReferendumPage)
                 ? 'คลิกเพื่อดูผลการเลือกตั้ง'
                 : 'คลิกเพื่อดูผลคะแนนประชามติ' }}
             </p>

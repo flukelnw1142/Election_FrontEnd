@@ -31,7 +31,7 @@ export class MainLayout {
   isMainPage = true;
   default = false;
   is_certified: boolean = false;
-
+  isRealReferendumPage = false;
   // เช็คว่าเป็นหน้า manage
   isSourceLabelPage = true;
   private sub = new Subscription();
@@ -72,6 +72,7 @@ export class MainLayout {
       .subscribe((event: any) => {
         const url = event.urlAfterRedirects;
         this.isReferendumPage = url.startsWith('/referendum');
+        this.isRealReferendumPage = url.startsWith('/referendum')
         console.log(" this.isReferendumPage : ", this.isReferendumPage);
         this.default = this.isReferendumPage;
         this.uiState.referendumLogoSmall$.subscribe((small) => {
@@ -126,7 +127,7 @@ export class MainLayout {
 
   referendum(): void {
 
-    if (this.isReferendumPage && !this.isDesktopOnly()) {
+    if ((this.isReferendumPage && this.isRealReferendumPage) && !this.isDesktopOnly()) {
       console.log('Going back to dashboard...');
       this.router.navigate(['/dashboard']);
     } else {

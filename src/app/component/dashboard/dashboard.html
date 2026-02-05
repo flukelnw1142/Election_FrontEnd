@@ -173,7 +173,7 @@
         <div class="party-page__col party-page__col--mid">
             <div class="party-card party-card--mid">
                 <div class="party-mid__center">
-                    <p class="zone-label">ส.ส.เขต</p>
+                    <p class="zone-label">สส. เขต</p>
                     <p class="zone-seats" (click)="onClickPartyListAndPartyZone(selectedParty, '')">
                         {{ zoneSeats }}
                     </p>
@@ -184,7 +184,7 @@
             <div class="party-card party-card--mid party-mid--bottom">
                 <div>
                     <div class="party-mid__center">
-                        <p class="party-list-label">ส.ส.บัญชีรายชื่อ</p>
+                        <p class="party-list-label">สส. บัญชีรายชื่อ</p>
                         <p class="party-list-seats" (click)="onClickPartyListAndPartyZone(selectedParty, 'partyList')">
                             {{ partylistSeats }}
                         </p>
@@ -225,13 +225,13 @@
                     </div>
                     <div class="zone-party" [style.background]="getColor(selectedParty)">
                         <div class="row2">
-                            <p class="zone-label" (click)="onClickPartyListAndPartyZone(selectedParty, '')">ส.ส.เขต
+                            <p class="zone-label" (click)="onClickPartyListAndPartyZone(selectedParty, '')">สส. เขต
                                 <span> {{ zoneSeats }}</span> ที่นั่ง
                             </p>
                         </div>
                         <div class="row2">
                             <p class="zone-label" (click)="onClickPartyListAndPartyZone(selectedParty, 'partyList')">
-                                ส.ส.บัญชีรายชื่อ <span> {{ partylistSeats }}</span> ที่นั่ง</p>
+                                สส. บัญชีรายชื่อ <span> {{ partylistSeats }}</span> ที่นั่ง</p>
                         </div>
                     </div>
                 </div>
@@ -294,7 +294,7 @@
                     <div class="tabs">
                         <button class="tab-button" [class.active]="activeTab === 'district'"
                             (click)="changeTab('district')">
-                            ส.ส. เขต
+                            สส.  เขต
                         </button>
                         <button class="tab-button" [class.active]="activeTab === 'partyList'"
                             (click)="changeTab('partyList')">
@@ -534,7 +534,7 @@
                     <div class="tabs">
                         <button class="tab-button" [class.active]="activeTab === 'district'"
                             (click)="changeTab('district')">
-                            ส.ส. เขต
+                            สส.  เขต
                         </button>
                         <button class="tab-button" [class.active]="activeTab === 'partyList'"
                             (click)="changeTab('partyList')">
@@ -656,7 +656,7 @@
 
 </div>
 
-<!-- PAGE 7 : แสดงส.ส.เขต และ บัญชีรายชื่อ ของ 1 พรรค | show-party-list & show-district-per-party -->
+<!-- PAGE 7 : แสดงสส. เขต และ บัญชีรายชื่อ ของ 1 พรรค | show-party-list & show-district-per-party -->
 <!-- <div *ngIf="selectedPartyListAndZoneSeat !== '' " style="position: relative;" class="show-partyList-ZoneSeat"> -->
 <!-- <div *ngIf="getCurrentPage('show-party-list_&_show-district-per-party') " class="show-partyList-ZoneSeat"> -->
 <div *ngIf="currentIsShowPartylistAndDistrictPerParty" class="show-partyList-ZoneSeat">
@@ -676,7 +676,7 @@
                         style="margin-top: clamp(10px, .7vw, 15px);">
                         <div class="row-score" style="background-color: #fffffff4; border-radius: 1rem 1rem 0rem 0rem;"
                             [style.color]="getColor(partySeatCounts.partyName)">
-                            <p class="header">ส.ส. เขต</p>
+                            <p class="header">สส.  เขต</p>
                             <div style="text-align: end;">
                                 <p style="font-size: clamp(1rem, 1.4vw, 1.6rem); font-weight: 600; ">
                                     {{partySeatCounts.zone_seats}}
@@ -690,7 +690,7 @@
                         <hr style="margin: 0;">
                         <div class="row-score" style="background-color: #fffffff4;"
                             [style.color]="getColor(partySeatCounts.partyName)">
-                            <p class="header">ส.ส. บัญชีรายชื่อ</p>
+                            <p class="header">สส.  บัญชีรายชื่อ</p>
                             <div style="text-align: end;">
                                 <p style="font-size: clamp(1rem, 1.4vw, 1.6rem); font-weight: 600;">
                                     {{partySeatCounts.partylist_seats}}
@@ -703,7 +703,7 @@
                             </div>
                         </div>
                         <div class="row-score">
-                            <p class="header">ส.ส. ทั้งหมด</p>
+                            <p class="header">สส.  ทั้งหมด</p>
                             <p style="font-size: clamp(1rem, 1.4vw, 1.6rem); font-weight: 600;">
                                 {{partySeatCounts.zone_seats +
                                 partySeatCounts.partylist_seats}}
@@ -732,7 +732,7 @@
                 <div class="tabs">
                     <button class="tab-button" [class.active]="activeTab === 'district'"
                         (click)="activeTab = 'district'">
-                        ส.ส. เขต ({{detailWinnerZonePerParty.length}})
+                        สส.  เขต ({{detailWinnerZonePerParty.length}})
                     </button>
                     <button class="tab-button" [class.active]="activeTab === 'partyList'"
                         (click)="activeTab = 'partyList'">
@@ -869,7 +869,7 @@
         <div class="two-column-grid">
             <div class="left" style="justify-content: space-between; display: flex; flex-direction: column; ">
                 <div>
-                    <div class="header">ส.ส. บัญชีรายชื่อ</div>
+                    <div class="header">สส.  บัญชีรายชื่อ</div>
                     <div class="partyName">{{partySeatCounts.partyName}}</div>
                 </div>
                 <div>
@@ -880,7 +880,7 @@
                     </div>
                     <div [style.background-color]="getColor(partySeatCounts.partyName)" class="score">
                         <div class="row-score">
-                            <p class="header">จำนวนส.ส. บัญชีรายชื่อ</p>
+                            <p class="header">จำนวนสส.  บัญชีรายชื่อ</p>
                             <p style="font-size: 3rem; font-weight: 600;">{{partySeatCounts.partylist_seats}}
                             </p>
                         </div>
@@ -924,7 +924,7 @@
 <!-- <div *ngIf="selectedZoneSeat !== ''" style="position: relative;" class="show-distric">
     <button class="ds-Button" (click)="closeDialog()">X</button>
     <div class="glass-card card" style="color: white;">
-        <p class="header">ส.ส. เขต</p>
+        <p class="header">สส.  เขต</p>
         <p class="partyName">{{detailWinnerZonePerParty[0].partyName || ""}} ( {{detailWinnerZonePerParty.length}}
             ที่นั่ง ) </p>
         <hr>

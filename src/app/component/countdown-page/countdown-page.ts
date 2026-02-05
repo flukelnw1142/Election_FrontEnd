@@ -40,6 +40,7 @@ export class CountdownPage implements OnInit, OnDestroy {
 
   // เป้าหมายเวลาไทย (GMT+7)
   // targetIso = '2026-02-05T13:51:00+07:00';
+  // targetIso = '2026-02-08T17:00:00+07:00';
   targetIso = '2026-02-08T17:00:00+07:00';
 
   countdown: Countdown = {
@@ -63,6 +64,8 @@ export class CountdownPage implements OnInit, OnDestroy {
 
   page = 1;
   take = 8; // 2 row (4x2)
+
+  countdownData: any;
 
   // @HostListener('window:scroll', [])
   // onScroll() {
@@ -92,6 +95,7 @@ export class CountdownPage implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.getCount();
     this.loadMoreNews();
     if (!isPlatformBrowser(this.platformId)) return;
     // this.getElectionNews();
@@ -241,6 +245,26 @@ export class CountdownPage implements OnInit, OnDestroy {
     }
 
     this.loadingNews = false;
+  }
+
+
+
+  getCount() {
+    this.countdownserive.getCountdownEvent().subscribe({
+      next: (res) => {
+        console.log(res[0])
+        this.countdownData = res[0]
+        this.title = res[0].Title
+        this.subtitle = res[0].Subtitle
+        this.targetUrl = res[0].TargetUrl
+        // this.targetIso = '2026-02-05T17:59:00+07:00'
+        this.targetIso =res[0].TargetIso
+
+      },
+      error: (err) => {
+        console.error('API error:', err);
+      },
+    })
   }
 
 }

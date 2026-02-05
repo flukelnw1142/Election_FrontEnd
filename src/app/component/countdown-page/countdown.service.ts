@@ -2,12 +2,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class CountdownService {
+    private baseUrl = environment.api_url;
 
     constructor(private _http: HttpClient) { }
 
@@ -19,6 +21,10 @@ export class CountdownService {
                 "api-key": apiKey
             }
         });
+    }
+
+    getCountdownEvent(): Observable<any> {
+        return this._http.get<any>(`${this.baseUrl}/trigger/master/official/countdown-events`);
     }
 
 }

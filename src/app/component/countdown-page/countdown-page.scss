@@ -4,19 +4,12 @@
     inset: 0;
     z-index: -1;
     overflow: hidden;
-    // background: #050914;
-    background-image: url('/background/bg-final.jpg');
+
+    filter: brightness(0.5) contrast(1.2);
+    background-image: url('/background/bg-final-2.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.logo-image {
-    padding: 10px;
-    max-height: 100px;
-    object-fit: contain;
-    flex-shrink: 0;
-    margin-bottom: 15px;
 }
 
 /* gradient เคลื่อนไหว */
@@ -77,138 +70,6 @@
     }
 }
 
-/* ===== Page ===== */
-.page {
-    display: grid;
-    place-items: center;
-    padding: 24px;
-    color: #e5e7eb;
-    font-family: "Kanit", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-}
-
-// .card {
-//     width: min(720px, 100%);
-//     border-radius: 20px;
-//     padding: 28px 24px;
-//     background: rgba(255, 255, 255, 0.062);
-//     border: 1px solid rgba(255, 255, 255, 0.10);
-//     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.788);
-//     backdrop-filter: blur(10px);
-//     text-align: center;
-// }
-
-.card {
-    width: min(720px, 100%);
-    border-radius: 20px;
-    padding: 28px 24px;
-    background: rgba(255, 255, 255, 0.062);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.788);
-    backdrop-filter: blur(10px);
-    text-align: center;
-}
-
-.badge {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    background: rgba(109, 109, 109, 0.728);
-    // border: 1px solid rgba(59, 130, 246, 0.35);
-    margin-bottom: 14px;
-}
-
-.title {
-    margin: 0 0 6px;
-    font-size: clamp(26px, 3.5vw, 35px);
-    line-height: 1.2;
-    color: #ffffff;
-    font-weight: 700;
-}
-
-.subtitle {
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 18px;
-    font-size: 18px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-    margin: 20px 0 10px;
-}
-
-.box {
-    border-radius: 16px;
-    padding: 16px 10px;
-    border: 1px solid rgba(255, 255, 255, 0);
-    background: rgba(255, 255, 255, 0.121);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.244);
-}
-
-.num {
-    font-size: clamp(26px, 4vw, 44px);
-    font-weight: 800;
-    line-height: 1;
-    color: #ffffff;
-}
-
-.label {
-    margin-top: 6px;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.95);
-    font-weight: 600;
-}
-
-.ended {
-    margin-top: 10px;
-    font-weight: 600;
-}
-
-.actions {
-    margin-top: 18px;
-    display: grid;
-    gap: 10px;
-    justify-items: center;
-}
-
-.primary {
-    border: 0;
-    border-radius: 12px;
-    padding: 12px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    background: #ffffff;
-    color: #000000;
-    width: min(320px, 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.primary:hover {
-    filter: brightness(.8);
-}
-
-.link-live {
-    margin-top: 16px;
-    font-size: 16px;
-    color: #000000;
-    text-decoration: underline;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.link-live:hover {
-    color: #0d2983;
-}
-
 .ghost {
     border-radius: 12px;
     padding: 12px 16px;
@@ -225,7 +86,6 @@
 }
 
 
-/* landing.component.scss */
 
 /* ให้ section ข่าวมีพื้นที่อ่านง่าย */
 .news-section {
@@ -234,6 +94,7 @@
     padding: 32px 18px 60px;
     margin: 0 40px;
 }
+
 
 .news-header {
     display: flex;
@@ -419,5 +280,179 @@
 
     mat-icon {
         font-size: 26px;
+    }
+}
+
+// body {
+//     scroll-snap-type: y mandatory;
+// }
+
+// .hero,
+// .news-section {
+//     scroll-snap-align: start;
+// }
+
+
+
+
+//
+
+.countdown-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url('/background/bg-final.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .logo-image {
+        padding: 10px;
+        max-height: 100px;
+        object-fit: contain;
+        flex-shrink: 0;
+        margin-bottom: 15px;
+    }
+
+    .page {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        width: 100%;
+        padding: 24px;
+        color: #e5e7eb;
+        font-family: "Kanit", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    .card {
+        grid-column: 2;
+        justify-self: center;
+        width: min(720px, 100%);
+        border-radius: 20px;
+        padding: 28px 24px;
+        background: rgba(255, 255, 255, 0.062);
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.788);
+        backdrop-filter: blur(10px);
+        text-align: center;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        background: rgba(109, 109, 109, 0.728);
+        margin-bottom: 14px;
+    }
+
+    .title {
+        margin: 0 0 6px;
+        font-size: clamp(26px, 3.5vw, 35px);
+        line-height: 1.2;
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .subtitle {
+        color: rgba(255, 255, 255, 0.95);
+        margin-bottom: 18px;
+        font-size: 18px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin: 20px 0 10px;
+    }
+
+    .box {
+        border-radius: 16px;
+        padding: 16px 10px;
+        border: 1px solid rgba(255, 255, 255, 0);
+        background: rgba(255, 255, 255, 0.121);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.244);
+    }
+
+    .num {
+        font-size: clamp(26px, 4vw, 44px);
+        font-weight: 800;
+        line-height: 1;
+        color: #ffffff;
+    }
+
+    .label {
+        margin-top: 6px;
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 600;
+    }
+
+    .ended {
+        margin-top: 10px;
+        font-weight: 600;
+    }
+
+    .actions {
+        margin-top: 18px;
+        display: grid;
+        gap: 10px;
+        justify-items: center;
+    }
+
+    .primary {
+        border: 0;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 16px;
+        cursor: pointer;
+        background: #ffffff;
+        color: #000000;
+        width: min(320px, 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .primary:hover {
+        filter: brightness(.8);
+    }
+
+    .link-live {
+        margin-top: 16px;
+        font-size: 16px;
+        color: #ffffff;
+        text-decoration: underline;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .link-live:hover {
+        color: rgb(7, 20, 63);
+    }
+
+}
+
+@media (max-width: 1024px) {
+    .countdown-section {
+
+        .page {
+            grid-template-columns: 1fr;
+            width: 80%;
+
+        }
+
+        .card {
+            grid-column: 1;
+            justify-self: center;
+        }
     }
 }

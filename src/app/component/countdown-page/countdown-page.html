@@ -1,5 +1,5 @@
 <!-- Background (Realtime animation) -->
-<div class="bg">
+<!-- <div class="bg">
     <div class="gradient"></div>
     <div class="glow"></div>
 
@@ -8,49 +8,54 @@
             [style.height.px]="p.size" [style.opacity]="p.opacity" [style.animationDelay.s]="p.delay"
             [style.animationDuration.s]="p.duration"></span>
     </div>
-</div>
+</div> -->
 
 <!-- Content -->
-<div class="page">
-    <div class="card">
-        <img src="/logo/logo-one-e.png" class="logo-image" alt="Logo" />
-        <!-- <div class="badge">COUNTDOWN</div> -->
+<div class="countdown-section">
+    <div class="page">
+        <div class="card">
+            <img src="/logo/logo-one-e.png" class="logo-image" alt="Logo" />
+            <!-- <div class="badge">COUNTDOWN</div> -->
 
-        <h1 class="title">{{ title }}</h1>
-        <div class="subtitle">{{ subtitle }}</div>
+            <h1 class="title">{{ title }}</h1>
+            <div class="subtitle">{{ subtitle }}</div>
 
-        <div class="grid">
-            <div class="box">
-                <div class="num">{{ countdown.days }}</div>
-                <div class="label">วัน</div>
+            <div class="grid">
+                <div class="box">
+                    <div class="num">{{ countdown.days }}</div>
+                    <div class="label">วัน</div>
+                </div>
+                <div class="box">
+                    <div class="num">{{ countdown.hours }}</div>
+                    <div class="label">ชั่วโมง</div>
+                </div>
+                <div class="box">
+                    <div class="num">{{ countdown.minutes }}</div>
+                    <div class="label">นาที</div>
+                </div>
+                <div class="box">
+                    <div class="num">{{ countdown.seconds }}</div>
+                    <div class="label">วินาที</div>
+                </div>
             </div>
-            <div class="box">
-                <div class="num">{{ countdown.hours }}</div>
-                <div class="label">ชั่วโมง</div>
+
+            <div class="ended" *ngIf="countdown.isEnded">
+                ถึงเวลาแล้ว ✅
             </div>
-            <div class="box">
-                <div class="num">{{ countdown.minutes }}</div>
-                <div class="label">นาที</div>
+
+            <div class="actions">
+                <button class="primary"
+                    (click)="goToWebsite()"><mat-icon>how_to_vote</mat-icon>ดูผลการเลือกตั้งเรียลไทม์</button>
             </div>
-            <div class="box">
-                <div class="num">{{ countdown.seconds }}</div>
-                <div class="label">วินาที</div>
-            </div>
+            <a href="/live-stream" class="link-live"> <mat-icon>live_tv</mat-icon>รับชมการถ่ายทอดสด</a>
         </div>
-
-        <div class="ended" *ngIf="countdown.isEnded">
-            ถึงเวลาแล้ว ✅
-        </div>
-
-        <div class="actions">
-            <button class="primary"
-                (click)="goToWebsite()"><mat-icon>how_to_vote</mat-icon>ดูผลการเลือกตั้งเรียลไทม์</button>
-        </div>
-        <a href="/live-stream" class="link-live"> <mat-icon>live_tv</mat-icon>รับชมการถ่ายทอดสด</a>
     </div>
 </div>
 
-<section id="news-section" class="news-section">
+<div class="bg">
+</div>
+
+<div id="news-section" class="news-section">
     <div class="news-header">
         <h2 class="news-title">วันเลือกตั้ง 2569</h2>
         <div class="news-subtitle">อัปเดตข่าวล่าสุดจาก ONE</div>
@@ -79,7 +84,7 @@
             <mat-icon class="spin">autorenew</mat-icon> กำลังโหลด...
         </div>
     </div>
-</section>
+</div>
 
 <button class="scroll-top" *ngIf="showScrollTop" (click)="scrollToTop()">
     <mat-icon>north</mat-icon>

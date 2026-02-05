@@ -299,7 +299,7 @@
 
     background-image: url('/background/bg-final.jpg');
     background-size: cover;
-    background-position: center -90px;
+    background-position: 0px -90px;
     background-repeat: no-repeat;
 
     .logo-image-mobile {
@@ -432,7 +432,7 @@
 
 @media (max-width: 1440px) {
     .countdown-section {
-        background-position: center 0px;
+        background-position: 0px 0px;
 
         .card {
             grid-column: 2;
@@ -494,7 +494,7 @@
 
 @media (max-width: 1024px) {
     .countdown-section {
-        background-position: center 0px;
+        background-position: -30px 0px;
 
         .logo-image {
             padding: 10px;
@@ -559,7 +559,7 @@
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
     .countdown-section {
         background-image: none;
 

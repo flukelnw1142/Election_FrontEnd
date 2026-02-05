@@ -378,66 +378,8 @@ export class ReferendumPage implements OnInit, AfterViewInit {
           if (provinceName) {
             this.handleProvinceSearch(provinceName, districtIds);
           }
-          // if (provinceName) {
-          //   let svgTextCurrent = this.currentSvg!
-          //   if (oldSvgIsAll) {
-          //     const region = await this.findRegionByProvince(provinceName);
-          //     if (region) {
-          //       this.selectedRegion = region
-          //       svgTextCurrent = await this.loadSvgByRegion(region);
-          //     }
-          //   }
-          //   this.handleGetResultReferendum(provinceName, 'province').then(() => {
-          //     this.processSvgForRegion(svgTextCurrent).then((processedSvg) => {
-          //       this.zone.run(() => {
-          //         this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
-          //           processedSvg.outerHTML
-          //         );
-          //         this.cdr.markForCheck();
-          //       });
-          //     });
-          //   });
-
-          //   this.resetZoom()
-          //   this.textShow = provinceName;
-          //   this.selectRegion_Province_district = {
-          //     value: districtIds,
-          //     type: 'province',
-          //     displayName: provinceName
-          //   }
-          // }
-          // return;
         }
-        // else if (/^[a-zA-Z]+_region$/.test(id)) {
-        //   // ✅ ชื่อ เช่น north_region
-        //   matchedElement = current;
-        //   const regionName = matchedElement
-        //     .querySelector('text')
-        //     ?.textContent?.trim();
-        //   if (regionName) {
-        //     // this.activeTab = 'district';
-        //     console.log("regionName : ", regionName);
 
-        //     this.onRegionSelect(regionName);
-        //     this.textShow = regionName
-        //     this.handleGetResultReferendum(regionName, 'region').then(() => {
-        //       this.processSvgForRegion(this.currentSvg!).then((processedSvg) => {
-        //         this.zone.run(() => {
-        //           this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
-        //             processedSvg.outerHTML
-        //           );
-        //           this.cdr.markForCheck();
-        //         });
-        //       });
-        //     });
-        //     this.selectRegion_Province_district = {
-        //       value: regionName,
-        //       type: 'region'
-        //     }
-        //   }
-
-        //   return;
-        // }
       }
       // this.loading = false;
       current = current.parentElement as HTMLElement;
@@ -529,17 +471,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
     // ทั้งประเทศ
     if (this.selectedRegion === 'ทั้งประเทศ') {
-      // const allGroups = svg.querySelectorAll<SVGGElement>('g');
-      // allGroups.forEach(g => {
-      //   const id = g.getAttribute('id');
-      //   if (id && id.endsWith('_region')) {
-      //     g.style.pointerEvents = 'auto';
-      //     g.setAttribute('pointer-events', 'auto');
-      //   } else {
-      //     g.style.pointerEvents = 'none';
-      //     g.setAttribute('pointer-events', 'none');
-      //   }
-      // });
 
       for (let i = 0; i < districtIds.length; i++) {
         const id = districtIds[i];
@@ -1048,11 +979,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     });
   }
 
-  focusProvince(provinceName: string) {
-    // this.handleProvinceClick(provinceName);
-  }
-
-  // Filter mobile
 
   provinceCtrl_Specific = new FormControl('');
   private showAllOnFocus_Specific = false;
@@ -1075,11 +1001,16 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       type: 'province',
       displayName: province
     };
+
+    setTimeout(() => {
+      this.specificTrig?.closePanel();
+    }, 0);
   }
 
   async handleProvinceSearch(province: string, districtIds?: string[]) {
     const provinceData = this.provinces.find(p => p.provinceName === province);
-    if (!provinceData?.hasLeader) {
+
+    if (!provinceData?.hasReferendumVotes) {
       this.sweetAlertService.showAlert(
         'แจ้งเตือน',
         'ยังไม่พบคะแนน',
@@ -1092,89 +1023,94 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     this.loading = true;
     this.textShow = province;
 
-    let svgTextCurrent = this.currentSvg!
-    const region = await this.findRegionByProvince(province);
-    if (region) {
-      this.selectedRegion = region
-      svgTextCurrent = await this.loadSvgByRegion(region);
-    }
+    try {
 
-    // 🔥 เรียก API
-    this.handleGetResultReferendum(province, 'province')
-      .then(() => {
-        // ใช้ svg ปัจจุบัน (region ที่เลือกอยู่)
-        this.processSvgForRegion(this.currentSvg!)
-          .then((processedSvg) => {
-            this.zone.run(() => {
-              this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
-                processedSvg.outerHTML
-              );
-              this.cdr.markForCheck();
-            });
-          });
-      })
-
-    this.resetZoom()
-    this.textShow = province;
-    this.selectRegion_Province_district = {
-      value: province,
-      type: 'province',
-      displayName: province
-    }
-    setTimeout(() => {
-      if (!this.isDesktopOnly()) {
-        this.focusProvinceOnMobile(province);
-      } else {
-        this.initPanzoom();
+      let svgTextCurrent = this.currentSvg!;
+      const region = await this.findRegionByProvince(province);
+      if (region) {
+        this.selectedRegion = region;
+        svgTextCurrent = await this.loadSvgByRegion(region);
       }
-      this.loading = false;
-    }, 300);
 
+      await this.handleGetResultReferendum(province, 'province');
+
+      const processedSvg = await this.processSvgForRegion(svgTextCurrent);
+
+      this.zone.run(() => {
+        this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
+          processedSvg.outerHTML
+        );
+        this.cdr.markForCheck();
+      });
+
+      this.resetZoom();
+      this.textShow = province;
+
+      this.selectRegion_Province_district = {
+        value: province,
+        type: 'province',
+        displayName: province
+      };
+
+      requestAnimationFrame(() => {
+        if (!this.isDesktopOnly()) {
+          this.focusProvinceOnMobile(province);
+        } else {
+          this.initPanzoom();
+        }
+        this.specificTrig?.closePanel();
+      });
+
+    } catch (err) {
+      console.error('handleProvinceSearch error:', err);
+    } finally {
+      this.loading = false;
+    }
   }
 
+
   async handleZoneSearch(districtId: string) {
-    let svgTextCurrent = this.currentSvg!
+    let svgTextCurrent = this.currentSvg!;
     let displayName = this.getDistrictDisplayNameFromDom(districtId);
-    const provinceName = this.colorByDistrict[districtId].provinceNameTH.split(' ')[0]
+
+    const provinceName = this.colorByDistrict[districtId].provinceNameTH.split(' ')[0];
     console.log("provinceName : ", provinceName);
+
     const region = await this.findRegionByProvince(provinceName);
     if (region) {
-      this.selectedRegion = region
+      this.selectedRegion = region;
       svgTextCurrent = await this.loadSvgByRegion(region);
     }
 
-    displayName = this.colorByDistrict[districtId].provinceNameTH
-
-
-    this.handleGetResultReferendum(districtId, 'district').then(() => {
-      this.processSvgForRegion(svgTextCurrent).then((processedSvg) => {
-        this.zone.run(() => {
-          this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(
-            processedSvg.outerHTML
-          );
-          this.cdr.markForCheck();
-        });
-      });
-    });
-
-    this.resetZoom()
+    displayName = this.colorByDistrict[districtId].provinceNameTH;
     this.textShow = displayName;
+
     this.selectRegion_Province_district = {
       value: districtId,
       type: 'district',
       displayName
     };
+    await this.handleGetResultReferendum(districtId, 'district');
+    const processedSvg = await this.processSvgForRegion(svgTextCurrent);
+    this.zone.run(() => {
+      this.svgContentRegion = this.sanitizer.bypassSecurityTrustHtml(processedSvg.outerHTML);
+      this.cdr.markForCheck();
+    });
 
-    setTimeout(() => {
 
+    this.resetZoom();
+
+
+    requestAnimationFrame(() => {
       if (!this.isDesktopOnly()) {
         this.focusProvinceOnMobile(provinceName);
       } else {
         this.initPanzoom();
       }
-    }, 300);
-
+      this.specificTrig?.closePanel();
+    });
   }
+
 
   openProvincePanel_Specific(): void {
     this.showAllOnFocus_Specific = true;
@@ -1186,23 +1122,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       this.specificTrig?.openPanel();
     }, 0);
   }
-
-  onSubmitFilter_Specific() {
-    console.log(this.provinceCtrl_Specific.value);
-
-    if (!this.selectedProvince_Specific) {
-      this.sweetAlertService.showAlert(
-        'แจ้งเตือน',
-        'กรุณาเลือกจังหวัด',
-        'warning'
-      );
-      return;
-    }
-    this.focusProvince(this.selectedProvince_Specific);
-    console.log('onSubmitFilter_Specific', this.selectedProvince_Specific, this.selectedZone_Specific);
-
-  }
-
 
   getProvince() {
     this._Tab2.getProvince().subscribe({
@@ -1229,6 +1148,38 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       p.provinceName.toLowerCase().includes(filterValue)
     );
   }
+
+  private applyFocusProvinceOnMobileSvg(svg: SVGSVGElement, province: string) {
+    // 1) หา text จังหวัด
+    const textEl = Array.from(svg.querySelectorAll('text'))
+      .find(t => t.textContent?.trim() === province);
+
+    if (!textEl) {
+      console.warn('❌ ไม่พบชื่อจังหวัดใน SVG:', province);
+      return;
+    }
+
+    // 2) ย้อนขึ้นไปหา group จังหวัด
+    const provinceGroup = textEl.closest('g[id^="province-"]') as SVGGElement | null;
+    if (!provinceGroup) {
+      console.warn('❌ ไม่พบ province group ของจังหวัด:', province);
+      return;
+    }
+
+    // 3) ปรับ viewBox จาก bbox
+    const bbox = provinceGroup.getBBox();
+    const padding = 20;
+
+    svg.setAttribute(
+      'viewBox',
+      `${bbox.x - padding} ${bbox.y - padding} ${bbox.width + padding * 2} ${bbox.height + padding * 2}`
+    );
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+    // 4) lock จังหวัดอื่น
+    this.lockOtherProvinces(svg, provinceGroup.id);
+  }
+
 
 
 }

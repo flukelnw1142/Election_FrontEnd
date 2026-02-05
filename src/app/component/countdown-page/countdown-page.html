@@ -10,11 +10,20 @@
     </div>
 </div> -->
 
+<div class="particles">
+    <span *ngFor="let p of particles" [style.top.%]="p.topPct" [style.left.%]="p.leftPct" [style.width.px]="p.size"
+        [style.height.px]="p.size" [style.opacity]="p.opacity" [style.animationDelay.s]="p.delay"
+        [style.animationDuration.s]="p.duration"></span>
+</div>
+
 <!-- Content -->
 <div class="countdown-section">
     <div class="page">
+        <div style="align-items: center; justify-content: center; display: flex;">
+            <img src="/logo/LOGO-ONEE-ELECTION-2.png" class="logo-image-mobile" alt="Logo" />
+        </div>
         <div class="card">
-            <img src="/logo/logo-one-e.png" class="logo-image" alt="Logo" />
+            <img src="/logo/Logo_ONE_NEWS.png" class="logo-image" alt="Logo" />
             <!-- <div class="badge">COUNTDOWN</div> -->
 
             <h1 class="title">{{ title }}</h1>

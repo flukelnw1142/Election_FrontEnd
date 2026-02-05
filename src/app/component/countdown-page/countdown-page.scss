@@ -106,7 +106,7 @@
     top: 0;
     z-index: 10;
     padding: 20px 58px;
-    background: rgb(5 12 41);
+    background: #050c29;
 
     .news-title {
         margin: 0;
@@ -302,6 +302,10 @@
     background-position: center -90px;
     background-repeat: no-repeat;
 
+    .logo-image-mobile {
+        display: none;
+    }
+
     .logo-image {
         padding: 10px;
         max-height: 100px;
@@ -333,15 +337,15 @@
         text-align: center;
     }
 
-    .badge {
-        display: inline-block;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 12px;
-        letter-spacing: 0.12em;
-        background: rgba(109, 109, 109, 0.728);
-        margin-bottom: 14px;
-    }
+    // .badge {
+    //     display: inline-block;
+    //     padding: 6px 12px;
+    //     border-radius: 999px;
+    //     font-size: 12px;
+    //     letter-spacing: 0.12em;
+    //     background: rgba(109, 109, 109, 0.728);
+    //     margin-bottom: 14px;
+    // }
 
     .title {
         margin: 0 0 6px;
@@ -435,9 +439,146 @@
 
 }
 
-@media (max-width: 1024px) {
+
+@media (max-width: 1440px) and (min-height: 745px) {
+    .countdown-section {
+        background-position: center -30px;
+
+        .card {
+            grid-column: 2;
+            justify-self: center;
+            width: min(500px, 100%);
+            border-radius: 20px;
+            padding: 24px 20px;
+            background: rgba(255, 255, 255, 0.062);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.788);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .title {
+            font-size: 30px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+        }
+
+        .grid {
+            gap: 14px;
+            margin: 10px 0 5px;
+        }
+
+        .box {
+            padding: 12px 8px;
+        }
+
+        .num {
+            font-size: 30px;
+        }
+
+        .label {
+            margin-top: 4px;
+            font-size: 14px;
+        }
+
+        .primary {
+            padding: 8px 12px;
+            font-size: 16px;
+            width: min(320px, 100%);
+            gap: 10px;
+        }
+
+        .primary:hover {
+            filter: brightness(.8);
+        }
+
+        .link-live {
+            margin-top: 16px;
+            font-size: 16px;
+            gap: 10px;
+        }
+    }
+}
+
+
+@media (max-width: 1024px) and (min-height: 745px) {
+    .countdown-section {
+        background-position: center 0px;
+
+        .logo-image {
+            padding: 10px;
+            max-height: 80px;
+            object-fit: contain;
+            flex-shrink: 0;
+            margin-bottom: 15px;
+        }
+
+        .card {
+            grid-column: 2;
+            justify-self: center;
+            width: min(400px, 100%);
+            border-radius: 20px;
+            padding: 20px 16px;
+        }
+
+        .title {
+            font-size: 26px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+        }
+
+        .grid {
+            gap: 10px;
+            margin: 5px 0 5px;
+        }
+
+        .box {
+            padding: 8px 4px;
+        }
+
+        .num {
+            font-size: 26px;
+        }
+
+        .label {
+            margin-top: 4px;
+            font-size: 12px;
+        }
+
+        .primary {
+            padding: 6px 10px;
+            font-size: 14px;
+            width: min(360px, 100%);
+            gap: 8px;
+        }
+
+        .primary:hover {
+            filter: brightness(.8);
+        }
+
+        .link-live {
+            margin-top: 14px;
+            font-size: 14px;
+            gap: 8px;
+        }
+    }
+}
+
+@media (max-width: 768px) and (min-height: 745px) {
     .countdown-section {
         background-image: none;
+
+
+        .logo-image-mobile {
+            display: flex;
+            width: 50%;
+            align-items: center;
+            justify-content: center;
+        }
 
         .page {
             grid-template-columns: 1fr;
@@ -447,6 +588,86 @@
         .card {
             grid-column: 1;
             justify-self: center;
+            background: rgb(50 17 90 / 30%);
         }
     }
+
+    // .countdown-section {
+    //     background-position: center 0px;
+
+    //     .logo-image {
+    //         padding: 10px;
+    //         max-height: 80px;
+    //         object-fit: contain;
+    //         flex-shrink: 0;
+    //         margin-bottom: 15px;
+    //     }
+
+    //     .card {
+    //         grid-column: 2;
+    //         justify-self: center;
+    //         width: min(400px, 100%);
+    //         border-radius: 20px;
+    //         padding: 20px 16px;
+    //     }
+
+    //     .title {
+    //         font-size: 26px;
+    //     }
+
+    //     .subtitle {
+    //         font-size: 14px;
+    //     }
+
+    //     .grid {
+    //         gap: 10px;
+    //         margin: 5px 0 5px;
+    //     }
+
+    //     .box {
+    //         padding: 8px 4px;
+    //     }
+
+    //     .num {
+    //         font-size: 26px;
+    //     }
+
+    //     .label {
+    //         margin-top: 4px;
+    //         font-size: 12px;
+    //     }
+
+    //     .primary {
+    //         padding: 6px 10px;
+    //         font-size: 14px;
+    //         width: min(360px, 100%);
+    //         gap: 8px;
+    //     }
+
+    //     .primary:hover {
+    //         filter: brightness(.8);
+    //     }
+
+    //     .link-live {
+    //         margin-top: 14px;
+    //         font-size: 14px;
+    //         gap: 8px;
+    //     }
+    // }
 }
+
+// @media (max-width: 1024px) {
+//     .countdown-section {
+//         background-image: none;
+
+//         .page {
+//             grid-template-columns: 1fr;
+//             width: 80%;
+//         }
+
+//         .card {
+//             grid-column: 1;
+//             justify-self: center;
+//         }
+//     }
+// }

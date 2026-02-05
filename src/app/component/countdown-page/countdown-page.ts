@@ -207,7 +207,8 @@ export class CountdownPage implements OnInit, OnDestroy {
   }
 
   openNews(item: any) {
-    window.open(`https://www.one31.net/news/detail/${item.id}`, '_blank');
+    // window.open(`https://www.one31.net/news/detail/${item.id}`, '_blank');
+    window.location.href = `https://www.one31.net/news/detail/${item.id}`;
   }
 
   trackById(_i: number, item: any) {

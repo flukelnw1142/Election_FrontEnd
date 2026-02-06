@@ -163,6 +163,7 @@
         opacity: 0.6;
         transition: 0.3s;
         user-select: none;
+        font-size: 16px;
     }
 
     .region-tab:hover,
@@ -524,6 +525,15 @@
    Tabs (ซ้าย) + Map (ขวา) แถวบน
    Summary ลงแถวล่างเต็ม
 ---------------------------- */
+
+@media (max-width: 1400px) {
+    .show-province-all {
+        .region-tab {
+            font-size: 14px;
+        }
+    }
+}
+
 @media (max-width: 1024px) {
     .show-province-all {
         width: 96vw;
@@ -573,7 +583,7 @@
     .show-province-all .region-tab {
         white-space: nowrap;
         padding: 0.4rem 0.75rem;
-        font-size: 0.95rem;
+        // font-size: 0.95rem;
     }
 
     .show-province-all .svg-container {

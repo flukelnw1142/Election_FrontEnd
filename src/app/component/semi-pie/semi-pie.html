@@ -4,13 +4,13 @@
     <canvas #pieCanvas></canvas>
     <div class="label-row">
 
-        <div class="label disagree">
+        <div class="label disagree" [class.full]="theme === 'foreign'">
             <div class="title">ไม่เห็นด้วย</div>
             <div class="percent">{{ question.disagreePercent }}%</div>
             <div class="score" [class.full]="fullWidth">({{ question.disagreeScore | number }} คะแนน)</div>
         </div>
 
-        <div class="label agree">
+        <div class="label agree" [class.full]="theme === 'foreign'">
             <div class="title">เห็นด้วย</div>
             <div class="percent">{{ question.agreePercent }}%</div>
             <div class="score" [class.full]="fullWidth">({{ question.agreeScore | number}} คะแนน)</div>

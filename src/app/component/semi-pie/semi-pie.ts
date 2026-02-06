@@ -23,6 +23,10 @@ export class SemiPie implements AfterViewInit, OnChanges {
     showGuideLine: boolean;
   };
   @Input() fullWidth = false;
+  @Input() theme: 'total' | 'foreign' = 'total';
+
+
+
   chart!: Chart;
   @ViewChild('pieCanvas') pieCanvas!: ElementRef<HTMLCanvasElement>;
 
@@ -49,13 +53,26 @@ export class SemiPie implements AfterViewInit, OnChanges {
     if (!chartCtx) {
       return;
     }
-    const agreeGradient = chartCtx.createLinearGradient(0, 0, 0, 300);
-    agreeGradient.addColorStop(0, '#66BB6A');
-    agreeGradient.addColorStop(1, '#2E7D32');
 
-    const disagreeGradient = chartCtx.createLinearGradient(0, 0, 0, 300);
-    disagreeGradient.addColorStop(0, '#EF5350');
-    disagreeGradient.addColorStop(1, '#B71C1C');
+    let agreeGradient = chartCtx.createLinearGradient(0, 0, 0, 300);
+    let disagreeGradient = chartCtx.createLinearGradient(0, 0, 0, 300);
+
+    if (this.theme === 'total') {
+      // โทนเขียว-แดง (ทั้งหมด)
+      agreeGradient.addColorStop(0, '#66BB6A');
+      agreeGradient.addColorStop(1, '#2E7D32');
+
+      disagreeGradient.addColorStop(0, '#EF5350');
+      disagreeGradient.addColorStop(1, '#B71C1C');
+    } else {
+      // โทนม่วง-ส้ม (นอกประเทศ)
+      agreeGradient.addColorStop(0, '#9a49a9');
+      agreeGradient.addColorStop(1, '#6d2897');
+
+      disagreeGradient.addColorStop(0, '#b83a3a');
+      disagreeGradient.addColorStop(1, '#a92020');
+    }
+
 
     this.chart = new Chart(chartCtx, {
       type: 'pie',

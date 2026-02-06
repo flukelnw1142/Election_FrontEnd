@@ -70,15 +70,16 @@
                                 <!-- พาย : ทั้งหมด -->
                                 <div class="pie-item">
                                     <h3 class="pie-title">ผลรวมทั้งหมด</h3>
-                                    <app-semi-pie [agree]="question.agreePercent" [disagree]="question.disagreePercent"
-                                        [question]="question" [fullWidth]="selectedRegion === 'ทั้งประเทศ'">
+                                    <app-semi-pie theme="total" [agree]="question.agreePercent"
+                                        [disagree]="question.disagreePercent" [question]="question"
+                                        [fullWidth]="selectedRegion === 'ทั้งประเทศ'">
                                     </app-semi-pie>
                                 </div>
 
                                 <!-- พาย : นอกประเทศ -->
                                 <div class="pie-item" *ngIf="selectedRegion === 'ทั้งประเทศ'">
                                     <h3 class="pie-title">นอกประเทศ</h3>
-                                    <app-semi-pie [agree]="question_NEW.agreePercent"
+                                    <app-semi-pie theme="foreign" [agree]="question_NEW.agreePercent"
                                         [disagree]="question_NEW.disagreePercent" [question]="question_NEW"
                                         [fullWidth]="true">
                                     </app-semi-pie>

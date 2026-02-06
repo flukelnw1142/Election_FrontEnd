@@ -32,8 +32,17 @@
     color: #4caf50;
   }
 
+  &.agree.full {
+    color: #6d2897;
+  }
+
+
   &.disagree {
     color: #f44336;
+  }
+
+  &.disagree.full {
+    color: #a92020;
   }
 }
 

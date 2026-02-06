@@ -223,7 +223,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     this._dashboard.getStatusMode().subscribe({
       next: (res) => {
         this.is_certified = res.is_certified === 0 ? false : true
-        console.log("res: ", res.is_certified)
       },
       error: (err) => console.error(err),
     });
@@ -231,7 +230,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     this._referendumService.getResultReferendum()
       .subscribe({
         next: (res) => {
-          console.log('result referendum:', res);
+          // console.log('result referendum:', res);
           this.colorByDistrict = res.data.byProvince
         }
       });
@@ -457,9 +456,8 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       p.style.stroke = 'none';
     });
 
-    console.log(this.selectRegion_Province_district)
     let districtIds = Object.keys(this.colorByDistrict)
-    console.log(svg)
+    // console.log(svg)
 
     svg.querySelectorAll('g[id]').forEach(g => {
       const id = g.id;
@@ -659,7 +657,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       this._referendumService.getResultReferendum(region, province, area)
         .subscribe({
           next: (res) => {
-            console.log('result referendum:', res);
+            // console.log('result referendum:', res);
 
             if (res.message === 'ไม่พบข้อมูลการเลือกตั้งในระบบ') {
               this.sweetAlertService.showAlert(
@@ -692,11 +690,9 @@ export class ReferendumPage implements OnInit, AfterViewInit {
             };
 
             const question_New = res.data.overseas.questions[0]
-            console.log(question_New)
             const agreePercent_New = question_New.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
             const disagreePercent_New = question_New.options.find((o: any) => o.optionCode === ('disagree'))?.percentage ?? 0;
 
-            console.log(agreePercent_New, disagreePercent_New)
             const diffPercent_New = Math.abs(agreePercent_New - disagreePercent_New);
 
             const agreeScore_New = question_New.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
@@ -710,8 +706,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
               disagreeScore: disagreeScore_New,
               showGuideLine: diffPercent_New <= 5,
             };
-
-            console.log(this.question_NEW)
 
             resolve(res.data.byProvince)
           },

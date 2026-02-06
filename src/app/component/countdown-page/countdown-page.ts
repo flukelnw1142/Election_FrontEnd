@@ -99,11 +99,7 @@ export class CountdownPage implements OnInit, OnDestroy {
   ngAfterViewInit() {
     this.loadMoreNews();
     if (!isPlatformBrowser(this.platformId)) return;
-    // this.getElectionNews();
     this.buildParticles(55);
-    console.log('targetIso =', this.targetIso);
-    console.log('parsed date =', new Date(this.targetIso));
-    console.log('targetMs =', new Date(this.targetIso).getTime());
     this.tick();
     this.timerId = setInterval(() => this.tick(), 1000);
   }
@@ -181,36 +177,6 @@ export class CountdownPage implements OnInit, OnDestroy {
     }));
   }
 
-  // async getElectionNews() {
-  //   if (this.isFetchingNews) return;
-  //   this.loadingNews = true;
-  //   let page = 1;
-  //   const take = 10;
-
-  //   let allNews: any[] = [];
-
-  //   while (true) {
-  //     console.log("Fetching page:", page);
-  //     const res: any = await firstValueFrom(
-  //       this.countdownserive.getNews(page, take)
-  //     );
-  //     const items = res?.detail?.news || [];
-  //     if (items.length === 0) {
-  //       console.log("หมดแล้ว หยุด loop");
-  //       break;
-  //     }
-
-  //     allNews.push(...items);
-
-  //     page++;
-  //   }
-  //   this.newsData = allNews;
-  //   console.log("ข่าวทั้งหมด:", this.newsData);
-  //   this.loadingNews = false;
-  //   this.isFetchingNews = true;
-
-  // }
-
   scrollToNews() {
     document.getElementById('news-section')?.scrollIntoView({ behavior: 'smooth' });
   }
@@ -258,7 +224,6 @@ export class CountdownPage implements OnInit, OnDestroy {
     this.isLoading = true
     this.countdownserive.getCountdownEvent().subscribe({
       next: (res) => {
-        console.log(res[0])
         this.countdownData = res[0]
         this.title = res[0].Title
         this.subtitle = res[0].Subtitle

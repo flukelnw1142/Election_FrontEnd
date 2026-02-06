@@ -310,9 +310,6 @@ export class Dashboard implements OnInit {
         // this.winners = winners;
         this.winners = winners_NEW;
         this.partySeatCountsList = seatCount;
-        console.log('winners_NEW >>>', winners_NEW)
-        console.log('partySeatCountsList >>>', seatCount)
-        console.log('partyColorMap >>>', colors)
       });
 
       // อัพเดท UI ครั้งแรก
@@ -326,7 +323,6 @@ export class Dashboard implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res) => {
-            // console.log('connectColor >>>', res);
             if (res.type === 'color') {
               this.zone.run(() => {
                 this.partyColorMap = res.data;
@@ -344,7 +340,6 @@ export class Dashboard implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res) => {
-            // console.log('connectDistrictWinners >>>', res);
             if (res.channel === 'results') {
               this.zone.run(async () => {
                 this.winners = res.data;
@@ -364,15 +359,8 @@ export class Dashboard implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res) => {
-            // console.log('connectPartySeatCounts >>>', res);
             if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
               this.partySeatCountsList = res.data || [];
-              // this.totalSeats =
-              //   this.partySeatCountsList.reduce(
-              //     (sum, p) =>
-              //       sum + (p.zone_seats || 0) + (p.partylist_seats || 0),
-              //     0
-              //   ) || 1;
               this.cd.markForCheck();
             }
           },
@@ -417,8 +405,6 @@ export class Dashboard implements OnInit {
       this.setText('percentZone', winners.percentZone);
       this.setText('percentPartylist', winners.percentPartylist);
 
-      // this.setText('resultFrom', winners.dataSourceLabel);
-      // console.log(winners.dataSourceLabel)
       this.electionService.setResultFrom(winners.dataSourceLabel);
 
       // อัพเดทข้อมูล
@@ -667,10 +653,9 @@ export class Dashboard implements OnInit {
       return;
     }
 
-    console.log('areaID >>>', areaID);
+
     this._dashboard.getRankByDistrictTop3_NEW(areaID).subscribe((data) => {
       this.detailDistrictTop3 = data;
-      console.log('data >>>', data);
 
       this.tooltipText = `${data[0].province}`;
       // this.tooltipText = `${data[0].province} เขต ${data[0].zone}`;
@@ -736,7 +721,6 @@ export class Dashboard implements OnInit {
 
 
       if (isNearMap || isDistrict) {
-        console.log(this.isDesktopOnly());
 
         if (this.isDesktop && this.isDesktopOnly()) {
           this.showMagnifier(event);
@@ -943,7 +927,6 @@ export class Dashboard implements OnInit {
 
             const textContent = textElement?.textContent?.trim() || '';
 
-            console.log(textContent);
             // ✅ ถ้าเป็นตัวเลข (เลขล้วน) → ส่งต่อไปเข้าเงื่อนไข group/path ด้านล่าง
             if (/^\d+$/.test(textContent)) {
               // ไม่ return
@@ -1063,7 +1046,7 @@ export class Dashboard implements OnInit {
   closeDialog() {
     this.STACK_MODAL.pop();
     const previous = this.STACK_MODAL[this.STACK_MODAL.length - 1];
-    // console.log(previous);
+  
     if (previous) {
       if (previous.page === 'show-dashboard-party') {
         this.onPartySelected(previous.partyName);
@@ -1099,7 +1082,6 @@ export class Dashboard implements OnInit {
     this.hideTooltip();
     this.activeTab = 'district';
 
-    console.log('STACK_MODAL', this.STACK_MODAL);
   }
 
   getPartylistSeatsArray(): number[] {
@@ -1212,7 +1194,6 @@ export class Dashboard implements OnInit {
         : type === 'partylist'
           ? this.partylistScroll
           : this.scrollContainer;
-    // console.log(target);
     target.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -1222,9 +1203,6 @@ export class Dashboard implements OnInit {
         (p) => p.partyName === this.selectedParty
       );
 
-      console.log('selectedParty', this.selectedParty);
-      console.log('partySeatCountsList', this.partySeatCountsList);
-      console.log('partyData', partyData);
 
       if (partyData) {
         this.totalSeats = partyData.zone_seats + partyData.partylist_seats;
@@ -1293,10 +1271,6 @@ export class Dashboard implements OnInit {
 
   async changeTab(command: string) {
     this.activeTab = command;
-    console.log(command);
-    console.log(this.zoneId);
-    console.log(this.selectedDistric);
-    console.log(this.selectedProvince);
 
     const provinceBefore = this.selectedProvince || this.allWinners[this.zoneId]?.provinceName;
 
@@ -1390,7 +1364,6 @@ export class Dashboard implements OnInit {
       })
       .then(() => this.cd.markForCheck())
       .catch((error) => console.error('Error loading SVG:', error));
-    console.log('STACK_MODAL', this.STACK_MODAL);
   }
   // Click PartyListAndPartyZone
   onClickPartyListAndPartyZone(partyName: string, command: string) {
@@ -1418,10 +1391,8 @@ export class Dashboard implements OnInit {
     this.clickOnPopup = this.selectedParty;
     this.selectedParty = '';
 
-    // console.log('partyName', partyName);
     this.onZoneSeatPerParty(partyName);
     this.onPartyListSeatPerParty(partyName);
-    console.log('STACK_MODAL', this.STACK_MODAL);
   }
   // Click SVG Page 2 (with out zoom)
   onSvgClick(event: MouseEvent) {
@@ -1458,7 +1429,6 @@ export class Dashboard implements OnInit {
         this.zoneId = parent.getAttribute('id');
         this.selectedDistric = this.allWinners[this.zoneId]?.areaID;
 
-        console.log('zoneId', this.zoneId);
         //CLICK-SVG
         this.handleDistrictClick(this.zoneId || '');
 
@@ -1500,8 +1470,6 @@ export class Dashboard implements OnInit {
   // Click Zone-Seat Page 2 (ส.ส.เขต) ----
   // Click เขต
   onClickDistrict(districtId: string) {
-    // console.log('onClickDistrict---------------------');
-    // console.log('districtId', districtId);
     if (this.selectedPartyListAndZoneSeat !== '') {
       this.keepPartyListAndZoneSeat = this.selectedPartyListAndZoneSeat;
       this.selectedPartyListAndZoneSeat = '';
@@ -1510,7 +1478,6 @@ export class Dashboard implements OnInit {
   }
   // Click จังหวัด
   onClickProvince(provinceName: string) {
-    // console.log('onClickProvince---------------------');
     // this.activeTab = 'partyList';
     this.handleProvinceClick(provinceName);
   }
@@ -1545,9 +1512,7 @@ export class Dashboard implements OnInit {
             ?.textContent?.trim();
           if (provinceName) {
             // this.activeTab = 'district';
-            console.log("provinceName : ", provinceName);
 
-            console.log(!this.provinces.find(p => p.provinceName === provinceName).hasLeader)
             if (!this.provinces.find(p => p.provinceName === provinceName).hasLeader) {
               this.sweetAlertService.showAlert(
                 'แจ้งเตือน',
@@ -1575,7 +1540,6 @@ export class Dashboard implements OnInit {
   }
   // Click ภูมิภาค
   async onRegionSelect(region: string) {
-    console.log('region', region);
     if (region === 'กรุงเทพมหานคร') {
       this.handleProvinceClick('กรุงเทพมหานคร');
       const svgText = await this.loadSvgByRegion(region);
@@ -1632,13 +1596,10 @@ export class Dashboard implements OnInit {
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY Party
   private onZoneSeatPerParty(partyName: string) {
     this._dashboard.getWinnerZoneByPartyName(partyName).subscribe((data) => {
-      console.log('onZoneSeatPerParty', data);
-      // console.log('onZoneSeatPerParty', data[0].partyName);
       if (data[0].areaID === undefined || data[0].areaID === null) {
         this.detailWinnerZonePerParty = [];
       } else {
         this.detailWinnerZonePerParty = data;
-        // console.log("detailWinnerZonePerParty : ", this.detailWinnerZonePerParty);
 
       }
       this.totalVoteZoneSeat = data[0].total_votes_all;
@@ -1648,7 +1609,6 @@ export class Dashboard implements OnInit {
   // Data แสดงข้อมูล ส.ส.บัญชีรายชื่อ BY Party
   private onPartyListSeatPerParty(partyName: string) {
     this._dashboard.getCadidateByPartyName(partyName).subscribe((data) => {
-      console.log('onPartyListSeatPerParty', partyName, data);
       this.detailPartyListPerPartyName = data;
       this.cd.markForCheck();
     });
@@ -1660,7 +1620,6 @@ export class Dashboard implements OnInit {
       (p) => p.PARTY_NAME === this.partyName
     );
     this.partyBackgroundColor = party?.COLOR || '#fefdfd';
-    // console.log(selectedParty);
   }
 
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต BY District
@@ -1673,7 +1632,6 @@ export class Dashboard implements OnInit {
     this.detailWinnerZonePerDistrict = [];
 
     this._dashboard.getRankByDistrict(areaId).subscribe((data) => {
-      console.log('onWinnerZoneByDistrict', data);
       if (data.result == false) {
         Swal.fire({
           icon: 'info',
@@ -1697,7 +1655,6 @@ export class Dashboard implements OnInit {
       this.zoneName = data[0].zone;
       this.progress = data[0].progress;
       this.totalvoteZone = data[0].total_votes_in_area;
-      console.log(data[0])
       this.loading = false;
 
     });
@@ -1710,13 +1667,11 @@ export class Dashboard implements OnInit {
     this.detailWinnerZonePerDistrict = [];
 
     this._dashboard.getPartyListForDistrict(areaId).subscribe((data) => {
-      // console.log('onWinnerPartyByDistrict', data);
       if (data.result == false) {
         return;
       }
       this.lastValidAreaId = areaId;
       this.detailWinnerPartyPerDistrict = data;
-      console.log("detailWinnerPartyPerDistrict : ", this.detailWinnerPartyPerDistrict);
 
       // this.detailWinnerZonePerDistrict = data;
       this.progress_party = data[0].progress;
@@ -1732,7 +1687,6 @@ export class Dashboard implements OnInit {
     this._dashboard
       .getAllwinnerZoneByProvinceName(province)
       .subscribe((data) => {
-        console.log(data)
         // this.detailWinnerZonePerProvince = data;
 
         const grouped = new Map<string, any[]>();
@@ -1747,7 +1701,6 @@ export class Dashboard implements OnInit {
         // เรียง totalVotes มากสุดไว้บน
         this.detailWinnerZonePerProvince = Array.from(grouped.entries()).map(
           ([key, candidates]) => {
-            // console.log(key, candidates);
             const [province, zone, districtId] = key.split('/');
             return {
               districtId,
@@ -1760,7 +1713,7 @@ export class Dashboard implements OnInit {
           }
         );
 
-        console.log("detailWinnerZonePerProvince", this.detailWinnerZonePerProvince)
+        
         this.loading = false;
         this.cd.markForCheck();
         this.cd.detectChanges();
@@ -1769,7 +1722,7 @@ export class Dashboard implements OnInit {
   // Data แสดงข้อมูลคะแนะตามลำดับพรรค ของแต่ละจังหวัด BY Province
   private onWinnerPartyByProvince(province: string) {
     this._dashboard.getPartylistProvince(province).subscribe((data) => {
-      // console.log('onWinnerPartyByProvince', data);
+      
 
       const groupedMap = new Map<
         number,
@@ -1778,7 +1731,7 @@ export class Dashboard implements OnInit {
 
       data.forEach(
         (item: { areaNo: any; provName: string; DistricID: string }) => {
-          // console.log(item)
+          
           const areaNo = item.areaNo;
           const province = item.provName || '';
           const districtId = item.DistricID;
@@ -1811,7 +1764,7 @@ export class Dashboard implements OnInit {
   // Data Zone-Seat (ส.ส.เขต) แสดงข้อมูล ส.ส.เขต 2 อันดับแรก ของแต่ละเขต BY Region
   private onWinnerZoneByRegion(region: string) {
     this._dashboard.getWinnerZoneByRegionName_NEW(region).subscribe((data) => {
-      // console.log(data)
+      
       const structuredArray: any[] = [];
 
       const grouped: {
@@ -1854,7 +1807,7 @@ export class Dashboard implements OnInit {
 
       // ✅ 3. เซ็ตเข้า array ที่ใช้ *ngFor ได้เลย
       this.detailWinnerZonePerRegion = structuredArray;
-      // console.log("structuredArray",structuredArray)
+    
       // this.cd.markForCheck();
       this.cd.detectChanges();
     });
@@ -1892,10 +1845,7 @@ export class Dashboard implements OnInit {
           this.detailWinnerPartyPerRegion = Array.from(groupedMap.values());
 
 
-          console.log(
-            'detailWinnerPartyPerRegion',
-            this.detailWinnerPartyPerRegion
-          );
+         
 
           // this.cd.markForCheck();
           this.cd.detectChanges();
@@ -1921,7 +1871,7 @@ export class Dashboard implements OnInit {
     this.updateCurrentPageStates();
     this.selectedProvince = '';
     this.detailDistrict = [];
-    console.log("districtId : ", districtId);
+  
 
     if (districtId === 'oldData') {
       this.selectedDistric = this.lastValidAreaId
@@ -1948,7 +1898,7 @@ export class Dashboard implements OnInit {
 
     this.tooltipVisible = false;
     this.hideMagnifier();
-    console.log('STACK_MODAL', this.STACK_MODAL);
+   
   }
   // Data จังหวัด
   private async handleProvinceClick(provinceName: string) {
@@ -1960,7 +1910,7 @@ export class Dashboard implements OnInit {
         page: 'show-province-all',
       });
     }
-    console.log("provinceName : ", provinceName);
+    
     this.updateCurrentPageStates();
     this.detailDistrict = [];
     this.detailWinnerZonePerRegion = [];
@@ -1974,7 +1924,7 @@ export class Dashboard implements OnInit {
     this.onWinnerZoneByProvince(provinceName);
     await this.loadAndSetRegionSvg(provinceName);
     this.onWinnerPartyByProvince(provinceName);
-    console.log('STACK_MODAL', this.STACK_MODAL);
+   
   }
 
   /**
@@ -1985,7 +1935,7 @@ export class Dashboard implements OnInit {
 
   private async loadAndSetRegionSvg(province: string): Promise<void> {
     try {
-      console.log('loadAndSetRegionSvg province:', province);
+    
       // หา region จาก province ก่อน
       const region = await this.findRegionByProvince(province);
       // this.onWinnerPartyByRegion(region); // เรียกค่า partyList
@@ -2062,16 +2012,15 @@ export class Dashboard implements OnInit {
       p.style.stroke = 'none';
     });
 
-    // console.log('allWinners:', this.allWinners);
-    console.log('activeTab:', this.activeTab);
+
 
     let districtIds;
 
     if (this.activeTab === 'partyList') {
-      console.log('allWinnersParty', this.allWinnersParty);
+     
       districtIds = Object.keys(this.allWinnersParty);
     } else {
-      console.log('allWinners:', this.allWinners);
+      
       districtIds = Object.keys(this.allWinners);
     }
 
@@ -2089,11 +2038,11 @@ export class Dashboard implements OnInit {
 
 
 
-    // console.log('districtIds:', districtIds, this.allWinners, this.allWinnersParty);
+    
     for (let i = 0; i < districtIds.length; i++) {
       const id = districtIds[i];
       const g = svg.querySelector('#' + id) as SVGGElement | null;
-      // console.log('Processing district ID:', id);
+      
 
       if (g) {
         const path = g.querySelector('circle');
@@ -2243,8 +2192,7 @@ export class Dashboard implements OnInit {
 
     this.uiState.updateMainPageStatus(isMain);
 
-    // Optional: log เพื่อ debug
-    // console.log('STACK_MODAL top page:', topPage, '→ isMainPage:', isMain);
+   
   }
 
   // เพิ่ม method
@@ -2280,7 +2228,7 @@ export class Dashboard implements OnInit {
   zoomIn() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() + 0.3); }
   zoomOut() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() - 0.3); }
   resetZoom() {
-    console.log("reset")
+   
     if (!this.panzoomInstance) return;
 
     this.panzoomInstance.moveTo(0, 0); // reset pan
@@ -2371,7 +2319,7 @@ export class Dashboard implements OnInit {
   }
 
   getColor2tone(partyName1: string, partyName2: string) {
-    // console.log("partyName1 : ",partyName1, "partyName2 : ", partyName2)
+   
 
     const color1 = this.getColor(partyName1);
     const color2 = this.getColor(partyName2);
@@ -2379,9 +2327,7 @@ export class Dashboard implements OnInit {
     // เฉียงซ้ายบน → ขวาล่าง
     return `linear-gradient(135deg, ${color1}70 0%, ${color1}70 50%, ${color2}70 65%, ${color2}70 100%)`;
 
-    // return `linear-gradient(135deg, ${color1}50 0%, ${color1}50 60%, ${color2}50 60%, ${color2}50 100%)`;
-    // return `linear-gradient(135deg, ${color1}30 0%, ${color1}30 50%, ${color2}30 50%, ${color2}30 100%)`;
-
+   
   }
 
   focusProvince(provinceName: string) {
@@ -2389,14 +2335,14 @@ export class Dashboard implements OnInit {
   }
 
   private focusProvinceOnMobile(province: string) {
-    console.log('focusProvinceOnMobile:', province);
+    
     if (this.isDesktopOnly()) return;
 
     const container = this.svgContainerRegion?.nativeElement;
     if (!container) return;
 
     const svg = container.querySelector('svg') as SVGSVGElement | null;
-    console.log("sadasdsadsads ; ",svg);
+   
     
     if (!svg) return;
 
@@ -2404,7 +2350,7 @@ export class Dashboard implements OnInit {
       `g[data-province="${province}"]`
     ) as SVGGElement | null;
 
-    console.log('anyDistrict:', anyDistrict);
+
 
     if (!anyDistrict) return;
 
@@ -2412,7 +2358,7 @@ export class Dashboard implements OnInit {
       'g[id^="province-"]'
     ) as SVGGElement | null;
 
-    console.log('provinceGroup:', provinceGroup);
+    
 
     if (!provinceGroup) return;
 
@@ -2484,7 +2430,7 @@ export class Dashboard implements OnInit {
   // }
 
   onSubmitFilter_Specific() {
-    console.log(this.provinceCtrl_Specific.value);
+
 
     if (!this.selectedProvince_Specific) {
       this.sweetAlertService.showAlert(
@@ -2496,7 +2442,7 @@ export class Dashboard implements OnInit {
     }
     this.focusProvince(this.selectedProvince_Specific);
     this.uiState.setReferendumLogoSmall(true);
-    console.log('onSubmitFilter_Specific', this.selectedProvince_Specific, this.selectedZone_Specific);
+   
 
   }
 
@@ -2505,7 +2451,7 @@ export class Dashboard implements OnInit {
     this._Tab2.getProvince().subscribe({
       next: (res) => {
         this.provinces = res.data;
-        // console.log("this.provinces :", this.provinces);
+   
 
         this.cd.detectChanges();
       },
@@ -2537,7 +2483,7 @@ export class Dashboard implements OnInit {
     this.selectedProvince_Specific = province;
 
     this.provinceCtrl_Specific.setValue('');
-    // console.log(this.provinces.find(p => p.provinceName === province).hasLeader)
+    
     if (!this.provinces.find(p => p.provinceName === province).hasLeader) {
       this.sweetAlertService.showAlert(
         'แจ้งเตือน',
@@ -2557,7 +2503,7 @@ export class Dashboard implements OnInit {
     this.focusProvince(province);
     this.uiState.setReferendumLogoSmall(true);
 
-    console.log('auto search province:', province);
+   
   }
 
 

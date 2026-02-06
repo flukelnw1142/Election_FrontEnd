@@ -954,6 +954,12 @@
     align-items: flex-start;
 }
 
+.pie-wrapper.full {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
 .pie-item {
     background: #ffffff00;
     border-radius: 16px;

@@ -34,7 +34,7 @@
 
 
 .chart-container {
-  width: 70%;
+  width: 100%;
   max-width: 350px; // จำกัดความกว้างสูงสุด (ปรับตามดีไซน์ได้)
   margin: 0rem auto; // กึ่งกลาง + ขอบบนล่าง
   padding: 10px;
@@ -43,11 +43,12 @@
 }
 
 // ทำให้ canvas responsive
-canvas#pieChart {
+canvas {
   display: block; // สำคัญมาก!
   width: 100% !important;
   height: auto !important;
   max-height: 320px; // ป้องกันสูงเกินบนจอใหญ่
+  margin: 0 auto;
 }
 
 @media (max-width: 576px) {

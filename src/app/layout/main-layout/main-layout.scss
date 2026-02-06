@@ -319,8 +319,8 @@ input:checked+.slider:before {
 
 .source-label.top {
     position: fixed;
-    top: 10px;
-    bottom: auto;
+    left: auto;
+    right: 10px;
 }
 
 
@@ -397,10 +397,10 @@ input:checked+.slider:before {
 @media (max-width: 450px) {
 
     .source-label {
-        width: 90px;
+        // width: 120px;
         font-size: 12px;
         text-align: center;
-        padding: 2px;
+        // padding: 2px;
     }
 
     .header-row {

@@ -23,6 +23,11 @@
     opacity: 1;
   }
 
+  .score.full {
+    font-size: 14px;
+    opacity: 1;
+  }
+
   &.agree {
     color: #4caf50;
   }
@@ -44,10 +49,10 @@
 
 // ทำให้ canvas responsive
 canvas {
-  display: block; // สำคัญมาก!
+  display: block;
   width: 100% !important;
   height: auto !important;
-  max-height: 320px; // ป้องกันสูงเกินบนจอใหญ่
+  max-height: 320px;
   margin: 0 auto;
 }
 

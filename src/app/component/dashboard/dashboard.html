@@ -349,7 +349,7 @@
                                             </div>
 
                                             <!-- VS กลาง -->
-                                            <div class="vs-center">VS</div>
+                                            <div class="vs-center" *ngIf="district.candidates?.length > 1 && district.candidates[1]?.totalVotes > 0">VS</div>
 
                                         </div>
                                     </div>
@@ -409,7 +409,7 @@
                                                 </div>
 
                                                 <!-- VS กลาง -->
-                                                <div class="vs-center">VS</div>
+                                                <div class="vs-center" *ngIf="district.candidates?.length > 1 && district.candidates[1]?.totalVotes > 0">VS</div>
 
                                             </div>
                                         </div>

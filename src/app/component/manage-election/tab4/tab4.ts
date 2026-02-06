@@ -238,30 +238,30 @@ export class Tab4 {
         const result = res.data ? res.data : res;
 
         if (result && result.questions) {
-          this.referendumQuestions = result.questions.map((q: any) => ({
-            ...q,
-
-            // reset ระดับ question
-            goodVotes: 0,
-            totalVotes: 0,
-            invalidVotes: 0,
-            noVotes: 0,
-
-            // reset options
-            options: q.options.map((opt: any) => ({
-              ...opt,
+          queueMicrotask(() => {
+            this.referendumQuestions = result.questions.map((q: any) => ({
+              ...q,
+              goodVotes: 0,
               totalVotes: 0,
-              percentage: 0
-            }))
-          }));
+              invalidVotes: 0,
+              noVotes: 0,
+              options: q.options.map((opt: any) => ({
+                ...opt,
+                totalVotes: 0,
+                percentage: 0
+              }))
+            }));
 
-          // percent ด้านบน
-          this.inputPercent = result.coverage?.percentage || 0;
+            this.inputPercent = result.coverage?.percentage || 0;
+
+            this.cdr.detectChanges();
+          });
         }
       },
       error: err => console.error(err)
     });
   }
+
 
   onSubmitFilter_ALL() {
     this._Tab4.genElectionReferendum({}).subscribe({

@@ -33,7 +33,8 @@ type Particle = {
 export class CountdownPage implements OnInit, OnDestroy {
 
   title = 'นับถอยหลังสู่วันเลือกตั้ง 2569';
-  subtitle = '8 กุมภาพันธ์ 2569 เวลา 17:00 น.';
+  // subtitle = '8 กุมภาพันธ์ 2569 เวลา 08:00 น.';
+  subtitle = '';
   private redirected = false; // กัน redirect ซ้ำ
   // ถ้าเป็น route ภายในระบบ แนะนำใช้ router.navigate
   targetUrl = '/dashboard';
@@ -41,7 +42,7 @@ export class CountdownPage implements OnInit, OnDestroy {
   // เป้าหมายเวลาไทย (GMT+7)
   // targetIso = '2026-02-05T13:51:00+07:00';
   // targetIso = '2026-02-08T17:00:00+07:00';
-  targetIso = '2026-02-08T17:00:00+07:00';
+  targetIso = '2026-02-08T08:00:00+07:00';
 
   countdown: Countdown = {
     totalMs: 0,
@@ -66,6 +67,8 @@ export class CountdownPage implements OnInit, OnDestroy {
   take = 8; // 2 row (4x2)
 
   countdownData: any;
+
+  isLoading: boolean = false;
 
   // @HostListener('window:scroll', [])
   // onScroll() {
@@ -93,9 +96,7 @@ export class CountdownPage implements OnInit, OnDestroy {
   ) { }
 
 
-
-  ngOnInit(): void {
-    this.getCount();
+  ngAfterViewInit() {
     this.loadMoreNews();
     if (!isPlatformBrowser(this.platformId)) return;
     // this.getElectionNews();
@@ -105,7 +106,11 @@ export class CountdownPage implements OnInit, OnDestroy {
     console.log('targetMs =', new Date(this.targetIso).getTime());
     this.tick();
     this.timerId = setInterval(() => this.tick(), 1000);
+  }
 
+
+  ngOnInit(): void {
+    this.getCount();
   }
 
   ngOnDestroy(): void {
@@ -250,6 +255,7 @@ export class CountdownPage implements OnInit, OnDestroy {
 
 
   getCount() {
+    this.isLoading = true
     this.countdownserive.getCountdownEvent().subscribe({
       next: (res) => {
         console.log(res[0])
@@ -258,13 +264,18 @@ export class CountdownPage implements OnInit, OnDestroy {
         this.subtitle = res[0].Subtitle
         this.targetUrl = res[0].TargetUrl
         // this.targetIso = '2026-02-05T17:59:00+07:00'
-        this.targetIso =res[0].TargetIso
+        this.targetIso = res[0].TargetIso
 
       },
       error: (err) => {
         console.error('API error:', err);
       },
     })
+
+    setTimeout(() => {
+      this.isLoading = false
+    }, 100)
+
   }
 
 }

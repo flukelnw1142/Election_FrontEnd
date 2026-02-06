@@ -444,7 +444,28 @@
 
 
 // responsive
-@media (min-width: 2560px) {}
+@media (max-width: 1400px) {
+    .number {
+        width: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    .left-section {
+        width: 100px;
+        min-width: 100px;
+
+        .img-head {
+            width: 100px;
+            height: 100px;
+            margin-top: 30px;
+        }
+
+        .img-head img {
+            width: 100%;
+        }
+    }
+
+}
 
 @media (max-width: 1160px) AND (min-width: 1024px) {
 

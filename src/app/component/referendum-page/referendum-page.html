@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <div class="column svg-column">
+            <div class="column svg-column" [class.full]="!isDesktopOnly()">
                 <div class="hint" [hidden]="!isDesktopOnly()"> <mat-icon>pinch_zoom_out</mat-icon>ลาก ซูม แตะ
                     เพื่อเลือกเขต</div>
                 <div class="reset-btn" [hidden]="!isDesktopOnly()" (click)="resetZoom()">

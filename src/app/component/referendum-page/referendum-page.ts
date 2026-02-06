@@ -321,7 +321,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         });
       })
 
-      this.handleGetResultReferendum_NEW()
+      // this.handleGetResultReferendum_NEW()
 
     }
     else {
@@ -689,12 +689,30 @@ export class ReferendumPage implements OnInit, AfterViewInit {
               disagreePercent,
               disagreeScore,
               showGuideLine: diffPercent <= 5,
-
             };
 
-            // if(question.totalVotes === 0){
-            //   // alert("ยังไม่พบข้อมูล")
-            // }
+            const question_New = res.data.overseas.questions[0]
+            console.log(question_New)
+            const agreePercent_New = question_New.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
+            const disagreePercent_New = question_New.options.find((o: any) => o.optionCode === ('disagree'))?.percentage ?? 0;
+
+            console.log(agreePercent_New, disagreePercent_New)
+            const diffPercent_New = Math.abs(agreePercent_New - disagreePercent_New);
+
+            const agreeScore_New = question_New.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
+            const disagreeScore_New = question_New.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
+
+            this.question_NEW = {
+              ...question_New,
+              agreePercent: agreePercent_New,
+              agreeScore: agreeScore_New,
+              disagreePercent: disagreePercent_New,
+              disagreeScore: disagreeScore_New,
+              showGuideLine: diffPercent_New <= 5,
+            };
+
+            console.log(this.question_NEW)
+
             resolve(res.data.byProvince)
           },
           error: (err) => {
@@ -704,51 +722,51 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     });
   }
 
-  handleGetResultReferendum_NEW(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._referendumService.getResultReferendum('ภาคกลาง')
-        .subscribe({
-          next: (res) => {
-            console.log('result referendum_NEW:', res);
+  // handleGetResultReferendum_NEW(): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     this._referendumService.getResultReferendum('ภาคกลาง')
+  //       .subscribe({
+  //         next: (res) => {
+  //           console.log('result referendum_NEW:', res);
 
-            if (res.message === 'ไม่พบข้อมูลการเลือกตั้งในระบบ') {
-              this.sweetAlertService.showAlert(
-                'แจ้งเตือน',
-                'ยังไม่พบคะแนน',
-                'info'
-              );
-              this.selectedRegion = 'ทั้งประเทศ'
-              this.handleGetResultReferendum();
-              return;
-            }
+  //           if (res.message === 'ไม่พบข้อมูลการเลือกตั้งในระบบ') {
+  //             this.sweetAlertService.showAlert(
+  //               'แจ้งเตือน',
+  //               'ยังไม่พบคะแนน',
+  //               'info'
+  //             );
+  //             this.selectedRegion = 'ทั้งประเทศ'
+  //             this.handleGetResultReferendum();
+  //             return;
+  //           }
 
-            // this.colorByDistrict = res.data.byProvince
-            const question = res.data.questions[0]
-            const agreePercent = question.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
-            const disagreePercent = question.options.find((o: any) => o.optionCode === ('disagree'))?.percentage ?? 0;
+  //           // this.colorByDistrict = res.data.byProvince
+  //           const question = res.data.questions[0]
+  //           const agreePercent = question.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
+  //           const disagreePercent = question.options.find((o: any) => o.optionCode === ('disagree'))?.percentage ?? 0;
 
-            const diffPercent = Math.abs(agreePercent - disagreePercent);
+  //           const diffPercent = Math.abs(agreePercent - disagreePercent);
 
-            const agreeScore = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
-            const disagreeScore = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
+  //           const agreeScore = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
+  //           const disagreeScore = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
 
-            this.question_NEW = {
-              ...question,
-              agreePercent,
-              agreeScore,
-              disagreePercent,
-              disagreeScore,
-              showGuideLine: diffPercent <= 5,
+  //           this.question_NEW = {
+  //             ...question,
+  //             agreePercent,
+  //             agreeScore,
+  //             disagreePercent,
+  //             disagreeScore,
+  //             showGuideLine: diffPercent <= 5,
 
-            };
+  //           };
 
-          },
-          error: (err) => {
-            console.error(err);
-          }
-        });
-    });
-  }
+  //         },
+  //         error: (err) => {
+  //           console.error(err);
+  //         }
+  //       });
+  //   });
+  // }
 
   private getDistrictDisplayNameFromDom(districtId: string): string {
     // BKK_5 → [BKK, 5]

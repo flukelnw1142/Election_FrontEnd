@@ -33,7 +33,7 @@ export class Referendumservice {
       params = params.set('ProvinceNameTH', province);
     }
 
-    console.log(`${url}?${params.toString()}`);
+    // console.log(`${url}?${params.toString()}`);
 
     return this._http.get<any>(url, { params: params });
   }

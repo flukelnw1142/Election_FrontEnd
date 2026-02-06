@@ -27,6 +27,7 @@ export class SemiPie implements AfterViewInit, OnChanges {
 
 
 
+
   chart!: Chart;
   @ViewChild('pieCanvas') pieCanvas!: ElementRef<HTMLCanvasElement>;
 
@@ -35,13 +36,21 @@ export class SemiPie implements AfterViewInit, OnChanges {
     this.createChart();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  // ngOnChanges(changes: SimpleChanges): void {
 
+  //   if (this.chart) {
+  //     this.chart.data.datasets[0].data = [this.agree, this.disagree];
+  //     this.chart.update();
+  //   }
+  // }
+
+  ngOnChanges(): void {
     if (this.chart) {
-      this.chart.data.datasets[0].data = [this.agree, this.disagree];
-      this.chart.update();
+      this.chart.destroy();
+      this.createChart();
     }
   }
+
 
   createChart() {
     /**
@@ -73,15 +82,25 @@ export class SemiPie implements AfterViewInit, OnChanges {
       disagreeGradient.addColorStop(1, '#a92020');
     }
 
+    const isEmpty = this.agree === 0 && this.disagree === 0;
+
+    const emptyGradient = chartCtx.createLinearGradient(0, 0, 0, 300);
+    emptyGradient.addColorStop(0, '#F5F5F5');
+    emptyGradient.addColorStop(1, '#E0E0E0');
+
 
     this.chart = new Chart(chartCtx, {
       type: 'pie',
       data: {
-        labels: ['เห็นด้วย', 'ไม่เห็นด้วย'],
+        labels: isEmpty ? ['ยังไม่มีข้อมูล'] : ['เห็นด้วย', 'ไม่เห็นด้วย'],
+        // labels: ['เห็นด้วย', 'ไม่เห็นด้วย'],
         datasets: [{
-          data: [this.agree, this.disagree],
-          // backgroundColor: ['#4CAF50', '#F44336'],
-          backgroundColor: [agreeGradient, disagreeGradient],
+          // data: [this.agree, this.disagree],
+          data: isEmpty ? [100] : [this.agree, this.disagree],
+          backgroundColor: isEmpty
+            ? [emptyGradient]
+            : [agreeGradient, disagreeGradient],
+          // backgroundColor: [agreeGradient, disagreeGradient],
           borderWidth: 0,
           // hoverOffset: 18
         }]
@@ -93,6 +112,7 @@ export class SemiPie implements AfterViewInit, OnChanges {
             display: false   // ซ่อน legend
           },
           tooltip: {
+            enabled: !isEmpty,
             callbacks: {
               label: (context) => `${context.label}: ${context.parsed}%`
             },

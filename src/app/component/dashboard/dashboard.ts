@@ -394,7 +394,6 @@ export class Dashboard implements OnInit {
 
   ngAfterViewInit() {
     this.initPanzoom();
-
   }
 
   private updateWinnerUI(winners: any): void {

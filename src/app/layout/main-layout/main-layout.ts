@@ -55,11 +55,9 @@ export class MainLayout {
         // ถ้า service บอกว่า main แต่เราไม่ได้อยู่ใน /dashboard → บังคับเป็น false
         this.isMainPage = isMain && isDashboardPage;
         // this.isMainPage = isMain;
-        console.log('MainLayout: isMainPage =', this.isMainPage);
       })
     );
     this.router.events.subscribe((event) => {
-      // console.log(event);
       if (event instanceof NavigationEnd) {
         this.showVotingStatus = event.url !== '/manage';
       } else {
@@ -73,10 +71,8 @@ export class MainLayout {
         const url = event.urlAfterRedirects;
         this.isReferendumPage = url.startsWith('/referendum');
         this.isRealReferendumPage = url.startsWith('/referendum')
-        console.log(" this.isReferendumPage : ", this.isReferendumPage);
         this.default = this.isReferendumPage;
         this.uiState.referendumLogoSmall$.subscribe((small) => {
-          console.log("small : ", small);
 
           const url = this.router.url;
           if (url.startsWith('/dashboard')) {
@@ -98,11 +94,9 @@ export class MainLayout {
       this.electionService.resultFrom$
         .subscribe(value => {
           this.dataSourceLabel = value;
-          console.log("value: ", value)
         });
       this.username = localStorage.getItem('UserName');
       this.getDataSource();
-      this.getBannersponsor();
     }
   }
 
@@ -120,7 +114,6 @@ export class MainLayout {
   }
 
   logout(): void {
-    console.log('Logging out...');
     localStorage.clear();
     this.router.navigate(['/login']);
   }
@@ -128,10 +121,8 @@ export class MainLayout {
   referendum(): void {
 
     if ((this.isReferendumPage && this.isRealReferendumPage) && !this.isDesktopOnly()) {
-      console.log('Going back to dashboard...');
       this.router.navigate(['/dashboard']);
     } else {
-      console.log('Navigating to referendum page...');
       this.router.navigate(['/referendum']);
     }
 
@@ -193,7 +184,6 @@ export class MainLayout {
   setDataSource() {
     this._dashboard.setStatusMode(this.isChecked, this.username).subscribe({
       next: (res) => {
-        // console.log('Mode updated successfully:', res);
         this.sweetAlertService.showAlert(res.message, res.is_certified === 1 ? 'กกต.' : 'อาสาสมัคร', 'success');
       },
       error: (err) => {
@@ -231,7 +221,6 @@ export class MainLayout {
 
         this.bannerImages = uniqueUrls
 
-        console.log(this.bannerImages)
       }
     });
   }

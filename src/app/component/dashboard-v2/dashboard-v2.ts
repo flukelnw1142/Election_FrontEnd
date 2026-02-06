@@ -79,7 +79,7 @@ export class DashboardV2 implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (res) => {
-              // console.log('connectColor >>>', res);
+
               if (res.type === 'color') {
                 this.zone.run(() => {
                   this.partyColorMap = res.data;
@@ -97,7 +97,6 @@ export class DashboardV2 implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (res) => {
-              // console.log('connectPartySeatCounts >>>', res);
               if (res.type === 'GetSummaryCountPartyZoneAndPartyList') {
                 this.zone.run(() => {
                   this.partySeatCountsList = res.data;
@@ -110,7 +109,6 @@ export class DashboardV2 implements OnInit {
                     0
                   );
 
-                  console.log('totalSeats', this.totalSeats);
                   this.cd.markForCheck();
                   this.loadSvg();
                 });
@@ -130,73 +128,6 @@ export class DashboardV2 implements OnInit {
     this.destroy$.complete();
   }
 
-  // async ngOnInit(): Promise<void> {
-  //   try {
-  //     this.partyColorMap = await firstValueFrom(
-  //       this._dashboard.getPartyColors()
-  //     );
-  //     this.partySeatCountsList = await firstValueFrom(
-  //       this._dashboard.getPartySeatCountsList()
-  //     );
-  //     // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
-  //     this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-  //       return sum + p.zone_seats + p.partylist_seats;
-  //     }, 0);
-
-  //     const intervalId = setInterval(async () => {
-  //       console.log('intervalId : DashboardV2');
-  //       this.partySeatCountsList = await firstValueFrom(
-  //         this._dashboard.getPartySeatCountsList()
-  //       );
-  //       // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
-  //       this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-  //         return sum + p.zone_seats + p.partylist_seats;
-  //       }, 0);
-
-  //       if (isPlatformBrowser(this.platformId)) {
-  //         await this.loadSvg();
-  //       }
-  //     }, 2000);
-
-  //     if (isPlatformBrowser(this.platformId)) {
-  //       await this.loadSvg();
-  //     }
-
-  //     this.intervalId = intervalId;
-  //   } catch (error) {
-  //     this.partyColorMap = await firstValueFrom(
-  //       this._dashboard.getPartyColors()
-  //     );
-  //     this.partySeatCountsList = await firstValueFrom(
-  //       this._dashboard.getPartySeatCountsList()
-  //     );
-  //     // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
-  //     this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-  //       return sum + p.zone_seats + p.partylist_seats;
-  //     }, 0);
-
-  //     const intervalId = setInterval(async () => {
-  //       console.log('intervalId : DashboardV2');
-  //       this.partySeatCountsList = await firstValueFrom(
-  //         this._dashboard.getPartySeatCountsList()
-  //       );
-  //       // รวมจำนวนที่นั่งทั้งหมดไว้สำหรับคำนวณ % ของ progress bar
-  //       this.totalSeats = this.partySeatCountsList.reduce((sum, p) => {
-  //         return sum + p.zone_seats + p.partylist_seats;
-  //       }, 0);
-
-  //       if (isPlatformBrowser(this.platformId)) {
-  //         await this.loadSvg();
-  //       }
-  //     }, 2000);
-
-  //     if (isPlatformBrowser(this.platformId)) {
-  //       await this.loadSvg();
-  //     }
-
-  //     this.intervalId = intervalId;
-  //   }
-  // }
 
   async loadSvg() {
     try {
@@ -395,10 +326,8 @@ export class DashboardV2 implements OnInit {
 
   getUrlParty(winner: any): string {
     const partyName = typeof winner === 'string' ? winner : winner?.party || '';
-    // console.log('partyName', partyName);
     for (const keyword in this.partyColorMap) {
       if (partyName === this.partyColorMap[keyword].PARTY_NAME) {
-        // console.log('IMG_PARTY', this.partyColorMap[keyword].IMG_PARTY);
         return this.partyColorMap[keyword].IMG_PARTY;
       }
     }

@@ -111,12 +111,10 @@ export class Tab3 {
     const jsonData = {
       ProvinceName: this.selectedProvince,
     };
-    console.log(jsonData);
     this.checked = false;
     this.onToggleChange();
     this._Tab3.genElectionByProvice(jsonData).subscribe({
       next: (res) => {
-        console.log(JSON.stringify(res.data));
         this.responseJson$.next(JSON.stringify(res.data, null, 2));
       },
       error: (err) => {
@@ -141,12 +139,10 @@ export class Tab3 {
     });
 
     const url = `${baseUrl}?${params.toString()}`;
-    console.log('Connecting to SSE:', url);
 
     this.eventSource = new EventSource(url);
 
     this.eventSource.onopen = () => {
-      console.log('SSE Connected');
     };
 
     this.eventSource.onmessage = (event) => {
@@ -154,7 +150,6 @@ export class Tab3 {
         const data = JSON.parse(event.data);
         const pretty = JSON.stringify(data, null, 2);
         this.responseJson$.next(pretty);
-        // ไม่ต้อง cd.detectChanges() เพราะ BehaviorSubject + async pipe จัดการให้
       } catch (err) {
         console.error('Parse error:', err);
       }
@@ -163,7 +158,6 @@ export class Tab3 {
     this.eventSource.onerror = (err) => {
       console.error('SSE Error:', err);
       if (this.eventSource?.readyState === EventSource.CLOSED) {
-        console.log('SSE Closed');
       }
     };
   }
@@ -173,7 +167,6 @@ export class Tab3 {
       this.eventSource.close();
       this.eventSource = null;
       this.responseJson$.next('');
-      console.log('SSE Disconnected');
     }
   }
 
@@ -190,11 +183,9 @@ export class Tab3 {
         counted: this.inputPercent.toString(),
       })),
     };
-    // console.log(JSON.stringify(jsonData, null, 2));
-    console.log("onSubmit : ",jsonData);
+
     this._Tab3.genElection(jsonData).subscribe({
       next: (res) => {
-        console.log(JSON.stringify(res.data));
         this.responseJson$.next(JSON.stringify(res.data, null, 2));
       },
       error: (err) => {

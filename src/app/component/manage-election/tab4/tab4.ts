@@ -172,27 +172,6 @@ export class Tab4 {
     });
   }
 
-  // onProvinceChange_UPDATE(province: any) {
-  //   const ProvinceID = province.provID;
-  //   console.log(ProvinceID)
-
-  //   if (!ProvinceID) return;
-
-  //   this._Tab4.getDistrict(ProvinceID).subscribe({
-  //     next: (res) => {
-  //       setTimeout(() => {
-  //         this.zonesInProvince_UPDATE = res.data || [];
-  //         this.zone = '';
-  //       });
-
-  //     },
-  //     error: (err) => {
-  //       console.error('API error:', err);
-  //       this.zonesInProvince_UPDATE = [];
-  //     },
-  //   });
-  // }
-
   onProvinceChange_UPDATE(province: any) {
     if (!province || !province.provID) {
       queueMicrotask(() => {
@@ -217,20 +196,6 @@ export class Tab4 {
       }
     });
   }
-
-  // getReferendum() {
-  //   this._Tab4.getReferendum().subscribe({
-  //     next: (res) => {
-  //       const result = res.data ? res.data : res;
-  //       console.log(result)
-  //       if (result && result.questions) {
-  //         this.referendumQuestions = result.questions;
-  //         this.inputPercent = result.coverage?.percentage || 0;
-  //         this.cdr.detectChanges();
-  //       }
-  //     }
-  //   });
-  // }
 
   getReferendum() {
     this._Tab4.getReferendum().subscribe({
@@ -266,8 +231,6 @@ export class Tab4 {
   onSubmitFilter_ALL() {
     this._Tab4.genElectionReferendum({}).subscribe({
       next: (res) => {
-        console.log("onSubmitFilter_ALL() : ", res);
-        console.log(JSON.stringify(res.REFERENDUM_REPORT));
         this.responseJson$.next(JSON.stringify(res.REFERENDUM_REPORT, null, 2));
         this.disconnectProvinceStream();
         this.checked = false;
@@ -297,12 +260,9 @@ export class Tab4 {
       ...(this.selectedZone ? { AreaNo: this.selectedZone.split(" ")[this.selectedZone.split(" ").length - 1] } : {})
     };
 
-    console.log(jsonData)
 
     this._Tab4.genElectionReferendum(jsonData).subscribe({
       next: (res) => {
-        // console.log("genElectionReferendum() : ", res);
-        // console.log(JSON.stringify(res.REFERENDUM_REPORT));
         this.responseJson$.next(JSON.stringify(res.REFERENDUM_REPORT, null, 2));
         this.disconnectProvinceStream();
         this.checked = false;
@@ -323,10 +283,8 @@ export class Tab4 {
   }
 
   getPercent(q: any, type: string): string {
-    // console.log(q, type)
     if (type === 'agree' || type === 'disagree') {
       const opt = this.findOption(q, type);
-      // console.log(opt)
       return opt.percentage ? opt.percentage.toFixed(2) : '0.00';
     } else if (type === 'invalid') {
       const total = q.totalVotes || 0;
@@ -401,16 +359,13 @@ export class Tab4 {
             (this.provinceIndex + 1) % this.provinces.length;
           const jsonData = {
             provinceNameTH: province,
-            // ...(this.selectedZone ? { AreaNo: this.selectedZone.split(" ")[this.selectedZone.split(" ").length - 1] } : {})
           };
 
-          console.log(jsonData)
           return this._Tab4.genElectionReferendum(jsonData);
         })
       )
       .subscribe({
         next: (res) => {
-          // console.log(JSON.stringify(res.REFERENDUM_REPORT));
           this.responseJson$.next(JSON.stringify(res.REFERENDUM_REPORT, null, 2));
         },
         error: (err) => {
@@ -423,7 +378,6 @@ export class Tab4 {
     if (this.provinceAutoSub) {
       this.provinceAutoSub.unsubscribe();
       this.provinceAutoSub = undefined;
-      console.log('Province auto stopped');
     }
   }
 
@@ -435,8 +389,6 @@ export class Tab4 {
 
     const displayArea =
       zoneObj?.areaName || provinceObj?.provinceName || 'ไม่ระบุจังหวัด';
-
-    console.log(displayArea)
 
     const jsonData = {
       // "REFERENDUM_REPORT": {
@@ -513,7 +465,6 @@ export class Tab4 {
   }
 
   displayProvince(province: any): string {
-    // console.log(province)
     return province ? province.provinceName : '';
   }
 

@@ -60,7 +60,6 @@ export class ReferendumPageV2 implements OnInit {
         firstValueFrom(this._dashboard.getDistrictWinners_NEW()),
       ]).then(([winners_NEW]) => {
         this.winners = winners_NEW;
-        console.log('winners_NEW >>>', winners_NEW)
       });
 
       // อัพเดท UI ครั้งแรก
@@ -72,7 +71,6 @@ export class ReferendumPageV2 implements OnInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res) => {
-            // console.log('connectDistrictWinners >>>', res);
             if (res.channel === 'results') {
               this.zone.run(async () => {
                 this.winners = res.data;
@@ -167,7 +165,6 @@ export class ReferendumPageV2 implements OnInit {
 
   private loadDataReferendum() {
     this._referendumService.getReferendum().subscribe((result) => {
-      console.log(result.data.questions.pop());
       // สมมติ backend คืน data.questions
       this.questions = result.data.questions.map((q: any) => {
         const agreeVotes = q.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
@@ -189,7 +186,6 @@ export class ReferendumPageV2 implements OnInit {
         };
       });
 
-      console.log(this.questions);
       this.cdr.markForCheck();
     });
   }
@@ -227,7 +223,6 @@ export class ReferendumPageV2 implements OnInit {
   getProvince() {
     this.referendumService.getProvince().subscribe({
       next: (res) => {
-        console.log('Province data:', res);
         this.provinces = res;
         this.cdr.detectChanges();
       },
@@ -253,7 +248,6 @@ export class ReferendumPageV2 implements OnInit {
   }
 
   onProvinceSelected(event: any) {
-    console.log('Selected Province:', event.option.value);
     const province = event.option.value;
     this.selectedProvince = province.provinceName;
     this.areaCtrl.reset();
@@ -265,9 +259,7 @@ export class ReferendumPageV2 implements OnInit {
     }
 
     if (province.provinceId) {
-      console.log('provinceId', province.provinceId);
       this.areasByProvince = this.areas.filter(area => area.provinceId === province.provinceId);
-      console.log('Filtered Areas by Province:', this.areasByProvince);
       this.filteredAreas = this.areaCtrl.valueChanges.pipe(
         startWith(''),
         map(value => this._filterAreas(value || ''))
@@ -287,7 +279,6 @@ export class ReferendumPageV2 implements OnInit {
   getAllArea() {
     this.referendumService.getArea().subscribe({
       next: (res) => {
-        console.log('Area data:', res);
         this.areas = res;
       },
       error: (err) => {
@@ -302,7 +293,6 @@ export class ReferendumPageV2 implements OnInit {
 
   onAreaSelected(event: any) {
     const selectedName = event.option.value;
-    console.log('Selected Area:', selectedName);
   }
 }
 

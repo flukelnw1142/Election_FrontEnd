@@ -72,12 +72,10 @@ export class Tab1 {
     });
 
     const url = `${baseUrl}?${params.toString()}`;
-    console.log('Connecting to SSE:', url);
 
     this.eventSource = new EventSource(url);
 
     this.eventSource.onopen = () => {
-      console.log('SSE Connected');
     };
 
     this.eventSource.onmessage = (event) => {
@@ -94,7 +92,6 @@ export class Tab1 {
     this.eventSource.onerror = (err) => {
       console.error('SSE Error:', err);
       if (this.eventSource?.readyState === EventSource.CLOSED) {
-        console.log('SSE Closed');
       }
     };
   }
@@ -105,7 +102,6 @@ export class Tab1 {
       this.eventSource = null;
       this.responseJson$.next('');
       this._Tab1.disconnect();
-      console.log('SSE Disconnected');
     }
 
   }
@@ -133,11 +129,8 @@ export class Tab1 {
         counted: this.inputPercent.toString(),
       })),
     };
-    // console.log(JSON.stringify(jsonData, null, 2));
-    console.log(jsonData);
     this._Tab1.genElection(jsonData).subscribe({
       next: (res) => {
-        console.log(JSON.stringify(res.data));
         this.responseJson$.next(JSON.stringify(res.data, null, 2));
       },
       error: (err) => {

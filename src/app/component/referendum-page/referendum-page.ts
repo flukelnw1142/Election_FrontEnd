@@ -83,7 +83,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   zoomIn() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() + 0.3); }
   zoomOut() { this.panzoomInstance.zoomAbs(0, 0, this.panzoomInstance.getZoom() - 0.3); }
   resetZoom() {
-    console.log("reset")
     if (!this.panzoomInstance) return;
 
     this.panzoomInstance.moveTo(0, 0); // reset pan
@@ -164,7 +163,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         firstValueFrom(this._dashboard.getDistrictWinners_NEW()),
       ]).then(([winners_NEW]) => {
         this.winners = winners_NEW;
-        console.log('winners_NEW >>>', winners_NEW)
       });
       this.getDataSource();
 
@@ -177,7 +175,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res) => {
-            // console.log('connectDistrictWinners >>>', res);
             if (res.channel === 'results') {
               this.zone.run(async () => {
                 this.winners = res.data;
@@ -194,7 +191,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res) => {
-            console.log('connectEctreport >>>', res);
             this.winners = res.data;
             this.updateWinnerUI(this.winners);
             this.getDataSource();
@@ -230,7 +226,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     this._referendumService.getResultReferendum()
       .subscribe({
         next: (res) => {
-          // console.log('result referendum:', res);
           this.colorByDistrict = res.data.byProvince
         }
       });
@@ -295,7 +290,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
   async onRegionSelect(region: string) {
     this.loading_tab2 = true
     this.textShow = region
-    // console.log('region', region);
 
     this.selectedRegion = region;
     const svgText = await this.loadSvgByRegion(region);
@@ -356,7 +350,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       const id = current.getAttribute('id');
 
       if (id) {
-        // console.log('Clicked element ID:', id, this.selectRegion_Province_district);
         const oldSvgIsAll = this.selectRegion_Province_district.value === 'ทั้งประเทศ'
         this.loading = true;
         if (/^[A-Z]+_\d+$/.test(id)) {
@@ -364,7 +357,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
           const districtId = id.trim().toUpperCase();
           let displayName = this.getDistrictDisplayNameFromDom(districtId);
-          console.log("districtId : ", districtId, "displayName :", displayName, this.colorByDistrict);
           this.handleZoneSearch(districtId);
 
           return;
@@ -372,11 +364,9 @@ export class ReferendumPage implements OnInit, AfterViewInit {
           // ✅ ชื่อจังหวัด เช่น BKK_name
           matchedElement = current;
           const provinceId = id.trim().toUpperCase(); // BKK_name
-          // console.log('provinceId  ', provinceId);
 
           const districtIds = this.getDistrictIdsByProvinceId(provinceId);
           const provinceName = matchedElement.textContent?.trim();
-          // console.log("provinceName : ", provinceName, "\ndistrictIds: ", districtIds);
           if (provinceName) {
             this.handleProvinceSearch(provinceName, districtIds);
           }
@@ -457,7 +447,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     });
 
     let districtIds = Object.keys(this.colorByDistrict)
-    // console.log(svg)
 
     svg.querySelectorAll('g[id]').forEach(g => {
       const id = g.id;
@@ -476,10 +465,8 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
       for (let i = 0; i < districtIds.length; i++) {
         const id = districtIds[i];
-        // console.log("id: ", id)
         const g = svg.querySelector('#' + id) as SVGGElement | null;
 
-        // console.log(g)
         if (g) {
           const path = g.querySelector('path');
           const text = g.querySelector('tspan');
@@ -528,8 +515,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
             // FILL - แสดงสีตาม party หรือ default
             path.style.fill = district.questions[0].options[0].color || '#d3d3d3'
-
-            console.log("hasSelectedZone", hasSelectedZone)
 
             // จัดการ OPACITY และ STROKE ตาม priority
             if (hasSelectedProvince) {
@@ -590,7 +575,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       }
       // กรณีที่'เขต'นั้นไม่มีค่า
       if (districtIds.length === 0) {
-        console.log(this.selectRegion_Province_district)
         if (this.selectRegion_Province_district.type === 'district') {
           const id = this.selectRegion_Province_district.value
           const g = svg.querySelector('#' + id) as SVGGElement | null;
@@ -657,8 +641,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       this._referendumService.getResultReferendum(region, province, area)
         .subscribe({
           next: (res) => {
-            // console.log('result referendum:', res);
-
             if (res.message === 'ไม่พบข้อมูลการเลือกตั้งในระบบ') {
               this.sweetAlertService.showAlert(
                 'แจ้งเตือน',
@@ -716,51 +698,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     });
   }
 
-  // handleGetResultReferendum_NEW(): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this._referendumService.getResultReferendum('ภาคกลาง')
-  //       .subscribe({
-  //         next: (res) => {
-  //           console.log('result referendum_NEW:', res);
-
-  //           if (res.message === 'ไม่พบข้อมูลการเลือกตั้งในระบบ') {
-  //             this.sweetAlertService.showAlert(
-  //               'แจ้งเตือน',
-  //               'ยังไม่พบคะแนน',
-  //               'info'
-  //             );
-  //             this.selectedRegion = 'ทั้งประเทศ'
-  //             this.handleGetResultReferendum();
-  //             return;
-  //           }
-
-  //           // this.colorByDistrict = res.data.byProvince
-  //           const question = res.data.questions[0]
-  //           const agreePercent = question.options.find((o: any) => o.optionCode === ('agree'))?.percentage ?? 0;
-  //           const disagreePercent = question.options.find((o: any) => o.optionCode === ('disagree'))?.percentage ?? 0;
-
-  //           const diffPercent = Math.abs(agreePercent - disagreePercent);
-
-  //           const agreeScore = question.options.find((o: any) => o.optionCode === ('agree'))?.totalVotes ?? 0;
-  //           const disagreeScore = question.options.find((o: any) => o.optionCode === ('disagree'))?.totalVotes ?? 0;
-
-  //           this.question_NEW = {
-  //             ...question,
-  //             agreePercent,
-  //             agreeScore,
-  //             disagreePercent,
-  //             disagreeScore,
-  //             showGuideLine: diffPercent <= 5,
-
-  //           };
-
-  //         },
-  //         error: (err) => {
-  //           console.error(err);
-  //         }
-  //       });
-  //   });
-  // }
 
   private getDistrictDisplayNameFromDom(districtId: string): string {
     // BKK_5 → [BKK, 5]
@@ -775,8 +712,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       ?.querySelector('text')
       ?.textContent
       ?.trim();
-
-    // console.log(districtId, match, provinceNameElement, provinceName)
 
     return provinceName
       ? `${provinceName} เขต ${num}`
@@ -839,7 +774,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
           return
         };
 
-        console.log(g)
         const id = g.id;
 
         // กรองให้เร็วที่สุด - ถ้า id เดิม → แค่ขยับ tooltip ไม่ต้อง zone.run
@@ -878,18 +812,14 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
   onRegionHover(regionId: string, event: MouseEvent) {
     if (!this.tooltipElement) {
-      // console.log('tooltipElement is null!');
       return;
     }
 
     const data = this.colorByDistrict?.[regionId];
     if (!data) {
-      // console.log('no data for', regionId);
       this.tooltipElement.style.display = 'none';
       return;
     }
-
-    // console.log('data found:', data);
 
     const agreeText = data.questions[0].options[0].optionCode === "agree"
       ? 'เห็นด้วย'
@@ -917,11 +847,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
           <span>${agreeText} ${voteCount} คน</span>
         </div>
       `;
-      // console.log('set text to:', text);
-    } else {
-      // console.log('ไม่เจอ .tooltip-content ภายใน tooltipElement');
-    }
-
+    } 
     const el = this.tooltipElement as HTMLElement;
 
     // Force style ให้เห็นชัด ๆ
@@ -939,19 +865,16 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     el.style.whiteSpace = 'nowrap';
 
     el.style.display = 'block';
-    // console.log('set display block, position:', el.style.position, 'left:', el.style.left);
   }
 
   onRegionLeave() {
     if (!this.tooltipElement) {
-      // console.log('[onRegionLeave] tooltipElement ไม่มีค่า');
       return;
     }
 
     // ซ่อน tooltip อย่างชัดเจน
     this.tooltipElement.style.display = 'none';
 
-    // console.log('[onRegionLeave] tooltip ถูกซ่อนแล้ว');
   }
 
   onSvgPointerUp(event: PointerEvent) {
@@ -969,7 +892,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
   private focusProvinceOnMobile(province: string) {
     if (this.isDesktopOnly()) return;
-    console.log('focusProvinceOnMobile:', province);
 
     const container = this.svgContainerRegion?.nativeElement;
     if (!container) return;
@@ -1005,46 +927,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     this.lockOtherProvinces(svg, provinceGroup.id);
   }
 
-
-
-  /** */
-  // private focusProvinceOnMobile(provinceName: string) {
-  //   if (this.isDesktopOnly()) return;
-
-  //   const container = this.svgContainerRegion?.nativeElement;
-  //   if (!container) return;
-
-  //   const svg = container.querySelector('svg') as SVGSVGElement | null;
-  //   if (!svg) return;
-
-  //   // 1. หา text จังหวัด
-  //   const textEl = Array.from(svg.querySelectorAll('text'))
-  //     .find(t => t.textContent?.trim() === provinceName);
-
-  //   if (!textEl) {
-  //     console.warn('❌ ไม่พบชื่อจังหวัดใน SVG:', provinceName);
-  //     return;
-  //   }
-
-  //   // 2. ย้อนขึ้นไปหา province-group
-  //   const provinceGroup = textEl.closest('g[id^="province-"]') as SVGGElement | null;
-  //   if (!provinceGroup) return;
-
-  //   // 3. zoom จาก bbox ของทั้ง province
-  //   const bbox = provinceGroup.getBBox();
-  //   const padding = 20;
-
-  //   svg.setAttribute(
-  //     'viewBox',
-  //     `${bbox.x - padding} ${bbox.y - padding}
-  //      ${bbox.width + padding * 2}
-  //      ${bbox.height + padding * 2}`
-  //   );
-
-  //   svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-  //   this.lockOtherProvinces(svg, provinceGroup.id);
-  // }
-
   lockOtherProvinces(svg: SVGSVGElement, activeGroupId: string) {
     const allProvinceGroups = svg.querySelectorAll('g[id^="province-"], g[id$="_id"]');
 
@@ -1073,7 +955,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     const province = event.option.value;
     this.selectedProvince_Specific = province;
 
-    // this.provinceCtrl_Specific.setValue('');
     this.handleProvinceSearch(province);
     // update state กลาง
     this.selectRegion_Province_district = {
@@ -1103,7 +984,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     this.loading = true;
     this.textShow = province;
 
-    console.log(provinceData.provinceName)
     if (provinceData.provinceName === 'ทั้งประเทศ') {
       this.onRegionSelect(provinceData.provinceName)
       this.loading = false;
@@ -1161,7 +1041,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     let displayName = this.getDistrictDisplayNameFromDom(districtId);
 
     const provinceName = this.colorByDistrict[districtId].provinceNameTH.split(' ')[0];
-    console.log("provinceName : ", provinceName);
 
     const region = await this.findRegionByProvince(provinceName);
     if (region) {
@@ -1218,7 +1097,6 @@ export class ReferendumPage implements OnInit, AfterViewInit {
           { provID: 0, provinceName: 'ทั้งประเทศ', hasLeader: 1, hasReferendumVotes: 1 },
           ...(Array.isArray(res.data) ? res.data : [])
         ];
-        console.log("this.provinces :", this.provinces);
 
         this.cdr.detectChanges();
       },

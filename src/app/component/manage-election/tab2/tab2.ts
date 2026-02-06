@@ -184,14 +184,12 @@ export class Tab2 {
 
     this._Tab2.genElectionByProviceAndZone(jsonData).subscribe({
       next: (res) => {
-        console.log(JSON.stringify(res.data));
         this.responseJsonProvince_auto$.next(JSON.stringify(res.data, null, 2));
       },
       error: (err) => {
         console.error('API error:', err);
       },
     });
-    console.log(this.selectedProvince_Province)
   }
 
   onSubmitFilter_Specific() {
@@ -213,24 +211,16 @@ export class Tab2 {
       areaNo: zoneId,
     };
 
-    console.log("jsonData", jsonData);
 
     // this.onToggleChange();
     this._Tab2.genElectionByProviceAndZone(jsonData).subscribe({
       next: (res) => {
-        console.log(JSON.stringify(res.data));
         this.responseJsonSpecific$.next(JSON.stringify(res.data, null, 2));
       },
       error: (err) => {
         console.error('API error:', err);
       },
     });
-    console.log(this.selectedProvince_Specific && !selectedZone)
-    if (this.selectedProvince_Specific && !selectedZone) {
-      console.log("เลือกจังหวัดอย่างเดียว")
-    } else if (this.selectedProvince_Specific && selectedZone) {
-      console.log("เลือกจังหวัด และ เขต")
-    }
   }
 
   ngOnDestroy(): void {
@@ -250,17 +240,14 @@ export class Tab2 {
     });
 
     const url = `${baseUrl}?${params.toString()}`;
-    console.log('Connecting to SSE:', url);
 
     this.eventSourceAll = new EventSource(url);
 
     this.eventSourceAll.onopen = () => {
-      console.log('SSE Connected');
     };
 
     this.eventSourceAll.onmessage = (event) => {
       try {
-        console.log('SSE Message received:', event);
         const data = JSON.parse(event.data);
         const pretty = JSON.stringify(data, null, 2);
         this.responseJsonAll_auto$.next(pretty);
@@ -273,41 +260,10 @@ export class Tab2 {
     this.eventSourceAll.onerror = (err) => {
       console.error('SSE Error:', err);
       if (this.eventSourceAll?.readyState === EventSource.CLOSED) {
-        console.log('SSE Closed');
       }
     };
   }
-  // private startStreaming_Province_Auto() {
-  //   if (!this.selectedProvince_Province) {
-  //     console.warn('No province selected');
-  //     return;
-  //   }
 
-  //   // กันซ้ำ
-  //   this.disconnectProvinceStream();
-
-  //   this.provinceAutoSub = interval(this.timeAuto_Province * 1000)
-  //     .pipe(
-  //       switchMap(() => {
-  //         const payload = {
-  //           ProvinceName: this.selectedProvince_Province
-  //         };
-  //         console.log("payload", payload)
-  //         return this._Tab2.genElectionByProviceAndZone(payload);
-  //       })
-  //     )
-  //     .subscribe({
-  //       next: (res) => {
-  //         console.log('Province auto data received', res);
-  //         this.responseJsonProvince_auto$.next(
-  //           JSON.stringify(res.data, null, 2)
-  //         );
-  //       },
-  //       error: (err) => {
-  //         console.error('Province auto error', err);
-  //       }
-  //     });
-  // }
 
   private startStreaming_Province_Auto() {
     if (!this.selectedProvince_Province) {
@@ -328,18 +284,15 @@ export class Tab2 {
             this.zoneIndex = 0;
           }
 
-          console.log('Auto selected province:', this.zonesInProvince_Province, 'zone:', zone);
           const payload = {
             ProvinceName: this.selectedProvince_Province,
             areaNo: zone
           };
-          console.log("payload", payload)
           return this._Tab2.genElectionByProviceAndZone(payload);
         })
       )
       .subscribe({
         next: (res) => {
-          console.log('Province auto data received', res);
           this.responseJsonProvince_auto$.next(
             JSON.stringify(res.data, null, 2)
           );
@@ -355,7 +308,6 @@ export class Tab2 {
       this.eventSourceAll = null;
       this.responseJsonAll_auto$.next('');
       this._Tab2.disconnect();
-      console.log('All SSE Disconnected');
     }
   }
 
@@ -363,7 +315,6 @@ export class Tab2 {
     if (this.provinceAutoSub) {
       this.provinceAutoSub.unsubscribe();
       this.provinceAutoSub = undefined;
-      console.log('Province auto stopped');
     }
   }
 
@@ -387,10 +338,8 @@ export class Tab2 {
       bkg: '...',
     }));
 
-    console.log(result);
     this._Tab2.genElection(result).subscribe({
       next: (res) => {
-        console.log(JSON.stringify(res.data));
         this.responseJsonAll_auto$.next(JSON.stringify(res.data, null, 2));
       },
       error: (err) => {
@@ -479,7 +428,6 @@ export class Tab2 {
     this._Tab2.getProvince().subscribe({
       next: (res) => {
         this.provinces = res.data;
-        console.log("this.provinces :");
 
         this.filteredProvinces_Province = this.provinceCtrl_Province.valueChanges.pipe(
           startWith(''),
@@ -492,7 +440,6 @@ export class Tab2 {
           );
 
           if (!isValidProvince && this.checked_Province_Auto) {
-            console.log('จังหวัดไม่ถูกต้อง → ปิด auto');
 
             this.checked_Province_Auto = false;
             this.disconnectProvinceStream();

@@ -10,7 +10,6 @@ export class UiStateService {
   referendumLogoSmall$ = this._referendumLogoSmall$.asObservable();
 
   setReferendumLogoSmall(value: boolean) {
-    console.log("value: ", value)
 
     this._referendumLogoSmall$.next(value);
   }
@@ -30,7 +29,6 @@ export class UiStateService {
 
   // ฟังก์ชันให้ Dashboard เรียกอัพเดทสถานะ
   updateMainPageStatus(isMain: boolean) {
-    // console.log("isMain: ", isMain)
     this.isMainPageSubject.next(isMain);
   }
 }

@@ -27,27 +27,6 @@ export class ReferendumService {
 
     const url = `${this.baseUrl}/referendum/final/referendum-constitution-2026`;
 
-    // const params: any = { level };
-
-    // if (level === 'province' && province != null) {
-    //   params.province = province;
-    // }
-
-    // if (level === 'area' && province != null && area != null) {
-    //   params.province = province;
-    //   params.area = area;
-    // }
-
-    // const headers = new HttpHeaders({
-    //   Authorization: `Bearer ${this.token}`
-    // });
-
-
-    // const queryString = new URLSearchParams(params).toString();
-    // const fullUrl = `${url}?${queryString}`;
-    // console.log(fullUrl);
-
-
     return this._http.get<any>(url);
   }
 

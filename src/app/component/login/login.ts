@@ -56,10 +56,8 @@ export class Login {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password,
     };
-    console.log('req', req);
     this._login.loginSSO(req).subscribe({
       next: (data) => {
-        console.log('✅ Login success:', data);
         localStorage.setItem('currentUser', JSON.stringify(data));
         localStorage.setItem('UserName', data.NAMFIRSTE + ' ' + data.NAMLASTE);
         this.isLoading = false;

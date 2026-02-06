@@ -1,7 +1,7 @@
-<div class="chart-container">
+<div class="chart-container" [ngClass]="{ 'full-width': fullWidth }">
     <!-- <canvas id="semiPieChart"></canvas> -->
     <!-- <canvas id="barChart"></canvas> -->
-    <canvas id="pieChart"></canvas>
+    <canvas #pieCanvas></canvas>
     <div class="label-row">
 
 

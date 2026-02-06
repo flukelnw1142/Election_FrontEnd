@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { CommonModule } from '@angular/common';
 
@@ -22,7 +22,10 @@ export class SemiPie implements AfterViewInit, OnChanges {
     disagreeScore: number;
     showGuideLine: boolean;
   };
+  @Input() fullWidth = false;
   chart!: Chart;
+  @ViewChild('pieCanvas') pieCanvas!: ElementRef<HTMLCanvasElement>;
+
 
   ngAfterViewInit(): void {
     this.createChart();
@@ -40,8 +43,9 @@ export class SemiPie implements AfterViewInit, OnChanges {
     /**
      * 1
      */
-    const ctx = document.getElementById('pieChart') as HTMLCanvasElement;
-    const chartCtx = ctx.getContext('2d');
+    // const ctx = document.getElementById('pieChart') as HTMLCanvasElement;
+    // const chartCtx = ctx.getContext('2d');
+    const chartCtx = this.pieCanvas.nativeElement.getContext('2d');
     if (!chartCtx) {
       return;
     }
@@ -53,7 +57,7 @@ export class SemiPie implements AfterViewInit, OnChanges {
     disagreeGradient.addColorStop(0, '#EF5350');
     disagreeGradient.addColorStop(1, '#B71C1C');
 
-    this.chart = new Chart('pieChart', {
+    this.chart = new Chart(chartCtx, {
       type: 'pie',
       data: {
         labels: ['เห็นด้วย', 'ไม่เห็นด้วย'],

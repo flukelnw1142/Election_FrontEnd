@@ -46,6 +46,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     this.checkScreenSize();
   }
 
+  private noVoteAlertShown = false;
   private checkScreenSize() {
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -641,16 +642,31 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       this._referendumService.getResultReferendum(region, province, area)
         .subscribe({
           next: (res) => {
+            // if (res.message === 'ไม่พบข้อมูลการเลือกตั้งในระบบ') {
+            //   this.sweetAlertService.showAlert(
+            //     'แจ้งเตือน',
+            //     'ยังไม่พบคะแนน',
+            //     'info'
+            //   );
+            //   this.selectedRegion = 'ทั้งประเทศ'
+            //   this.handleGetResultReferendum();
+            //   return;
+            // }
+
             if (res.message === 'ไม่พบข้อมูลการเลือกตั้งในระบบ') {
-              this.sweetAlertService.showAlert(
-                'แจ้งเตือน',
-                'ยังไม่พบคะแนน',
-                'info'
-              );
-              this.selectedRegion = 'ทั้งประเทศ'
-              this.handleGetResultReferendum();
+              if (!this.noVoteAlertShown) {
+                this.noVoteAlertShown = true;
+                this.sweetAlertService.showAlert(
+                  'แจ้งเตือน',
+                  'ยังไม่พบคะแนน',
+                  'info'
+                );
+                this.selectedRegion = 'ทั้งประเทศ'
+                // this.handleGetResultReferendum();
+              }
               return;
             }
+            this.noVoteAlertShown = false;
 
             // this.colorByDistrict = res.data.byProvince
             const question = res.data.questions[0]

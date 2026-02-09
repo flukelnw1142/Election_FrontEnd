@@ -21,7 +21,13 @@
                 <span class="time ti_bf updateDate">22/10/2025 11:15:00</span>
             </div>
 
-            <div class="zoneAndParty">
+            <div class="counted-summary">
+                <span class="text">นับแล้ว</span>
+                <span class="percent" id="percentAll">80%</span>
+            </div>
+
+
+            <!-- <div class="zoneAndParty">
                 <div class="status-right zone">
                     <span class="prefix">นับแล้ว</span>
                     <span class="type">เขต</span>
@@ -34,7 +40,7 @@
                     <span id="totalVotePartylist">0</span>
                     <span id="percentPartylist">0%</span>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -94,8 +100,7 @@
     </div>
 </div> -->
 
-<div class="source-label" [class.top]="!isDesktop"
- *ngIf="(is_certified || !isReferendumPage) ">
+<div class="source-label" [class.top]="!isDesktop" *ngIf="(is_certified || !isReferendumPage) ">
     <!-- หน้าแรก -->
     <ng-container *ngIf="isReferendumPage">
         ผลคะแนนจาก กกต.

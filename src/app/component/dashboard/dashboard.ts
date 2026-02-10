@@ -386,6 +386,7 @@ export class Dashboard implements OnInit {
 
   private updateWinnerUI(winners: any): void {
     if (!winners) return;
+    this.uiState.setWinnerReady(true);
 
     console.log(winners)
 

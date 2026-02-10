@@ -31,4 +31,12 @@ export class UiStateService {
   updateMainPageStatus(isMain: boolean) {
     this.isMainPageSubject.next(isMain);
   }
+
+  private winnerReady$ = new BehaviorSubject<boolean>(false);
+
+  winnerReadyObs$ = this.winnerReady$.asObservable();
+
+  setWinnerReady(isReady: boolean) {
+    this.winnerReady$.next(isReady);
+  }
 }

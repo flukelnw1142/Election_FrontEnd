@@ -18,6 +18,7 @@ import { ElectionService } from '../../service/election.service';
 import { Tab2Service } from '../manage-election/tab2/tab2service';
 import { SweetAlertService } from '../../service/sweet-alert.service';
 import { area } from 'd3';
+import { UiStateService } from '../share/ui-state.service';
 
 @Component({
   selector: 'app-referendum-page',
@@ -153,7 +154,8 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     private zone: NgZone,
     private electionService: ElectionService,
     private _Tab2: Tab2Service,
-    private sweetAlertService: SweetAlertService
+    private sweetAlertService: SweetAlertService,
+    private uiState: UiStateService
   ) { }
 
 
@@ -235,6 +237,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
 
   private updateWinnerUI(winners: any): void {
     if (!winners) return;
+    this.uiState.setWinnerReady(true);
 
     this.zone.run(() => {
       // อัพเดท text
@@ -253,6 +256,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       );
       this.setText('percentZone', winners.percentZone);
       this.setText('percentPartylist', winners.percentPartylist);
+      this.setText('percentAll', winners.coveragePercent.overall);
       this.cdr.markForCheck();
     });
   }
@@ -863,7 +867,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
           <span>${agreeText} ${voteCount} คน</span>
         </div>
       `;
-    } 
+    }
     const el = this.tooltipElement as HTMLElement;
 
     // Force style ให้เห็นชัด ๆ

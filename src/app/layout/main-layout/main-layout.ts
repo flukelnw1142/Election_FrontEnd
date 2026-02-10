@@ -4,7 +4,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardService } from '../../component/dashboard/service/dashboardservice';
 import { SweetAlertService } from '../../service/sweet-alert.service';
-import { filter, Subscription } from 'rxjs';
+import { filter, Subject, Subscription, takeUntil } from 'rxjs';
 import { UiStateService } from '../../component/share/ui-state.service';
 import { ElectionService } from '../../service/election.service';
 
@@ -35,6 +35,8 @@ export class MainLayout {
   // เช็คว่าเป็นหน้า manage
   isSourceLabelPage = true;
   private sub = new Subscription();
+
+  isWinnerReady = false;
   constructor(private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private _dashboard: DashboardService,
@@ -87,8 +89,15 @@ export class MainLayout {
 
       });
   }
+  private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
+    this.uiState.winnerReadyObs$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((ready) => {
+        this.isWinnerReady = ready;
+        this.cdr.detectChanges();
+      });
     if (isPlatformBrowser(this.platformId)) {
       this.checkScreenSize()
       this.electionService.resultFrom$

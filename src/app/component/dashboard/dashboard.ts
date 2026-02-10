@@ -335,23 +335,23 @@ export class Dashboard implements OnInit {
         });
 
       // WebSocket - District Winners
-      this._dashboard
-        .connectDistrictWinners()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (res) => {
-            if (res.channel === 'results') {
-              this.zone.run(async () => {
-                this.winners = res.data;
-                this.updateWinnerUI(this.winners);
-                this.loadSvgIfNeeded();
-                this.getProvince();
-              });
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
+      // this._dashboard
+      //   .connectDistrictWinners()
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe({
+      //     next: (res) => {
+      //       if (res.channel === 'results') {
+      //         this.zone.run(async () => {
+      //           this.winners = res.data;
+      //           this.updateWinnerUI(this.winners);
+      //           this.loadSvgIfNeeded();
+      //           this.getProvince();
+      //         });
+      //       }
+      //     },
+      //     error: (err) => console.error('WebSocket error', err),
+      //     complete: () => console.log('WebSocket closed'),
+      //   });
 
       // // WebSocket - Party Seat Counts
       this._dashboard
@@ -388,7 +388,7 @@ export class Dashboard implements OnInit {
     if (!winners) return;
     this.uiState.setWinnerReady(true);
 
-    console.log(winners)
+    // console.log(winners)
 
     this.zone.run(() => {
       // อัพเดท text

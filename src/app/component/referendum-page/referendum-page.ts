@@ -166,6 +166,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         firstValueFrom(this._dashboard.getDistrictWinners_NEW()),
       ]).then(([winners_NEW]) => {
         this.winners = winners_NEW;
+        // console.log("winners_NEW: ", winners_NEW)
       });
       this.getDataSource();
 
@@ -173,21 +174,22 @@ export class ReferendumPage implements OnInit, AfterViewInit {
       this.updateWinnerUI(this.winners);
 
       // WebSocket - District Winners
-      this._dashboard
-        .connectDistrictWinners()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (res) => {
-            if (res.channel === 'results') {
-              this.zone.run(async () => {
-                this.winners = res.data;
-                this.updateWinnerUI(this.winners);
-              });
-            }
-          },
-          error: (err) => console.error('WebSocket error', err),
-          complete: () => console.log('WebSocket closed'),
-        });
+      // this._dashboard
+      //   .connectDistrictWinners()
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe({
+      //     next: (res) => {
+      //       if (res.channel === 'results') {
+      //         this.zone.run(async () => {
+      //           this.winners = res.data;
+      //           // console.log("185 results: ", res.data)
+      //           this.updateWinnerUI(this.winners);
+      //         });
+      //       }
+      //     },
+      //     error: (err) => console.error('WebSocket error', err),
+      //     complete: () => console.log('WebSocket closed'),
+      //   });
 
       this._dashboard
         .connectEctreport()
@@ -195,7 +197,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
         .subscribe({
           next: (res) => {
             this.winners = res.data;
-            this.updateWinnerUI(this.winners);
+            // this.updateWinnerUI(this.winners);
             this.getDataSource();
             this.electionService.setResultFrom(res.dataSourceLabel);
             this.onRegionSelect(this.selectedRegion);
@@ -239,6 +241,7 @@ export class ReferendumPage implements OnInit, AfterViewInit {
     if (!winners) return;
     this.uiState.setWinnerReady(true);
 
+    // console.log("244 winners: ", winners)
     this.zone.run(() => {
       // อัพเดท text
       const updateEls = document.getElementsByClassName('updateDate');
